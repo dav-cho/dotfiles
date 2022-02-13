@@ -1,0 +1,14 @@
+{
+  "prettier.singleQuote": true,
+  "prettier.arrowParens": "avoid",
+  "python.pythonPath": "/Users/dav/.pyenv/shims/python",
+  "python.venvPath": "~/.local/share/virtualenvs",
+  "python.formatting.provider": "autopep8",
+  "python.linting.pylintEnabled": true,
+  "html-css-support.enabledLanguages": [
+    "html",
+    "htmldjango",
+    "typescriptreact",
+    "javascriptreact"
+  ]
+}

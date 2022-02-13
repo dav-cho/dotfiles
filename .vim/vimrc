@@ -1,0 +1,479 @@
+""---------------------------- Vim Plug ------------------------------
+
+" Install vim-plug if not found
+"if empty(glob('~/.vim/autoload/plug.vim'))
+  "silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    "\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+"endif
+
+" Run PlugInstall if there are missing plugins
+"autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+"  \| PlugInstall --sync | source $MYVIMRC
+"\| endif
+
+"" Set rtp to run ~/.vim/autoload.
+set rtp+=~/.vim/autoload
+
+call plug#begin('~/.vim/plugged')
+
+Plug 'junegunn/vim-plug'
+Plug 'junegunn/fzf'
+"Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'tpope/vim-surround'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'preservim/nerdtree'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'airblade/vim-gitgutter'
+
+Plug 'ryanoasis/vim-devicons'
+Plug 'joshdick/onedark.vim'
+Plug 'gruvbox-community/gruvbox'
+Plug 'dracula/vim', {'as': 'dracula'}
+Plug 'lukas-reineke/indent-blankline.nvim'
+
+"Plug 'scrooloose/nerdcommenter'
+Plug 'kevinoid/vim-jsonc'
+
+"Plug 'psf/black', { 'branch': 'stable' }
+
+Plug 'mhinz/vim-startify'
+
+call plug#end()
+
+"" Set font for devicons
+"set guifont=<FONT_NAME> <FONT_SIZE>
+
+""------------------------------ Main --------------------------------
+
+"" Runs project based vimrc files.
+set exrc
+set noerrorbells
+
+filetype plugin indent on
+syntax on
+set hidden
+set noswapfile
+set shiftwidth=2
+set tabstop=2 softtabstop=2
+set expandtab autoindent smartindent
+"set number
+set relativenumber
+set nu
+set scrolloff=10
+set mouse=a
+set cmdheight=1
+set nowrap
+"set columns=80
+"set colorcolumn=80
+"set signcolumn=yes
+set t_Co=256
+
+set hlsearch
+set incsearch
+"set nohlsearch
+"set ignorecase
+"" Turns into case sensitive if uppercase is present in search.
+"set smartcase
+
+"" Handles history/backup files/directory
+"set noswapfile
+"set nobackup
+"set undir=~/.vim/undodir
+"set undofile
+
+setlocal path=.,**
+
+"" Set run time paths and RC file run time path
+let $RTP=split(&runtimepath, ',')[0]
+let $RC="$HOME/.vim/vimrc"
+
+""----------------------------- Themes -------------------------------
+
+"colorscheme onedark
+"colorscheme dracula
+colorscheme gruvbox
+"highlight Normal guibg=none
+
+"let g:airline_theme='simple'
+"let g:airline_theme='gruvbox'
+"let g:airline_powerline_fonts = 1
+
+" TODO: highlight CursorLineNr
+"term=bold ctermfg=214 ctermbg=237 guifg=#fabd2f guibg=#3c3836
+
+""------------------------------ Maps --------------------------------
+
+let mapleader = ","
+
+"" Cursor style for various modes.
+let &t_SI.="\e[5 q" " SI = INSERT mode
+let &t_SR.="\e[4 q" " SR = REPLACE mode
+let &t_EI.="\e[2 q" " EI = NORMAL mode (ELSE)
+
+"" Normal Mode
+nnoremap 0 ^
+nnoremap ^ 0
+nnoremap J 5j
+nnoremap K 5k
+nnoremap <leader>w <C-w>
+nnoremap <leader>wr :w<CR>
+nnoremap <leader>n :noh<CR>
+
+"" Insert Mode
+inoremap JK <Esc>
+
+"" Buffer navigation TODO
+"nnoremap <C-M>l :bn<CR>
+"nnoremap <C-M>h :bp<CR>
+
+"" Move lines up and down with alt/option key TODO
+"nnoremap <M-j> :m .+1<CR>==
+"nnoremap <M-k> :m .-2<CR>==
+"nnoremap <A-j> :m .+1<CR>==
+"nnoremap <A-k> :m .-2<CR>==
+
+"" Resize windows iwth arrow keys TODO
+"nnoremap <leader><C-Left> :vertical resize -2<CR>
+"nnoremap <leader><C-Right> :vertical resize +2<CR>
+"nnoremap <leader><C-Up> :resize -2<CR>
+"nnoremap <leader><C-Down> :resize +2<CR>
+
+"" TODO: move to python.vim in after/ftplugin?
+nnoremap <leader>py :w !python<CR>
+nnoremap <leader>pi :term python % <CR>
+
+"nnoremap <leader>f :Black<CR>
+
+""----------------------------- Airline ------------------------------
+
+"" Vim Airline Config
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+"set showtabline=2
+
+"  let g:airline_section_a       (mode, crypt, paste, spell, iminsert)
+"  let g:airline_section_b       (hunks, branch)[*]
+"  let g:airline_section_c       (bufferline or filename, readonly)
+"  let g:airline_section_gutter  (csv)
+"  let g:airline_section_x       (tagbar, filetype, virtualenv)
+"  let g:airline_section_y       (fileencoding, fileformat, 'bom', 'eol')
+"  let g:airline_section_z       (percentage, line number, column number)
+"  let g:airline_section_error   (ycm_error_count, syntastic-err, eclim,
+"                                 languageclient_error_count)
+"  let g:airline_section_warning (ycm_warning_count, syntastic-warn,
+"                                 languageclient_warning_count, whitespace)
+
+""--------------------------- CoC Config -----------------------------
+
+"" Some servers have issues with backup files, see #649.
+set nobackup
+set nowritebackup
+
+"" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+"" delays and poor user experience.
+"set updatetime=300
+
+"" Don't pass messages to |ins-completion-menu|.
+"set shortmess+=c
+
+"" Use tab for trigger completion with characters ahead and navigate.
+"" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+"" other plugin before putting this into your config.
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <Tab> pumvisible() ?
+  \ "\<C-n>" : <SID>check_back_space() ?
+  \ "\<Tab>" : coc#refresh()
+
+"" Use <C-space>for trigger completion
+inoremap <silent><expr> <C-space> coc#refresh()
+
+"" Make <CR> auto-select the first completion item and notify coc.nvim to
+"" format on enter, <cr> could be remapped by other vim plugin
+inoremap <silent><expr> <CR> pumvisible() ?
+  \ coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+"" <CR> confirms completion when popup is visible
+"" \<C-g>u is used to break undo level
+"inoremap <expr> <CR>
+"  \ pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+"" Make <CR> select first completion item and confirm the completion
+"" when no item has been selected
+"inoremap <silent><expr> <CR>
+"  \ pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
+
+"" Make coc.nvim format your code on <CR>
+"inoremap <silent><expr> <cr> pumvisible() ?
+"  \ coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+"" Use complete_info() if you need confirm completion when there's
+"" complete item
+if exists('*complete_info')
+  inoremap <silent><expr> <CR>
+  \ complete_info(['selected'])['selected'] != -1 ?
+  \ "\<C-y>" : "\<C-g>u\<CR>"
+endif
+
+"" Use <Tab> and <S-Tab> to navigate completion list
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+"" GoTo code navigation.
+nnoremap <silent> gd <Plug>(coc-definition)
+nnoremap <silent> gy <Plug>(coc-type-definition)
+nnoremap <silent> gi <Plug>(coc-implementation)
+nnoremap <silent> gr <Plug>(coc-references)
+
+"" Use gh to show documentation in preview window.
+nnoremap <silent> gh :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+
+"" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+"" Symbol renaming.
+nnoremap <F2> <Plug>(coc-rename)
+"nmap <F2> <Plug>(coc-rename)
+
+"" Formatting selected code
+nnoremap <leader>f<CR> <Plug>(coc-format-selected)
+vnoremap <leader>f<CR> <Plug>(coc-format-selected)
+"xmap <leader>f<CR> <Plug>(coc-format-selected)
+"nmap <leader>f<CR> <Plug>(coc-format-selected)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+"" Applying codeAction to the selected region.
+"" Example: `<leader>aap` for current paragraph
+nnoremap <leader>a  <Plug>(coc-codeaction-selected)
+xnoremap <leader>a  <Plug>(coc-codeaction-selected)
+"nmap <leader>a  <Plug>(coc-codeaction-selected)
+"xmap <leader>a  <Plug>(coc-codeaction-selected)
+
+"" Remap keys for applying codeAction to the current buffer.
+"nmap <leader>ac  <Plug>(coc-codeaction)
+"" Apply AutoFix to problem on the current line.
+"nmap <leader>qf  <Plug>(coc-fix-current)
+
+"" Map function and class text objects
+"" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+"xmap if <Plug>(coc-funcobj-i)
+"omap if <Plug>(coc-funcobj-i)
+"xmap af <Plug>(coc-funcobj-a)
+"omap af <Plug>(coc-funcobj-a)
+"xmap ic <Plug>(coc-classobj-i)
+"omap ic <Plug>(coc-classobj-i)
+"xmap ac <Plug>(coc-classobj-a)
+"omap ac <Plug>(coc-classobj-a)
+
+"" Remap <C-f> and <C-b> for scroll float windows/popups.
+"if has('nvim-0.4.0') || has('patch-8.2.0750')
+"  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+"  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+"  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+"  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+"  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+"  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+"endif
+
+"" Use CTRL-S for selections ranges.
+"" Requires 'textDocument/selectionRange' support of language server.
+"nmap <silent> <C-s> <Plug>(coc-range-select)
+"xmap <silent> <C-s> <Plug>(coc-range-select)
+
+"" Add `:Format` command to format current buffer.
+"command! -nargs=0 Format :call CocAction('format')
+
+"" Add `:Fold` command to fold current buffer.
+"command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+"" Add `:OR` command for organize imports of the current buffer.
+"command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+"" Use `[g` and `]g` to navigate diagnostics
+"" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nnoremap <silent> [g <Plug>(coc-diagnostic-prev)
+nnoremap <silent> ]g <Plug>(coc-diagnostic-next)
+"nmap <silent> [g <Plug>(coc-diagnostic-prev)
+"nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" Mappings for CoCList
+" Show all diagnostics.
+nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions.
+nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+" Show commands.
+nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document.
+nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols.
+nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list.
+nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+
+let g:coc_global_extensions = [
+  \ "coc-html",
+  \ "coc-css",
+  \ "coc-tsserver",
+  \ "coc-pyright",
+  \ "coc-json",
+  \ "coc-vimlsp",
+  \ "coc-prettier",
+  \ "coc-git",
+  \ "coc-eslint",
+  \ "coc-texlab",
+  \ "coc-markdownlint",
+  \ "coc-fzf-preview",
+  \ "coc-html-css-support",
+\ ]
+
+"" Prettier
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
+
+"nnoremap <leader>f<CR> <Plug>(coc-format)
+nnoremap <leader>f<CR> :CocCommand prettier.formatFile
+"nnoremap <leader>f<CR> <Plug>(coc-formatFile)
+"nnoremap <leader>f<CR> <Plug>(coc-fileformat)
+
+"" fzf preview
+nnoremap <leader>fz [fzf-p]
+
+"" Support for jsonc
+autocmd FileType json syntax match Comment +\/\/.\+$+
+autocmd BufRead,BufNewFile *.mycjson set filetype=jsonc
+
+"" TODO: move to after/ftplugin/python.vim?
+autocmd FileType python
+  \ let b:coc_root_patterns =[
+  \ '.git', '.env', 'venv', '.venv',
+  \ 'setup.cfg', 'setup.py', 'pyproject.toml', 'pyrightconfig.json'
+  \ ]
+
+""---------------------------- NerdTree ------------------------------
+
+nnoremap <leader>b :NERDTreeToggle<CR>
+nnoremap <leader>e :NERDTreeFocus<CR>
+
+"NERDTree-s - opens selectd file in new vertically split window
+"NERDTree-x - collapses parent directory
+" - :NERDTreeMapCloseDir
+
+"" Exit Vim if NERDTree is the only window remaining in the only tab.
+"autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1
+"  \ && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+
+"" Close the tab if NERDTree is the only window remaining in it.
+"autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree')
+"  \ && b:NERDTree.isTabTree() | quit | endif
+
+"" If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
+"autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+'
+"  \ && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
+"  \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" |
+"  \ execute 'buffer'.buf | endif
+
+"" To solve lag issues, limit allowed extensions
+"let g:NERDTreeSyntaxDisableDefaultExtensions = 1
+"let g:NERDTreeSyntaxDisableDefaultExactMatches = 1
+"let g:NERDTreeSyntaxDisableDefaultPatternMatches = 1
+"let g:NERDTreeSyntaxEnabledExtensions =
+"  \ ['c', 'h', 'c++', 'cpp', 'php', 'rb', 'js', 'css', 'html']
+"let g:NERDTreeSyntaxEnabledExactMatches = ['node_modules', 'favicon.ico']
+
+""----------------------------- Others -------------------------------
+
+""------------------------------ TODO --------------------------------
+
+"" General:
+"" - configure fzf
+"" - fix airline symbols/sections
+
+"" Plugins:
+"" - https://github.com/prabirshrestha/vim-lsp
+"" - treesitter
+"" - https://github.com/edkolev/tmuxline.vim
+"" - https://github.com/lukas-reineke/indent-blankline.nvim
+"" - https://github.com/airblade/vim-gitgutter
+"" - https://github.com/tpope/vim-commentary
+"" - https://github.com/ludovicchabant/vim-gutentags
+"" - https://github.com/iamcco/markdown-preview.nvim
+"" - https://github.com/lewis6991/gitsigns.nvim
+"" - https://github.com/preservim/nerdcommenter
+"" - https://github.com/mbbill/undotree
+"" - https://github.com/lilydjwg/colorizer
+"" - https://github.com/tpope/vim-fugitive
+"" - https://github.com/MattesGroeger/vim-bookmarks
+
+"" Coc:
+"" List of implemented extensions:
+"" https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensions#implemented-coc-extensions
+"" List of coc language servers:
+"" https://github.com/neoclide/coc.nvim/wiki/Language-servers
+"" - coc-eslint
+"" - coc-spell-checker
+"" - coc-snippets
+"" - coc-sumneko-lua
+"" - coc-react-refactor
+"" - coc-emmet
+"" - coc-explorer
+"" - coc-java
+"" - coc-go
+"" - coc-graphql
+"" - coc-sql
+"" - coc-styled-components
+"" - coc-highlight
+"" - coc-htmlhint
+"" - coc-calc
+"" - coc-sql
+
+""---------------------------- Startify ------------------------------
+
+let g:startify_padding_left = 5
+let g:startify_custom_header = startify#pad([
+\ '      $$\                               $$\                  ',
+\ '      $$ |                              $$ |                 ',
+\ ' $$$$$$$ | $$$$$$\ $$\    $$\  $$$$$$$\ $$$$$$$\   $$$$$$\   ',
+\ '$$  __$$ | \____$$\\$$\  $$  |$$  _____|$$  __$$\ $$  __$$\  ',
+\ '$$ /  $$ | $$$$$$$ |\$$\$$  / $$ /      $$ |  $$ |$$ /  $$ | ',
+\ '$$ |  $$ |$$  __$$ | \$$$  /  $$ |      $$ |  $$ |$$ |  $$ | ',
+\ '\$$$$$$$ |\$$$$$$$ |  \$  /   \$$$$$$$\ $$ |  $$ |\$$$$$$  | ',
+\ ' \_______| \_______|   \_/     \_______|\__|  \__| \______/  ',
+\])
+
+"let g:startify_custom_header = startify#pad([
+"\ ' ______   _______  __   __  _______  __   __  _______ ',
+"\ '|      | |   _   ||  | |  ||       ||  | |  ||       |',
+"\ '|  _    ||  |_|  ||  |_|  ||       ||  |_|  ||   _   |',
+"\ '| | |   ||       ||       ||       ||       ||  | |  |',
+"\ '| |_|   ||       ||       ||      _||       ||  |_|  |',
+"\ '|       ||   _   | |     | |     |_ |   _   ||       |',
+"\ '|______| |__| |__|  |___|  |_______||__| |__||_______|',
+"\])
+
+""--------------------------------------------------------------------
+
