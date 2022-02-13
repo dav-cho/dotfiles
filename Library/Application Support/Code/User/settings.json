@@ -1,0 +1,172 @@
+{
+  "workbench.colorTheme": "Material Theme Darker High Contrast",
+  "workbench.iconTheme": "eq-material-theme-icons",
+  "editor.fontFamily": "Jetbrains Mono, RobotoMono Nerd Font, Operator Mono Lig, Operator Mono, Menlo, Monaco, Fira Code, sans serif",
+  "editor.fontLigatures": true,
+  "editor.fontSize": 14,
+  "editor.letterSpacing": 0.1,
+  "editor.lineHeight": 22,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.useTabStops": true,
+  "editor.cursorSurroundingLines": 5,
+  "editor.lineNumbers": "relative",
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active",
+  "window.newWindowDimensions": "offset",
+  "explorer.compactFolders": false,
+  "editor.acceptSuggestionOnCommitCharacter": false,
+  "workbench.list.automaticKeyboardNavigation": false,
+  "terminal.external.osxExec": "iTerm.app",
+
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "prettier.singleQuote": true,
+  "prettier.arrowParens": "avoid",
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[go]": {
+    "editor.defaultFormatter": "golang.go",
+    "editor.formatOnSave": false
+  },
+
+  "relativePath.excludedExtensions": [".js", ".jsx", ".ts", ".tsx"],
+  "turboConsoleLog.quote": "'",
+  "turboConsoleLog.logMessagePrefix": "",
+  "turboConsoleLog.insertEnclosingFunction": false,
+  "turboConsoleLog.includeFileNameAndLineNum": false,
+  "turboConsoleLog.insertEnclosingClass": false,
+
+  "python.pythonPath": "/Users/dav/.pyenv/versions/3.9.6/bin/python",
+  "python.defaultInterpreterPath": "/Users/dav/.pyenv/versions/3.9.6/bin/python",
+  "[python]": {
+    "editor.defaultFormatter": null,
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.useTabStops": true,
+    "gitlens.codeLens.symbolScopes": ["!Module"]
+  },
+  "python.formatting.provider": "black",
+  "workbench.editorAssociations": {
+    "*.ipynb": "jupyter-notebook"
+  },
+
+  "vim.leader": ",",
+  "vim.hlsearch": true,
+  "vim.incsearch": true,
+  "vim.normalModeKeyBindings": [
+    {
+      "before": ["<leader>", "e"],
+      "commands": ["workbench.view.explorer"]
+    },
+    {
+      "before": ["<leader>", "b"],
+      "commands": ["workbench.action.toggleSidebarVisibility"]
+    }
+  ],
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<leader>", "f"],
+      "commands": ["editor.action.formatDocument"]
+    },
+    {
+      "before": ["<leader>", "w", "r"],
+      "commands": ["workbench.action.files.save"]
+    },
+    {
+      "before": ["<leader>", "w", "a"],
+      "commands": ["workbench.action.files.saveFiles"]
+    },
+    {
+      "before": ["<leader>", "n"],
+      "commands": [":nohl"]
+    },
+    {
+      "before": ["0"],
+      "after": ["^"]
+    },
+    {
+      "before": ["^"],
+      "after": ["0"]
+    },
+    {
+      "before": ["<C-j>"],
+      "after": ["5", "j"]
+    },
+    {
+      "before": ["<C-k>"],
+      "after": ["5", "k"]
+    },
+    {
+      "before": ["<leader>", "j"],
+      "after": ["J"]
+    }
+  ],
+  "vim.insertModeKeyBindingsNonRecursive": [
+    {
+      "before": ["J", "K"],
+      "after": ["<ESC>"]
+    }
+  ],
+  "vim.visualModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<leader>", "w", "r"],
+      "commands": ["workbench.action.files.save"]
+    },
+    {
+      "before": ["<leader>", "w", "a"],
+      "commands": ["workbench.action.files.saveFiles"]
+    },
+    {
+      "before": ["<leader>", "f"],
+      "commands": ["editor.action.formatDocument"]
+    },
+    {
+      "before": ["<leader>", "e"],
+      "commands": ["workbench.view.explorer"]
+    },
+    {
+      "before": ["<leader>", "b"],
+      "commands": ["workbench.action.toggleSidebarVisibility"]
+    },
+    {
+      "before": ["0"],
+      "after": ["^"]
+    },
+    {
+      "before": ["^"],
+      "after": ["0"]
+    },
+    {
+      "before": ["<leader>", "l"],
+      "commands": ["turboConsoleLog.displayLogMessage"]
+    }
+  ],
+
+  "terminal.integrated.fontSize": 14,
+  "workbench.colorCustomizations": {
+    "terminal.background": "#000000",
+    "terminal.foreground": "#D0D0D0",
+    "terminalCursor.background": "#D0D0D0",
+    "terminalCursor.foreground": "#D0D0D0",
+    "terminal.ansiBlack": "#000000",
+    "terminal.ansiBlue": "#0E5A94",
+    "terminal.ansiBrightBlack": "#505050",
+    "terminal.ansiBrightBlue": "#0E5A94",
+    "terminal.ansiBrightCyan": "#00AABB",
+    "terminal.ansiBrightGreen": "#37B349",
+    "terminal.ansiBrightMagenta": "#B31E8D",
+    "terminal.ansiBrightRed": "#EB008A",
+    "terminal.ansiBrightWhite": "#FFFFFF",
+    "terminal.ansiBrightYellow": "#F8CA12",
+    "terminal.ansiCyan": "#00AABB",
+    "terminal.ansiGreen": "#37B349",
+    "terminal.ansiMagenta": "#B31E8D",
+    "terminal.ansiRed": "#EB008A",
+    "terminal.ansiWhite": "#D0D0D0",
+    "terminal.ansiYellow": "#F8CA12"
+  }
+}
