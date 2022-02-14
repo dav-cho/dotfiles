@@ -7,7 +7,7 @@
 #alias lla='lsd -la'
 #alias lt='lsd --tree'
 #alias ltd='lsd --tree --depth'
-#alias gdot='/usr/bin/git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME'
+alias gdot='/usr/bin/git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME'
 
 export FZF_DEFAULT_OPTS='--height 60% --layout=reverse --border'
 
