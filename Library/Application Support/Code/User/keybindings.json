@@ -41,19 +41,19 @@
     "when": "editorTextFocus && !editorReadonly"
   },
   {
-    "key": "alt+cmd+h",
+    "key": "ctrl+cmd+h",
     "command": "workbench.action.previousEditor"
   },
   {
-    "key": "alt+cmd+l",
+    "key": "ctrl+cmd+l",
     "command": "workbench.action.nextEditor"
   },
   {
-    "key": "ctrl+cmd+h",
+    "key": "alt+cmd+h",
     "command": "workbench.action.moveEditorLeftInGroup"
   },
   {
-    "key": "ctrl+cmd+l",
+    "key": "alt+cmd+l",
     "command": "workbench.action.moveEditorRightInGroup"
   },
   {
