@@ -1,6 +1,7 @@
 {
   "workbench.colorTheme": "Material Theme Darker High Contrast",
   "workbench.iconTheme": "eq-material-theme-icons",
+  "workbench.list.automaticKeyboardNavigation": false,
   "editor.fontFamily": "Jetbrains Mono, RobotoMono Nerd Font, Operator Mono Lig, Operator Mono, Menlo, Monaco, Fira Code, sans serif",
   "editor.fontLigatures": true,
   "editor.fontSize": 14,
@@ -13,13 +14,12 @@
   "editor.lineNumbers": "relative",
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": "active",
-  "window.newWindowDimensions": "offset",
   "explorer.compactFolders": false,
   "editor.acceptSuggestionOnCommitCharacter": false,
-  "workbench.list.automaticKeyboardNavigation": false,
-  "terminal.external.osxExec": "iTerm.app",
-
   "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "terminal.external.osxExec": "iTerm.app",
+  "window.newWindowDimensions": "offset",
+
   "prettier.singleQuote": true,
   "prettier.arrowParens": "avoid",
   "[html]": {
@@ -33,14 +33,6 @@
     "editor.formatOnSave": false,
     "editor.tabSize": 4
   },
-
-  "relativePath.excludedExtensions": [".js", ".jsx", ".ts", ".tsx"],
-  "turboConsoleLog.quote": "'",
-  "turboConsoleLog.logMessagePrefix": "",
-  "turboConsoleLog.insertEnclosingFunction": false,
-  "turboConsoleLog.includeFileNameAndLineNum": false,
-  "turboConsoleLog.insertEnclosingClass": false,
-
   "python.pythonPath": "/Users/dav/.pyenv/versions/3.9.6/bin/python",
   "python.defaultInterpreterPath": "/Users/dav/.pyenv/versions/3.9.6/bin/python",
   "[python]": {
@@ -54,6 +46,13 @@
   "workbench.editorAssociations": {
     "*.ipynb": "jupyter-notebook"
   },
+
+  "relativePath.excludedExtensions": [".js", ".jsx", ".ts", ".tsx"],
+  "turboConsoleLog.quote": "'",
+  "turboConsoleLog.logMessagePrefix": "",
+  "turboConsoleLog.insertEnclosingFunction": false,
+  "turboConsoleLog.includeFileNameAndLineNum": false,
+  "turboConsoleLog.insertEnclosingClass": false,
 
   "vim.leader": ",",
   "vim.hlsearch": true,
@@ -146,6 +145,12 @@
       "commands": ["turboConsoleLog.displayLogMessage"]
     }
   ],
+
+  "editor.tokenColorCustomizations": {
+    "[Material Theme Darker High Contrast]": {
+      "comments": "#666666"
+    }
+  },
 
   "terminal.integrated.fontSize": 14,
   "workbench.colorCustomizations": {
