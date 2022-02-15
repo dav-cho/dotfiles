@@ -30,7 +30,8 @@
   },
   "[go]": {
     "editor.defaultFormatter": "golang.go",
-    "editor.formatOnSave": false
+    "editor.formatOnSave": false,
+    "editor.tabSize": 4
   },
 
   "relativePath.excludedExtensions": [".js", ".jsx", ".ts", ".tsx"],
