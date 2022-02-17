@@ -103,7 +103,31 @@
     {
       "before": ["<leader>", "j"],
       "after": ["J"]
-    }
+    },
+    {
+      "before": ["<leader>", "t", "t"],
+      "commands": ["terminal.focus"]
+    },
+    {
+      "before": ["<leader>", "t", "n"],
+      "commands": ["workbench.action.terminal.new"]
+    },
+    {
+      "before": ["<leader>", "t", "e"],
+      "commands": ["workbench.action.terminal.openNativeConsole"]
+    },
+    {
+      "before": ["<leader>", "t", "j"],
+      "commands": ["workbench.action.terminal.focusNext"]
+    },
+    {
+      "before": ["<leader>", "t", "k"],
+      "commands": ["workbench.action.terminal.focusPrevious"]
+    },
+    {
+      "before": ["<leader>", "t", "d"],
+      "commands": ["workbench.action.terminal.kill"]
+    },
   ],
   "vim.insertModeKeyBindingsNonRecursive": [
     {
