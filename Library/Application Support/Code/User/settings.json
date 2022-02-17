@@ -105,6 +105,10 @@
       "after": ["J"]
     },
     {
+      "before": ["<leader>", "f", "f"],
+      "commands": ["workbench.action.quickOpen"]
+    },
+    {
       "before": ["<leader>", "t", "t"],
       "commands": ["terminal.focus"]
     },
@@ -127,7 +131,7 @@
     {
       "before": ["<leader>", "t", "d"],
       "commands": ["workbench.action.terminal.kill"]
-    },
+    }
   ],
   "vim.insertModeKeyBindingsNonRecursive": [
     {
