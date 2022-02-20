@@ -211,7 +211,11 @@ map('n', '<leader>wr', '<cmd>w<CR>')
 map('n', '<leader>n', '<cmd>noh<CR>')
 
 ---- Insert Mode
-map('i', 'JK', '<Esc>')
+--map('i', 'JK', '<Esc>')
+--map('i', '<M-ç>', '<Esc>')
+--map('i', '<M-o>', '<Esc>o')
+--map('i', '<M-[>', '<Esc>', { noremap = true, nowait = true })
+
 
 ---- Visual Mode
 map('v', '0', '^')

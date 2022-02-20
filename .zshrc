@@ -9,6 +9,9 @@
 #alias ltd='lsd --tree --depth'
 alias gdot='/usr/bin/git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME'
 
+bindkey -v
+#VI_MODE_SET_CURSOR=true
+
 export FZF_DEFAULT_OPTS='--height 60% --layout=reverse --border'
 
 #--------------------------dav------------------------------
@@ -85,7 +88,7 @@ export ZSH="/Users/dav/.oh-my-zsh"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git z fzf)
+plugins=(git z fzf vi-mode)
 
 source $ZSH/oh-my-zsh.sh
 
