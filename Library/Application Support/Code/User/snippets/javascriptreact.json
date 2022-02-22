@@ -1,0 +1,56 @@
+{
+  "Export Arrow Function Component": {
+    "prefix": "eafc",
+    "body": [
+      "export const ${1:functionName} = ($2) => {",
+      "\treturn (",
+      "\t\t<>",
+      "\t\t\t($1 Component)",
+      "\t\t</>",
+      "\t);",
+      "};"
+    ],
+    "description": "Export Arrow Function Component"
+  },
+  "Export Default Arrow Function Component": {
+    "prefix": "edafc",
+    "body": [
+      "const ${1:functionName} = ($2) => {",
+      "\treturn (",
+      "\t\t<>",
+      "\t\t\t($1 Component)",
+      "\t\t</>",
+      "\t);",
+      "};\n",
+      "export default $1;"
+    ],
+    "description": "Export Default Arrow Function Component"
+  },
+  "Export Named Function Component": {
+    "prefix": "enfc",
+    "body": [
+      "export function ${1:functionName}($2) {",
+      "\treturn (",
+      "\t\t<>",
+      "\t\t\t($1 Component)",
+      "\t\t</>",
+      "\t);",
+      "};"
+    ],
+    "description": "Exported Named Function Component"
+  },
+  "Export Default Named Function Component": {
+    "prefix": "ednfc",
+    "body": [
+      "function ${1:functionName}($2) {",
+      "\treturn (",
+      "\t\t<>",
+      "\t\t\t($1 Component)",
+      "\t\t</>",
+      "\t);",
+      "};\n",
+      "export default $1;"
+    ],
+    "description": "Exported Default Named Function Component"
+  }
+}
