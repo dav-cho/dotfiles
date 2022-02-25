@@ -1,19 +1,19 @@
 {
   "defaults" : {
-    "almostMaximizeWidth" : {
-      "float" : 0.42399999499320984
-    },
     "centerHalfCycles" : {
+      "int" : 0
+    },
+    "curtainChangeSize" : {
+      "int" : 0
+    },
+    "ignoredSnapAreas" : {
       "int" : 0
     },
     "allowAnyShortcut" : {
       "bool" : false
     },
-    "ignoredSnapAreas" : {
-      "int" : 0
-    },
-    "curtainChangeSize" : {
-      "int" : 0
+    "almostMaximizeWidth" : {
+      "float" : 0.42399999499320984
     },
     "screenEdgeGapBottom" : {
       "float" : 0
@@ -27,23 +27,23 @@
     "SUEnableAutomaticChecks" : {
       "bool" : false
     },
+    "todoSidebarWidth" : {
+      "float" : 400
+    },
     "gapSize" : {
       "float" : 0
     },
-    "fullIgnoreBundleIds" : {
+    "disabledApps" : {
+
+    },
+    "todoApplication" : {
 
     },
     "specifiedHeight" : {
       "float" : 889
     },
-    "todoApplication" : {
+    "fullIgnoreBundleIds" : {
 
-    },
-    "disabledApps" : {
-
-    },
-    "todoSidebarWidth" : {
-      "float" : 400
     },
     "centeredDirectionalMove" : {
       "int" : 2
@@ -72,17 +72,17 @@
     "traverseSingleScreen" : {
       "int" : 0
     },
-    "snapEdgeMarginBottom" : {
-      "float" : 5
-    },
-    "footprintFade" : {
-      "int" : 0
-    },
     "minimumWindowHeight" : {
       "float" : 0
     },
     "specifiedWidth" : {
       "float" : 1128
+    },
+    "footprintFade" : {
+      "int" : 0
+    },
+    "snapEdgeMarginBottom" : {
+      "float" : 5
     },
     "screenEdgeGapRight" : {
       "float" : 0
@@ -93,13 +93,13 @@
     "screenEdgeGapLeft" : {
       "float" : 0
     },
-    "showAllActionsInMenu" : {
-      "int" : 0
-    },
     "alternateDefaultShortcuts" : {
       "bool" : true
     },
     "subsequentExecutionMode" : {
+      "int" : 0
+    },
+    "showAllActionsInMenu" : {
       "int" : 0
     },
     "footprintBorderWidth" : {
@@ -123,6 +123,9 @@
     "snapEdgeMarginRight" : {
       "float" : 5
     },
+    "footprintColor" : {
+
+    },
     "footprintAlpha" : {
       "float" : 0.30000001192092896
     },
@@ -131,9 +134,6 @@
     },
     "attemptMatchOnNextPrevDisplay" : {
       "int" : 0
-    },
-    "footprintColor" : {
-
     },
     "almostMaximizeHeight" : {
       "float" : 0.76099997758865356
@@ -158,8 +158,8 @@
       "keyCode" : 126,
       "modifierFlags" : 917504
     },
-    "smaller" : {
-      "keyCode" : 27,
+    "lastThird" : {
+      "keyCode" : 5,
       "modifierFlags" : 786432
     },
     "moveUp" : {
@@ -170,16 +170,16 @@
       "keyCode" : 38,
       "modifierFlags" : 1835008
     },
-    "maximize" : {
-      "keyCode" : 36,
-      "modifierFlags" : 786432
-    },
     "restore" : {
       "keyCode" : 51,
       "modifierFlags" : 786432
     },
     "moveLeft" : {
       "keyCode" : 4,
+      "modifierFlags" : 786432
+    },
+    "maximize" : {
+      "keyCode" : 36,
       "modifierFlags" : 786432
     },
     "lastTwoThirds" : {
@@ -202,8 +202,8 @@
       "keyCode" : 124,
       "modifierFlags" : 786432
     },
-    "specified" : {
-      "keyCode" : 1,
+    "centerThird" : {
+      "keyCode" : 3,
       "modifierFlags" : 786432
     },
     "moveDown" : {
@@ -214,29 +214,29 @@
       "keyCode" : 14,
       "modifierFlags" : 786432
     },
-    "nextDisplay" : {
-      "keyCode" : 124,
-      "modifierFlags" : 1835008
-    },
-    "centerThird" : {
-      "keyCode" : 3,
-      "modifierFlags" : 786432
-    },
-    "centerHalf" : {
-      "keyCode" : 15,
-      "modifierFlags" : 786432
-    },
     "topRightSixth" : {
       "keyCode" : 34,
       "modifierFlags" : 1835008
     },
-    "almostMaximize" : {
-      "keyCode" : 36,
+    "nextDisplay" : {
+      "keyCode" : 124,
       "modifierFlags" : 1835008
+    },
+    "specified" : {
+      "keyCode" : 1,
+      "modifierFlags" : 786432
     },
     "topHalf" : {
       "keyCode" : 126,
       "modifierFlags" : 786432
+    },
+    "center" : {
+      "keyCode" : 8,
+      "modifierFlags" : 786432
+    },
+    "almostMaximize" : {
+      "keyCode" : 36,
+      "modifierFlags" : 1835008
     },
     "topLeftSixth" : {
       "keyCode" : 32,
@@ -246,12 +246,12 @@
       "keyCode" : 2,
       "modifierFlags" : 786432
     },
-    "center" : {
-      "keyCode" : 8,
+    "centerHalf" : {
+      "keyCode" : 6,
       "modifierFlags" : 786432
     },
-    "lastThird" : {
-      "keyCode" : 5,
+    "smaller" : {
+      "keyCode" : 27,
       "modifierFlags" : 786432
     },
     "larger" : {
@@ -260,5 +260,5 @@
     }
   },
   "bundleId" : "com.knollsoft.Rectangle",
-  "version" : "53"
+  "version" : "54"
 }
