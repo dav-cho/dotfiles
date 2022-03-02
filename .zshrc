@@ -14,6 +14,7 @@ bindkey -v
 
 export FZF_DEFAULT_OPTS='--layout=reverse --height 60% --border'
 #export FZF_DEFAULT_OPTS='--layout=reverse --border'
+#export FZF_DEFAULT_OPTS='--layout=reverse --height 60%'
 
 #--------------------------dav------------------------------
 
@@ -142,3 +143,6 @@ eval "$(pyenv init -)"
 # if command -v pyenv 1>/dev/null 2>&1; then
 #   eval "$(pyenv init -)"
 # fi
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
