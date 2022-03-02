@@ -12,7 +12,8 @@ alias gdot='/usr/bin/git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME'
 bindkey -v
 #VI_MODE_SET_CURSOR=true
 
-export FZF_DEFAULT_OPTS='--height 60% --layout=reverse --border'
+export FZF_DEFAULT_OPTS='--layout=reverse --height 60% --border'
+#export FZF_DEFAULT_OPTS='--layout=reverse --border'
 
 #--------------------------dav------------------------------
 
@@ -120,6 +121,7 @@ source $ZSH/oh-my-zsh.sh
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
+
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
