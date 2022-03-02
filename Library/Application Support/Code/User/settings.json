@@ -17,6 +17,7 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "terminal.external.osxExec": "iTerm.app",
   "window.newWindowDimensions": "offset",
+  "workbench.startupEditor": "none",
 
   "prettier.singleQuote": true,
   "prettier.arrowParens": "avoid",
@@ -26,6 +27,7 @@
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "typescript.suggest.includeCompletionsWithSnippetText": false,
   "[go]": {
     "editor.defaultFormatter": "golang.go",
     "editor.formatOnSave": false,
@@ -200,6 +202,5 @@
     "terminal.ansiRed": "#EB008A",
     "terminal.ansiWhite": "#D0D0D0",
     "terminal.ansiYellow": "#F8CA12"
-  },
-  "typescript.suggest.includeCompletionsWithSnippetText": false
+  }
 }
