@@ -135,9 +135,25 @@
   ],
   "vim.insertModeKeyBindingsNonRecursive": [
     {
-      "before": ["J", "K"],
-      "after": ["<ESC>"]
-    }
+      "before": ["ø"],
+      "after": ["<ESC>", "o"]
+    },
+    {
+      "before": ["Ø"],
+      "after": ["<ESC>", "O"]
+    },
+    {
+      "before": ["π"],
+      "after": ["<ESC>", "p"]
+    },
+    {
+      "before": ["∏"],
+      "after": ["<ESC>", "P"]
+    },
+    {
+      "before": ["∂"],
+      "after": ["<ESC>", "d"]
+    },
   ],
   "vim.visualModeKeyBindingsNonRecursive": [
     {
