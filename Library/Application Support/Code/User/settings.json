@@ -143,6 +143,10 @@
       "after": ["<ESC>", "O"]
     },
     {
+      "before": ["ˆ"],
+      "after": ["<ESC>", "i"]
+    },
+    {
       "before": ["π"],
       "after": ["<ESC>", "p"]
     },
@@ -153,7 +157,11 @@
     {
       "before": ["∂"],
       "after": ["<ESC>", "d"]
-    },
+    }
+    // {
+    //   "before": ["¬"],
+    //   "after": ["<ESC>", "l", "a"]
+    // }
   ],
   "vim.visualModeKeyBindingsNonRecursive": [
     {
@@ -218,5 +226,8 @@
     "terminal.ansiRed": "#EB008A",
     "terminal.ansiWhite": "#D0D0D0",
     "terminal.ansiYellow": "#F8CA12"
-  }
+  },
+  "go.toolsManagement.autoUpdate": true,
+  "liveServer.settings.donotShowInfoMsg": true,
+  "editor.largeFileOptimizations": false
 }
