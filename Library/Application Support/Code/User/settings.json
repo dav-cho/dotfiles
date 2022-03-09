@@ -202,7 +202,15 @@
 
   "editor.tokenColorCustomizations": {
     "[Material Theme Darker High Contrast]": {
-      "comments": "#666666"
+      "comments": "#666666",
+      "textMateRules": [
+        {
+          "scope": ["string.quoted.docstring.multi.python"],
+          "settings": {
+            "foreground": "#666666"
+          }
+        }
+      ]
     }
   },
 
