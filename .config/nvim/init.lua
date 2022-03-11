@@ -202,8 +202,8 @@ local function replace_termcodes(str)
 end
 
 ---- Normal Mode
-map('n', '0', '^')
-map('n', '^', '0')
+--map('n', '0', '^')
+--map('n', '^', '0')
 map('n', '<C-j>', '5j')
 map('n', '<C-k>', '5k')
 map('n', '<leader>w', '<C-w>')
