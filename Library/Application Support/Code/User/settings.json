@@ -59,6 +59,7 @@
   "vim.leader": ",",
   "vim.hlsearch": true,
   "vim.incsearch": true,
+  "vim.easymotion": true,
   "vim.normalModeKeyBindings": [
     {
       "before": ["<leader>", "e"],

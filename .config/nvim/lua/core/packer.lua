@@ -27,6 +27,7 @@ return require('packer').startup(function()
   use 'nvim-lua/popup.nvim'
   use 'nvim-lua/plenary.nvim'
   use 'tpope/vim-surround'
+  use 'easymotion/vim-easymotion'
   use 'ojroques/nvim-hardline'
   use 'hoob3rt/lualine.nvim'
   use 'hrsh7th/nvim-compe'
