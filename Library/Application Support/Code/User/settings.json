@@ -1,4 +1,5 @@
 {
+  "workbench.colorTheme": "Material Theme Darker High Contrast",
   "workbench.iconTheme": "eq-material-theme-icons",
   "workbench.list.automaticKeyboardNavigation": false,
   "editor.fontFamily": "Jetbrains Mono, SF Mono, RobotoMono Nerd Font, Operator Mono Lig, Operator Mono, Menlo, Monaco, Fira Code, sans serif",
@@ -63,12 +64,14 @@
   "vim.useCtrlKeys": false,
   "vim.handleKeys": {
     "<C-[>": true,
+    "<C-v>": true,
     "<C-d>": true,
     "<C-u>": true,
     "<C-r>": true,
-    "<C-v>": true,
+    "<C-o>": true,
+    "<C-i>": true,
     "<C-a>": true,
-    "<C-x>": true,
+    "<C-x>": true
   },
   "vim.normalModeKeyBindings": [
     {
@@ -235,6 +238,5 @@
     "terminal.ansiRed": "#EB008A",
     "terminal.ansiWhite": "#D0D0D0",
     "terminal.ansiYellow": "#F8CA12"
-  },
-  "workbench.colorTheme": "Material Theme Darker High Contrast"
+  }
 }
