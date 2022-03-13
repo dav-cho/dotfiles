@@ -61,17 +61,8 @@
   "vim.hlsearch": true,
   "vim.incsearch": true,
   "vim.easymotion": true,
-  "vim.useCtrlKeys": false,
   "vim.handleKeys": {
-    "<C-[>": true,
-    "<C-v>": true,
-    "<C-d>": true,
-    "<C-u>": true,
-    "<C-r>": true,
-    "<C-o>": true,
-    "<C-i>": true,
-    "<C-a>": true,
-    "<C-x>": true
+    "<C-w>": false
   },
   "vim.normalModeKeyBindings": [
     {
