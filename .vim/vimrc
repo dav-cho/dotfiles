@@ -1,5 +1,8 @@
 " Main -----------------------------------------------------
 
+" Set run time paths and RC file run time path
+let $RTP=split(&runtimepath, ',')[0]
+let $RC="$HOME/.vim/vimrc"
 
 set exrc
 set noerrorbells
@@ -37,9 +40,6 @@ set incsearch
 
 setlocal path=.,**
 
-" Set run time paths and RC file run time path
-let $RTP=split(&runtimepath, ',')[0]
-let $RC="$HOME/.vim/vimrc"
 
 " Vim-Plug -------------------------------------------------
 
@@ -79,6 +79,7 @@ Plug 'vim-airline/vim-airline-themes'
 " Main -----------------------
 Plug 'junegunn/vim-plug'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 " Others ---------------------
 "Plug 'tpope/vim-surround'
@@ -105,13 +106,14 @@ colorscheme spacegray
 
 "" Airline -------------------
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_left_sep=''
-let g:airline_right_sep=''
 let g:airline#extensions#tabline#left_sep = ''
 let g:airline#extensions#tabline#left_alt_sep = ''
-let g:airline_right_alt_sep = ''
 let g:airline_powerline_fonts = 1
+let g:airline_left_sep=''
+let g:airline_right_sep=''
+let g:airline_right_alt_sep = ''
 "let g:airline_inactive_collapse=1
+"let showtabline=2
 
 let g:airline_theme='deus'
 "let g:airline_theme='bubblegum'
@@ -130,7 +132,7 @@ let g:airline_theme='deus'
 
 let mapleader = ","
 
-" Cursor style for various modes.
+" Cursor Styles
 let &t_SI.="\e[5 q" " SI = INSERT mode
 let &t_SR.="\e[4 q" " SR = REPLACE mode
 let &t_EI.="\e[2 q" " EI = NORMAL mode (ELSE)
@@ -159,4 +161,23 @@ nnoremap <leader>py :w !python<CR>
 nnoremap <leader>pi :term python % <CR>
 
 "nnoremap <leader>f :Black<CR>
+
+" fzf ------------------------------------------------------
+
+"command! -bang -nargs=? -complete=dir Files
+"    \ call fzf#vim#files(<q-args>, {'options': ['--height=40%', '--layout=reverse', '--info=inline']}, <bang>0)
+
+"command! -bang -nargs=? -complete=dir Files
+"    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)
+
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview(), <bang>0)
+
+command! -bang -nargs=? -complete=dir Files
+  \ call fzf#vim#files(<q-args>, <bang>0 ? fzf#vim#with_preview('up:60%') : {}, <bang>0)
+
+nnoremap <silent> <leader>ff :Files<CR>
+nnoremap <silent> <leader>FF :Files!<CR>
 

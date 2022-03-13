@@ -154,6 +154,12 @@ vim.g.jellybeans_overrides = {
 --vim.cmd('colorscheme synthwave84')
 --vim.cmd('colorscheme shades_of_purple')
 
+--TODO: set background transparent
+--highlight normal guibg
+--highlight linenr
+--highlight nontext
+--vim.o.highlight = 
+
 vim.g.python3_host_prog = '~/.local/share/virtualenvs/neovim-venv-tlU6wFvh/bin/python'
 --vim.env.VIRTUAL_ENV = '~/.local/share/virtualenvs/neovim-venv-tlU6wFvh/'
 
@@ -215,7 +221,6 @@ map('n', '<leader>n', '<cmd>noh<CR>')
 --map('i', '<M-ç>', '<Esc>')
 --map('i', '<M-o>', '<Esc>o')
 --map('i', '<M-[>', '<Esc>', { noremap = true, nowait = true })
-
 
 ---- Visual Mode
 map('v', '0', '^')
