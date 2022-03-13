@@ -61,6 +61,15 @@
   "vim.incsearch": true,
   "vim.easymotion": true,
   "vim.useCtrlKeys": false,
+  "vim.handleKeys": {
+    "<C-[>": true,
+    "<C-d>": true,
+    "<C-u>": true,
+    "<C-r>": true,
+    "<C-v>": true,
+    "<C-a>": true,
+    "<C-x>": true,
+  },
   "vim.normalModeKeyBindings": [
     {
       "before": ["<leader>", "e"],
