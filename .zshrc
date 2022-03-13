@@ -9,7 +9,7 @@
 #alias ltd='lsd --tree --depth'
 alias gdot='/usr/bin/git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME'
 
-bindkey -v
+#bindkey -v
 #VI_MODE_SET_CURSOR=true
 
 export FZF_DEFAULT_OPTS='--layout=reverse --height 60% --border'
@@ -131,6 +131,7 @@ fi
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
 source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
