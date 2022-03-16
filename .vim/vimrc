@@ -21,10 +21,11 @@ set mouse=a
 set nowrap
 set cmdheight=1
 "set number
+"set termguicolors
 "set columns=80
 "set colorcolumn=80
 "set signcolumn=yes
-set t_Co=256
+"set t_Co=256
 
 set hlsearch
 set incsearch
@@ -64,6 +65,14 @@ autocmd VimEnter *
 call plug#begin('~/.vim/plugged')
 
 
+" Main -----------------------
+Plug 'junegunn/vim-plug'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'tpope/vim-surround'
+Plug 'easymotion/vim-easymotion'
+
+
 " Themes ---------------------
 "Plug 'ryanoasis/vim-devicons'
 Plug 'ackyshake/Spacegray.vim'
@@ -75,11 +84,6 @@ Plug 'ackyshake/Spacegray.vim'
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-
-" Main -----------------------
-Plug 'junegunn/vim-plug'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
 
 " Others ---------------------
 "Plug 'tpope/vim-surround'
@@ -128,6 +132,19 @@ let g:airline_theme='deus'
 "set background=dark
 "highlight Normal guibg=none
 
+
+"highlight CursorLine ctermbg=255 guibg=#303030
+"highlight CursorLineNr ctermfg=208 guifg=#FFB13B
+"highlight CursorLine guibg=0
+
+highlight LineNr guifg=#585858
+highlight CursorLine guibg=#1c1c1c
+highlight CursorLineNr guifg=#FFB13B
+
+"LineNr         xxx ctermfg=8 guifg=#3E4853 guibg=#111314
+"LineNrAbove    xxx links to LineNr
+"LineNrBelow    xxx links to LineNr
+
 " Mappings -------------------------------------------------
 
 let mapleader = ","
@@ -138,9 +155,12 @@ let &t_SR.="\e[4 q" " SR = REPLACE mode
 let &t_EI.="\e[2 q" " EI = NORMAL mode (ELSE)
 
 "" Normal Mode
-nnoremap <leader>wr :w<CR>
-nnoremap <leader>n :noh<CR>
-nnoremap <leader>w <C-w>
+nnoremap <silent> <leader>wr :w<CR>
+nnoremap <silent> <leader>n :noh<CR>
+nnoremap <silent> <leader>w <C-w>
+nnoremap <silent> <leader>e :Lex 20<CR>
+nnoremap <silent> <C-j> 5j
+nnoremap <silent> <C-k> 5k
 
 "" Insert Mode
 
@@ -157,8 +177,8 @@ nnoremap <leader>w <C-w>
 "nnoremap <leader><C-Down> :resize +2<CR>
 
 "" TODO: move to python.vim in after/ftplugin?
-nnoremap <leader>py :w !python<CR>
-nnoremap <leader>pi :term python % <CR>
+nnoremap <silent> <leader>py :w !python<CR>
+nnoremap <silent> <leader>pi :term python % <CR>
 
 "nnoremap <leader>f :Black<CR>
 
@@ -170,13 +190,13 @@ nnoremap <leader>pi :term python % <CR>
 "command! -bang -nargs=? -complete=dir Files
 "    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)
 
-command! -bang -nargs=* Rg
-  \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
-  \   fzf#vim#with_preview(), <bang>0)
-
-command! -bang -nargs=? -complete=dir Files
-  \ call fzf#vim#files(<q-args>, <bang>0 ? fzf#vim#with_preview('up:60%') : {}, <bang>0)
+"command! -bang -nargs=* Rg
+"  \ call fzf#vim#grep(
+"  \   'rg --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
+"  \   fzf#vim#with_preview(), <bang>0)
+"
+"command! -bang -nargs=? -complete=dir Files
+"  \ call fzf#vim#files(<q-args>, <bang>0 ? fzf#vim#with_preview('up:60%') : {}, <bang>0)
 
 nnoremap <silent> <leader>ff :Files<CR>
 nnoremap <silent> <leader>FF :Files!<CR>
