@@ -12,7 +12,7 @@ local map_tele = function(before, after, opts)
 end
 
 map_tele('<leader>ff', 'find_files')
---map_tele('<leader>FF', 'find_browser') -- TODO: Deprecated?
+--map_tele('<leader>FF', 'find_browser') -- TODO: Add... Deprecated?
 map_tele('<leader>fb', 'buffers')
 map_tele('<leader>fc', 'command_history')
 map_tele('<leader>fs', 'current_buffer_fuzzy_find')

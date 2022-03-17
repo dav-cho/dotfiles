@@ -1,21 +1,28 @@
--- evil_lualine --
-local ok, evil_lualine = pcall(require, 'core.lualine-themes.evil_lualine')
-if not ok then
-  vim.notify('~ evil_lualine Call Error!')
-  return
+local prequire = function(theme)
+  local prefix = 'core.lualine-themes.'
+  local ok, theme = pcall(require, prefix .. theme)
+  if not ok then
+    vim.notify('~ Lualine Theme "' .. theme .. '" Call Error!')
+    return
+  end
 end
 
+prequire('evil_lualine')
+--prequire('bubbles')
+--prequire('slanted-gaps')
 
+
+-- Use Default Config --
+--lualine.setup()
+
+
+-- TODO: My Config --
 --local ok, lualine = pcall(require, 'lualine')
 --if not ok then
 --  vim.notify('~ lualine Call Error!')
 --  return
 --end
 
--- use default config --
---lualine.setup()
-
--- TODO: My Config --
 --lualine.setup {
 --  options = {
 --    icons_enabled = true,
@@ -44,6 +51,7 @@ end
 --  tabline = {},
 --  extensions = {}
 --}
+
 
 -- Default Config --
 --lualine.setup {
