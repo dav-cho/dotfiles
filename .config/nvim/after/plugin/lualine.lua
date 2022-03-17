@@ -1,5 +1,5 @@
 local prequire = function(theme)
-  local prefix = 'core.lualine-themes.'
+  local prefix = 'themes.lualine.'
   local ok, theme = pcall(require, prefix .. theme)
   if not ok then
     vim.notify('~ Lualine Theme "' .. theme .. '" Call Error!')
