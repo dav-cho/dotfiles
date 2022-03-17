@@ -1,5 +1,4 @@
 local prequire = require 'utils.prequire'
-
 local telescope = prequire 'telescope'
 local actions = prequire 'telescope.actions'
 local devicons = prequire 'nvim-web-devicons'

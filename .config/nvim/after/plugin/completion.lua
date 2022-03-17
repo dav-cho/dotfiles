@@ -1,13 +1,13 @@
+local prequire = require 'utils.prequire'
+local luasnip = prequire('luasnip')
+local cmp = prequire("cmp")
+local icons = prequire 'core.icons'
+local kind_icons = icons.kind
+
 local has_words_before = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
-
-local prequire = require 'utils.prequire'
-local luasnip = prequire('luasnip')
-local cmp = prequire("cmp")
-local icons = require 'core.icons'
-local kind_icons = icons.kind
 
 cmp.setup({
     snippet = {

@@ -14,8 +14,8 @@ augroup end
 ]])
 
 -- Use protected call to prevent error on first use
-local status_ok, packer = pcall(require, 'packer')
-if not status_ok then
+local ok, packer = pcall(require, 'packer')
+if not ok then
   vim.notify('~ Packer CALL ERROR')
   return
 end
@@ -32,12 +32,15 @@ packer.init {
 return require('packer').startup(function(use)
   -- Main --
   use 'wbthomason/packer.nvim' -- have packer manage itself.
+  use 'nvim-lua/popup.nvim'
   use 'nvim-lua/plenary.nvim'
-  --use 'nvim-lua/popup.nvim' -- TODO: need?
+  use 'kyazdani42/nvim-web-devicons'
+  use 'nvim-lualine/lualine.nvim'
 
   -- Theming --
   use "lunarvim/darkplus.nvim"
   use 'folke/tokyonight.nvim'
+  use 'marko-cerovac/material.nvim'
   --use 'nanotech/jellybeans.vim'
   --use "lukas-reineke/indent-blankline.nvim"
 
@@ -67,7 +70,6 @@ return require('packer').startup(function(use)
 
   -- Telescope --
   use 'nvim-telescope/telescope.nvim'
-  use 'kyazdani42/nvim-web-devicons'
 
   -- Vim --
   use 'tpope/vim-surround' -- TODO: make it work with '.' (repeat command)

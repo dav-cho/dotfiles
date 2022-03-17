@@ -3,7 +3,6 @@ local configs = require 'nvim-treesitter.configs'
 
 configs.setup {
   -- One of 'all', 'maintained' (parsers with maintainers), or a list of languages
-  --ensure_installed = 'maintained',
   ensure_installed = {
     'javascript',
     'typescript',
