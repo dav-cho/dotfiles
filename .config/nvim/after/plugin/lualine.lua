@@ -1,4 +1,4 @@
-local prequire = function(theme)
+local function prequire(theme)
   local prefix = 'themes.lualine.'
   local ok, theme = pcall(require, prefix .. theme)
   if not ok then
@@ -7,13 +7,10 @@ local prequire = function(theme)
   end
 end
 
+-- Themes --
 prequire('evil_lualine')
 --prequire('bubbles')
 --prequire('slanted-gaps')
-
-
--- Use Default Config --
---lualine.setup()
 
 
 -- TODO: My Config --

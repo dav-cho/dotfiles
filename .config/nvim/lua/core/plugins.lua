@@ -16,7 +16,7 @@ augroup end
 -- Use protected call to prevent error on first use
 local ok, packer = pcall(require, 'packer')
 if not ok then
-  vim.notify('~ Packer CALL ERROR')
+  vim.notify('~ Packer Call Error!')
   return
 end
 
@@ -76,6 +76,10 @@ return require('packer').startup(function(use)
   -- Vim --
   use 'tpope/vim-surround' -- TODO: make it work with '.' (repeat command)
   use 'easymotion/vim-easymotion'
+
+  -- Other --
+  use 'windwp/nvim-autopairs'
+  use 'numToStr/Comment.nvim'
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

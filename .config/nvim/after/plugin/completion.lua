@@ -1,4 +1,11 @@
-local prequire = require 'utils.prequire'
+local function prequire(module)
+  local ok, lib = pcall(require, module)
+  if ok then return lib end
+
+  vim.notify('~ ' .. module .. ' Call Error!')
+end
+
+-- local prequire = require 'utils.prequire'
 local luasnip = prequire('luasnip')
 local cmp = prequire("cmp")
 local icons = prequire 'core.icons'

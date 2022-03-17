@@ -1,3 +1,6 @@
+-- TODO: Move to 'lua/themes/neovim'? Each in their own file like lualine themes?
+
+
 ----- Dark+ -----
 
 vim.g.transparent_background = true

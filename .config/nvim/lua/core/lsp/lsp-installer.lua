@@ -1,6 +1,6 @@
 local ok, lsp_installer = pcall(require, 'nvim-lsp-installer')
 if not ok then
-  vim.notify('~ LSP Installer CALL ERROR')
+  vim.notify('~ LSP Installer Call Error!')
   return
 end
 

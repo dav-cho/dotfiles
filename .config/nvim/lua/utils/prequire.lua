@@ -1,7 +1,7 @@
-return function(mod)
-  local ok, lib = pcall(require, mod)
+return function(module)
+  local ok, lib = pcall(require, module)
   if ok then return lib end
-  vim.notify('~ ' .. mod .. ' CALL ERROR')
+  vim.notify(string.format('~ %s Call Error!', module))
   return nil
 end
 

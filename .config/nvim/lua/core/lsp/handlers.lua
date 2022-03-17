@@ -1,11 +1,14 @@
+local function prequire(module)
+  local ok, lib = pcall(require, module)
+  if ok then return lib end
+
+  vim.notify('~ ' .. module .. ' Call Error!')
+end
+
 -- Word Highlighting
 local function lsp_highlight_document(client)
   if client.resolved_capabilities.document_highlight then
-    local status_ok, illuminate = pcall(require, "illuminate")
-    if not status_ok then
-      vim.notify('~ Illuminate CALL ERROR')
-      return
-    end
+    local illuminate = prequire('illuminate')
     illuminate.on_attach(client)
   end
 end
@@ -110,12 +113,7 @@ end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 --capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-local status_ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
-if not status_ok then
-  vim.notify('~ nvim-cmp CALL ERROR')
-  return
-end
-
+local cmp_nvim_lsp = prequire('cmp_nvim_lsp')
 M.capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
 
 -- Enable some language servers with the additional completion capabilities offered by nvim-cmp

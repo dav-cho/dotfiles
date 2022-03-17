@@ -1,8 +1,15 @@
-local prequire = require 'utils.prequire'
+local function prequire(module)
+  local ok, lib = pcall(require, module)
+  if ok then return lib end
+
+  vim.notify(string.format('~ %s Call Error!', module))
+end
+
+-- local prequire = require 'utils.prequire'
 local telescope = prequire 'telescope'
 local actions = prequire 'telescope.actions'
 
--- TODO: start file_browser in normal mode
+-- TODO: add rg
 
 telescope.setup {
   defaults = {
