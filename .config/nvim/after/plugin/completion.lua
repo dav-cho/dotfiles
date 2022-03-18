@@ -114,6 +114,24 @@ cmp.setup({
 --vim.api.nvim_set_keymap("i", "<C-E>", "<Plug>luasnip-next-choice", {})
 --vim.api.nvim_set_keymap("s", "<C-E>", "<Plug>luasnip-next-choice", {})
 
+-- TODO: Use lspkind for icons?
+--local lspkind = require('lspkind')
+--cmp.setup {
+--  formatting = {
+--    format = lspkind.cmp_format({
+--      mode = 'symbol', -- show only symbol annotations
+--      maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+--
+--      -- The function below will be called before any actual modifications from lspkind
+--      -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+--      before = function (entry, vim_item)
+--        ...
+--        return vim_item
+--      end
+--    })
+--  }
+--}
+--
 
 -- Icons moved to core.icons
 --local kind_icons = {
@@ -143,76 +161,4 @@ cmp.setup({
 --  Operator = "",
 --  TypeParameter = "",
 --}
-
--- TODO: Use lspkind for icons?
---local lspkind = require('lspkind')
---cmp.setup {
---  formatting = {
---    format = lspkind.cmp_format({
---      mode = 'symbol', -- show only symbol annotations
---      maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
---
---      -- The function below will be called before any actual modifications from lspkind
---      -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
---      before = function (entry, vim_item)
---        ...
---        return vim_item
---      end
---    })
---  }
---}
---
-
-
--- From nvim-compe --
-
---local t = function(str)
---  return vim.api.nvim_replace_termcodes(str, true, true, true)
---end
---
---local check_back_space = function()
---  local col = vim.fn.col('.') - 1
---  if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
---    return true
---  else
---    return false
---  end
---end
-
---_G.tab_complete = function()
---  if cmp and cmp.visible() then
---    cmp.select_next_item()
---  elseif luasnip and luasnip.expand_or_jumpable() then
---    return t("<Plug>luasnip-expand-or-jump")
---  elseif check_back_space() then
---    return t "<Tab>"
---  else
---    cmp.complete()
---  end
---  return ""
---end
---
---_G.s_tab_complete = function()
---  if cmp and cmp.visible() then
---    cmp.select_prev_item()
---  elseif luasnip and luasnip.jumpable(-1) then
---    return t("<Plug>luasnip-jump-prev")
---  else
---    return t "<S-Tab>"
---  end
---  return ""
---end
-
-
--- Old --
-    --vim_item.menu = ({
-    --  nvim_lsp = "",
-    --  nvim_lua = "",
-    --  luasnip = "",
-    --  buffer = "",
-    --  path = "",
-    --  emoji = "",
-    --})[entry.source.name]
-    --vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
-
 

@@ -12,7 +12,7 @@ local options = {
 
   --showmode = false,
   termguicolors = true,
-  cmdheight = 2,
+  cmdheight = 1,
   mouse = 'a',
   relativenumber = true,
   number = true,

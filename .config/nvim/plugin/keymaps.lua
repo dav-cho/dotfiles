@@ -18,7 +18,7 @@ map('n', '<leader>bd', '<cmd>bd<CR>', { silent = true })
 --function format_help_str(term)
 --  return string.format('<cmd>vert h %s<CR>', term)
 
-map('n', '<leader>hh', ':vert h ', { silent = true })
+map('n', '<leader>hh', ':vert h ')
 
 -- Insert --
 

@@ -49,6 +49,7 @@ return require('packer').startup(function(use)
   use 'neovim/nvim-lspconfig'
   use 'williamboman/nvim-lsp-installer'
   use 'b0o/SchemaStore.nvim'
+  use 'jose-elias-alvarez/null-ls.nvim'
   use 'RRethy/vim-illuminate'
 
   -- Completion --
@@ -80,6 +81,11 @@ return require('packer').startup(function(use)
   -- Other --
   use 'windwp/nvim-autopairs'
   use 'numToStr/Comment.nvim'
+  use {
+    'prettier/vim-prettier',
+    --ft = { 'html', 'css', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
+    run = 'yarn install --frozen-lockfile --production',
+  }
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
