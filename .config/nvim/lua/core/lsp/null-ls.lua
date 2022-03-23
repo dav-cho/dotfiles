@@ -7,8 +7,9 @@ end
 
 local null_ls = prequire 'null-ls'
 local formatting = null_ls.builtins.formatting
--- local diagnostics = null_ls.builtins.diagnostics
+local diagnostics = null_ls.builtins.diagnostics
 -- local completion = null_ls.builtins.completion
+local code_actions = null_ls.builtins.code_actions
 
 -- local formatting = prequire 'null-ls'.builtins.formatting
 -- local diagnostics = prequire 'null-ls'.builtins.diagnostics
@@ -23,10 +24,15 @@ null_ls.setup {
         },
         formatting.black,
         formatting.stylua,
+        -- formatting.gofmt,
+        -- formatting.goimports,
+        -- formatting.lua_format,
 
-        --diagnostics.eslint,
+        diagnostics.zsh,
 
         --completion.spell,
+
+        code_actions.gitsigns,
     },
 }
 

@@ -39,6 +39,11 @@ lsp_installer.on_server_ready(function(server)
     opts = vim.tbl_deep_extend('force', jsonls_opts, opts)
   end
 
+  -- if server.name == 'bashls' then
+  --   local bashls_opts = require 'core.lsp.settings.bashls'
+  --   opts = vim.tbl_deep_extend('force', bashls_opts, opts)
+  -- end
+
   --if server.name == "pyright" then
   --  local pyright_opts = require "user.lsp.settings.pyright"
   --  opts = vim.tbl_deep_extend("force", pyright_opts, opts)

@@ -78,6 +78,7 @@ return require('packer').startup(function(use)
   -- Vim --
   use 'tpope/vim-surround' -- TODO: make it work with '.' (repeat command)
   use 'easymotion/vim-easymotion'
+  use 'tpope/vim-repeat'
 
   -- Other --
   use 'windwp/nvim-autopairs'
@@ -85,10 +86,10 @@ return require('packer').startup(function(use)
   use 'numToStr/Comment.nvim'
   use {
     'prettier/vim-prettier',
-    --ft = { 'html', 'css', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
     run = 'yarn install --frozen-lockfile --production',
   }
   use 'norcalli/nvim-colorizer.lua'
+  use 'lewis6991/gitsigns.nvim'
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

@@ -98,10 +98,10 @@ cmp.setup({
     --  border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
     --},
 
-    experimental = {
-      ghost_text = true,
-      --native_menu = false,
-    },
+    -- experimental = {
+    --   ghost_text = true,
+    --   --native_menu = false,
+    -- },
   })
 
 -- TODO: VSCode like snippets (needs additional plugin)
@@ -132,33 +132,4 @@ cmp.setup({
 --  }
 --}
 --
-
--- Icons moved to core.icons
---local kind_icons = {
---  Text = "",
---  Method = "m",
---  Function = "",
---  Constructor = "",
---  Field = "",
---  Variable = "",
---  Class = "",
---  Interface = "",
---  Module = "",
---  Property = "",
---  Unit = "",
---  Value = "",
---  Enum = "",
---  Keyword = "",
---  Snippet = "",
---  Color = "",
---  File = "",
---  Reference = "",
---  Folder = "",
---  EnumMember = "",
---  Constant = "",
---  Struct = "",
---  Event = "",
---  Operator = "",
---  TypeParameter = "",
---}
 

@@ -1,12 +1,8 @@
-local function prequire(module)
-  local ok, lib = pcall(require, module)
-  if ok then return lib end
-
-  vim.notify('~ ' .. module ' Call Error!')
+local ok, configs = pcall(require, 'nvim-treesitter.configs')
+if not ok then
+  vim.notify('~ Treesitter.configs Call Error!')
+  return
 end
-
---local prequire = require 'utils.prequire'
-local configs = require 'nvim-treesitter.configs'
 
 configs.setup {
   ensure_installed = {  -- One of 'all', 'maintained' (parsers with maintainers), or a list of languages

@@ -17,7 +17,7 @@ bufferline.setup {
       local head = vim.fn.fnamemodify(buf.path, ':p:h:t')
       local path = vim.fn.fnamemodify(buf.path, ':~')
 
-      print(path, head, cwd)
+      print(path) -- show full path in status line
 
       if head == cwd or head == '.' then
         return buf.name
