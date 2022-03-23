@@ -80,10 +80,6 @@ M.setup = function()
       active = signs,
     },
     float = {
-      -- focusable = true,
-      -- style = 'minimal',
-      -- border = 'single',
-      -- source = 'if_many',
       source = 'always',
       header = '',
       prefix = '',
@@ -95,7 +91,6 @@ M.setup = function()
   vim.diagnostic.config(diagnostic_config)
 
   local hover_config = {
-    -- focusable = true,
     -- style = 'minimal',
     border = 'single',
     source = 'always',
@@ -119,6 +114,7 @@ end
 
 -- Add additional capabilities supported by nvim-cmp
 local capabilities = vim.lsp.protocol.make_client_capabilities()
+
 -- capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local cmp_nvim_lsp = prequire('cmp_nvim_lsp')

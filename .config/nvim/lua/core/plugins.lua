@@ -69,6 +69,7 @@ return require('packer').startup(function(use)
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate'
   }
+  use 'p00f/nvim-ts-rainbow'
 
   -- Telescope --
   use 'nvim-telescope/telescope.nvim'
@@ -86,6 +87,7 @@ return require('packer').startup(function(use)
     --ft = { 'html', 'css', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
     run = 'yarn install --frozen-lockfile --production',
   }
+  use 'norcalli/nvim-colorizer.lua'
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

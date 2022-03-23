@@ -6,31 +6,48 @@ end
 
 bufferline.setup {
   options = {
-    --mode = 'buffers',
-    numbers = function(opts)
-      return string.format('%s%s', opts.raise(opts.ordinal), opts.lower(opts.id))
+    --mode = 'tabs',
+
+    -- numbers = function(opts)
+    --   return string.format('%s%s', opts.raise(opts.ordinal), opts.lower(opts.id))
+    -- end,
+
+    name_formatter = function(buf)
+      local cwd = vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
+      local head = vim.fn.fnamemodify(buf.path, ':p:h:t')
+      local path = vim.fn.fnamemodify(buf.path, ':~')
+
+      print(path, head, cwd)
+
+      if head == cwd or head == '.' then
+        return buf.name
+      else
+        return string.format('%s/%s', head, buf.name)
+      end
     end,
+    -- name_formatter = function(buf)  -- buf contains a "name", "path" and "bufnr"
+    --   -- remove extension from markdown files for example
+    --   if buf.name:match('%.md') then
+    --     return vim.fn.fnamemodify(buf.name, ':t:r')
+    --   end
+    -- end,
+
+    max_name_length = 30,
+    -- max_prefix_length = 30,
+    -- tab_size = 20,
 
     diagnostics = 'nvim_lsp',
     diagnostics_update_in_insert = true,
-    -- Customized LSP Indicators --
-    --- count is an integer representing total count of errors
-    --- level is a string "error" | "warning"
-    --- diagnostics_dict is a dictionary from error level ("error", "warning" or "info")to number of errors for each level.
-    --- this should return a string
-    --- Don't get too fancy as this function will be executed a lot
     diagnostics_indicator = function(count, level, diagnostics_dict, context)
       local icon = level:match("error") and " " or " "
-      return " " .. icon .. count
+      -- return " " .. icon .. count
+      return icon .. count
     end,
-    -- To set conditional buffer based LSP indicators use below: --
-    --diagnostics_indicator = function(count, level, diagnostics_dict, context)
-    --  if context.buffer:current() then
-    --    return ''
-    --  end
 
-    --  return ''
-    --end,
+    -- persist_buffer_sort = false,
+    -- enforce_regular_tabs = true,
+    -- always_show_bufferline = true,
+    sort_by = 'tabs',
 
     custom_areas = {
       right = function()
@@ -59,26 +76,6 @@ bufferline.setup {
         return result
       end,
     },
-
-    -- TODO: Groups
-    --groups = {
-    --}
-
-    -- TODO: lsp indicator icon colors?
-    --highlights = {
-    --  modified = {
-    --    guifg = { attribute = "fg", highlight = "TabLine" },
-    --    guibg = { attribute = "bg", highlight = "TabLine" },
-    --  },
-    --  modified_selected = {
-    --    guifg = { attribute = "fg", highlight = "Normal" },
-    --    guibg = { attribute = "bg", highlight = "Normal" },
-    --  },
-    --  modified_visible = {
-    --    guifg = { attribute = "fg", highlight = "TabLine" },
-    --    guibg = { attribute = "bg", highlight = "TabLine" },
-    --  },
-    --},
   }
 }
 
