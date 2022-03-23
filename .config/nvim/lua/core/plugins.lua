@@ -81,6 +81,7 @@ return require('packer').startup(function(use)
 
   -- Other --
   use 'windwp/nvim-autopairs'
+  use 'windwp/nvim-ts-autotag'
   use 'numToStr/Comment.nvim'
   use {
     'prettier/vim-prettier',
