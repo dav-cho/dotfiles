@@ -1,56 +1,51 @@
-local map_builtin = function(before, after, opts)
+local map_tele = function(before, type, after, opts)  -- type = 'builtin' | 'extensions' | etc...
   local options = { noremap = true, silent = true }
-  local rhs = string.format([[<cmd>lua require('telescope.builtin').%s()<CR>]], after)
+
+  local rhs = ''
+  if type == 'builtin' then
+    rhs = string.format("<cmd>lua require('telescope.%s').%s()<CR>", type, after)
+  elseif type == 'extensions' then
+    rhs = string.format("<cmd>lua require('telescope').%s.%s()<CR>", type, after)
+  else
+    vim.notify('~ Invalid Type')
+  end
 
   options = vim.tbl_deep_extend('force', options, opts or {})
   vim.api.nvim_set_keymap('n', before, rhs, options)
 end
 
-local map_extension = function(before, after, opts)
-  local options = { noremap = true, silent = true }
-  local rhs = string.format([[<cmd>lua require('telescope').extensions.%s()<CR>]], after)
+map_tele('<leader>ff', 'builtin', 'find_files')
+map_tele('<leader>fb', 'builtin', 'buffers')
+map_tele('<leader>fc', 'builtin', 'command_history')
+map_tele('<leader>fg', 'builtin', 'live_grep')
+map_tele('<leader>fs', 'builtin', 'current_buffer_fuzzy_find')
+map_tele('<leader>fo', 'builtin', 'oldfiles')
+map_tele('<leader>fh', 'builtin', 'help_tags')
+map_tele('<leader>bb', 'extensions', 'file_browser.file_browser')
 
-  options = vim.tbl_deep_extend('force', options, opts or {})
-  vim.api.nvim_set_keymap('n', before, rhs, options)
-end
-
-
-map_builtin('<leader>ff', 'find_files')
-map_builtin('<leader>fb', 'buffers')
-map_builtin('<leader>fc', 'command_history')
-map_builtin('<leader>fg', 'live_grep')
-map_builtin('<leader>fs', 'current_buffer_fuzzy_find')
-map_builtin('<leader>fo', 'oldfiles')
-map_builtin('<leader>fh', 'help_tags')
-
-map_extension('<leader>bb', 'file_browser.file_browser')
---vim.api.nvim_set_keymap('n', '<leader>bb', [[<cmd>lua require('telescope').extensions.file_browser.file_browser()<CR>]], { noremap = true, silent = true })
---vim.api.nvim_set_keymap('n', '<leader>bb', '<cmd>Telescope file_browser<CR>', { noremap = true, silent = true })
-
-
--- TODO
-
---local sorters = prequire('telescope.sorters')
---local sorters = require 'telescope.sorters'
-
-
--- Reference
---TelescopeMapArgs = TelescopeMapArgs or {}
+-- local map_builtin = function(before, after, opts)
+--   local options = { noremap = true, silent = true }
+--   local rhs = string.format([[<cmd>lua require('telescope.builtin').%s()<CR>]], after)
 --
---local map_tele = function(key, f, options, buffer)
---  local map_key = vim.api.nvim_replace_termcodes(key .. f, true, true, true)
+--   options = vim.tbl_deep_extend('force', options, opts or {})
+--   vim.api.nvim_set_keymap('n', before, rhs, options)
+-- end
 --
---  TelescopeMapArgs[map_key] = options or {}
+-- map_builtin('<leader>ff', 'find_files')
+-- map_builtin('<leader>fb', 'buffers')
+-- map_builtin('<leader>fc', 'command_history')
+-- map_builtin('<leader>fg', 'live_grep')
+-- map_builtin('<leader>fs', 'current_buffer_fuzzy_find')
+-- map_builtin('<leader>fo', 'oldfiles')
+-- map_builtin('<leader>fh', 'help_tags')
 --
---  local mode = "n"
---  local rhs = string.format("<cmd>lua R('core.telescope')['%s'](TelescopeMapArgs['%s'])<CR>", f, map_key)
+-- local map_extension = function(before, after, opts)
+--   local options = { noremap = true, silent = true }
+--   local rhs = string.format([[<cmd>lua require('telescope').extensions.%s()<CR>]], after)
 --
---  local map_options = { noremap = true, silent = true }
+--   options = vim.tbl_deep_extend('force', options, opts or {})
+--   vim.api.nvim_set_keymap('n', before, rhs, options)
+-- end
 --
---  if not buffer then
---    vim.api.nvim_set_keymap(mode, key, rhs, map_options)
---  else
---    vim.api.nvim_buf_set_keymap(0, mode, key, rhs, map_options)
---  end
---end
+-- map_extension('<leader>bb', 'file_browser.file_browser')
 

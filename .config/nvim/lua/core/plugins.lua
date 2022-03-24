@@ -74,6 +74,7 @@ return require('packer').startup(function(use)
   -- Telescope --
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
+  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 
   -- Vim --
   use 'tpope/vim-surround' -- TODO: make it work with '.' (repeat command)

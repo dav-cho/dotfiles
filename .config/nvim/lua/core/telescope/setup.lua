@@ -5,7 +5,6 @@ local function prequire(module)
   vim.notify(string.format('~ %s Call Error!', module))
 end
 
--- local prequire = require 'utils.prequire'
 local telescope = prequire 'telescope'
 local actions = prequire 'telescope.actions'
 
@@ -24,7 +23,8 @@ telescope.setup {
         ["<C-j>"] = actions.move_selection_next,
         ["<C-k>"] = actions.move_selection_previous,
       }
-    }
+    },
+
   },
 
   --pickers = {
@@ -41,10 +41,15 @@ telescope.setup {
     file_browser = {
       initial_mode = 'normal',
     },
+    fzf = {
+      fuzzy = true,
+      override_generic_sorter = true,
+      override_file_sorter = true,
+      case_mode = "smart_case",
+    },
   },
 }
 
--- To get telescope-file-browser loaded and working with telescope,
--- you need to call load_extension, somewhere after setup function:
 telescope.load_extension 'file_browser'
+telescope.load_extension 'fzf'
 
