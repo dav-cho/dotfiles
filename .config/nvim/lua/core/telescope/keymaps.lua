@@ -30,7 +30,7 @@ map_tele('<leader>fc', 'commands', 'builtin')
 map_tele('<leader>fh', 'help_tags', 'builtin')
 map_tele('<leader>fr', 'resume', 'builtin')
 
-map_tele('<C-r>', 'command_history', 'builtin')
+map_tele('<leader>rr', 'command_history', 'builtin')
 map_tele('<leader>bf', 'current_buffer_fuzzy_find', 'builtin')
 
 -- Neovim LSP Pickers
