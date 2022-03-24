@@ -19,6 +19,7 @@ map('n', '<leader>bd', '<cmd>bd<CR>', { silent = true })
 --  return string.format('<cmd>vert h %s<CR>', term)
 
 map('n', '<leader>hh', ':vert h ')
+map('n', '<leader>tt', ':Telescope ')
 
 -- Insert --
 
