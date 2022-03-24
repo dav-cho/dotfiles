@@ -23,9 +23,9 @@ null_ls.setup {
           extra_args = { '--single-quote', '--arrow-parens=avoid' },
         },
         formatting.black,
+        formatting.gofmt,
+        formatting.goimports,
         formatting.stylua,
-        -- formatting.gofmt,
-        -- formatting.goimports,
         -- formatting.lua_format,
 
         diagnostics.zsh,

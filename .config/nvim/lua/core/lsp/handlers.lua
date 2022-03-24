@@ -97,8 +97,12 @@ M.setup = function()
 end
 
 M.on_attach = function(client, bufnr)
-  if client.name == 'tsserver' then
-    client.resolved_capabilities.document_formatting = false
+  local format_ignore_list = {'tsserver', 'gopls'}
+  for _, v in ipairs(format_ignore_list) do
+    if client.name == v then
+      client.resolved_capabilities.document_formatting = false
+      client.resolved_capabilities.document_range_formatting = false
+    end
   end
 
   lsp_keymaps(bufnr)
