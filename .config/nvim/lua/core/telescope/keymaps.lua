@@ -34,8 +34,8 @@ map_tele('<C-r>', 'command_history', 'builtin')
 map_tele('<leader>bf', 'current_buffer_fuzzy_find', 'builtin')
 
 -- Neovim LSP Pickers
-map_tele('<leader>lr', 'lsp_references', 'builtin')
--- map_tele('<F12>', 'lsp_references', 'builtin)
+-- map_tele('<leader>lr', 'lsp_references', 'builtin')
+map_tele('<F12>', 'lsp_references', 'builtin')
 map_tele('<leader>ls', 'lsp_document_symbols', 'builtin')
 map_tele('<leader>la', 'lsp_code_actions', 'builtin')
 -- map_tele('<leader>li', 'lsp_implementations', 'builtin)
