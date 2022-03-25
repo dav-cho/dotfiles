@@ -20,19 +20,27 @@ export NVM_DIR="$HOME/.nvm"
 
 eval "$(pyenv init -)"
 
-export FZF_DEFAULT_COMMAND='rg --files --hidden --no-ignore-vcs --follow'
-#export FZF_DEFAULT_OPTS='--height 60% --layout=reverse --info=inline'
-export FZF_DEFAULT_OPTS='--height 60% --layout=reverse --border --info=inline'
+export FZF_DEFAULT_COMMAND="rg --files --smart-case --hidden --no-ignore-vcs --follow"
+export FZF_CTRL_T_COMMAND="rg --files --smart-case --hidden --no-ignore-vcs --follow"
+export FZF_ALT_C_COMMAND='rg --hidden --files --null | xargs -0 dirname | uniq'
+
+export FZF_DEFAULT_OPTS="--multi --no-height --layout=reverse --info=inline --border"
+export FZF_CTRL_T_OPTS="--preview 'bat --theme=\"Visual Studio Dark+\" --style=numbers --color=always --line-range :500 {}' --preview-window :hidden --bind '?:toggle-preview'"
+# export FZF_CTRL_T_OPTS="--preview 'bat --theme=Dracula --style=numbers --color=always --line-range :500 {}' --preview-window :hidden --bind '?:toggle-preview'"
+export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
+export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
+# export FZF_TMUX_OPTS=''
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-alias gdot='/usr/bin/git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME'
-alias ls='lsd'
-alias la='lsd -a'
-alias ll='lsd -l'
-alias lla='lsd -la'
-alias lt='lsd --tree'
-alias ltd='lsd --tree --depth'
+alias gdot="/usr/bin/git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME"
+alias ls="lsd"
+alias la="lsd -a"
+alias ll="lsd -l"
+alias lla="lsd -la"
+alias lt="lsd --tree"
+alias ltd="lsd --tree --depth"
 
