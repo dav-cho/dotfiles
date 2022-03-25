@@ -29,7 +29,7 @@ export FZF_CTRL_T_OPTS="--preview 'bat --theme=\"Visual Studio Dark+\" --style=n
 # export FZF_CTRL_T_OPTS="--preview 'bat --theme=Dracula --style=numbers --color=always --line-range :500 {}' --preview-window :hidden --bind '?:toggle-preview'"
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
-# export FZF_TMUX_OPTS=''
+export FZF_TMUX_OPTS="-p 80%,80%"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -43,6 +43,14 @@ alias ll="lsd -l"
 alias lla="lsd -la"
 alias lt="lsd --tree"
 alias ltd="lsd --tree --depth"
+
+tmuxx() {
+  [[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"
+  if [ $1 ]; then
+    tmux $change -t "$1" 2>/dev/null || (tmux new-session -d -s $1 && tmux $change -t "$1"); return
+  fi
+  session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) &&  tmux $change -t "$session" || echo "No sessions found."
+}
 
 alias ide="~/.config/dav/ide.sh"
 
