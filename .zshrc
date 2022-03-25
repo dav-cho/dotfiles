@@ -44,3 +44,5 @@ alias lla="lsd -la"
 alias lt="lsd --tree"
 alias ltd="lsd --tree --depth"
 
+alias ide="~/.config/dav/ide.sh"
+
