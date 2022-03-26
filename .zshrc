@@ -49,8 +49,13 @@ tmuxx() {
   if [ $1 ]; then
     tmux $change -t "$1" 2>/dev/null || (tmux new-session -d -s $1 && tmux $change -t "$1"); return
   fi
-  session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf-tmux -p 40%,40% --exit-0) &&  tmux $change -t "$session" || echo "No sessions found."
+  session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf-tmux -p 40%,40% --border=none --exit-0) &&  tmux $change -t "$session" || echo "No sessions found."
 }
 
-alias ide="~/.config/dav/ide.sh"
+ide() {
+  tmux split-window -v -p 30
+  tmux split-window -h
+  tmux select-pane -L
+  tmux select-pane -U
+}
 
