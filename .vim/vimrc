@@ -84,6 +84,7 @@ Plug 'ackyshake/Spacegray.vim'
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+" Plug 'edkolev/tmuxline.vim'
 
 " Others ---------------------
 "Plug 'tpope/vim-surround'
@@ -128,6 +129,9 @@ let g:airline_theme='deus'
 "let g:airline_theme='wombat'
 "let g:airline_theme='jellybeans'
 "let g:airline_theme='gruvbox'
+
+" tmuxline
+" let g:airline#extensions#tmuxline#enabled=0
 
 "set background=dark
 "highlight Normal guibg=none
