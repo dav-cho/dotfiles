@@ -1,15 +1,13 @@
-local function prequire(module)
-  local ok, lib = pcall(require, module)
-  if ok then return lib end
-
-  vim.notify(string.format('~ %s Call Error!', module))
+local ok, null_ls = pcall(require, 'null-ls')
+if not ok then
+  vim.notify('~ null-ls Call Error!')
+  return
 end
 
-local null_ls = prequire 'null-ls'
 local formatting = null_ls.builtins.formatting
 local diagnostics = null_ls.builtins.diagnostics
--- local completion = null_ls.builtins.completion
 local code_actions = null_ls.builtins.code_actions
+-- local completion = null_ls.builtins.completion
 
 -- local formatting = prequire 'null-ls'.builtins.formatting
 -- local diagnostics = prequire 'null-ls'.builtins.diagnostics
