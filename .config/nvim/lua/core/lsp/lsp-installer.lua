@@ -7,10 +7,11 @@ end
 -- TODO: Automatically install selected servers
 -- Include the servers you want to have installed by default below
 -- local servers = {
---  'tsserver',
---  'jsonls',
---  'pyright',
---  'sumneko_lua',
+--   'typescriptreact',
+--   'tsserver',
+--   'jsonls',
+--   'pyright',
+--   'sumneko_lua',
 -- }
 
 --for _, name in pairs(servers) do

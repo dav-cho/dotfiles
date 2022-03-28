@@ -26,11 +26,13 @@ null_ls.setup {
         formatting.stylua,
         -- formatting.lua_format,
 
+        diagnostics.eslint,
         diagnostics.zsh,
 
         --completion.spell,
 
         code_actions.gitsigns,
+        code_actions.eslint,
     },
 }
 
