@@ -30,7 +30,6 @@ export FZF_CTRL_T_OPTS="--preview 'bat --theme=\"Visual Studio Dark+\" --style=n
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
 # export FZF_TMUX_OPTS="-p 80%,80%"
-export FZF_TMUX_OPTS=""
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
