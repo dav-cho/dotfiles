@@ -97,7 +97,7 @@ M.setup = function()
 end
 
 M.on_attach = function(client, bufnr)
-  local format_ignore_list = {'tsserver', 'gopls'}
+  local format_ignore_list = {'tsserver', 'jsonls', 'gopls'}
   for _, v in ipairs(format_ignore_list) do
     if client.name == v then
       client.resolved_capabilities.document_formatting = false
