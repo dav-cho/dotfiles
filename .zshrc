@@ -24,12 +24,12 @@ export FZF_DEFAULT_COMMAND="rg --files --smart-case --hidden --no-ignore-vcs --f
 export FZF_CTRL_T_COMMAND="rg --files --smart-case --hidden --no-ignore-vcs --follow"
 export FZF_ALT_C_COMMAND='rg --hidden --files --null | xargs -0 dirname | uniq'
 
-export FZF_DEFAULT_OPTS="--multi --no-height --layout=reverse --info=inline --border"
+export FZF_DEFAULT_OPTS="--multi --no-height --layout=reverse --info=inline"
 export FZF_CTRL_T_OPTS="--preview 'bat --theme=\"Visual Studio Dark+\" --style=numbers --color=always --line-range :500 {}' --preview-window :hidden --bind '?:toggle-preview'"
 # export FZF_CTRL_T_OPTS="--preview 'bat --theme=Dracula --style=numbers --color=always --line-range :500 {}' --preview-window :hidden --bind '?:toggle-preview'"
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
-# export FZF_TMUX_OPTS="-p 80%,80%"
+export FZF_TMUX_OPTS="-p 80%,80%"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
