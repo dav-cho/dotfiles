@@ -14,9 +14,11 @@ map('n', 'Y', 'y$', { silent = true })
 map('n', '<leader>hh', ':vert h ')
 map('n', '<leader>tt', ':Telescope ')
 
--- Keep search centered
+-- Search behavior
 map('n', 'n', 'nzzzv', { silent = true })
 map('n', 'N', 'Nzzzv', { silent = true })
+map('n', '*', '*``', { silent = true })
+map('n', '#', '#``', { silent = true })
 
 -- Moving Text
 map('n', '<leader>jj', '<cmd>move .+1<CR>==', { silent = true })
