@@ -36,7 +36,7 @@ export FZF_TMUX_OPTS="-p 80%,80%"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-alias gdot="/usr/bin/git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME"
+alias dot="/usr/bin/git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME"
 alias ls="lsd"
 alias la="lsd -a"
 alias ll="lsd -l"
