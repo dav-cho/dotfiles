@@ -37,6 +37,12 @@ telescope.setup {
   --  builtin picker
   --},
 
+  -- pickers = {
+  --   oldfiles = {
+  --     initial_mode = 'normal',
+  --   },
+  -- },
+
   extensions = {
     file_browser = {
       initial_mode = 'normal',

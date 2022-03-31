@@ -18,7 +18,7 @@ null_ls.setup {
         -- formatting.eslint,
         formatting.prettier.with {
           extra_filetypes = { 'toml' },
-          extra_args = { '--single-quote', '--arrow-parens=avoid' },
+          -- extra_args = { '--single-quote', '--arrow-parens=avoid' },
         },
         formatting.black,
         formatting.gofmt,
