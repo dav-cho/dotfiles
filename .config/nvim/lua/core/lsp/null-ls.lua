@@ -26,7 +26,7 @@ null_ls.setup {
         formatting.stylua,
         -- formatting.lua_format,
 
-        diagnostics.eslint,
+        -- diagnostics.eslint,
         diagnostics.zsh,
 
         --completion.spell,
