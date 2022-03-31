@@ -34,7 +34,7 @@ cmp.setup({
         i = cmp.mapping.abort(),
         c = cmp.mapping.close(),
       }),
-      --['<CR>'] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+      ['<CR>'] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
       ["<Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_next_item()
@@ -62,9 +62,9 @@ cmp.setup({
       format = function(entry, vim_item)
         vim_item.kind = string.format('%s', kind_icons[vim_item.kind])
         vim_item.menu = ({
+          luasnip = "[LuaSnip]",
           nvim_lsp = "[LSP]",
           nvim_lua = "[NVIM_Lua]",
-          luasnip = "[LuaSnip]",
           buffer = "[Buffer]",
           path = '[Path]',
         })[entry.source.name]
@@ -80,20 +80,12 @@ cmp.setup({
       { name = 'buffer' },
       { name = 'path' },
     }),
-    --sources = cmp.config.sources({
-    --  { name = 'nvim_lsp' },
-    --  { name = 'nvim-lua' },
-    --  { name = 'luasnip' },
-    --  { name = 'buffer' },
-    --  { name = 'path' },
-    --}),
 
     confirm_opts = {
       select = false,
     },
 
     documentation = { border = 'single' },
-    --documentation = false,
     --documentation = {
     --  border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
     --},
@@ -106,13 +98,8 @@ cmp.setup({
 
 -- TODO: VSCode like snippets (needs additional plugin)
 --require("luasnip.loaders.from_vscode").lazy_load()
-
---vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
---vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
---vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
---vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
---vim.api.nvim_set_keymap("i", "<C-E>", "<Plug>luasnip-next-choice", {})
---vim.api.nvim_set_keymap("s", "<C-E>", "<Plug>luasnip-next-choice", {})
+-- local from_vscode = prequire('luasnip.loaders.from_vscode')
+-- from_vscode.load({ paths = { '~/Library/Application Support/Code/User/snippets' }})
 
 -- TODO: Use lspkind for icons?
 --local lspkind = require('lspkind')

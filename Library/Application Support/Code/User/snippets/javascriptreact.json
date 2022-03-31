@@ -2,7 +2,7 @@
   "Export Function Component": {
     "prefix": "efc",
     "body": [
-      "export function ${1:functionName}($2) {",
+      "export function ${1:ComponentName}($2) {",
       "\treturn (",
       "\t\t<>",
       "\t\t\t<div>($1 Component)</div>",
@@ -15,7 +15,7 @@
   "Export Default Function Component": {
     "prefix": "edfc",
     "body": [
-      "export default function ${1:functionName}($2) {",
+      "export default function ${1:ComponentName}($2) {",
       "\treturn (",
       "\t\t<>",
       "\t\t\t<div>($1 Component)</div>",
@@ -25,10 +25,10 @@
     ],
     "description": "Exported Named Function Component"
   },
-  "Export Named Default Function Component": {
-    "prefix": "endfc",
+  "Function Component Export Default EOF": {
+    "prefix": "fced",
     "body": [
-      "function ${1:functionName}($2) {",
+      "function ${1:ComponentName}($2) {",
       "\treturn (",
       "\t\t<>",
       "\t\t\t<div>($1 Component)</div>",
@@ -42,7 +42,7 @@
   "Export Arrow Function Component": {
     "prefix": "eafc",
     "body": [
-      "export const ${1:functionName} = ($2) => {",
+      "export const ${1:ComponentName} = ($2) => {",
       "\treturn (",
       "\t\t<>",
       "\t\t\t<div>($1 Component)</div>",
@@ -52,10 +52,10 @@
     ],
     "description": "Export Arrow Function Component"
   },
-  "Export Named Default Arrow Function Component": {
-    "prefix": "endafc",
+  "Export Default Arrow Function Component": {
+    "prefix": "edafc",
     "body": [
-      "const ${1:functionName} = ($2) => {",
+      "const ${1:ComponentName} = ($2) => {",
       "\treturn (",
       "\t\t<>",
       "\t\t\t<div>($1 Component)</div>",
