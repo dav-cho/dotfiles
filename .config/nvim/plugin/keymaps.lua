@@ -10,6 +10,8 @@ map('n', '<leader>bd', '<cmd>bd<CR>', { silent = true })
 map('n', '<leader>n', '<cmd>noh<CR>', { silent = true })
 map('n', '<leader>w', '<C-w>', { silent = true })
 map('n', 'Y', 'y$', { silent = true })
+map('v', '<leader>y', '"*y', { silent = true })
+map('n', '<leader>Y', '"*Y', { silent = true })
 
 map('n', '<leader>hh', ':vert h ')
 map('n', '<leader>tt', ':Telescope ')
