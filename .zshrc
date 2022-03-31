@@ -44,23 +44,7 @@ alias lla="lsd -la"
 alias lt="lsd --tree"
 alias ltd="lsd --tree --depth"
 
-tmuxx() {
-  [[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"
-  if [ $1 ]; then
-    tmux $change -t "$1" 2>/dev/null || (tmux new-session -d -s $1 && tmux $change -t "$1"); return
-  fi
-  session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf-tmux -p 70%,70% --border=none --exit-0) &&  tmux $change -t "$session" || echo "No sessions found."
-}
-
-ide() {
-  if [ -z "${TMUX}" ]
-  then
-    echo "~ not in tmux!"
-  else
-    tmux split-window -v -p 30
-    tmux split-window -h
-    tmux select-pane -L
-    tmux select-pane -U
-  fi
-}
+if [ -d "$HOME/.config/bin" ]; then
+  export PATH="$HOME/.config/bin:$PATH"
+fi
 

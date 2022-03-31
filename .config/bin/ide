@@ -1,0 +1,68 @@
+#!/bin/zsh
+
+if [ -z "${TMUX}" ]; then
+  echo "~ not in tmux!"
+  exit 0
+fi
+
+if [ -z $1 ]; then
+  read -k 1 "LAYOUT?Choose layout (0-9): "
+  echo ""
+else 
+  LAYOUT=$1
+fi
+
+case $LAYOUT in
+  1)
+    tmux split-window -h
+    tmux select-pane -L
+    tmux split-window -v -p 30
+    tmux select-pane -U
+    tmux select-pane -R
+    ;;
+  2)
+    tmux split-window -h
+    tmux split-window -v -p 30
+    tmux select-pane -U
+    tmux select-pane -L
+    ;;
+  3)
+    tmux split-window -h -p 60
+    tmux select-pane -L
+    tmux split-window -v -p 30
+    tmux select-pane -U
+    tmux select-pane -R
+    ;;
+  4)
+    tmux split-window -h -p 40
+    tmux split-window -v -p 30
+    tmux select-pane -U
+    tmux select-pane -L
+    ;;
+  5)
+    ;;
+  6)
+    ;;
+  7)
+    ;;
+  8)
+    tmux split-window -v -p 30
+    tmux select-pane -U
+    tmux split-window -h
+    ;;
+  9)
+    tmux split-window -v -p 30
+    tmux split-window -h
+    tmux select-pane -L
+    tmux select-pane -U
+    ;;
+  0)
+    tmux split-window -v -p 30
+    tmux split-window -h
+    tmux select-pane -U
+    tmux split-window -h
+    ;;
+  *)
+    echo "Invalid option."
+    ;;
+esac
