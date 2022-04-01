@@ -44,6 +44,10 @@ case $LAYOUT in
   6)
     ;;
   7)
+    tmux split-window -v -p 30
+    tmux split-window -h
+    tmux select-pane -U
+    tmux split-window -h
     ;;
   8)
     tmux split-window -v -p 30
@@ -58,9 +62,7 @@ case $LAYOUT in
     ;;
   0)
     tmux split-window -v -p 30
-    tmux split-window -h
     tmux select-pane -U
-    tmux split-window -h
     ;;
   *)
     echo "Invalid option."
