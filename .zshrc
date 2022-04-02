@@ -38,9 +38,6 @@ export FZF_TMUX_OPTS="-p 80%,80%"
 
 alias dot="/usr/bin/git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME"
 alias ls="lsd"
-alias la="lsd -a"
-alias ll="lsd -l"
-alias lla="lsd -la"
 alias lt="lsd --tree"
 alias ltd="lsd --tree --depth"
 
