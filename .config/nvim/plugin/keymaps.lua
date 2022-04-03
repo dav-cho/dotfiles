@@ -25,8 +25,8 @@ map('n', '#', '#``', { silent = true })
 -- Moving Text
 map('n', '<leader>jj', '<cmd>move .+1<CR>==', { silent = true })
 map('n', '<leader>kk', '<cmd>move .-2<CR>==', { silent = true })
-map('i', '<C-j>', '<esc><cmd>move .+1<CR>==i', { silent = true })
-map('i', '<C-k>', '<esc><cmd>move .-2<CR>==i', { silent = true })
+-- map('i', '<C-j>', '<esc><cmd>move .+1<CR>==i', { silent = true })
+-- map('i', '<C-k>', '<esc><cmd>move .-2<CR>==i', { silent = true })
 -- map('v', '<leader>j', "<cmd>move \'>+1<CR> gv=gv", { silent = true })
 -- map('v', '<leader>k', "<cmd>move \'<-2<CR>gv=gv", { silent = true })
 
