@@ -4,6 +4,7 @@ local function map(mode, before, after, opts)
   vim.api.nvim_set_keymap(mode, before, after, options)
 end
 
+map('i', '<esc>', '<esc>', { nowait = true, silent = true })
 map('n', '<leader>wr', '<cmd>w<CR>', { silent = true })
 map('n', '<leader>wa', '<cmd>wa<CR>', { silent = true })
 map('n', '<leader>bd', '<cmd>bd<CR>', { silent = true })
