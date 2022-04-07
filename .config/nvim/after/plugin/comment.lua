@@ -4,18 +4,20 @@ if not ok then
   return
 end
 
-comment.setup {
-  toggler = {
-    line = '<C-_>',
-  },
-}
+comment.setup()
 
+local opts = { noremap = true, silent = true, expr = true }
+local comment_command = [[v:count == 0 ? '<CMD>lua require("Comment.api").call("toggle_current_linewise_op")<CR>g@$' : '<CMD>lua require("Comment.api").call("toggle_linewise_count_op")<CR>g@$']]
 
--- TODO: Comment over multiple lines
+vim.api.nvim_set_keymap('n', '<C-_>', comment_command, opts)
+vim.api.nvim_set_keymap('v', '<C-_>', comment_command, opts)
 
---local map = require 'utils.map'
-
--- vim.api.nvim_set_keymap('v', '<C-_>', '<cmd>lua require("Comment.api").toggle_linewise_op(vmode, cfg)<cr>', { noremap = true, silent = true })
--- vim.api.nvim_set_keymap('v', '<C-_>', '<cmd>lua require("Comment.api").toggle_linewise_count(cfg)<cr>', { noremap = true, silent = true })
--- vim.api.nvim_set_keymap('v', '<C-_>', '<cmd>lua require("Comment.api").toggle_current_linewise_op(vmode, cfg)<cr>', { noremap = true, silent = true })
+-- comment.setup {
+--   toggler = {
+--     line = '<C-_>',
+--   },
+--   opleader = {
+--     line = '<C-_>',
+--   },
+-- }
 
