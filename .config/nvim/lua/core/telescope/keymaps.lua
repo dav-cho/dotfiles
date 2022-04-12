@@ -44,6 +44,7 @@ map_tele('<leader>la', 'lsp_code_actions', 'builtin')
 -- map_tele('<leader>ld', 'lsp_type_definitions', 'builtin)
 
 -- Git Pickers
+map_tele('<leader>gf', 'git_files', 'builtin')
 map_tele('<leader>gs', 'git_status', 'builtin')
 map_tele('<leader>gc', 'git_commits', 'builtin')
 map_tele('<leader>gb', 'git_branchs', 'builtin')
