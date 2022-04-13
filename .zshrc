@@ -19,8 +19,6 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-eval "$(pyenv init -)"
-
 export FZF_DEFAULT_COMMAND="rg --files --smart-case --hidden --no-ignore-vcs --follow"
 export FZF_CTRL_T_COMMAND="rg --files --smart-case --hidden --no-ignore-vcs --follow"
 export FZF_ALT_C_COMMAND='rg --hidden --files --null | xargs -0 dirname | uniq'
@@ -36,6 +34,8 @@ export FZF_TMUX_OPTS="-p 80%,80%"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+eval "$(pyenv init -)"
 
 alias dot="/usr/bin/git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME"
 alias ls="lsd"

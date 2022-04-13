@@ -5,6 +5,6 @@ if not ok then
 end
 
 colorizer.setup({ '*' }, {
-  mode = 'foreground',
+  mode = 'background',
+  -- mode = 'foreground',
 })
-
