@@ -10,7 +10,6 @@ local options = {
   smartcase = true,
   --inccommand = 'nosplit',
 
-  --showmode = false,
   termguicolors = true,
   cmdheight = 1,
   mouse = 'a',
@@ -18,12 +17,9 @@ local options = {
   number = true,
   cursorline = true,
   signcolumn = 'yes',
-  --colorcolumn = '80',
   scrolloff = 10,
   sidescrolloff = 10,
-  --completeopt = { 'menuone', 'noselect' },
   completeopt = { 'menu', 'menuone', 'noselect' },
-  --completeopt = { 'menuone', 'noselect', 'noinsert' },
   pumheight = 10,
   pumblend = 17,
 
