@@ -14,11 +14,10 @@ null_ls.setup {
       prefer_local = true,
       command = '/Users/dav/.config/prettier/node_modules/.bin/prettier',
       extra_filetypes = { 'toml' },
-      extra_args = { '--single-quote' },
-      -- extra_args = { '--single-quote', '--arrow-parens=avoid' },
+      -- extra_args = { '--single-quote' },
+      extra_args = { '--single-quote', '--arrow-parens=avoid' },
     },
     formatting.black,
-    -- formatting.gofmt,
     formatting.goimports.with {
       prefer_local = true,
       command = '/Users/dav/go/bin/goimports'
