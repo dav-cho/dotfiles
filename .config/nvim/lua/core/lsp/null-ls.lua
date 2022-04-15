@@ -14,8 +14,7 @@ null_ls.setup {
       prefer_local = true,
       command = '/Users/dav/.config/prettier/node_modules/.bin/prettier',
       extra_filetypes = { 'toml' },
-      -- extra_args = { '--single-quote' },
-      extra_args = { '--single-quote', '--arrow-parens=avoid' },
+      extra_args = { '--single-quote', '--arrow-parens=avoid', '--config-precedence=prefer-file' },
     },
     formatting.black,
     formatting.goimports.with {
@@ -30,4 +29,3 @@ null_ls.setup {
     code_actions.eslint,
   },
 }
-
