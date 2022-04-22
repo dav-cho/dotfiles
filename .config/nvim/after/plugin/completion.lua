@@ -26,6 +26,13 @@ cmp.setup({
   preselect = 'none',
   -- preselect = cmp.PreselectMode.None,
 
+  window = {
+    documentation = { border = 'single' }
+    --documentation = {
+    --  border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
+    --},
+  },
+
   mapping = {
     ['<C-k>'] = cmp.mapping.select_prev_item(),
     ['<C-j>'] = cmp.mapping.select_next_item(),
@@ -83,22 +90,17 @@ cmp.setup({
   },
 
   sources = cmp.config.sources({
-  { name = 'nvim_lsp' },
-  { name = 'nvim-lua' },
-  { name = 'luasnip' },
+    { name = 'nvim_lsp' },
+    { name = 'nvim-lua' },
+    { name = 'luasnip' },
   }, {
     { name = 'buffer' },
     { name = 'path' },
-    }),
+  }),
 
   confirm_opts = {
     select = false,
   },
-
-  documentation = { border = 'single' },
-  --documentation = {
-  --  border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
-  --},
 
   -- experimental = {
   --   ghost_text = true,
@@ -124,4 +126,3 @@ cmp.setup({
 --  }
 --}
 --
-
