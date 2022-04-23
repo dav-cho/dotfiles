@@ -17,7 +17,7 @@
     "command": "workbench.action.newWindow"
   },
   {
-    "key": "ctrl+cmd+`",
+    "key": "ctrl+shift+cmd+`",
     "command": "workbench.action.terminal.kill"
   },
   {
