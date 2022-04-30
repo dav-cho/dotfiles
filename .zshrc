@@ -19,6 +19,8 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
+
 export FZF_DEFAULT_COMMAND="rg --files --smart-case --hidden --no-ignore-vcs --follow"
 export FZF_CTRL_T_COMMAND="rg --files --smart-case --hidden --no-ignore-vcs --follow"
 export FZF_ALT_C_COMMAND='rg --hidden --files --null | xargs -0 dirname | uniq'
