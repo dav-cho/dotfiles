@@ -14,12 +14,13 @@
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": "active",
   "explorer.compactFolders": false,
+  "files.trimTrailingWhitespace": true,
   "editor.acceptSuggestionOnCommitCharacter": false,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "terminal.external.osxExec": "iTerm.app",
   "window.newWindowDimensions": "offset",
   "workbench.startupEditor": "none",
 
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[html]": {
     "editor.defaultFormatter": "vscode.html-language-features"
   },
@@ -33,7 +34,6 @@
     "editor.tabSize": 4
   },
   "go.toolsManagement.autoUpdate": true,
-  "python.pythonPath": "/Users/dav/.pyenv/versions/3.9.6/bin/python",
   "python.defaultInterpreterPath": "/Users/dav/.pyenv/versions/3.9.6/bin/python",
   "[python]": {
     "editor.defaultFormatter": null,
@@ -76,10 +76,6 @@
   ],
   "vim.normalModeKeyBindingsNonRecursive": [
     {
-      "before": ["<leader>", "f", "m"],
-      "commands": ["editor.action.formatDocument"]
-    },
-    {
       "before": ["<leader>", "w", "r"],
       "commands": ["workbench.action.files.save"]
     },
@@ -88,20 +84,20 @@
       "commands": ["workbench.action.files.saveFiles"]
     },
     {
+      "before": ["<leader>", "f", "m"],
+      "commands": ["editor.action.formatDocument"]
+    },
+    {
       "before": ["<leader>", "n"],
       "commands": [":nohl"]
     },
     {
-      "before": ["<C-j>"],
-      "after": ["5", "j"]
+      "before": ["<S-y>"],
+      "after": ["y", "$"]
     },
     {
-      "before": ["<C-k>"],
-      "after": ["5", "k"]
-    },
-    {
-      "before": ["<leader>", "j"],
-      "after": ["J"]
+      "before": ["<leader>", "<S-y>"],
+      "after": ["\"", "*", "y", "$"]
     },
     {
       "before": ["<leader>", "f", "f"],
@@ -130,6 +126,14 @@
     {
       "before": ["<leader>", "t", "d"],
       "commands": ["workbench.action.terminal.kill"]
+    },
+    {
+      "before": ["g", "l"],
+      "commands": ["editor.action.marker.next"]
+    },
+    {
+      "before": ["g", "L"],
+      "commands": ["editor.action.marker.prev"]
     }
   ],
   "vim.insertModeKeyBindingsNonRecursive": [
@@ -186,6 +190,14 @@
     {
       "before": ["^"],
       "after": ["0"]
+    },
+    {
+      "before": ["<leader>", "y"],
+      "after": ["\"", "*", "y"]
+    },
+    {
+      "before": ["<leader>", "<S-y>"],
+      "after": ["\"", "*", "Y"]
     },
     {
       "before": ["<leader>", "l"],
