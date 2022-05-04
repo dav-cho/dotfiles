@@ -5,7 +5,7 @@ if not ok then
 end
 
 configs.setup {
-  ensure_installed = {  -- One of 'all', 'maintained' (parsers with maintainers), or a list of languages
+  ensure_installed = { -- One of 'all', 'maintained' (parsers with maintainers), or a list of languages
     'html',
     'css',
     'javascript',
@@ -27,6 +27,7 @@ configs.setup {
 
   indent = {
     enable = true,
+    disable = { 'python' },
   },
 
   autopairs = {
@@ -55,19 +56,19 @@ configs.setup {
   },
 }
 
-      -- '#ee82ee',
-      -- '#90ee90',
-      -- '#32cd32',
-      -- '#ffa500',
-      -- '#20b2aa',
-      -- '#00ffff',
-      -- '#d8bfd8',
-      -- '#40e0d0',
-      -- '#ffe4c4',
-      -- '#faebd7',
-      -- "#f5f5dc",
-      -- '#f4a460',
-      -- '#f08080',
+-- '#ee82ee',
+-- '#90ee90',
+-- '#32cd32',
+-- '#ffa500',
+-- '#20b2aa',
+-- '#00ffff',
+-- '#d8bfd8',
+-- '#40e0d0',
+-- '#ffe4c4',
+-- '#faebd7',
+-- "#f5f5dc",
+-- '#f4a460',
+-- '#f08080',
 
 -- private static readonly names = {
 --     aliceblue: "#f0f8ff",

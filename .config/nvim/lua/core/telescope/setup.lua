@@ -24,9 +24,16 @@ telescope.setup {
     },
   },
 
+  pickers = {
+    find_files = {
+      hidden = true,
+    },
+  },
+
   extensions = {
     file_browser = {
       initial_mode = 'normal',
+      hidden = true,
     },
     fzf = {
       fuzzy = true,
@@ -39,4 +46,3 @@ telescope.setup {
 
 telescope.load_extension 'file_browser'
 telescope.load_extension 'fzf'
-
