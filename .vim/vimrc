@@ -6,41 +6,33 @@ let $RC="$HOME/.vim/vimrc"
 
 set exrc
 set noerrorbells
+set belloff=all
+set noswapfile
 
 filetype plugin indent on
 syntax on
 set hidden
 set noswapfile
-set shiftwidth=2
-set tabstop=2 softtabstop=2
-set expandtab autoindent smartindent
-set relativenumber
-set nu
-set scrolloff=10
-set mouse=a
-set nowrap
-set cmdheight=1
-"set number
-"set termguicolors
-"set columns=80
-"set colorcolumn=80
-"set signcolumn=yes
-"set t_Co=256
-
-set hlsearch
 set incsearch
-"set nohlsearch
-"set ignorecase
-"set smartcase  " Turns into case sensitive if uppercase is present in search
-
-" Handles history/backup files/directory
-"set noswapfile
-"set nobackup
-"set undir=~/.vim/undodir
-"set undofile
-
+set ignorecase
+set smartcase
+set termguicolors
+set cmdheight=1
+set mouse=a
+set relativenumber
+set number
+set cursorline
+set scrolloff=10
+set sidescrolloff=10
+set autoindent smartindent
+set expandtab
+set tabstop=2 softtabstop=2
+set shiftwidth=2
+set nowrap
+set hlsearch
+set splitbelow
+set splitright
 setlocal path=.,**
-
 
 " Vim-Plug -------------------------------------------------
 
@@ -58,58 +50,30 @@ autocmd VimEnter *
   \| endif
 
 
-" Set rtp to run ~/.vim/autoload TODO: Necessary?
+" Set rtp to run ~/.vim/autoload
 "set rtp+=~/.vim/autoload
 
-"call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
 call plug#begin('~/.vim/plugged')
 
-
-" Main -----------------------
 Plug 'junegunn/vim-plug'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-surround'
 Plug 'easymotion/vim-easymotion'
-
-
-" Themes ---------------------
-"Plug 'ryanoasis/vim-devicons'
 Plug 'ackyshake/Spacegray.vim'
-"Plug 'gruvbox-community/gruvbox'
-"Plug 'joshdick/onedark.vim'
-"Plug 'dracula/vim', {'as': 'dracula'}
-"
-"Plug 'lukas-reineke/indent-blankline.nvim'
-
+Plug 'gruvbox-community/gruvbox'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-" Plug 'edkolev/tmuxline.vim'
-
-" Others ---------------------
-"Plug 'tpope/vim-surround'
-"Plug 'preservim/nerdtree'
-"Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-"Plug 'neoclide/coc.nvim', {'branch': 'release'}
-"Plug 'airblade/vim-gitgutter'
-
-"Plug 'scrooloose/nerdcommenter'
-"Plug 'kevinoid/vim-jsonc'
-
-"Plug 'psf/black', { 'branch': 'stable' }
-
-"Plug 'mhinz/vim-startify'
 
 call plug#end()
 
-"" Themes --------------------------------------------------
+" Colors --------------------------------------------------
 
-colorscheme spacegray
-"colorscheme gruvbox
+"colorscheme spacegray
+colorscheme gruvbox
 "colorscheme onedark
 "colorscheme dracula
 
-"" Airline -------------------
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ''
 let g:airline#extensions#tabline#left_alt_sep = ''
@@ -120,7 +84,8 @@ let g:airline_right_alt_sep = ''
 "let g:airline_inactive_collapse=1
 "let showtabline=2
 
-let g:airline_theme='deus'
+"let g:airline_theme='deus'
+let g:airline_theme='gruvbox'
 "let g:airline_theme='bubblegum'
 "let g:airline_theme='base16'
 "let g:airline_theme='minimalist'
@@ -128,22 +93,12 @@ let g:airline_theme='deus'
 "let g:airline_theme='simple'
 "let g:airline_theme='wombat'
 "let g:airline_theme='jellybeans'
-"let g:airline_theme='gruvbox'
-
-" tmuxline
-" let g:airline#extensions#tmuxline#enabled=0
 
 "set background=dark
 "highlight Normal guibg=none
 
-
-"highlight CursorLine ctermbg=255 guibg=#303030
-"highlight CursorLineNr ctermfg=208 guifg=#FFB13B
-"highlight CursorLine guibg=0
-
-highlight LineNr guifg=#585858
-highlight CursorLine guibg=#1c1c1c
-highlight CursorLineNr guifg=#FFB13B
+highlight CursorLine ctermbg=none guibg=none
+highlight CursorLineNr ctermfg=214 guifg=#FFAF00
 
 "LineNr         xxx ctermfg=8 guifg=#3E4853 guibg=#111314
 "LineNrAbove    xxx links to LineNr
@@ -158,50 +113,13 @@ let &t_SI.="\e[5 q" " SI = INSERT mode
 let &t_SR.="\e[4 q" " SR = REPLACE mode
 let &t_EI.="\e[2 q" " EI = NORMAL mode (ELSE)
 
-"" Normal Mode
 nnoremap <silent> <leader>wr :w<CR>
+nnoremap <silent> <leader>wa :wa<CR>
+nnoremap <silent> <leader>bd :bd<CR>
 nnoremap <silent> <leader>n :noh<CR>
 nnoremap <silent> <leader>w <C-w>
-nnoremap <silent> <leader>e :Lex 20<CR>
-nnoremap <silent> <C-j> 5j
-nnoremap <silent> <C-k> 5k
 
-"" Insert Mode
-
-"" TODO: Move lines up and down with alt/option key
-"nnoremap <M-j> :m .+1<CR>==
-"nnoremap <M-k> :m .-2<CR>==
-"nnoremap <A-j> :m .+1<CR>==
-"nnoremap <A-k> :m .-2<CR>==
-
-"" TODO: Resize windows with arrow keys
-"nnoremap <leader><C-Left> :vertical resize -2<CR>
-"nnoremap <leader><C-Right> :vertical resize +2<CR>
-"nnoremap <leader><C-Up> :resize -2<CR>
-"nnoremap <leader><C-Down> :resize +2<CR>
-
-"" TODO: move to python.vim in after/ftplugin?
-nnoremap <silent> <leader>py :w !python<CR>
-nnoremap <silent> <leader>pi :term python % <CR>
-
-"nnoremap <leader>f :Black<CR>
-
-" fzf ------------------------------------------------------
-
-"command! -bang -nargs=? -complete=dir Files
-"    \ call fzf#vim#files(<q-args>, {'options': ['--height=40%', '--layout=reverse', '--info=inline']}, <bang>0)
-
-"command! -bang -nargs=? -complete=dir Files
-"    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)
-
-"command! -bang -nargs=* Rg
-"  \ call fzf#vim#grep(
-"  \   'rg --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
-"  \   fzf#vim#with_preview(), <bang>0)
-"
-"command! -bang -nargs=? -complete=dir Files
-"  \ call fzf#vim#files(<q-args>, <bang>0 ? fzf#vim#with_preview('up:60%') : {}, <bang>0)
-
-nnoremap <silent> <leader>ff :Files<CR>
-nnoremap <silent> <leader>FF :Files!<CR>
+nnoremap <silent> Y y$
+vnoremap <silent> <leader>y "*y
+nnoremap <silent> <leader>Y "*Y
 
