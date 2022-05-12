@@ -10,7 +10,7 @@ local actions = prequire 'telescope.actions'
 
 telescope.setup {
   defaults = {
-    sorting_strategy = "ascending",
+    sorting_strategy = 'ascending',
     layout_strategy = 'flex',
     layout_config = {
       prompt_position = 'top',
@@ -18,10 +18,11 @@ telescope.setup {
     color_devicons = true,
     mappings = {
       i = {
-        ["<C-j>"] = actions.move_selection_next,
-        ["<C-k>"] = actions.move_selection_previous,
+        ['<C-j>'] = actions.move_selection_next,
+        ['<C-k>'] = actions.move_selection_previous,
       }
     },
+    file_ignore_patterns = { '^.git/', '^node_modules/' },
   },
 
   pickers = {
@@ -39,7 +40,7 @@ telescope.setup {
       fuzzy = true,
       override_generic_sorter = true,
       override_file_sorter = true,
-      case_mode = "smart_case",
+      case_mode = 'smart_case',
     },
   },
 }
