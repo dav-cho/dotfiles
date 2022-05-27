@@ -21,7 +21,7 @@ map_tele('<leader>ff', 'find_files', 'builtin')
 map_tele('<leader>bb', 'file_browser.file_browser', 'extensions')
 
 map_tele('<leader>gr', 'grep_string', 'builtin')
-map_tele('<leader>lg', 'live_grep', 'builtin')
+map_tele('<leader>ll', 'live_grep', 'builtin')
 map_tele('<leader>bf', 'current_buffer_fuzzy_find', 'builtin')
 
 -- Vim Pickers
