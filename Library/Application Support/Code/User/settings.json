@@ -46,6 +46,9 @@
   "workbench.editorAssociations": {
     "*.ipynb": "jupyter-notebook"
   },
+  "[markdown]": {
+    "files.trimTrailingWhitespace": false
+  },
 
   "prettier.singleQuote": true,
   "prettier.arrowParens": "avoid",
