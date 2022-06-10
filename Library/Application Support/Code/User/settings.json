@@ -1,15 +1,13 @@
 {
-  "workbench.colorTheme": "Material Theme Darker High Contrast",
   "workbench.iconTheme": "eq-material-theme-icons",
   "workbench.list.automaticKeyboardNavigation": false,
-  "editor.fontFamily": "Rec Mono Custom Linear, Jetbrains Mono, SF Mono, RobotoMono Nerd Font, Operator Mono Lig, Operator Mono, Menlo, Monaco, Fira Code, sans serif",
-  // "editor.letterSpacing": 0.1,
+  "editor.fontFamily": "JetBrainsMono Nerd Font, SauceCodePro Nerd Font, Rec Mono Custom Linear, SF Mono, RobotoMono Nerd Font, Operator Mono Lig, Operator Mono, Menlo, Monaco, Fira Code, sans serif",
   "editor.fontLigatures": true,
   "editor.fontSize": 14,
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
   "editor.useTabStops": true,
-  "editor.cursorSurroundingLines": 5,
+  "editor.cursorSurroundingLines": 10,
   "editor.lineNumbers": "relative",
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": "active",
@@ -80,19 +78,25 @@
   "vim.normalModeKeyBindingsNonRecursive": [
     {
       "before": ["<leader>", "w", "r"],
-      "commands": ["workbench.action.files.save"]
+      "commands": ["workbench.action.files.save"],
+      "silent": true
     },
     {
       "before": ["<leader>", "w", "a"],
-      "commands": ["workbench.action.files.saveFiles"]
+      "commands": ["workbench.action.files.saveFiles"],
+      "silent": true
     },
     {
       "before": ["<leader>", "f", "m"],
       "commands": ["editor.action.formatDocument"]
     },
     {
-      "before": ["<leader>", "n"],
-      "commands": [":nohl"]
+      "before": ["<leader>", "f", "f"],
+      "commands": ["workbench.action.quickOpen"]
+    },
+    {
+      "before": ["<leader>", "l", "l"],
+      "commands": ["workbench.action.findInFiles"]
     },
     {
       "before": ["<S-y>"],
@@ -101,6 +105,22 @@
     {
       "before": ["<leader>", "<S-y>"],
       "after": ["\"", "*", "y", "$"]
+    },
+    {
+      "before": ["g", "t"],
+      "commands": ["workbench.action.nextEditor"]
+    },
+    {
+      "before": ["g", "T"],
+      "commands": ["workbench.action.previousEditor"]
+    },
+    {
+      "before": ["<leader>", "n"],
+      "commands": [":nohl"]
+    },
+    {
+      "before": ["<leader>", "t", "m"],
+      "commands": ["editor.action.toggleMinimap"]
     },
     {
       "before": ["<leader>", "f", "f"],
@@ -187,14 +207,6 @@
       "commands": ["workbench.action.toggleSidebarVisibility"]
     },
     {
-      "before": ["0"],
-      "after": ["^"]
-    },
-    {
-      "before": ["^"],
-      "after": ["0"]
-    },
-    {
       "before": ["<leader>", "y"],
       "after": ["\"", "*", "y"]
     },
@@ -210,12 +222,16 @@
 
   "editor.tokenColorCustomizations": {
     "[Material Theme Darker High Contrast]": {
-      "comments": "#666666",
+      "comments": "#888",
       "textMateRules": [
         {
-          "scope": ["string.quoted.docstring.multi.python"],
+          "scope": [
+            "comment",
+            "string.quoted.docstring.multi.python",
+            "punctuation.definition.comment.python"
+          ],
           "settings": {
-            "foreground": "#666666"
+            "foreground": "#888"
           }
         }
       ]
@@ -224,6 +240,18 @@
 
   "terminal.integrated.fontSize": 14,
   "workbench.colorCustomizations": {
+    "[Default Dark+]": {
+      "editor.background": "#111",
+      "breadcrumb.background": "#111",
+      "tab.inactiveBackground": "#222",
+      "titleBar.activeBackground": "#222",
+      "activityBar.background": "#222",
+      "sideBar.background": "#222",
+      "statusBar.background": "#222",
+      "statusBar.noFolderBackground": "#222"
+      // "statusBar.background": "#64529f",
+      // "statusBar.noFolderBackground": "#64529f"
+    },
     "terminal.background": "#000000",
     "terminal.foreground": "#D0D0D0",
     "terminalCursor.background": "#D0D0D0",
