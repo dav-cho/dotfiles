@@ -67,16 +67,6 @@
   },
   "vim.normalModeKeyBindings": [
     {
-      "before": ["<leader>", "e"],
-      "commands": ["workbench.view.explorer"]
-    },
-    {
-      "before": ["<leader>", "b"],
-      "commands": ["workbench.action.toggleSidebarVisibility"]
-    }
-  ],
-  "vim.normalModeKeyBindingsNonRecursive": [
-    {
       "before": ["<leader>", "w", "r"],
       "commands": ["workbench.action.files.save"],
       "silent": true
@@ -99,12 +89,13 @@
       "commands": ["workbench.action.findInFiles"]
     },
     {
-      "before": ["<S-y>"],
-      "after": ["y", "$"]
+      "before": ["<leader>", "e"],
+      "commands": ["workbench.view.explorer"]
+      // "commands": ["workbench.view.explorer", "workbench.action.focusSideBar"]
     },
     {
-      "before": ["<leader>", "<S-y>"],
-      "after": ["\"", "*", "y", "$"]
+      "before": ["<leader>", "b"],
+      "commands": ["workbench.action.toggleSidebarVisibility"]
     },
     {
       "before": ["g", "t"],
@@ -113,10 +104,6 @@
     {
       "before": ["g", "T"],
       "commands": ["workbench.action.previousEditor"]
-    },
-    {
-      "before": ["<leader>", "n"],
-      "commands": [":nohl"]
     },
     {
       "before": ["<leader>", "t", "m"],
@@ -157,9 +144,22 @@
     {
       "before": ["g", "L"],
       "commands": ["editor.action.marker.prev"]
+    },
+    {
+      "before": ["<S-y>"],
+      "after": ["y", "$"]
+    },
+    {
+      "before": ["<leader>", "<S-y>"],
+      "after": ["\"", "*", "y", "$"]
+    },
+    {
+      "before": ["<leader>", "n"],
+      "commands": [":nohl"]
     }
   ],
-  "vim.insertModeKeyBindingsNonRecursive": [
+  "vim.normalModeKeyBindingsNonRecursive": [],
+  "vim.insertModeKeyBindings": [
     {
       "before": ["ø"],
       "after": ["<ESC>", "o"]
@@ -185,18 +185,33 @@
       "after": ["<ESC>", "d"]
     }
   ],
-  "vim.visualModeKeyBindingsNonRecursive": [
+  "vim.insertModeKeyBindingsNonRecursive": [],
+  "vim.visualModeKeyBindings": [
+    {
+      "before": ["<leader>", "l"],
+      "commands": ["turboConsoleLog.displayLogMessage"]
+    },
     {
       "before": ["<leader>", "w", "r"],
-      "commands": ["workbench.action.files.save"]
+      "commands": ["workbench.action.files.save"],
+      "silent": true
     },
     {
       "before": ["<leader>", "w", "a"],
-      "commands": ["workbench.action.files.saveFiles"]
+      "commands": ["workbench.action.files.saveFiles"],
+      "silent": true
     },
     {
-      "before": ["<leader>", "f"],
+      "before": ["<leader>", "f", "m"],
       "commands": ["editor.action.formatDocument"]
+    },
+    {
+      "before": ["<leader>", "f", "f"],
+      "commands": ["workbench.action.quickOpen"]
+    },
+    {
+      "before": ["<leader>", "l", "l"],
+      "commands": ["workbench.action.findInFiles"]
     },
     {
       "before": ["<leader>", "e"],
@@ -207,18 +222,63 @@
       "commands": ["workbench.action.toggleSidebarVisibility"]
     },
     {
+      "before": ["g", "t"],
+      "commands": ["workbench.action.nextEditor"]
+    },
+    {
+      "before": ["g", "T"],
+      "commands": ["workbench.action.previousEditor"]
+    },
+    {
+      "before": ["<leader>", "t", "m"],
+      "commands": ["editor.action.toggleMinimap"]
+    },
+    {
+      "before": ["<leader>", "f", "f"],
+      "commands": ["workbench.action.quickOpen"]
+    },
+    {
+      "before": ["<leader>", "t", "t"],
+      "commands": ["terminal.focus"]
+    },
+    {
+      "before": ["<leader>", "t", "n"],
+      "commands": ["workbench.action.terminal.new"]
+    },
+    {
+      "before": ["<leader>", "t", "e"],
+      "commands": ["workbench.action.terminal.openNativeConsole"]
+    },
+    {
+      "before": ["<leader>", "t", "j"],
+      "commands": ["workbench.action.terminal.focusNext"]
+    },
+    {
+      "before": ["<leader>", "t", "k"],
+      "commands": ["workbench.action.terminal.focusPrevious"]
+    },
+    {
+      "before": ["<leader>", "t", "d"],
+      "commands": ["workbench.action.terminal.kill"]
+    },
+    {
+      "before": ["g", "l"],
+      "commands": ["editor.action.marker.next"]
+    },
+    {
+      "before": ["g", "L"],
+      "commands": ["editor.action.marker.prev"]
+    },
+    {
       "before": ["<leader>", "y"],
       "after": ["\"", "*", "y"]
     },
     {
       "before": ["<leader>", "<S-y>"],
       "after": ["\"", "*", "Y"]
-    },
-    {
-      "before": ["<leader>", "l"],
-      "commands": ["turboConsoleLog.displayLogMessage"]
     }
   ],
+  "vim.visualModeKeyBindingsNonRecursive": [],
 
   "editor.tokenColorCustomizations": {
     "[Material Theme Darker High Contrast]": {
@@ -247,30 +307,12 @@
       "titleBar.activeBackground": "#222",
       "activityBar.background": "#222",
       "sideBar.background": "#222",
-      "statusBar.background": "#222",
-      "statusBar.noFolderBackground": "#222"
+      // "statusBar.background": "#222",
+      // "statusBar.noFolderBackground": "#222"
+      "statusBar.background": "#4e407b",
+      "statusBar.noFolderBackground": "#4e407b"
       // "statusBar.background": "#64529f",
       // "statusBar.noFolderBackground": "#64529f"
-    },
-    "terminal.background": "#000000",
-    "terminal.foreground": "#D0D0D0",
-    "terminalCursor.background": "#D0D0D0",
-    "terminalCursor.foreground": "#D0D0D0",
-    "terminal.ansiBlack": "#000000",
-    "terminal.ansiBlue": "#0E5A94",
-    "terminal.ansiBrightBlack": "#505050",
-    "terminal.ansiBrightBlue": "#0E5A94",
-    "terminal.ansiBrightCyan": "#00AABB",
-    "terminal.ansiBrightGreen": "#37B349",
-    "terminal.ansiBrightMagenta": "#B31E8D",
-    "terminal.ansiBrightRed": "#EB008A",
-    "terminal.ansiBrightWhite": "#FFFFFF",
-    "terminal.ansiBrightYellow": "#F8CA12",
-    "terminal.ansiCyan": "#00AABB",
-    "terminal.ansiGreen": "#37B349",
-    "terminal.ansiMagenta": "#B31E8D",
-    "terminal.ansiRed": "#EB008A",
-    "terminal.ansiWhite": "#D0D0D0",
-    "terminal.ansiYellow": "#F8CA12"
+    }
   }
 }

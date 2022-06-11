@@ -1,6 +1,11 @@
 // Place your key bindings in this file to override the defaultsauto[]
 [
   {
+    "key": "ctrl+/",
+    "command": "editor.action.commentLine",
+    "when": "editorTextFocus && !editorReadOnly"
+  },
+  {
     "key": "cmd+n",
     "command": "explorer.newFile"
   },
@@ -22,8 +27,18 @@
   },
   {
     "key": ", e",
+    "command": "workbench.view.explorer",
+    "when": "!editorIsOpen"
+  },
+  {
+    "key": ", e",
     "command": "workbench.action.focusActiveEditorGroup",
     "when": "!editorTextFocus"
+  },
+  {
+    "key": ", e",
+    "command": "workbench.view.explorer",
+    "when": "!editorIsOpen"
   },
   {
     "key": ", b",
