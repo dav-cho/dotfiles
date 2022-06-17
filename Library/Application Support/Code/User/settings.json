@@ -13,8 +13,9 @@
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": "active",
   "explorer.compactFolders": false,
-  "files.trimTrailingWhitespace": true,
   "editor.acceptSuggestionOnCommitCharacter": false,
+  "files.trimTrailingWhitespace": true,
+  "terminal.integrated.fontSize": 14,
   "terminal.external.osxExec": "iTerm.app",
   "window.newWindowDimensions": "offset",
   "workbench.startupEditor": "none",
@@ -38,6 +39,9 @@
   },
   "go.toolsManagement.autoUpdate": true,
   "python.defaultInterpreterPath": "/Users/dav/.pyenv/versions/3.9.6/bin/python",
+  "python.formatting.provider": "black",
+  "python.analysis.typeCheckingMode": "basic",
+  // "python.analysis.autoImportCompletions": true,
   "[python]": {
     "editor.defaultFormatter": null,
     "editor.tabSize": 4,
@@ -45,7 +49,6 @@
     "editor.useTabStops": true,
     "gitlens.codeLens.symbolScopes": ["!Module"]
   },
-  "python.formatting.provider": "black",
   "workbench.editorAssociations": {
     "*.ipynb": "jupyter-notebook"
   },
@@ -303,7 +306,6 @@
     }
   },
 
-  "terminal.integrated.fontSize": 14,
   "workbench.colorCustomizations": {
     // "[Default Dark+]": {
     //   "editor.background": "#111",

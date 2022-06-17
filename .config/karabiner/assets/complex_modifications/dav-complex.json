@@ -2,7 +2,7 @@
   "title": "dav complex modifications",
   "rules": [
     {
-      "description": "control mod-tap escape",
+      "description": "left control mod-tap escape",
       "manipulators": [
         {
           "type": "basic",
@@ -14,7 +14,7 @@
           },
           "to": [
             {
-              "key_code": "control",
+              "key_code": "left_control",
               "lazy": true
             }
           ],
@@ -182,7 +182,7 @@
       ]
     },
     {
-      "description": "space+enter simultaneous fn active",
+      "description": "space+backspace to delete",
       "manipulators": [
         {
           "type": "basic",
@@ -192,11 +192,11 @@
                 "key_code": "spacebar"
               },
               {
-                "key_code": "return_or_enter"
+                "key_code": "delete_or_backspace"
               }
             ],
             "simultaneous_options": {
-              "key_down_order": "insensitive"
+              "key_down_order": "strict"
             },
             "modifiers": {
               "optional": ["any"]
@@ -204,282 +204,12 @@
           },
           "to": [
             {
-              "set_variable": {
-                "name": "space_enter_fn_simultaneous",
-                "value": 1
-              }
+              "key_code": "delete_forward"
             }
           ],
-          "to_if_alone": [
-            {
-              "key_code": "spacebar"
-            }
-          ],
-          "to_after_key_up": [
-            {
-              "set_variable": {
-                "name": "space_enter_fn_simultaneous",
-                "value": 0
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "description": "space+enter simultaneous fn",
-      "manipulators": [
-        {
-          "type": "basic",
-          "from": {
-            "key_code": "1",
-            "modifiers": {
-              "optional": ["any"]
-            }
-          },
-          "to": [
-            {
-              "key_code": "f1"
-            }
-          ],
-          "conditions": [
-            {
-              "type": "variable_if",
-              "name": "space_enter_fn_simultaneous",
-              "value": 1
-            }
-          ]
-        },
-        {
-          "type": "basic",
-          "from": {
-            "key_code": "2",
-            "modifiers": {
-              "optional": ["any"]
-            }
-          },
-          "to": [
-            {
-              "key_code": "f2"
-            }
-          ],
-          "conditions": [
-            {
-              "type": "variable_if",
-              "name": "space_enter_fn_simultaneous",
-              "value": 1
-            }
-          ]
-        },
-        {
-          "type": "basic",
-          "from": {
-            "key_code": "3",
-            "modifiers": {
-              "optional": ["any"]
-            }
-          },
-          "to": [
-            {
-              "key_code": "f3"
-            }
-          ],
-          "conditions": [
-            {
-              "type": "variable_if",
-              "name": "space_enter_fn_simultaneous",
-              "value": 1
-            }
-          ]
-        },
-        {
-          "type": "basic",
-          "from": {
-            "key_code": "4",
-            "modifiers": {
-              "optional": ["any"]
-            }
-          },
-          "to": [
-            {
-              "key_code": "f4"
-            }
-          ],
-          "conditions": [
-            {
-              "type": "variable_if",
-              "name": "space_enter_fn_simultaneous",
-              "value": 1
-            }
-          ]
-        },
-        {
-          "type": "basic",
-          "from": {
-            "key_code": "5",
-            "modifiers": {
-              "optional": ["any"]
-            }
-          },
-          "to": [
-            {
-              "key_code": "f5"
-            }
-          ],
-          "conditions": [
-            {
-              "type": "variable_if",
-              "name": "space_enter_fn_simultaneous",
-              "value": 1
-            }
-          ]
-        },
-        {
-          "type": "basic",
-          "from": {
-            "key_code": "6",
-            "modifiers": {
-              "optional": ["any"]
-            }
-          },
-          "to": [
-            {
-              "key_code": "f6"
-            }
-          ],
-          "conditions": [
-            {
-              "type": "variable_if",
-              "name": "space_enter_fn_simultaneous",
-              "value": 1
-            }
-          ]
-        },
-        {
-          "type": "basic",
-          "from": {
-            "key_code": "7",
-            "modifiers": {
-              "optional": ["any"]
-            }
-          },
-          "to": [
-            {
-              "key_code": "f7"
-            }
-          ],
-          "conditions": [
-            {
-              "type": "variable_if",
-              "name": "space_enter_fn_simultaneous",
-              "value": 1
-            }
-          ]
-        },
-        {
-          "type": "basic",
-          "from": {
-            "key_code": "8",
-            "modifiers": {
-              "optional": ["any"]
-            }
-          },
-          "to": [
-            {
-              "key_code": "f8"
-            }
-          ],
-          "conditions": [
-            {
-              "type": "variable_if",
-              "name": "space_enter_fn_simultaneous",
-              "value": 1
-            }
-          ]
-        },
-        {
-          "type": "basic",
-          "from": {
-            "key_code": "9",
-            "modifiers": {
-              "optional": ["any"]
-            }
-          },
-          "to": [
-            {
-              "key_code": "f9"
-            }
-          ],
-          "conditions": [
-            {
-              "type": "variable_if",
-              "name": "space_enter_fn_simultaneous",
-              "value": 1
-            }
-          ]
-        },
-        {
-          "type": "basic",
-          "from": {
-            "key_code": "0",
-            "modifiers": {
-              "optional": ["any"]
-            }
-          },
-          "to": [
-            {
-              "key_code": "f10"
-            }
-          ],
-          "conditions": [
-            {
-              "type": "variable_if",
-              "name": "space_enter_fn_simultaneous",
-              "value": 1
-            }
-          ]
-        },
-        {
-          "type": "basic",
-          "from": {
-            "key_code": "hyphen",
-            "modifiers": {
-              "optional": ["any"]
-            }
-          },
-          "to": [
-            {
-              "key_code": "f11"
-            }
-          ],
-          "conditions": [
-            {
-              "type": "variable_if",
-              "name": "space_enter_fn_simultaneous",
-              "value": 1
-            }
-          ]
-        },
-        {
-          "type": "basic",
-          "from": {
-            "key_code": "equal_sign",
-            "modifiers": {
-              "optional": ["any"]
-            }
-          },
-          "to": [
-            {
-              "key_code": "f12"
-            }
-          ],
-          "conditions": [
-            {
-              "type": "variable_if",
-              "name": "space_enter_fn_simultaneous",
-              "value": 1
-            }
-          ]
+          "parameters": {
+            "basic.simultaneous_threshold_milliseconds": 250
+          }
         }
       ]
     },
@@ -510,7 +240,7 @@
             }
           ],
           "parameters": {
-            "basic.simultaneous_threshold_milliseconds": 250
+            "basic.simultaneous_threshold_milliseconds": 50
           }
         },
         {
@@ -537,7 +267,7 @@
             }
           ],
           "parameters": {
-            "basic.simultaneous_threshold_milliseconds": 250
+            "basic.simultaneous_threshold_milliseconds": 50
           }
         },
         {
@@ -564,7 +294,7 @@
             }
           ],
           "parameters": {
-            "basic.simultaneous_threshold_milliseconds": 250
+            "basic.simultaneous_threshold_milliseconds": 50
           }
         },
         {
@@ -591,7 +321,7 @@
             }
           ],
           "parameters": {
-            "basic.simultaneous_threshold_milliseconds": 250
+            "basic.simultaneous_threshold_milliseconds": 50
           }
         },
         {
@@ -618,7 +348,7 @@
             }
           ],
           "parameters": {
-            "basic.simultaneous_threshold_milliseconds": 250
+            "basic.simultaneous_threshold_milliseconds": 50
           }
         },
         {
@@ -645,7 +375,7 @@
             }
           ],
           "parameters": {
-            "basic.simultaneous_threshold_milliseconds": 250
+            "basic.simultaneous_threshold_milliseconds": 50
           }
         },
         {
@@ -672,7 +402,7 @@
             }
           ],
           "parameters": {
-            "basic.simultaneous_threshold_milliseconds": 250
+            "basic.simultaneous_threshold_milliseconds": 50
           }
         },
         {
@@ -699,7 +429,7 @@
             }
           ],
           "parameters": {
-            "basic.simultaneous_threshold_milliseconds": 250
+            "basic.simultaneous_threshold_milliseconds": 50
           }
         },
         {
@@ -726,7 +456,7 @@
             }
           ],
           "parameters": {
-            "basic.simultaneous_threshold_milliseconds": 250
+            "basic.simultaneous_threshold_milliseconds": 50
           }
         },
         {
@@ -753,7 +483,7 @@
             }
           ],
           "parameters": {
-            "basic.simultaneous_threshold_milliseconds": 250
+            "basic.simultaneous_threshold_milliseconds": 50
           }
         },
         {
@@ -780,7 +510,7 @@
             }
           ],
           "parameters": {
-            "basic.simultaneous_threshold_milliseconds": 250
+            "basic.simultaneous_threshold_milliseconds": 50
           }
         },
         {
@@ -807,7 +537,7 @@
             }
           ],
           "parameters": {
-            "basic.simultaneous_threshold_milliseconds": 250
+            "basic.simultaneous_threshold_milliseconds": 50
           }
         }
       ]
