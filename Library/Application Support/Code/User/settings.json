@@ -8,7 +8,7 @@
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
   "editor.useTabStops": true,
-  "editor.cursorSurroundingLines": 10,
+  "editor.cursorSurroundingLines": 7,
   "editor.lineNumbers": "relative",
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": "active",
