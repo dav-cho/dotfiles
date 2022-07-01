@@ -5,32 +5,6 @@ local function prequire(module)
   vim.notify('~ ' .. module .. ' Call Error!')
 end
 
--- Word Highlighting
-local function lsp_highlight_document(client)
-  if client.resolved_capabilities.document_highlight then
-    local illuminate = prequire('illuminate')
-    illuminate.on_attach(client)
-  end
-end
-
--- Set autocommands conditional on server capabilities
--- if client.resolved_capabilities.document_highlight then
---   vim.cmd [[
---   augroup lsp_document_highlight
---   autocmd! * <buffer>
---   autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
---   autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
---   augroup END
---   ]]
--- end
---
--- require'lspconfig'.gopls.setup {
---   on_attach = function(client)
---     -- [[ other on_attach code ]]
---     require 'illuminate'.on_attach(client)
---   end,
--- }
-
 local lsp_keymaps = function(bufnr)
   local opts = { noremap = true, silent = true }
 
@@ -47,8 +21,16 @@ local lsp_keymaps = function(bufnr)
 
   -- vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
   -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>fm', '<cmd>lua vim.lsp.buf.formatting_sync()<CR>', opts)
+  -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>fm', '<cmd>Format<CR>', opts)
   vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting_sync()' ]]
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>fm', '<cmd>Format<CR>', opts)
+end
+
+-- Word Highlighting
+local function lsp_highlight_document(client)
+  if client.resolved_capabilities.document_highlight then
+    local illuminate = prequire('illuminate')
+    illuminate.on_attach(client)
+  end
 end
 
 local M = {}
@@ -115,6 +97,27 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local cmp_nvim_lsp = prequire('cmp_nvim_lsp')
 M.capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+
+
+
+
+-- Set autocommands conditional on server capabilities
+-- if client.resolved_capabilities.document_highlight then
+--   vim.cmd [[
+--   augroup lsp_document_highlight
+--   autocmd! * <buffer>
+--   autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+--   autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+--   augroup END
+--   ]]
+-- end
+--
+-- require'lspconfig'.gopls.setup {
+--   on_attach = function(client)
+--     -- [[ other on_attach code ]]
+--     require 'illuminate'.on_attach(client)
+--   end,
+-- }
 
 -- Enable some language servers with the additional completion capabilities offered by nvim-cmp
 -- local servers = {
