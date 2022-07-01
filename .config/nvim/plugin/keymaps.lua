@@ -7,6 +7,7 @@ end
 map('i', '<esc>', '<esc>', { nowait = true, silent = true })
 map('n', '<leader>wr', '<cmd>w<CR>', { silent = true })
 map('n', '<leader>wa', '<cmd>wa<CR>', { silent = true })
+map('n', '<leader>fm', '<cmd>lua vim.lsp.buf.formatting_sync()<CR>', { silent = true })
 map('n', '<leader>bd', '<cmd>bd<CR>', { silent = true })
 map('n', '<leader>n', '<cmd>noh<CR>', { silent = true })
 map('n', '<leader>w', '<C-w>', { silent = true })
@@ -31,3 +32,6 @@ map('n', '<leader>kk', '<cmd>move .-2<CR>==', { silent = true })
 -- map('v', '<leader>j', "<cmd>move \'>+1<CR> gv=gv", { silent = true })
 -- map('v', '<leader>k', "<cmd>move \'<-2<CR>gv=gv", { silent = true })
 
+-- Folds
+map('n', '<leader>mv', '<cmd>mkview<CR>')
+map('n', '<leader>lv', '<cmd>loadview<CR>')
