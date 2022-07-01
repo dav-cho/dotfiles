@@ -65,7 +65,7 @@
       "float" : 0
     },
     "hideMenubarIcon" : {
-      "bool" : false
+      "bool" : true
     },
     "ignoredSnapAreas" : {
       "int" : 0
@@ -144,6 +144,9 @@
     },
     "specifiedWidth" : {
       "float" : 1128
+    },
+    "stageSize" : {
+      "float" : 190
     },
     "subsequentExecutionMode" : {
       "int" : 0
@@ -287,5 +290,5 @@
       "modifierFlags" : 1835008
     }
   },
-  "version" : "62"
+  "version" : "63"
 }
