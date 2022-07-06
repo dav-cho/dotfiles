@@ -1,3 +1,6 @@
+-- TODO:
+-- check plugins.lua 'Auto Install Packer'
+
 local download_packer = function()
   if vim.fn.input "Download Packer? (y for yes)" ~= "y" then
     return

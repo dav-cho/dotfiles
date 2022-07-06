@@ -1,14 +1,18 @@
 -- Globals that should always be visible.
-require "dav.globals"
+-- TODO
+-- require "dav.globals"
 
 -- TODO
--- if require "user.first_load"() then
--- 	return
--- end
+if require "dav.first_load"() then
+	return
+end
 
 vim.g.mapleader = ","
 
 -- TODO
--- require "user.disable_builtin"
+-- require "dav.disable_builtin"
 
-require "dav.lsp"
+-- require "dav.lsp"
+-- require "dav.telescope.setup"
+-- require "dav.plugins" -- need?
+-- require "dav.themes"
