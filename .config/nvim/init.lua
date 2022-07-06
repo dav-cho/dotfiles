@@ -1,8 +1,14 @@
-vim.g.mapleader = ','
-vim.g.maplocalleader = ','
+-- Globals that should always be visible.
+require "dav.globals"
 
-require 'core.plugins'
-require 'core.colorscheme'
-require 'core.lsp'
-require 'core.telescope'
+-- TODO
+-- if require "user.first_load"() then
+-- 	return
+-- end
 
+vim.g.mapleader = ","
+
+-- TODO
+-- require "user.disable_builtin"
+
+require "dav.lsp"
