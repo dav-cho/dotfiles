@@ -13,6 +13,6 @@ vim.g.mapleader = ","
 -- require "dav.disable_builtin"
 
 -- require "dav.lsp"
--- require "dav.telescope.setup"
--- require "dav.plugins" -- need?
+require "dav.telescope"
+require "dav.plugins" -- need?
 -- require "dav.themes"

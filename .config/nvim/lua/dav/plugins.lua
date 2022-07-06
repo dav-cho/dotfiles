@@ -37,7 +37,8 @@ return require ("packer").startup(function()
  	use 'nvim-lua/popup.nvim'
  	use 'kyazdani42/nvim-web-devicons'
  	use 'nvim-lualine/lualine.nvim'
- 	use 'akinsho/bufferline.nvim'
+ 	-- use 'akinsho/bufferline.nvim'
+	use {'akinsho/bufferline.nvim', tag = "v2.*"}
 
  	-- LSP --
  	use 'neovim/nvim-lspconfig'

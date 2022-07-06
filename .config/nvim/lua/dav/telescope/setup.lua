@@ -17,7 +17,7 @@ local actions = require "telescope.actions"
 --   action_state.get_current_picker(prompt_bufnr):reset_prompt(entry.ordinal)
 -- end
 
-telescope.setup {
+require("telescope").setup {
   defaults = {
     sorting_strategy = 'ascending',
 
@@ -79,5 +79,5 @@ telescope.setup {
   },
 }
 
-telescope.load_extension 'file_browser'
-telescope.load_extension 'fzf'
+require("telescope").load_extension 'file_browser'
+require("telescope").load_extension 'fzf'
