@@ -15,4 +15,4 @@ vim.g.mapleader = ","
 -- require "dav.lsp"
 require "dav.telescope"
 require "dav.plugins" -- need?
--- require "dav.themes"
+require "dav.themes"
