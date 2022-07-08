@@ -45,6 +45,12 @@ alias la="ls -a"
 alias lt="lsd --tree"
 alias ltd="lsd --tree --depth"
 
+alias gwt="git worktree"
+alias gwtl="git worktree list"
+alias gwta="git worktree add"
+alias gwtr="git worktree remove"
+alias gnoignore="git update-index --no-assume-unchanged"
+
 if [ -d "$HOME/.config/bin" ]; then
   export PATH="$HOME/.config/bin:$PATH"
 fi
