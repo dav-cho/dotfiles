@@ -11,7 +11,7 @@ vim.g.mapleader = ","
 -- vim.g.maplocalleader = ',' -- TODO: need?
 
 -- require "dav.disable_builtin" -- TODO
-require "dav.plugins" -- TODO: need? way to autoload?
+require "dav.plugins"
 require "dav.themes" -- TODO
 require "dav.lsp"
 require "dav.telescope"

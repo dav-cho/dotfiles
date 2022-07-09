@@ -9,8 +9,8 @@ opt.swapfile = false
 opt.cmdheight = 1
 opt.pumheight = 10
 opt.pumblend = 17
-opt.completeopt = { "menu", "menuone", "noselect" }
 opt.wrap = false
+-- opt.completeopt = { "menu", "menuone", "noselect" } -- Moved to completion.lua
 
 opt.incsearch = true
 opt.ignorecase = true
