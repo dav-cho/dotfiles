@@ -46,71 +46,71 @@ local use = packer.use
 packer.startup {
   function()
     -- Main --
-    use 'wbthomason/packer.nvim'
-    use 'nvim-lua/plenary.nvim'
-    use 'nvim-lua/popup.nvim'
-    use 'kyazdani42/nvim-web-devicons'
-    use 'nvim-lualine/lualine.nvim'
-    -- use 'akinsho/bufferline.nvim'
-    use {'akinsho/bufferline.nvim', tag = "v2.*"}
-
-    -- LSP --
-    use 'neovim/nvim-lspconfig'
-    use 'williamboman/nvim-lsp-installer'
-    use 'b0o/SchemaStore.nvim'
-    use 'jose-elias-alvarez/null-ls.nvim'
-    use 'RRethy/vim-illuminate'
-
-     -- Completion --
-     use 'hrsh7th/nvim-cmp'
-     use 'hrsh7th/cmp-buffer'
-     use 'hrsh7th/cmp-path'
-     use 'hrsh7th/cmp-cmdline'
-     use "hrsh7th/cmp-nvim-lsp"
-     use 'hrsh7th/cmp-nvim-lua'
-     use 'saadparwaiz1/cmp_luasnip'
-
-     -- Snippets --
-     use 'L3MON4D3/LuaSnip'
-
-     -- Treesitter --
-     use {
-       'nvim-treesitter/nvim-treesitter',
-       run = ':TSUpdate'
-     }
-     use 'p00f/nvim-ts-rainbow'
-
-     -- Telescope --
-     use 'nvim-telescope/telescope.nvim'
-     use 'nvim-telescope/telescope-file-browser.nvim'
-     use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-
-     -- Vim --
-     use 'tpope/vim-surround' -- TODO: make it work with '.' (repeat command)
-     use 'easymotion/vim-easymotion'
-     use 'tpope/vim-repeat'
+    use "wbthomason/packer.nvim"
+    use "nvim-lua/plenary.nvim"
+    use "nvim-lua/popup.nvim"
+    use "kyazdani42/nvim-web-devicons"
+    use "nvim-lualine/lualine.nvim"
+    -- use "akinsho/bufferline.nvim"
+    use {"akinsho/bufferline.nvim", tag = "v2.*"}
 
     -- Themes --
     use "lunarvim/darkplus.nvim"
-    -- use 'folke/tokyonight.nvim'
-    -- use 'marko-cerovac/material.nvim'
+    -- use "folke/tokyonight.nvim"
+    -- use "marko-cerovac/material.nvim"
+
+    -- LSP --
+    use "neovim/nvim-lspconfig"
+    use "williamboman/nvim-lsp-installer"
+    use "b0o/SchemaStore.nvim"
+    use "jose-elias-alvarez/null-ls.nvim"
+    use "RRethy/vim-illuminate"
+
+     -- Completion --
+     use "hrsh7th/nvim-cmp"
+     use "hrsh7th/cmp-buffer"
+     use "hrsh7th/cmp-path"
+     use "hrsh7th/cmp-cmdline"
+     use "hrsh7th/cmp-nvim-lsp"
+     use "hrsh7th/cmp-nvim-lua"
+     use "saadparwaiz1/cmp_luasnip"
+
+     -- Snippets --
+     use "L3MON4D3/LuaSnip"
+
+     -- Treesitter --
+     use {
+       "nvim-treesitter/nvim-treesitter",
+       run = ":TSUpdate"
+     }
+     use "p00f/nvim-ts-rainbow"
+
+     -- Telescope --
+     use "nvim-telescope/telescope.nvim"
+     use "nvim-telescope/telescope-file-browser.nvim"
+     use {"nvim-telescope/telescope-fzf-native.nvim", run = "make" }
+
+     -- Vim --
+     use "tpope/vim-surround"
+     use "easymotion/vim-easymotion"
+     use "tpope/vim-repeat"
 
     -- Other --
-    use 'windwp/nvim-autopairs'
-    use 'windwp/nvim-ts-autotag'
-    use 'numToStr/Comment.nvim'
+    use "windwp/nvim-autopairs"
+    use "windwp/nvim-ts-autotag"
+    use "numToStr/Comment.nvim"
     use {
-      'prettier/vim-prettier',
-      run = 'yarn install --frozen-lockfile --production',
+      "prettier/vim-prettier",
+      run = "yarn install --frozen-lockfile --production",
     }
-    use 'norcalli/nvim-colorizer.lua'
-    use 'lewis6991/gitsigns.nvim'
+    use "norcalli/nvim-colorizer.lua"
+    use "lewis6991/gitsigns.nvim"
     
     -- TODO: how to get this from first_load?
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
     if packer_bootstrap then
-      require('packer').sync()
+      require("packer").sync()
     end
   end,
 
