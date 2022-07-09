@@ -1,37 +1,40 @@
-local function map(mode, before, after, opts)
-  local options = { noremap = true }
-  options = vim.tbl_deep_extend('force', options, opts or {})
-  vim.api.nvim_set_keymap(mode, before, after, options)
-end
+local nnoremap = require("dav.utils.keymap").nnoremap
+local inoremap = require("dav.utils.keymap").inoremap
+local vnoremap = require("dav.utils.keymap").vnoremap
 
-map('i', '<esc>', '<esc>', { nowait = true, silent = true })
-map('n', '<leader>wr', '<cmd>w<CR>', { silent = true })
-map('n', '<leader>wa', '<cmd>wa<CR>', { silent = true })
-map('n', '<leader>fm', '<cmd>lua vim.lsp.buf.formatting_sync()<CR>', { silent = true })
-map('n', '<leader>bd', '<cmd>bd<CR>', { silent = true })
-map('n', '<leader>n', '<cmd>noh<CR>', { silent = true })
-map('n', '<leader>w', '<C-w>', { silent = true })
-map('n', 'Y', 'y$', { silent = true })
-map('v', '<leader>y', '"*y', { silent = true })
-map('n', '<leader>Y', '"*Y', { silent = true })
+-- Main
+inoremap('<esc>', '<esc>', { nowait = true, silent = true })
 
-map('n', '<leader>hh', ':vert h ')
-map('n', '<leader>tt', ':Telescope ')
+nnoremap('<leader>wr', '<cmd>w<CR>', { silent = true })
+nnoremap('<leader>wa', '<cmd>wa<CR>', { silent = true })
+nnoremap('<leader>fm', vim.lsp.buf.formatting_sync, { silent = true })
+nnoremap('<leader>bd', '<cmd>bd<CR>', { silent = true })
+nnoremap('<leader>n', '<cmd>noh<CR>', { silent = true })
+nnoremap('<leader>w', '<C-w>', { silent = true })
+
+nnoremap('Y', 'y$', { silent = true })
+nnoremap('<leader>Y', '"*Y', { silent = true })
+vnoremap('<leader>y', '"*y', { silent = true })
+
+nnoremap('<leader>hh', ':vert h ')
+nnoremap('<leader>tt', ':Telescope ')
 
 -- Search behavior
-map('n', 'n', 'nzzzv', { silent = true })
-map('n', 'N', 'Nzzzv', { silent = true })
-map('n', '*', '*``', { silent = true })
-map('n', '#', '#``', { silent = true })
-
--- Moving Text
-map('n', '<leader>jj', '<cmd>move .+1<CR>==', { silent = true })
-map('n', '<leader>kk', '<cmd>move .-2<CR>==', { silent = true })
--- map('i', '<C-j>', '<esc><cmd>move .+1<CR>==i', { silent = true })
--- map('i', '<C-k>', '<esc><cmd>move .-2<CR>==i', { silent = true })
--- map('v', '<leader>j', "<cmd>move \'>+1<CR> gv=gv", { silent = true })
--- map('v', '<leader>k', "<cmd>move \'<-2<CR>gv=gv", { silent = true })
+nnoremap('n', 'nzzzv', { silent = true })
+nnoremap('N', 'Nzzzv', { silent = true })
+nnoremap('*', '*``', { silent = true })
+nnoremap('#', '#``', { silent = true })
 
 -- Folds
-map('n', '<leader>mv', '<cmd>mkview<CR>')
-map('n', '<leader>lv', '<cmd>loadview<CR>')
+nnoremap('<leader>mv', '<cmd>mkview<CR>')
+nnoremap('<leader>lv', '<cmd>loadview<CR>')
+
+-- TODO
+-- Moving Text
+-- nnoremap('<leader>jj', '<cmd>move .+1<CR>==', { silent = true })
+-- nnoremap('<leader>kk', '<cmd>move .-2<CR>==', { silent = true })
+-- nnoremap('<C-j>', '<esc><cmd>move .+1<CR>==i', { silent = true })
+-- nnoremap('<C-k>', '<esc><cmd>move .-2<CR>==i', { silent = true })
+-- nnoremap('<leader>j', "<cmd>move \'>+1<CR> gv=gv", { silent = true })
+-- nnoremap('<leader>k', "<cmd>move \'<-2<CR>gv=gv", { silent = true })
+
