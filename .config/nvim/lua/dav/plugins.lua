@@ -74,6 +74,7 @@ packer.startup {
      use "hrsh7th/cmp-nvim-lsp"
      use "hrsh7th/cmp-nvim-lua"
      use "saadparwaiz1/cmp_luasnip"
+     use "onsails/lspkind-nvim" -- TODO: use lspkind instead of local icons?
 
      -- Snippets --
      use "L3MON4D3/LuaSnip"

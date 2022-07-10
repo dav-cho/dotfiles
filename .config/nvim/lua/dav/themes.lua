@@ -1,3 +1,5 @@
+-- TODO: Transparent background on floats.
+
 vim.g.transparent_background = true
 
 local colorscheme = "darkplus"
@@ -12,3 +14,5 @@ vim.cmd "highlight CursorLine guibg=none"
 vim.cmd "highlight CursorLineNr guifg=#FFB13B"
 vim.cmd "highlight NormalFloat cterm=none gui=none guifg=none guibg=#1E1E1E"
 vim.cmd "highlight WinSeparator cterm=none gui=none guifg=none guibg=#1E1E1E"
+-- vim.cmd "highlight NormalFloat cterm=none gui=none guifg=none guibg=none"
+-- vim.cmd "highlight WinSeparator cterm=none gui=none guifg=none guibg=none"

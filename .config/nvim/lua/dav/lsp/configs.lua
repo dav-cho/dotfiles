@@ -1,79 +1,37 @@
 local buf_nnoremap = require("dav.utils.keymap").buf_nnoremap
 
-local ok, lsp_installer = pcall(require, "nvimj-lsp-installer")
-if not ok then
-  return
-end
-
-local ok, lspconfig = pcall(require, "lspconfig")
-if not ok then
-  return
-end
-
-local servers = {
-  pyright = true,
-
-  gopls = true,
-  -- TODO
-  -- gopls = {
-  --   cmd = { "gopls" },
-  -- },
-
-  tsserver = true,
-  -- TODO
-  -- tsserver = {
-  --   -- init_options = ts_utl.init_options, -- TODO
-  --   -- cmd = { "typescript-language-server", "--stio" }, -- TODO
-  --   filetypes = {
-  --     "javascript",
-  --     "javascriptreact",
-  --     "javascript.jsx",
-  --     "typescript",
-  --     "typescriptreact",
-  --     "typescript.tsx",
-  --   },
-  -- },
-
-  rust_analyzer = true,
-  kotlin_language_server = true,
-  bashls = true,
-  dockerls = true,
-  sqls = true,
-  jsonls = true,
-  yamlls = true,
-  sumneko_lua = true,
-  eslint = true,
-  html = true,
-  cssls = true,
-  cssmodules_ls = true,
-  emmet_ls = true,
-}
-
 local keymaps = function(bufnr)
   local opts = { silent = true }
 
-  buf_nnoremap(bufnr, "gD", vim.lsp.buf.declaration)
-  buf_nnoremap(bufnr, "gd", vim.lsp.buf.definition)
-  buf_nnoremap(bufnr, "gh", vim.lsp.buf.hover)
-  buf_nnoremap(bufnr, "gi", vim.lsp.buf.implementation)
-  buf_nnoremap(bufnr, "<C-k>", vim.lsp.buf.signature_help)
-  buf_nnoremap(bufnr, "gl", vim.diagnostic.open_float)
-  buf_nnoremap(bufnr, "<leader>D", vim.lsp.buf.type_definition)
-  buf_nnoremap(bufnr, "<leader>rn", vim.lsp.buf.rename)
-  buf_nnoremap(bufnr, "gr", vim.lsp.buf.references)
-  buf_nnoremap(bufnr, "<leader>ca", vim.lsp.buf.code_action)
+  buf_nnoremap(bufnr, "gD", vim.lsp.buf.declaration, opts)
+  buf_nnoremap(bufnr, "gd", vim.lsp.buf.definition, opts)
+  buf_nnoremap(bufnr, "gh", vim.lsp.buf.hover, opts)
+  buf_nnoremap(bufnr, "gi", vim.lsp.buf.implementation, opts)
+  buf_nnoremap(bufnr, "<C-k>", vim.lsp.buf.signature_help, opts)
+  buf_nnoremap(bufnr, "gl", vim.diagnostic.open_float, opts)
+  buf_nnoremap(bufnr, "<leader>D", vim.lsp.buf.type_definition, opts)
+  buf_nnoremap(bufnr, "<leader>rn", vim.lsp.buf.rename, opts)
+  buf_nnoremap(bufnr, "gr", vim.lsp.buf.references, opts)
+  buf_nnoremap(bufnr, "<leader>ca", vim.lsp.buf.code_action, opts)
 
   vim.cmd [[ command! Format execute "lua vim.lsp.buf.formatting_sync()" ]]
 end
 
--- Word Highlighting
 local highlight_document = function(client)
   if client.resolved_capabilities.document_highlight then
     require("illuminate").on_attach(client)
   end
 end
 
-local custom_attach = function(client, bufnr)
+local M = {}
+
+-- TODO
+-- M.on_init = function(client)
+--   client.config.flags = client.config.flags or {}
+--   client.config.flags.allow_incremental_sync = true
+-- end
+
+M.on_attach = function(client, bufnr)
   -- TODO: See last line in function.
   -- local filetype = vim.api.nvim_buf_get_option(0, "filetype")
 
@@ -98,64 +56,16 @@ local custom_attach = function(client, bufnr)
   -- filetype_attach[filetype](client)
 end
 
-local updated_capabilities = vim.lsp.make_client_capabilities()
--- updated_capabilities = require("cmp_nvim_lsp").update_capabilities(updated_capabilities) -- TODO: uncomment after setup cmp
+local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
+updated_capabilities = require("cmp_nvim_lsp").update_capabilities(updated_capabilities) -- TODO: uncomment after cmp setup
+updated_capabilities.textDocument.completion.completionItem.snippetSupport = true -- TODO: uncomment after luasnip setup
 
-local setup_server = function(server, config)
-  if not config then
-    return
-  end
+M.capabilities = updated_capabilities
 
-  if type(config) ~= "table" then
-    config = {}
-  end
+return M
 
-  config = vim.tbl_deep_extend("force", {
-    on_init = custom_init,
-    on_attach = custom_attach,
-    capbilities = updated_capbilities,
-    -- flags = {
-    --   debounce_text_changes = nil,
-    -- },
-  }, config)
 
-  lspconfig[server].setup(config)
-end
-
--- TODO
-lsp_installer.setup {
-  automatic_installation = false, -- TODO: need?
-  -- ensure_installed = {},
-}
---
--- require("nvim-lsp-installer").setup {
---   automatic_installation = false, -- TODO: need?
---   -- ensure_installed = {},
--- }
---
--- local list_servers = function(servers)
---   local list = {}
---   local i = 1
--- 
---   for server, _ in pairs(servers) do
---     list[i] = server
---     i += 1
---   end
--- 
---   return list
--- end
--- 
--- require("nvim-lsp-installer").setup {
---   automatic_installation = false,
---   -- ensure_installed = {},
---   ensure_installed = list_servers(servers),
--- }
-
-for server, config in pairs(servers) do
-  setup_server(server, config)
-end
-
--- TODO: Don't need to return anything yet because these are not used for any other plugin configs.
+-- TODO:
 -- return {
 --   on_init = custom_init,
 --   on_attach = custom_attach,
