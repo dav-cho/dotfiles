@@ -2,7 +2,7 @@
 -- Auto Install Packer
 -- local fn = vim.fn
 -- local install_path = fn.stdpath("data").."/site/pack/packer/start/packer.nvim"
--- 
+--
 -- if fn.empty(fn.glob(install_path)) > 0 then
 --   packer_bootstrap = fn.system({"git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path})
 -- end
@@ -34,10 +34,10 @@ vim.cmd([[
 local ok, packer = pcall(require, "packer")
 if not ok then
   return
---   local first_load = require "dav.first_load"()
---   if not first_load then
---     return
--- end
+  --   local first_load = require "dav.first_load"()
+  --   if not first_load then
+  --     return
+  -- end
 end
 
 local use = packer.use
@@ -52,7 +52,7 @@ packer.startup {
     use "kyazdani42/nvim-web-devicons"
     use "nvim-lualine/lualine.nvim"
     -- use "akinsho/bufferline.nvim"
-    use {"akinsho/bufferline.nvim", tag = "v2.*"}
+    use { "akinsho/bufferline.nvim", tag = "v2.*" }
 
     -- Themes --
     use "lunarvim/darkplus.nvim"
@@ -66,37 +66,45 @@ packer.startup {
     use "jose-elias-alvarez/null-ls.nvim"
     use "RRethy/vim-illuminate"
 
-     -- Completion --
-     use "hrsh7th/nvim-cmp"
-     use "hrsh7th/cmp-buffer"
-     use "hrsh7th/cmp-path"
-     use "hrsh7th/cmp-cmdline"
-     use "hrsh7th/cmp-nvim-lsp"
-     use "hrsh7th/cmp-nvim-lua"
-     use "hrsh7th/cmp-nvim-lsp-document-symbol"
-     use "hrsh7th/cmp-nvim-lsp-signature-help"
-     use "saadparwaiz1/cmp_luasnip"
-     use "onsails/lspkind-nvim" -- TODO: use lspkind instead of local icons?
+    -- Completion --
+    use "hrsh7th/nvim-cmp"
+    use "hrsh7th/cmp-buffer"
+    use "hrsh7th/cmp-path"
+    use "hrsh7th/cmp-cmdline"
+    use "hrsh7th/cmp-nvim-lsp"
+    use "hrsh7th/cmp-nvim-lua"
+    use "hrsh7th/cmp-nvim-lsp-document-symbol"
+    use "hrsh7th/cmp-nvim-lsp-signature-help"
+    use "saadparwaiz1/cmp_luasnip"
+    use "onsails/lspkind-nvim" -- TODO: use lspkind instead of local icons?
 
-     -- Snippets --
-     use "L3MON4D3/LuaSnip"
+    -- Snippets --
+    use "L3MON4D3/LuaSnip"
 
-     -- Treesitter --
-     use {
-       "nvim-treesitter/nvim-treesitter",
-       run = ":TSUpdate"
-     }
-     use "p00f/nvim-ts-rainbow"
+    -- Treesitter --
+    use {
+      "nvim-treesitter/nvim-treesitter",
+      run = ":TSUpdate"
+    }
+    use "p00f/nvim-ts-rainbow"
 
-     -- Telescope --
-     use "nvim-telescope/telescope.nvim"
-     use "nvim-telescope/telescope-file-browser.nvim"
-     use {"nvim-telescope/telescope-fzf-native.nvim", run = "make" }
+    -- Telescope --
+    use "nvim-telescope/telescope.nvim"
+    use "nvim-telescope/telescope-file-browser.nvim"
+    use { "nvim-telescope/telescope-fzf-native.nvim", run = "make" }
 
-     -- Vim --
-     use "tpope/vim-surround"
-     use "easymotion/vim-easymotion"
-     use "tpope/vim-repeat"
+    -- Vim --
+    use "tpope/vim-surround"
+    use "easymotion/vim-easymotion"
+    use "tpope/vim-repeat"
+
+    -- Debugger --
+    use 'mfussenegger/nvim-dap'
+    use 'rcarriga/nvim-dap-ui'
+    use 'theHamsta/nvim-dap-virtual-text'
+    use 'nvim-telescope/telescope-dap.nvim'
+    use 'mfussenegger/nvim-dap-python'
+    use 'leoluz/nvim-dap-go'
 
     -- Other --
     use "windwp/nvim-autopairs"
@@ -108,7 +116,7 @@ packer.startup {
     }
     use "norcalli/nvim-colorizer.lua"
     use "lewis6991/gitsigns.nvim"
-    
+
     -- TODO: how to get this from first_load?
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins

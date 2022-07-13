@@ -19,11 +19,11 @@ local actions = require "telescope.actions"
 
 require("telescope").setup {
   defaults = {
-    sorting_strategy = 'ascending',
+    sorting_strategy = "ascending",
 
-    layout_strategy = 'flex',
+    layout_strategy = "flex",
     layout_config = {
-      prompt_position = 'top',
+      prompt_position = "top",
 
       horizontal = {
         preview_width = function(_, cols, _)
@@ -51,12 +51,12 @@ require("telescope").setup {
 
     mappings = {
       i = {
-        ['<C-j>'] = actions.move_selection_next,
-        ['<C-k>'] = actions.move_selection_previous,
+        ["<C-j>"] = actions.move_selection_next,
+        ["<C-k>"] = actions.move_selection_previous,
       }
     },
 
-    file_ignore_patterns = { '^.git/', '^node_modules/' },
+    file_ignore_patterns = { "^.git/", "^node_modules/" },
   },
 
   pickers = {
@@ -67,17 +67,18 @@ require("telescope").setup {
 
   extensions = {
     file_browser = {
-      initial_mode = 'normal',
+      initial_mode = "normal",
       hidden = true,
     },
     fzf = {
       fuzzy = true,
       override_generic_sorter = true,
       override_file_sorter = true,
-      case_mode = 'smart_case',
+      case_mode = "smart_case",
     },
   },
 }
 
-require("telescope").load_extension 'file_browser'
-require("telescope").load_extension 'fzf'
+require("telescope").load_extension "file_browser"
+require("telescope").load_extension "fzf"
+require("telescope").load_extension "dap"
