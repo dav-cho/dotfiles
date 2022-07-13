@@ -98,9 +98,10 @@ cmp.setup {
     ["<CR>"] = cmp.mapping.confirm({ select = true }),
     -- ["<CR>"] = cmp.mapping.confirm({ select = false }),
 
+    -- TODO: weird behavior with 'nvim_lsp_signature_help'
+    --    - Set up custom func...maybe get source name?
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
-        -- cmp.select_next_item { behavior = cmp.SelectBehavior.Insert }
         cmp.select_next_item()
       elseif luasnip.expand_or_jumpable() then
         luasnip.expand_or_jump()
@@ -110,7 +111,6 @@ cmp.setup {
     end, { "i", "s" }),
     ["<S-Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
-        -- cmp.select_prev_item { behavior = cmp.SelectBehavior.Insert }
         cmp.select_prev_item()
       elseif luasnip.jumpable(-1) then
         luasnip.jump(-1)
@@ -231,7 +231,7 @@ cmp.setup {
     { name = "nvim_lua" },
     { name = "luasnip" },
     -- { name = "gh_issues" }, -- TODO
-    { name = "nvim_lsp_signature_help" }, -- TODO
+    -- { name = "nvim_lsp_signature_help" }, -- TODO
   }, {
     { name = "buffer" },
     { name = "path" },
@@ -252,11 +252,31 @@ cmp.setup {
   -- },
 }
 
+local cmdline_mapping = {
+  ["<C-n>"] = {
+    c = function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item { behavior = cmp.SelectBehavior.Select }
+      else
+        fallback()
+      end
+    end,
+  },
+  ["<C-p>"] = {
+    c = function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item { behavior = cmp.SelectBehavior.Select }
+      else
+        fallback()
+      end
+    end,
+  },
+}
+
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline("/", {
-  -- TODO: Set your own mappings
-  -- mapping = cmp.mapping.preset.cmdline(),
-
+  -- mapping = cmp.mapping.preset.cmdline(), -- This uses mappings from cmp.setup()
+  mapping = cmdline_mapping,
   sources = cmp.config.sources({
     { name = "nvim_lsp_document_symbol" },
   }, {
@@ -265,16 +285,40 @@ cmp.setup.cmdline("/", {
 })
 
 -- Use cmdline & path source for ":" (if you enabled `native_menu`, this won"t work anymore).
--- cmp.setup.cmdline(":", {
---   -- TODO: Set your own mappings
---   -- mapping = cmp.mapping.preset.cmdline(),
---
---   sources = cmp.config.sources({
---     { name = "path" }
---   }, {
---     { name = "cmdline" }
---   })
--- })
+cmp.setup.cmdline(":", {
+  -- mapping = cmp.mapping.preset.cmdline(), -- This uses mappings from cmp.setup()
+  mapping = cmdline_mapping,
+  -- mapping = {
+  --   ["<C-n>"] = {
+  --     c = function(fallback)
+  --       local cmp = require("cmp")
+  --       if cmp.visible() then
+  --         -- cmp.select_next_item()
+  --         cmp.select_next_item { behavior = cmp.SelectBehavior.Select }
+  --       else
+  --         fallback()
+  --       end
+  --     end,
+  --   },
+  --   ["<C-p>"] = {
+  --     c = function(fallback)
+  --       local cmp = require("cmp")
+  --       if cmp.visible() then
+  --         -- cmp.select_prev_item()
+  --         cmp.select_prev_item { behavior = cmp.SelectBehavior.Select }
+  --       else
+  --         fallback()
+  --       end
+  --     end,
+  --   },
+  -- },
+
+  sources = cmp.config.sources({
+    { name = "path" },
+  }, {
+    { name = "cmdline" },
+  }),
+})
 
 
 
