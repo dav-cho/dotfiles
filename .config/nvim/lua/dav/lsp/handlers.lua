@@ -49,11 +49,10 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.s
 --     print "[LSP] Could not find definition"
 --     return
 --   end
--- 
+--
 --   if vim.tbl_islist(result) then
 --     vim.lsp.util.jump_to_location(result[1], "utf-8")
 --   else
 --     vim.lsp.util.jump_to_location(result, "utf-8")
 --   end
 -- end
-

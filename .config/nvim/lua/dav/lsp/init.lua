@@ -62,7 +62,7 @@ local setup_server = function(server, config)
   lspconfig[server].setup(config)
 end
 
-require ("nvim-lsp-installer").setup {
+require("nvim-lsp-installer").setup {
   automatic_installation = false, -- TODO: need?
   -- ensure_installed = { "sumneko_lua" , "gopls" }, -- TODO: setup gpls here?
   ensure_installed = { "sumneko_lua" },
@@ -93,15 +93,15 @@ require "dav.lsp.null-ls"
 -- local list_servers = function(servers)
 --   local list = {}
 --   local i = 1
--- 
+--
 --   for server, _ in pairs(servers) do
 --     list[i] = server
 --     i += 1
 --   end
--- 
+--
 --   return list
 -- end
--- 
+--
 -- require("nvim-lsp-installer").setup {
 --   automatic_installation = false,
 --   -- ensure_installed = {},

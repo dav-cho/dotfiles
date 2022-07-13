@@ -18,7 +18,6 @@ require("nvim-dap-virtual-text").setup {
   enabled_commands = false,
   highlight_changed_variables = true,
   highlight_new_as_changed = true,
-  -- highlight_new_as_changed = false,
   show_stop_reason = true,
   commented = false,
   all_references = false,

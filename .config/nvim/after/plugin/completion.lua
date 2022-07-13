@@ -5,33 +5,34 @@ vim.opt.completeopt = { "menu", "menuone", "noselect" }
 -- TODO
 -- vim.opt.shortmess:append "c"
 
-local kind_icons = {
-  Text = "",
-  Method = "",
-  Function = "",
-  Constructor = "",
-  Field = "",
-  Variable = "",
-  Class = "ﴯ",
-  Interface = "",
-  Module = "",
-  Property = "ﰠ",
-  Unit = "",
-  Value = "",
-  Enum = "",
-  Keyword = "",
-  Snippet = "",
-  Color = "",
-  File = "",
-  Reference = "",
-  Folder = "",
-  EnumMember = "",
-  Constant = "",
-  Struct = "",
-  Event = "",
-  Operator = "",
-  TypeParameter = ""
-}
+-- TODO: Used for function that uses both lspkind and local icons
+-- local kind_icons = {
+--   Text = "",
+--   Method = "",
+--   Function = "",
+--   Constructor = "",
+--   Field = "",
+--   Variable = "",
+--   Class = "ﴯ",
+--   Interface = "",
+--   Module = "",
+--   Property = "ﰠ",
+--   Unit = "",
+--   Value = "",
+--   Enum = "",
+--   Keyword = "",
+--   Snippet = "",
+--   Color = "",
+--   File = "",
+--   Reference = "",
+--   Folder = "",
+--   EnumMember = "",
+--   Constant = "",
+--   Struct = "",
+--   Event = "",
+--   Operator = "",
+--   TypeParameter = ""
+-- }
 
 local has_lspkind, lspkind = pcall(require, "lspkind")
 if not has_lspkind then
@@ -65,6 +66,8 @@ cmp.setup {
     -- ["<C-k>"] = cmp.mapping.select_prev_item(),
     -- ["<C-j>"] = cmp.mapping.select_next_item(),
 
+    -- ["<C-p>"] = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), { "i", "c" }),
+    -- ["<C-n>"] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }), { "i", "c" }),
     ["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select },
     ["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select },
 
@@ -226,9 +229,9 @@ cmp.setup {
   sources = cmp.config.sources({
     { name = "nvim_lsp" },
     { name = "nvim_lua" },
-    -- { name = "nvim-lua" },
     { name = "luasnip" },
     -- { name = "gh_issues" }, -- TODO
+    { name = "nvim_lsp_signature_help" }, -- TODO
   }, {
     { name = "buffer" },
     { name = "path" },
@@ -249,7 +252,35 @@ cmp.setup {
   -- },
 }
 
--- TODO: goes in cmp.setup
+-- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline("/", {
+  -- TODO: Set your own mappings
+  -- mapping = cmp.mapping.preset.cmdline(),
+
+  sources = cmp.config.sources({
+    { name = "nvim_lsp_document_symbol" },
+  }, {
+    { name = "buffer" },
+  }),
+})
+
+-- Use cmdline & path source for ":" (if you enabled `native_menu`, this won"t work anymore).
+-- cmp.setup.cmdline(":", {
+--   -- TODO: Set your own mappings
+--   -- mapping = cmp.mapping.preset.cmdline(),
+--
+--   sources = cmp.config.sources({
+--     { name = "path" }
+--   }, {
+--     { name = "cmdline" }
+--   })
+-- })
+
+
+
+---- TODO
+
+-- TODO: Sorting - goes in cmp.setup
 -- sorting = {
 --   comparators = {
 --     cmp.config.compare.offset,
@@ -276,8 +307,6 @@ cmp.setup {
 --     cmp.config.compare.order,
 --   },
 -- },
-
-
 
 -- TODO: Additional icons - use if not using lspkind
 --

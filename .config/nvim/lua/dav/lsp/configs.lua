@@ -57,8 +57,8 @@ M.on_attach = function(client, bufnr)
 end
 
 local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
-updated_capabilities = require("cmp_nvim_lsp").update_capabilities(updated_capabilities) -- TODO: uncomment after cmp setup
-updated_capabilities.textDocument.completion.completionItem.snippetSupport = true -- TODO: uncomment after luasnip setup
+updated_capabilities = require("cmp_nvim_lsp").update_capabilities(updated_capabilities)
+updated_capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 M.capabilities = updated_capabilities
 
