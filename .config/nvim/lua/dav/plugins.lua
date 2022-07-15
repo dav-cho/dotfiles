@@ -49,9 +49,8 @@ packer.startup {
     use "wbthomason/packer.nvim"
     use "nvim-lua/plenary.nvim"
     use "nvim-lua/popup.nvim"
-    use "kyazdani42/nvim-web-devicons"
+    -- use "kyazdani42/nvim-web-devicons" -- TODO: need? maybe for lualine/bufferline?
     use "nvim-lualine/lualine.nvim"
-    -- use "akinsho/bufferline.nvim"
     use { "akinsho/bufferline.nvim", tag = "v2.*" }
 
     -- Themes --
@@ -76,7 +75,7 @@ packer.startup {
     use "hrsh7th/cmp-nvim-lsp-document-symbol"
     use "hrsh7th/cmp-nvim-lsp-signature-help"
     use "saadparwaiz1/cmp_luasnip"
-    use "onsails/lspkind-nvim" -- TODO: use lspkind instead of local icons?
+    use "onsails/lspkind-nvim"
 
     -- Snippets --
     use "L3MON4D3/LuaSnip"

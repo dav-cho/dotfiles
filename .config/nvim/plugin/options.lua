@@ -8,7 +8,7 @@ opt.swapfile = false
 
 opt.cmdheight = 1
 opt.pumheight = 10
-opt.pumblend = 17
+opt.pumblend = 20 -- transparency
 opt.wrap = false
 
 opt.incsearch = true

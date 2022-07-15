@@ -54,7 +54,7 @@ cmp.setup {
 
   snippet = {
     expand = function(args)
-      require("luasnip").lsp_expand(args.body)
+      luasnip.lsp_expand(args.body)
     end,
   },
 
@@ -288,32 +288,7 @@ cmp.setup.cmdline("/", {
 cmp.setup.cmdline(":", {
   -- mapping = cmp.mapping.preset.cmdline(), -- This uses mappings from cmp.setup()
   mapping = cmdline_mapping,
-  -- mapping = {
-  --   ["<C-n>"] = {
-  --     c = function(fallback)
-  --       local cmp = require("cmp")
-  --       if cmp.visible() then
-  --         -- cmp.select_next_item()
-  --         cmp.select_next_item { behavior = cmp.SelectBehavior.Select }
-  --       else
-  --         fallback()
-  --       end
-  --     end,
-  --   },
-  --   ["<C-p>"] = {
-  --     c = function(fallback)
-  --       local cmp = require("cmp")
-  --       if cmp.visible() then
-  --         -- cmp.select_prev_item()
-  --         cmp.select_prev_item { behavior = cmp.SelectBehavior.Select }
-  --       else
-  --         fallback()
-  --       end
-  --     end,
-  --   },
-  -- },
-
-  sources = cmp.config.sources({
+ sources = cmp.config.sources({
     { name = "path" },
   }, {
     { name = "cmdline" },

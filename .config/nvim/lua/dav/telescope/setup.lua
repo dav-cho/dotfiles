@@ -1,19 +1,21 @@
 if not pcall(require, "telescope") then
-	return
+  return
 end
 
 local actions = require "telescope.actions"
+-- local action_state = require "telescope.actions.state" -- TODO
+-- local action_layout = require "telescope.actions.layout"
 
 -- TODO
 -- local action_state = require "telescope.actions.state"
 -- local action_layout = require "telescope.actions.layout"
--- 
+--
 -- local set_prompt_to_entry_value = function(prompt_bufnr)
 --   local entry = action_state.get_selected_entry()
 --   if not entry or not type(entry) == "table" then
 --     return
 --   end
--- 
+--
 --   action_state.get_current_picker(prompt_bufnr):reset_prompt(entry.ordinal)
 -- end
 
@@ -66,16 +68,23 @@ require("telescope").setup {
   },
 
   extensions = {
-    file_browser = {
-      initial_mode = "normal",
-      hidden = true,
-    },
     fzf = {
       fuzzy = true,
       override_generic_sorter = true,
       override_file_sorter = true,
       case_mode = "smart_case",
     },
+
+    file_browser = {
+      initial_mode = "normal",
+      hidden = true,
+    },
+
+    -- TODO
+    -- ["ui-select"] = {
+    --   require("telescope.themes").get_dropdown {
+    --   },
+    -- },
   },
 }
 

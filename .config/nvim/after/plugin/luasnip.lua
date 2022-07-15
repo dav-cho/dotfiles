@@ -3,10 +3,13 @@ if not ok then
   return
 end
 
+-- TODO: Move to completion.lua?
+--        - then use this file for snippet definitions?
 require("luasnip.loaders.from_vscode").lazy_load {
   paths = "~/Library/Application Support/Code/User/snippets"
 }
 
+-- TODO: Move to completion.lua?
 ls.filetype_extend("javascriptreact", { "javascript" })
 ls.filetype_extend("typescriptreact", { "typescript" })
 
