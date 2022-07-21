@@ -226,6 +226,21 @@ cmp.setup {
   --   end
   -- },
 
+  sorting = {
+    comparators = {
+      cmp.config.compare.offset,
+      cmp.config.compare.exact,
+      cmp.config.compare.score,
+      cmp.config.compare.recently_used,
+      cmp.config.compare.locality,
+      require "cmp-under-comparator".under,
+      cmp.config.compare.kind,
+      cmp.config.compare.sort_text,
+      cmp.config.compare.length,
+      cmp.config.compare.order,
+    },
+  },
+
   sources = cmp.config.sources({
     { name = "nvim_lsp" },
     { name = "nvim_lua" },
@@ -288,7 +303,7 @@ cmp.setup.cmdline("/", {
 cmp.setup.cmdline(":", {
   -- mapping = cmp.mapping.preset.cmdline(), -- This uses mappings from cmp.setup()
   mapping = cmdline_mapping,
- sources = cmp.config.sources({
+  sources = cmp.config.sources({
     { name = "path" },
   }, {
     { name = "cmdline" },

@@ -49,7 +49,7 @@ packer.startup {
     use "wbthomason/packer.nvim"
     use "nvim-lua/plenary.nvim"
     use "nvim-lua/popup.nvim"
-    -- use "kyazdani42/nvim-web-devicons" -- TODO: need? maybe for lualine/bufferline?
+    use "kyazdani42/nvim-web-devicons"
     use "nvim-lualine/lualine.nvim"
     use { "akinsho/bufferline.nvim", tag = "v2.*" }
 
@@ -64,6 +64,7 @@ packer.startup {
     use "b0o/SchemaStore.nvim"
     use "jose-elias-alvarez/null-ls.nvim"
     use "RRethy/vim-illuminate"
+    use "j-hui/fidget.nvim"
 
     -- Completion --
     use "hrsh7th/nvim-cmp"
@@ -76,6 +77,7 @@ packer.startup {
     use "hrsh7th/cmp-nvim-lsp-signature-help"
     use "saadparwaiz1/cmp_luasnip"
     use "onsails/lspkind-nvim"
+    use "lukas-reineke/cmp-under-comparator"
 
     -- Snippets --
     use "L3MON4D3/LuaSnip"
@@ -109,12 +111,73 @@ packer.startup {
     use "windwp/nvim-autopairs"
     use "windwp/nvim-ts-autotag"
     use "numToStr/Comment.nvim"
-    use {
-      "prettier/vim-prettier",
-      run = "yarn install --frozen-lockfile --production",
-    }
+    -- TODO
+    -- use {
+    --   "prettier/vim-prettier",
+    --   run = "yarn install --frozen-lockfile --production",
+    -- }
+    -- use {
+    --   "prettier/vim-prettier",
+    --   ft = { "html", "javascript", "typescript", "typescriptreact" },
+    --   run = "yarn install",
+    -- }
     use "norcalli/nvim-colorizer.lua"
     use "lewis6991/gitsigns.nvim"
+
+    -- New --
+    -- use {
+    --   "folke/trouble.nvim",
+    --   requires = "kyazdani42/nvim-web-devicons",
+    --   config = function()
+    --     require("trouble").setup {
+    --       -- your configuration comes here
+    --       -- or leave it empty to use the default settings
+    --       -- refer to the configuration section below
+    --     }
+    --   end
+    -- }
+
+    -- use "rcarriga/nvim-notify"
+
+    -- use {
+    --   "AckslD/nvim-neoclip.lua",
+    --   requires = {
+    --     { 'nvim-telescope/telescope.nvim' },
+    --   },
+    --   config = function()
+    --     require('neoclip').setup()
+    --   end,
+    -- }
+
+    -- use "folke/zen-mode.nvim"
+    -- use "folke/twilight.nvim"
+    -- use "junegunn/goyo.vim"
+    -- use "junegunn/limelight.vim"
+
+    -- use { "iamcco/markdown-preview.nvim", ft = "markdown", run = "cd app && yarn install" }
+
+    -- use { "liuchengxu/vista.vim", cmd = "Vista" }
+
+    -- use "windwp/nvim-spectre"
+
+    -- use "danymat/neogen"
+
+    -- use "tamago324/lir.nvim"
+
+    -- if executable "mmv" then
+    --   use "tamago324/lir-mmv.nvim"
+    -- end
+
+    -- use "pechorin/any-jump.vim"
+
+    -- use "TimUntersberger/neogit"
+
+    -- use "sindrets/diffview.nvim"
+
+    -- use "rhysd/git-messenger.vim"
+
+
+
 
     -- TODO: how to get this from first_load?
     -- Automatically set up your configuration after cloning packer.nvim
