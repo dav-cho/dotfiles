@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+
+set -x
+
+cd "$HOME"
+
+DOTFILES="$HOME/dotfiles"
+OMZ_CUSTOM=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}
+
+function symlink() {
+	if [[ ! $(readlink -f "$2") == "$1" ]]; then
+		ln -sfv "$1" "$2"
+	fi
+}
+
+if [[ $(uname) == "Darwin" ]]; then
+	if ! command -v brew &>/dev/null; then
+		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+		brew install \
+			bat \
+			eza \
+			fd \
+			fzf \
+			gh \
+			git \
+			git-delta \
+			jq \
+			neovim \
+			ripgrep \
+			tmux \
+			zoxide
+
+		$(brew --prefix)/opt/fzf/install
+	fi
+fi
+
+if [[ ! -d $HOME/.oh-my-zsh ]]; then
+	sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+fi
+
+if [[ ! -e $OMZ_CUSTOM/themes/powerlevel10k ]]; then
+	git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $OMZ_CUSTOM/themes/powerlevel10k
+fi
+
+if [[ ! -e $OMZ_CUSTOM/plugins/zsh-autosuggestions ]]; then
+	git clone https://github.com/zsh-users/zsh-autosuggestions $OMZ_CUSTOM/plugins/zsh-autosuggestions
+fi
+
+if [[ ! -e $OMZ_CUSTOM/plugins/zsh-syntax-highlighting ]]; then
+	git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $OMZ_CUSTOM/plugins/zsh-syntax-highlighting
+fi
+
+if [[ ! -e $OMZ_CUSTOM/plugins/fzf-tab ]]; then
+	git clone https://github.com/Aloxaf/fzf-tab $OMZ_CUSTOM/plugins/fzf-tab
+fi
+
+if [[ ! -e $HOME/.tmux/plugins/tpm ]]; then
+	git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
+fi
+
+symlink "$DOTFILES/zprofile" "$HOME/.zprofile"
+symlink "$DOTFILES/zshrc" "$HOME/.zshrc"
+symlink "$DOTFILES/tmux.conf" "$HOME/.tmux.conf"
+symlink "$DOTFILES/p10k.zsh" "$HOME/.p10k.zsh"
+symlink "$DOTFILES/gitconfig" "$HOME/.gitconfig"
+symlink "$DOTFILES/vimrc" "$HOME/.vimrc"
+
+symlink "$DOTFILES/alacritty/alacritty.yml" "$HOME/.config"
+symlink "$DOTFILES/gh" "$HOME/.config/gh"
+symlink "$DOTFILES/git" "$HOME/.config/git"
+symlink "$DOTFILES/nvim" "$HOME/.config/nvim"
+symlink "$DOTFILES/skhd" "$HOME/.config/skhd"
+symlink "$DOTFILES/yabai" "$HOME/.config/yabai"
+
+[[ -d "$HOME/.local/bin" ]] && mkdir "$HOME/.local/bin"
+cp "$DOTFILES/bin/*" "$HOME/.local/bin"
+
+if [[ $USER == "dcho" ]]; then
+	. "$HOME/cm-settings/install"
+fi

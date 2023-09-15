@@ -1,0 +1,32 @@
+{
+  "Print": {
+    "prefix": "p",
+    "body": ["print($1)"],
+    "description": "Simple print"
+  },
+  "Print f-string Debug": {
+    "prefix": "pf",
+    "body": ["print(f\"{${1:} = }\")"],
+    "description": "Message mirrors element."
+  },
+  "Print Mirror": {
+    "prefix": "pm",
+    "body": ["print(\"$1:\", ${1:})"],
+    "description": "Message mirrors element."
+  },
+  "Print Separate Message": {
+    "prefix": "pp",
+    "body": ["print(\"$2:\", $1)"],
+    "description": "Type seperate message."
+  },
+  "Print Key-Value": {
+    "prefix": "pkv",
+    "body": ["for k, v in $1.items():", "\tprint(f\"{k}: {v}\")"],
+    "description": "Print dictionary items key-value pairs."
+  },
+  "__name__ == __main__": {
+    "prefix": "nama",
+    "body": ["if __name__ == \"__main__\":", "\t$0"],
+    "description": "if __name__ == \"__main__\""
+  }
+}
