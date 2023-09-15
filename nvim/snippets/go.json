@@ -1,0 +1,17 @@
+{
+  "fmt Print Line Fancy": {
+    "prefix": "prn",
+    "body": ["fmt.Println(\"~ $2:\", $1)"],
+    "description": "Formatted 'fmt.Println'"
+  },
+  "fmt Print Line Fancy Uppercase": {
+    "prefix": "pru",
+    "body": ["fmt.Println(\"~ ${2/(.*)/${1:/upcase}/}:\", $1)"],
+    "description": "Formatted 'fmt.Println'"
+  },
+  "fmt Print Line Quick": {
+    "prefix": "prq",
+    "body": ["fmt.Println(\"~ $1:\", $1)"],
+    "description": "Formatted 'fmt.Println'"
+  }
+}

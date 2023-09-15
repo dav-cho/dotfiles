@@ -1,0 +1,88 @@
+#!/usr/bin/env bash
+
+set -x
+
+if [[ $(uname) == "Darwin" ]]; then
+	if ! command -v brew &>/dev/null; then
+		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+		brew install \
+			bat \
+			fd \
+			fzf \
+			gh \
+			git \
+			jq \
+			lsd \
+			neovim \
+			ripgrep \
+			tmux \
+			tree \
+			zoxide
+
+		$(brew --prefix)/opt/fzf/install
+	fi
+fi
+
+if [[ ! -d $HOME/.oh-my-zsh ]]; then
+	sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+fi
+
+OMZ_CUSTOM=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}
+
+if [[ ! -e $OMZ_CUSTOM/plugins/zsh-autosuggestions ]]; then
+	git clone https://github.com/zsh-users/zsh-autosuggestions $OMZ_CUSTOM/plugins/zsh-autosuggestions
+fi
+
+if [[ ! -e $OMZ_CUSTOM/themes/powerlevel10k ]]; then
+	git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $OMZ_CUSTOM/themes/powerlevel10k
+fi
+
+if [[ ! -e $OMZ_CUSTOM/plugins/fzf-tab ]]; then
+	git clone https://github.com/Aloxaf/fzf-tab $OMZ_CUSTOM/plugins/fzf-tab
+fi
+
+if [[ ! -e $OMZ_CUSTOM/plugins/zsh-syntax-highlighting ]]; then
+	git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $OMZ_CUSTOM/plugins/zsh-syntax-highlighting
+fi
+
+if [[ ! -e $HOME/.tmux/plugins/tpm ]]; then
+	git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
+fi
+
+function symlink() {
+	if [[ ! $(readlink -f "$2") == "$1" ]]; then
+		ln -sfv "$1" "$2"
+	fi
+}
+
+DOTFILES="$HOME/dotfiles"
+
+symlink "$DOTFILES/zshenv" "$HOME/.zshenv"
+symlink "$DOTFILES/zprofile" "$HOME/.zprofile"
+symlink "$DOTFILES/zshrc" "$HOME/.zshrc"
+symlink "$DOTFILES/p10k.zsh" "$HOME/.p10k.zsh"
+symlink "$DOTFILES/tmux.conf" "$HOME/.tmux.conf"
+
+symlink "$DOTFILES/lsd" "$HOME/.config/lsd"
+symlink "$DOTFILES/nvim" "$HOME/.config/nvim"
+symlink "$DOTFILES/skhd" "$HOME/.config/skhd"
+symlink "$DOTFILES/alacritty/alacritty.yml" "$HOME/.config"
+
+if [[ $USER == "dav" ]]; then
+	symlink "$DOTFILES/gitconfig" "$HOME/.gitconfig"
+	symlink "$DOTFILES/gh" "$HOME/.config/gh"
+	symlink "$DOTFILES/git" "$HOME/.config/git"
+	symlink "$DOTFILES/yabai" "$HOME/.config/yabai"
+fi
+
+if [[ $USER == "dcho" ]]; then
+	WORK="$HOME/cm-settings/dotfiles"
+	symlink "$WORK/gitconfig" "$HOME/.gitconfig"
+	symlink "$WORK/gh" "$HOME/.config/gh"
+	symlink "$WORK/git" "$HOME/.config/git"
+	symlink "$WORK/yabai" "$HOME/.config/yabai"
+fi
+
+[[ -d "$HOME/.local/bin" ]] && mkdir "$HOME/.local/bin"
+cp "$DOTFILES/bin/*" "$HOME/.local/bin"

@@ -1,0 +1,23 @@
+yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+sudo yabai --load-sa
+
+yabai -m config                           \
+    layout bsp                            \
+    window_animation_duration 0.0         \
+    normal_window_opacity 1.0             \
+    split_ratio 0.5                       \
+    top_padding    7                      \
+    bottom_padding 7                      \
+    left_padding   7                      \
+    right_padding  7                      \
+    window_gap     7                      \
+    mouse_drop_action stack
+
+yabai -m rule --add \
+    app!="^(Alacritty|Google Chrome|iTerm2)$" \
+    manage=off
+
+yabai -m rule --add role="AXStandard" subrole="AXStandardWindow" layer=below
+yabai -m signal --add event=window_created action='yabai -m window $YABAI_WINDOW_ID --layer below'
+
+yabai -m signal --add app="Alacritty" event=window_destroyed action="yabai -m window --focus recent"

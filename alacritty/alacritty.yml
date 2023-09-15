@@ -1,0 +1,54 @@
+window:
+  dimensions:
+    columns: 100
+    lines: 25
+  decorations: none
+  dynamic_padding: true
+  opacity: 0.75
+  resize_increments: true
+  option_as_alt: Both
+
+font:
+  normal:
+    family: JetBrainsMono Nerd Font
+    style: Regular
+  size: 14.0
+  offset:
+    y: 2
+
+draw_bold_text_with_bright_colors: true
+
+colors:
+  primary:
+    background: '#000000'
+    foreground: '#e6edf3'
+  cursor:
+    text: '#1d1d1d'
+    cursor: '#e6edf3'
+  vi_mode_cursor:
+    text: '#1d1d1d'
+    cursor: '#e6edf3'
+  selection:
+    text: '#e6edf3'
+    background: '#264f78'
+  normal:
+    black: '#2e3138'
+    red: '#ff7b72'
+    green: '#3fb950'
+    yellow: '#d4b26c'
+    blue: '#58a6ff'
+    magenta: '#bc8cff'
+    cyan: '#39c5cf'
+    white: '#b1bac4'
+  bright:
+    black: '#484f58'
+    red: '#ffa198'
+    green: '#56d364'
+    yellow: '#e5ba64'
+    blue: '#79c0ff'
+    magenta: '#d2a8ff'
+    cyan: '#56d4dd'
+    white: '#ffffff'
+
+key_bindings:
+  - { key: Slash, mods: Control, chars: "\x1f" }
