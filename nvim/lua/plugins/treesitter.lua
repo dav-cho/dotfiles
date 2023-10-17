@@ -143,15 +143,19 @@ return {
       },
     },
     config = function(_, opts)
-      local repeatable_move = require("nvim-treesitter.textobjects.repeatable_move")
+      local repeat_move = require("nvim-treesitter.textobjects.repeatable_move")
 
-      local next_fold, prev_fold = repeatable_move.make_repeatable_move_pair(
+      local next_fold, prev_fold = repeat_move.make_repeatable_move_pair(
         function() vim.cmd("normal! zj") end,
         function() vim.cmd("normal! zk") end
       )
 
-      vim.keymap.set({ "n", "x", "o" }, ";", repeatable_move.repeat_last_move_next)
-      vim.keymap.set({ "n", "x", "o" }, "<Bslash>", repeatable_move.repeat_last_move_previous)
+      vim.keymap.set({ "n", "x", "o" }, ";", repeat_move.repeat_last_move_next)
+      vim.keymap.set({ "n", "x", "o" }, "<Bslash>", repeat_move.repeat_last_move_previous)
+      vim.keymap.set({ "n", "x", "o" }, "f", repeat_move.builtin_f)
+      vim.keymap.set({ "n", "x", "o" }, "F", repeat_move.builtin_F)
+      vim.keymap.set({ "n", "x", "o" }, "t", repeat_move.builtin_t)
+      vim.keymap.set({ "n", "x", "o" }, "T", repeat_move.builtin_T)
       vim.keymap.set({ "n", "x", "o" }, "zj", next_fold, { silent = true, desc = "Down next fold" })
       vim.keymap.set({ "n", "x", "o" }, "zk", prev_fold, { silent = true, desc = "Up next fold" })
 

@@ -198,6 +198,7 @@ return {
         go = { { "goimports", "gofmt" } },
         javascript = { { "prettierd", "prettier" } },
         lua = { "stylua" },
+        markdown = { { "prettierd", "prettier" } },
         python = { "isort", "black" },
         rust = { "rustfmt" },
         sh = { "shfmt" },

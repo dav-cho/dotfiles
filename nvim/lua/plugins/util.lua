@@ -228,6 +228,7 @@ return {
       },
       modes = {
         char = {
+          enabled = false,
           highlight = { backdrop = false },
         },
       },
