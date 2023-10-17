@@ -121,7 +121,6 @@ return {
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
       capabilities.textDocument.completion.completionItem.snippetSupport = true
-      capabilities.textDocument.foldingRange = { dynamicRegistration = false, lineFoldingOnly = true }
 
       for server, config in pairs(opts.servers) do
         config = vim.tbl_deep_extend("force", {

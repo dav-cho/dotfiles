@@ -6,8 +6,6 @@ opt.completeopt = { "menu", "menuone", "noselect" }
 opt.cursorline = true
 opt.diffopt:append({ "vertical" })
 opt.expandtab = true
-opt.foldlevel = 99
-opt.foldlevelstart = 99
 opt.formatoptions = "jncrql"
 opt.guicursor:append("a:Cursor/lCursor")
 opt.ignorecase = true
