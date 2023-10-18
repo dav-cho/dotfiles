@@ -1,8 +1,11 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter-textobjects",
+    },
     build = ":TSUpdate",
-    event = { "BufReadPost", "BufNewFile" },
+    event = { "BufReadPre", "BufNewFile" },
     ft = { "diff" },
     opts = {
       ensure_installed = {
@@ -36,15 +39,6 @@ return {
           scope_incremental = false,
         },
       },
-    },
-    config = function(_, opts)
-      require("nvim-treesitter.configs").setup(opts)
-    end,
-  },
-  {
-    "nvim-treesitter/nvim-treesitter-textobjects",
-    event = "LspAttach",
-    opts = {
       textobjects = {
         select = {
           enable = true,
@@ -190,25 +184,5 @@ return {
     config = function(_, opts)
       require("nvim-treesitter.configs").setup(opts)
     end,
-  },
-  {
-    "JoosepAlviste/nvim-ts-context-commentstring",
-    lazy = true,
-    opts = {
-      context_commentstring = {
-        enable = true,
-        enable_autocmd = false,
-        config = {
-          lua = "-- %s",
-        },
-      },
-    },
-    config = function(_, opts)
-      require("nvim-treesitter.configs").setup(opts)
-    end,
-  },
-  {
-    "windwp/nvim-ts-autotag",
-    ft = { "html", "react", "typescriptreact" },
   },
 }

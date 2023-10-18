@@ -7,7 +7,7 @@ return {
       "nvimtools/none-ls.nvim",
       "folke/neodev.nvim",
     },
-    event = { "BufReadPost", "BufNewFile" },
+    event = { "BufReadPre", "BufNewFile" },
     opts = {
       signs = {
         { name = "DiagnosticSignError", text = "" },
@@ -188,22 +188,25 @@ return {
       {
         "<Space>\\",
         function() require("conform").format({ async = true, lsp_fallback = true }) end,
-        mode = { "n", "x" },
+        mode = { "n", "v" },
         desc = "[Conform] Format"
       },
       { "<leader>ci", "<Cmd>ConformInfo<CR>", desc = "[Conform] Info" },
+      "gq",
     },
     opts = {
       formatters_by_ft = {
         go = { { "goimports", "gofmt" } },
         javascript = { { "prettierd", "prettier" } },
+        javascriptreact = { { "prettierd", "prettier" } },
         lua = { "stylua" },
-        markdown = { { "prettierd", "prettier" } },
+        markdown = { "mdformat", "prettierd" },
         python = { "isort", "black" },
         rust = { "rustfmt" },
         sh = { "shfmt" },
         typescript = { { "prettierd", "prettier" } },
-        yaml = { { "prettier", "yamlfmt" } },
+        typescriptreact = { { "prettierd", "prettier" } },
+        yaml = { { "prettierd", "prettier", "yamlfmt" } },
         ["_"] = { "trim_whitespace" },
       },
     },
@@ -212,9 +215,7 @@ return {
       require("conform").setup(opts)
 
       require("conform.formatters.goimports").command = vim.fn.expand("$HOME/go/bin/goimports")
-      require("conform.formatters.isort").args = {
-        "--stdout", "--filename", "$FILENAME", "--profile", "black", "-",
-      }
+      require("conform.formatters.isort").args = { "--stdout", "--filename", "$FILENAME", "--profile", "black", "-" }
       require("conform.formatters.prettier").args = {
         "--stdin-filepath", "$FILENAME", "--config-precedence", "prefer-file", "--single-quote",
       }

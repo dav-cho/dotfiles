@@ -386,7 +386,6 @@ return {
             case_mode = "smart_case",
           },
           file_browser = {
-            initial_mode = "normal",
             hidden = true,
             mappings = {
               i = {
@@ -408,7 +407,6 @@ return {
             treesitter = true,
           },
           undo = {
-            initial_mode = "normal",
             use_delta = false,
           },
           bookmarks = {

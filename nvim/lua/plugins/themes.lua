@@ -59,7 +59,7 @@ return {
     opts = function(_, opts)
       local colors = {
         emerald = "#36c692",
-        gray_1 = "#0d0d0d",
+        gray_1 = "#111111",
         gray_2 = "#262626",
         gray_3 = "#333333",
         gray_4 = "#404040",
@@ -160,6 +160,31 @@ return {
     end,
   },
   {
+    "rmehri01/onenord.nvim",
+    lazy = true,
+    opts = function()
+      local colors = require("onenord.colors").load()
+      return {
+        theme = "dark",
+        custom_highlights = {
+          CursorLineNr = { fg = "#EBCB8B" },
+          Normal = { bg = "#2B303B" },
+          NormalNC = { bg = "#2B303B" },
+          Search = { bg = colors.fg, fg = colors.bg },
+          Visual = { bg = colors.selection, fg = colors.none },
+          BufferlineTabSelected = { fg = colors.light_purple },
+          IlluminatedWordText = { style = "None", bg = colors.highlight_dark, sp = colors.yellow },
+          IlluminatedWordRead = { style = "None", bg = colors.highlight_dark, sp = colors.yellow },
+          IlluminatedWordWrite = { style = "None", bg = colors.highlight_dark, sp = colors.yellow },
+        },
+      }
+    end,
+    config = function(_, opts)
+      require("onenord").setup(opts)
+      set_lualine_theme("onenord")
+    end,
+  },
+  {
     "folke/tokyonight.nvim",
     lazy = true,
     opts = {
@@ -211,28 +236,37 @@ return {
     end,
   },
   {
-    "rmehri01/onenord.nvim",
+    "navarasu/onedark.nvim",
     lazy = true,
-    opts = function()
-      local colors = require("onenord.colors").load()
-      return {
-        theme = "dark",
-        custom_highlights = {
-          CursorLineNr = { fg = "#EBCB8B" },
-          Normal = { bg = "#2B303B" },
-          NormalNC = { bg = "#2B303B" },
-          Search = { bg = colors.fg, fg = colors.bg },
-          Visual = { bg = colors.selection, fg = colors.none },
-          BufferlineTabSelected = { fg = colors.light_purple },
-          IlluminatedWordText = { style = "None", bg = colors.highlight_dark, sp = colors.yellow },
-          IlluminatedWordRead = { style = "None", bg = colors.highlight_dark, sp = colors.yellow },
-          IlluminatedWordWrite = { style = "None", bg = colors.highlight_dark, sp = colors.yellow },
+    opts = function(_, opts)
+      require("onedark").load()
+      local colors = require("onedark.colors")
+      return vim.tbl_deep_extend("force", opts, {
+        style = "darker", -- dark, darker, cool, deep, warm, warmer
+        code_style = {
+          comments = "none",
         },
-      }
+        diagnostics = {
+          darker = true,     -- darker colors for diagnostic
+          undercurl = true,  -- use undercurl instead of underline for diagnostics
+          background = true, -- use background color for virtual text
+        },
+        colors = {
+          bg4 = "#4e525d",
+          bg5 = "#62656f",
+        },
+        highlights = {
+          IlluminatedWordText = { bg = colors.bg3 },
+          IlluminatedWordRead = { bg = colors.bg3 },
+          IlluminatedWordWrite = { bg = colors.bg3 },
+        }
+      })
     end,
     config = function(_, opts)
-      require("onenord").setup(opts)
-      set_lualine_theme("onenord")
+      local onedark = require("onedark")
+      onedark.setup(opts)
+      onedark.load()
+      set_lualine_theme("onedark")
     end,
   },
   {
@@ -319,40 +353,6 @@ return {
       vim.cmd("colorscheme kanagawa")
       illuminate_default()
       set_lualine_theme("kanagawa")
-    end,
-  },
-  {
-    "navarasu/onedark.nvim",
-    lazy = true,
-    opts = function(_, opts)
-      require("onedark").load()
-      local colors = require("onedark.colors")
-      return vim.tbl_deep_extend("force", opts, {
-        style = "dark", -- dark, darker, cool, deep, warm, warmer
-        code_style = {
-          comments = "none",
-        },
-        diagnostics = {
-          darker = true,     -- darker colors for diagnostic
-          undercurl = true,  -- use undercurl instead of underline for diagnostics
-          background = true, -- use background color for virtual text
-        },
-        colors = {
-          bg4 = "#4e525d",
-          bg5 = "#62656f",
-        },
-        highlights = {
-          IlluminatedWordText = { bg = colors.bg3 },
-          IlluminatedWordRead = { bg = colors.bg3 },
-          IlluminatedWordWrite = { bg = colors.bg3 },
-        }
-      })
-    end,
-    config = function(_, opts)
-      local onedark = require("onedark")
-      onedark.setup(opts)
-      onedark.load()
-      set_lualine_theme("onedark")
     end,
   },
   {
