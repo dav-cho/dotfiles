@@ -12,22 +12,9 @@ return {
     event = "UIEnter",
     opts = {
       options = {
-        icons_enabled = true,
-        theme = "auto",
-        component_separators = { left = "", right = "" },
-        section_separators = { left = "", right = "" },
-        disable_filetypes = {
-          statusline = {},
-          winbar = {},
-        },
-        ignore_focus = {},
-        always_divide_middle = true,
+        component_separators = "",
+        section_separators = "",
         globalstatus = true,
-        refresh = {
-          statusline = 1000,
-          tabline = 1000,
-          winbar = 1000,
-        },
       },
       sections = {
         lualine_a = { "mode" },
@@ -36,8 +23,12 @@ return {
           "diff",
           {
             "diagnostics",
-            icons_enabled = false,
             symbols = { error = " ", warn = " ", hint = " ", info = " " },
+          },
+          {
+            require("lazy.status").updates,
+            cond = require("lazy.status").has_updates,
+            color = { fg = "#ff9e64" },
           },
         },
         lualine_c = {
@@ -49,17 +40,7 @@ return {
           },
         },
         lualine_x = { "encoding", "fileformat", "filetype", "filesize" },
-        lualine_y = {
-          {
-            function()
-              local cursor = vim.fn.line(".")
-              local total = vim.fn.line("$")
-              local percentage = math.floor(cursor / total * 100) .. "%%"
-
-              return percentage
-            end,
-          },
-        },
+        lualine_y = { "progress" },
         lualine_z = { "location" }
       },
       inactive_sections = {
