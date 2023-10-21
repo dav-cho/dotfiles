@@ -10,9 +10,9 @@ return {
         { "<Space>r",   function() require("telescope.builtin").resume() end,      desc = "resume" },
         { "<Space>k",   function() require("telescope.builtin").keymaps() end,     desc = "keymaps" },
         { "<Space>h",   function() require("telescope.builtin").help_tags() end,   desc = "help_tags" },
-        { "<leader>mn", function() require("telescope.builtin").man_pages() end,   desc = "man_pages" },
-        { "<leader>co", function() require("telescope.builtin").commands() end,    desc = "commands" },
-        { "<leader>cs", function() require("telescope.builtin").colorscheme() end, desc = "colorscheme" },
+        { "<Leader>mn", function() require("telescope.builtin").man_pages() end,   desc = "man_pages" },
+        { "<Leader>co", function() require("telescope.builtin").commands() end,    desc = "commands" },
+        { "<Leader>cs", function() require("telescope.builtin").colorscheme() end, desc = "colorscheme" },
         { "<Space>f",   function() require("telescope.builtin").find_files() end,  desc = "find_files" },
         {
           "<Space>g",
@@ -25,7 +25,7 @@ return {
           desc = "find_files (no_ignore, hidden)",
         },
         {
-          "<leader>ff",
+          "<Leader>ff",
           function()
             require("telescope.builtin").find_files({
               cwd = require("telescope.utils").buffer_dir(),
@@ -34,7 +34,7 @@ return {
           desc = "find_files (buf dir)",
         },
         {
-          "<leader>FF",
+          "<Leader>FF",
           function()
             require("telescope.builtin").find_files({
               cwd = require("telescope.utils").buffer_dir(),
@@ -44,11 +44,11 @@ return {
           end,
           desc = "find_files (buf dir, no_ignore, hidden)",
         },
-        { "<leader>oo", function() require("telescope.builtin").oldfiles() end,  desc = "oldfiles" },
-        { "<leader>gf", function() require("telescope.builtin").git_files() end, desc = "git_files" },
-        { "<leader>ll", function() require("telescope.builtin").live_grep() end, desc = "live_grep" },
+        { "<Leader>oo", function() require("telescope.builtin").oldfiles() end,  desc = "oldfiles" },
+        { "<Leader>gf", function() require("telescope.builtin").git_files() end, desc = "git_files" },
+        { "<Leader>ll", function() require("telescope.builtin").live_grep() end, desc = "live_grep" },
         {
-          "<leader>lo",
+          "<Leader>lo",
           function()
             require("telescope.builtin").live_grep({
               grep_open_files = true,
@@ -58,7 +58,7 @@ return {
           desc = "live_grep (open files)",
         },
         {
-          "<leader>lb",
+          "<Leader>lb",
           function()
             require("telescope.builtin").live_grep({
               cwd = require("telescope.utils").buffer_dir(),
@@ -68,7 +68,7 @@ return {
           desc = "live_grep (buf dir)",
         },
         {
-          "<leader>lg",
+          "<Leader>lg",
           function()
             local glob
             vim.ui.input({ prompt = "Glob > ", completion = "file" }, function(input) glob = input end)
@@ -85,14 +85,14 @@ return {
           desc = "live_grep (glob)",
         },
         {
-          "<leader>jj",
+          "<Leader>jj",
           function() require("telescope.builtin").grep_string() end,
           mode = { "n", "x" },
           desc = "grep_string",
         },
         {
           mode = { "n", "x" },
-          "<leader>jo",
+          "<Leader>jo",
           function()
             require("telescope.builtin").grep_string({
               grep_open_files = true,
@@ -101,7 +101,7 @@ return {
           desc = "grep_string (open files)",
         },
         {
-          "<leader>jb",
+          "<Leader>jb",
           function()
             require("telescope.builtin").grep_string({
               search_dirs = { vim.fn.expand("%:h") },
@@ -115,20 +115,20 @@ return {
           function() require("telescope.builtin").current_buffer_fuzzy_find() end,
           desc = "current_buffer_fuzzy_find",
         },
-        { "<leader>sh", function() require("telescope.builtin").search_history() end,      desc = "search_history" },
-        { "<leader>ch", function() require("telescope.builtin").command_history() end,     desc = "command_history" },
+        { "<Leader>sh", function() require("telescope.builtin").search_history() end,      desc = "search_history" },
+        { "<Leader>ch", function() require("telescope.builtin").command_history() end,     desc = "command_history" },
         { "<Space>o",   function() require("telescope.builtin").buffers() end,             desc = "buffers" },
-        { "<leader>re", function() require("telescope.builtin").registers() end,           desc = "registers" },
-        { "<leader>ju", function() require("telescope.builtin").jumplist() end,            desc = "jumplist" },
-        { "<leader>ma", function() require("telescope.builtin").marks() end,               desc = "marks" },
-        { "<leader>qf", function() require("telescope.builtin").quickfix() end,            desc = "quickfix" },
-        { "<leader>qF", function() require("telescope.builtin").quickfixhistory() end,     desc = "quickfixhistory" },
-        { "<leader>lc", function() require("telescope.builtin").loclist() end,             desc = "loclist" },
-        { "<leader>bt", function() require("telescope.builtin").current_buffer_tags() end, desc = "current_buffer_tags" },
-        { "<leader>sp", function() require("telescope.builtin").spell_suggest() end,       desc = "spell_suggest" },
-        { "<leader>vo", function() require("telescope.builtin").vim_options() end,         desc = "vim_options" },
-        { "<leader>ac", function() require("telescope.builtin").autocommands() end,        desc = "autocommands" },
-        { "<leader>hi", function() require("telescope.builtin").highlights() end,          desc = "highlights" },
+        { "<Leader>re", function() require("telescope.builtin").registers() end,           desc = "registers" },
+        { "<Leader>ju", function() require("telescope.builtin").jumplist() end,            desc = "jumplist" },
+        { "<Leader>ma", function() require("telescope.builtin").marks() end,               desc = "marks" },
+        { "<Leader>qf", function() require("telescope.builtin").quickfix() end,            desc = "quickfix" },
+        { "<Leader>qF", function() require("telescope.builtin").quickfixhistory() end,     desc = "quickfixhistory" },
+        { "<Leader>lc", function() require("telescope.builtin").loclist() end,             desc = "loclist" },
+        { "<Leader>bt", function() require("telescope.builtin").current_buffer_tags() end, desc = "current_buffer_tags" },
+        { "<Leader>sp", function() require("telescope.builtin").spell_suggest() end,       desc = "spell_suggest" },
+        { "<Leader>vo", function() require("telescope.builtin").vim_options() end,         desc = "vim_options" },
+        { "<Leader>ac", function() require("telescope.builtin").autocommands() end,        desc = "autocommands" },
+        { "<Leader>hi", function() require("telescope.builtin").highlights() end,          desc = "highlights" },
         {
           "<F12>",
           function()
@@ -159,7 +159,7 @@ return {
           desc = "diagnostics (no unlisted)",
         },
         {
-          "<leader>dd",
+          "<Leader>dd",
           function()
             require("telescope.builtin").diagnostics({
               root_dir = require("telescope.utils").buffer_dir(),
@@ -168,12 +168,12 @@ return {
           desc = "diagnostics (buf dir)",
         },
         {
-          "<leader>DD",
+          "<Leader>DD",
           function() require("telescope.builtin").diagnostics() end,
           desc = "diagnostics",
         },
         {
-          "<leader><M-D>",
+          "<Leader><M-D>",
           function() require("telescope.builtin").diagnostics() end,
           desc = "diagnostics (cwd)",
         },
@@ -188,28 +188,28 @@ return {
           desc = "lsp_dynamic_workspace_symbols",
         },
         {
-          "<leader>SS",
+          "<Leader>SS",
           function() require("telescope.builtin").lsp_workspace_symbols() end,
           desc = "lsp_workspace_symbols",
         },
-        { "<leader>ic", function() require("telescope.builtin").lsp_incoming_calls() end,  desc = "lsp_incoming_calls" },
-        { "<leader>oc", function() require("telescope.builtin").lsp_outgoing_calls() end,  desc = "lsp_outgoing_calls" },
-        { "<leader>li", function() require("telescope.builtin").lsp_implementations() end, desc = "lsp_implementations" },
-        { "<leader>ld", function() require("telescope.builtin").lsp_definitions() end,     desc = "lsp_definitions" },
+        { "<Leader>ic", function() require("telescope.builtin").lsp_incoming_calls() end,  desc = "lsp_incoming_calls" },
+        { "<Leader>oc", function() require("telescope.builtin").lsp_outgoing_calls() end,  desc = "lsp_outgoing_calls" },
+        { "<Leader>li", function() require("telescope.builtin").lsp_implementations() end, desc = "lsp_implementations" },
+        { "<Leader>ld", function() require("telescope.builtin").lsp_definitions() end,     desc = "lsp_definitions" },
         {
-          "<leader>lt",
+          "<Leader>lt",
           function() require("telescope.builtin").lsp_type_definitions() end,
           desc = "lsp_type_definitions",
         },
-        { "<leader>ts", function() require("telescope.builtin").treesitter() end,   desc = "treesitter" },
-        { "<leader>gb", function() require("telescope.builtin").git_branches() end, desc = "git_branches" },
-        { "<leader>gl", function() require("telescope.builtin").git_commits() end,  desc = "git_commits" },
-        { "<leader>gL", function() require("telescope.builtin").git_bcommits() end, desc = "git_bcommits" },
-        { "<leader>gs", function() require("telescope.builtin").git_status() end,   desc = "git_status" },
-        { "<leader>st", function() require("telescope.builtin").git_stash() end,    desc = "git_stash" },
-        { "<leader>bi", function() require("telescope.builtin").builtin() end,      desc = "builtin" },
-        { "<leader>tp", function() require("telescope.builtin").pickers() end,      desc = "pickers" },
-        { "<leader>rl", function() require("telescope.builtin").reloader() end,     desc = "reloader" },
+        { "<Leader>ts", function() require("telescope.builtin").treesitter() end,   desc = "treesitter" },
+        { "<Leader>gb", function() require("telescope.builtin").git_branches() end, desc = "git_branches" },
+        { "<Leader>gl", function() require("telescope.builtin").git_commits() end,  desc = "git_commits" },
+        { "<Leader>gL", function() require("telescope.builtin").git_bcommits() end, desc = "git_bcommits" },
+        { "<Leader>gs", function() require("telescope.builtin").git_status() end,   desc = "git_status" },
+        { "<Leader>st", function() require("telescope.builtin").git_stash() end,    desc = "git_stash" },
+        { "<Leader>bi", function() require("telescope.builtin").builtin() end,      desc = "builtin" },
+        { "<Leader>tp", function() require("telescope.builtin").pickers() end,      desc = "pickers" },
+        { "<Leader>rl", function() require("telescope.builtin").reloader() end,     desc = "reloader" },
         {
           "<Space>b",
           function()
@@ -232,12 +232,12 @@ return {
           desc = "file_browser (buf dir, no respect gitignore)",
         },
         {
-          "<leader>bb",
+          "<Leader>bb",
           function() require("telescope").extensions.file_browser.file_browser() end,
           desc = "file_browser",
         },
         {
-          "<leader>BB",
+          "<Leader>BB",
           function()
             require("telescope").extensions.file_browser.file_browser({
               respect_gitignore = false,
@@ -245,25 +245,25 @@ return {
           end,
           desc = "file_browser (no respect gitignore)",
         },
-        { "<leader>no", function() require("telescope").extensions.notify.notify() end,   desc = "notify" },
+        { "<Leader>no", function() require("telescope").extensions.notify.notify() end,   desc = "notify" },
         { "<Space>m",   function() require("telescope").extensions.harpoon.marks() end,   desc = "Harpoon marks" },
-        { "<leader>yy", function() require("telescope").extensions.neoclip.default() end, desc = "neoclip" },
-        { "<leader>un", function() require("telescope").extensions.undo.undo() end,       desc = "undo" },
-        { "<leader>he", function() require("telescope").extensions.heading.heading() end, desc = "markdown heading" },
+        { "<Leader>yy", function() require("telescope").extensions.neoclip.default() end, desc = "neoclip" },
+        { "<Leader>un", function() require("telescope").extensions.undo.undo() end,       desc = "undo" },
+        { "<Leader>he", function() require("telescope").extensions.heading.heading() end, desc = "markdown heading" },
         {
-          "<leader>dl",
+          "<Leader>dl",
           function() require("telescope").extensions.dap.list_breakpoints() end,
           desc = "dap.list_breakpoints",
         },
         {
-          "<leader>dpC",
+          "<Leader>dpC",
           function() require("telescope").extensions.dap.configurations() end,
           desc = "dap.configurations"
         },
-        { "<leader>dpc", function() require("telescope").extensions.dap.commands() end,        desc = "dap.commands" },
-        { "<leader>dpv", function() require("telescope").extensions.dap.variables() end,       desc = "dap.variables" },
-        { "<leader>dpf", function() require("telescope").extensions.dap.frames() end,          desc = "dap.frames" },
-        { "<leader>bo",  function() require("telescope").extensions.bookmarks.bookmarks() end, desc = "bookmarks" },
+        { "<Leader>dpc", function() require("telescope").extensions.dap.commands() end,        desc = "dap.commands" },
+        { "<Leader>dpv", function() require("telescope").extensions.dap.variables() end,       desc = "dap.variables" },
+        { "<Leader>dpf", function() require("telescope").extensions.dap.frames() end,          desc = "dap.frames" },
+        { "<Leader>bo",  function() require("telescope").extensions.bookmarks.bookmarks() end, desc = "bookmarks" },
       }
 
       for _, keymap in pairs(keymaps) do

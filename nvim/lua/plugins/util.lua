@@ -43,7 +43,7 @@ return {
     cmd = "Copilot",
     keys = {
       {
-        "<leader>cp",
+        "<Leader>cp",
         function() require("copilot.suggestion").toggle_auto_trigger() end,
         desc = "[copilot] Toggle auto_trigger"
       },
@@ -247,7 +247,7 @@ return {
     build = function() vim.fn["mkdp#util#install"]() end,
     ft = "markdown",
     keys = {
-      { "<leader>md", "<Cmd>MarkdownPreviewToggle<CR>", silent = true }
+      { "<Leader>md", "<Cmd>MarkdownPreviewToggle<CR>", silent = true }
     },
     config = function()
       vim.g.mkdp_preview_options = { sync_scroll_type = "relative" }
@@ -258,7 +258,7 @@ return {
   {
     "mbbill/undotree",
     keys = {
-      { "<leader>ut", "<Cmd>UndotreeToggle<CR>", desc = "[Undotree] toggle" },
+      { "<Leader>ut", "<Cmd>UndotreeToggle<CR>", desc = "[Undotree] toggle" },
     }
   },
   {
@@ -266,8 +266,8 @@ return {
     dependencies = { "junegunn/fzf" },
     lazy = true,
     keys = {
-      { "<leader>fz", function() vim.cmd("FZF") end, silent = true, desc = "[FZF] fzf" },
-      { "<leader>fZ", ":FZF ",                       silent = true, desc = "[FZF] :FZF" },
+      { "<Leader>fz", function() vim.cmd("FZF") end, silent = true, desc = "[FZF] fzf" },
+      { "<Leader>fZ", ":FZF ",                       silent = true, desc = "[FZF] :FZF" },
     },
     config = function()
       vim.api.nvim_create_user_command(
@@ -293,10 +293,10 @@ return {
     cmd = "ChatGPT",
     keys = function()
       local keymaps = {
-        { "<leader>ai", "<Cmd>ChatGPT<CR>",      desc = ":ChatGPT" },
-        { "<leader>aa", "<Cmd>ChatGPTActAs<CR>", desc = ":ChatGPTActAs" },
+        { "<Leader>ai", "<Cmd>ChatGPT<CR>",      desc = ":ChatGPT" },
+        { "<Leader>aa", "<Cmd>ChatGPTActAs<CR>", desc = ":ChatGPTActAs" },
         {
-          "<leader>ae",
+          "<Leader>ae",
           "<Cmd>ChatGPTEditWithInstructions<CR>",
           mode = { "n", "v" },
           desc = ":ChatGPTEditWithInstructions"

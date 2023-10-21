@@ -70,23 +70,23 @@ return {
         { "<Space><",   function() require("bufferline").move(-1) end,                    desc = "BufferLineMovePrev" },
         { "<Space>p",   function() require("bufferline").pick() end,                      desc = "BufferlinePick" },
         { "<Space>c",   function() require("bufferline").close_with_pick() end,           desc = "BufferLinePickClose" },
-        { "<leader>bp", function() require("bufferline.groups").toggle_pin() end,         desc = "BufferLineTogglePin" },
-        { "<leader>br", function() require("bufferline").restore_positions() end,         desc = "restore_positions()" },
-        { "<leader>Bh", function() require("bufferline").close_in_direction("left") end,  desc = "BufferLineCloseLeft" },
-        { "<leader>Bl", function() require("bufferline").close_in_direction("right") end, desc = "BufferLineCloseRight" },
-        { "<leader>Bt", function() require("bufferline").sort_by("tabs") end,             desc = "BufferLineSortByTabs" },
+        { "<Leader>bp", function() require("bufferline.groups").toggle_pin() end,         desc = "BufferLineTogglePin" },
+        { "<Leader>br", function() require("bufferline").restore_positions() end,         desc = "restore_positions()" },
+        { "<Leader>Bh", function() require("bufferline").close_in_direction("left") end,  desc = "BufferLineCloseLeft" },
+        { "<Leader>Bl", function() require("bufferline").close_in_direction("right") end, desc = "BufferLineCloseRight" },
+        { "<Leader>Bt", function() require("bufferline").sort_by("tabs") end,             desc = "BufferLineSortByTabs" },
         {
-          "<leader>Be",
+          "<Leader>Be",
           function() require("bufferline").sort_by("extension") end,
           desc = "BufferLineSortByExtension",
         },
         {
-          "<leader>Bd",
+          "<Leader>Bd",
           function() require("bufferline").sort_by("directory") end,
           desc = "BufferLineSortByDirectory",
         },
         {
-          "<leader>Br",
+          "<Leader>Br",
           function() require("bufferline").sort_by("relative_directory") end,
           desc = "BufferLineSortByRelativeDirectory",
         },
@@ -130,7 +130,7 @@ return {
     event = "UIEnter",
     keys = {
       {
-        "<leader>nx",
+        "<Leader>nx",
         function() require("notify").dismiss({ silent = true, pending = true }) end,
         desc = "[Notify] Delete all Notifications",
       },
@@ -169,13 +169,13 @@ return {
     keys = function()
       local keymaps = {
         { "<Space>x",   "<Cmd>TroubleToggle<CR>",                       desc = "Toggle" },
-        { "<leader>xd", "<Cmd>TroubleToggle document_diagnostics<CR>",  desc = "Toggle document_diagnostics" },
-        { "<leader>xw", "<Cmd>TroubleToggle workspace_diagnostics<CR>", desc = "Toggle workspace_diagnostics" },
-        { "<leader>xq", "<Cmd>TroubleToggle quickfix<CR>",              desc = "Toggle quickfix" },
-        { "<leader>xl", "<Cmd>TroubleToggle loclist<CR>",               desc = "Toggle loclist" },
-        { "<leader>xr", "<Cmd>TroubleToggle lsp_references<CR>",        desc = "Toggle lsp_references" },
-        { "<leader>xt", "<Cmd>TroubleToggle lsp_type_definitions<CR>",  desc = "Toggle lsp_type_definitions" },
-        { "<leader>xi", "<Cmd>TroubleToggle lsp_implementations<CR>",   desc = "Toggle lsp_implementations" },
+        { "<Leader>xd", "<Cmd>TroubleToggle document_diagnostics<CR>",  desc = "Toggle document_diagnostics" },
+        { "<Leader>xw", "<Cmd>TroubleToggle workspace_diagnostics<CR>", desc = "Toggle workspace_diagnostics" },
+        { "<Leader>xq", "<Cmd>TroubleToggle quickfix<CR>",              desc = "Toggle quickfix" },
+        { "<Leader>xl", "<Cmd>TroubleToggle loclist<CR>",               desc = "Toggle loclist" },
+        { "<Leader>xr", "<Cmd>TroubleToggle lsp_references<CR>",        desc = "Toggle lsp_references" },
+        { "<Leader>xt", "<Cmd>TroubleToggle lsp_type_definitions<CR>",  desc = "Toggle lsp_type_definitions" },
+        { "<Leader>xi", "<Cmd>TroubleToggle lsp_implementations<CR>",   desc = "Toggle lsp_implementations" },
       }
 
       for _, keymap in pairs(keymaps) do
@@ -201,8 +201,8 @@ return {
     "lukas-reineke/indent-blankline.nvim",
     main = "ibl",
     keys = {
-      { "<leader>ib", "<Cmd>IBLToggle<CR>",      silent = true, desc = "[IndentBlankline] Toggle" },
-      { "<leader>is", "<Cmd>IBLToggleScope<CR>", silent = true, desc = "[IndentBlankline] Toggle Scope" },
+      { "<Leader>ib", "<Cmd>IBLToggle<CR>",      silent = true, desc = "[IndentBlankline] Toggle" },
+      { "<Leader>is", "<Cmd>IBLToggleScope<CR>", silent = true, desc = "[IndentBlankline] Toggle Scope" },
     },
     opts = function(_, opts)
       local hooks = require("ibl.hooks")
@@ -248,7 +248,7 @@ return {
     dependencies = { "folke/twilight.nvim" },
     keys = {
       {
-        "<leader>zz",
+        "<Leader>zz",
         function()
           require("zen-mode").toggle({ plugins = { twilight = { enabled = false } } })
         end,
@@ -256,7 +256,7 @@ return {
         desc = "[Zen Mode] Toggle",
       },
       {
-        "<leader>zt",
+        "<Leader>zt",
         function()
           require("zen-mode").toggle({ plugins = { twilight = { enabled = true } } })
         end,
@@ -275,7 +275,7 @@ return {
     "folke/twilight.nvim",
     keys = {
       {
-        "<leader>tw",
+        "<Leader>tw",
         function()
           require("twilight").setup()
           require("twilight").toggle()
@@ -284,7 +284,7 @@ return {
         desc = "[Twilight] Toggle"
       },
       {
-        "<leader>tf",
+        "<Leader>tf",
         function()
           require("twilight").setup({ context = 0 })
           require("twilight").toggle()

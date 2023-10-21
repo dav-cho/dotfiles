@@ -83,7 +83,7 @@ return {
       vim.keymap.set("n", "gL", vim.diagnostic.setloclist, { desc = "vim.diagnostic.setloclist" })
       vim.keymap.set("n", "[d", diagnostic_goto_prev, { desc = "vim.diagnostic.goto_prev" })
       vim.keymap.set("n", "]d", diagnostic_goto_next, { desc = "vim.diagnostic.goto_next" })
-      vim.keymap.set("n", "<leader>lr", function() vim.cmd("LspRestart") end, { desc = "LspRestart" })
+      vim.keymap.set("n", "<Leader>lr", function() vim.cmd("LspRestart") end, { desc = "LspRestart" })
 
       for _, sign in ipairs(opts.signs) do
         vim.fn.sign_define(sign.name, { text = sign.text, texthl = sign.name, numhl = "" })
@@ -110,12 +110,12 @@ return {
         buf_map("n", "gi", vim.lsp.buf.implementation)
         buf_map("n", "gr", vim.lsp.buf.references)
         buf_map({ "n", "i" }, "<M-s>", vim.lsp.buf.signature_help)
-        buf_map("n", "<leader>gd", vim.lsp.buf.declaration)
-        buf_map("n", "<leader>rn", vim.lsp.buf.rename)
-        buf_map("n", "<leader>ca", vim.lsp.buf.code_action)
-        buf_map("n", "<leader>Wa", vim.lsp.buf.add_workspace_folder)
-        buf_map("n", "<leader>Wr", vim.lsp.buf.remove_workspace_folder)
-        buf_map("n", "<leader>Wl", function() vim.notify(vim.inspect(vim.lsp.buf.list_workspace_folders())) end)
+        buf_map("n", "<Leader>gd", vim.lsp.buf.declaration)
+        buf_map("n", "<Leader>rn", vim.lsp.buf.rename)
+        buf_map("n", "<Leader>ca", vim.lsp.buf.code_action)
+        buf_map("n", "<Leader>Wa", vim.lsp.buf.add_workspace_folder)
+        buf_map("n", "<Leader>Wr", vim.lsp.buf.remove_workspace_folder)
+        buf_map("n", "<Leader>Wl", function() vim.notify(vim.inspect(vim.lsp.buf.list_workspace_folders())) end)
       end
 
       local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -176,7 +176,7 @@ return {
         end
       end
 
-      vim.keymap.set("n", "<leader>pl", toggle_pylint_diagnostics, { silent = true, desc = "Toggle pylint diagnostics" })
+      vim.keymap.set("n", "<Leader>pl", toggle_pylint_diagnostics, { silent = true, desc = "Toggle pylint diagnostics" })
     end,
   },
   { "folke/neodev.nvim", lazy = true, config = true },
@@ -191,7 +191,7 @@ return {
         mode = { "n", "v" },
         desc = "[Conform] Format"
       },
-      { "<leader>ci", "<Cmd>ConformInfo<CR>", desc = "[Conform] Info" },
+      { "<Leader>ci", "<Cmd>ConformInfo<CR>", desc = "[Conform] Info" },
       "gq",
     },
     opts = {
@@ -230,18 +230,18 @@ return {
     event = "LspAttach",
     keys = function()
       local keymaps = {
-        { "<leader>lf", "<Cmd>Lspsaga finder<CR>",                     desc = "lsp_finder" },
+        { "<Leader>lf", "<Cmd>Lspsaga finder<CR>",                     desc = "lsp_finder" },
         { "<F2>",       "<Cmd>Lspsaga rename<CR>",                     desc = "rename" },
         { "<Space>d",   "<Cmd>Lspsaga peek_definition<CR>",            desc = "peek_definition" },
         { "<Space>t",   "<Cmd>Lspsaga peek_type_definition<CR>",       desc = "peek_type_definition" },
-        { "<leader>sl", "<Cmd>Lspsaga show_line_diagnostics<CR>",      desc = "show_line_diagnostics" },
-        { "<leader>sb", "<Cmd>Lspsaga show_buf_diagnostics<CR>",       desc = "show_buf_diagnostics" },
-        { "<leader>sw", "<Cmd>Lspsaga show_workspace_diagnostics<CR>", desc = "show_workspace_diagnostics" },
-        { "<leader>sc", "<Cmd>Lspsaga show_cursor_diagnostics<CR>",    desc = "show_cursor_diagnostics" },
-        { "<leader>so", "<Cmd>Lspsaga outline<CR>",                    desc = "outline" },
-        { "<leader>gh", "<Cmd>Lspsaga hover_doc<CR>",                  desc = "hover_doc" },
-        { "<leader>in", "<Cmd>Lspsaga incoming_calls<CR>",             desc = "incoming_calls" },
-        { "<leader>ou", "<Cmd>Lspsaga outgoing_calls<CR>",             desc = "outgoing_calls" },
+        { "<Leader>sl", "<Cmd>Lspsaga show_line_diagnostics<CR>",      desc = "show_line_diagnostics" },
+        { "<Leader>sb", "<Cmd>Lspsaga show_buf_diagnostics<CR>",       desc = "show_buf_diagnostics" },
+        { "<Leader>sw", "<Cmd>Lspsaga show_workspace_diagnostics<CR>", desc = "show_workspace_diagnostics" },
+        { "<Leader>sc", "<Cmd>Lspsaga show_cursor_diagnostics<CR>",    desc = "show_cursor_diagnostics" },
+        { "<Leader>so", "<Cmd>Lspsaga outline<CR>",                    desc = "outline" },
+        { "<Leader>gh", "<Cmd>Lspsaga hover_doc<CR>",                  desc = "hover_doc" },
+        { "<Leader>in", "<Cmd>Lspsaga incoming_calls<CR>",             desc = "incoming_calls" },
+        { "<Leader>ou", "<Cmd>Lspsaga outgoing_calls<CR>",             desc = "outgoing_calls" },
       }
 
       for _, keymap in pairs(keymaps) do
@@ -257,10 +257,10 @@ return {
       definition = {
         width = 0.7,
         keys = {
-          edit = "<leader>we",
-          vsplit = "<leader>wv",
-          split = "<leader>ws",
-          tabe = "<leader>wt",
+          edit = "<Leader>we",
+          vsplit = "<Leader>wv",
+          split = "<Leader>ws",
+          tabe = "<Leader>wt",
           quit = "q",
         },
       },
@@ -334,7 +334,7 @@ return {
   {
     "simrat39/symbols-outline.nvim",
     keys = {
-      { "<leader>sy", "<cmd>SymbolsOutline<CR>", silent = true, desc = "[SymbolsOutline] Toggle" },
+      { "<Leader>sy", "<cmd>SymbolsOutline<CR>", silent = true, desc = "[SymbolsOutline] Toggle" },
     },
     opts = {
       position = "left",

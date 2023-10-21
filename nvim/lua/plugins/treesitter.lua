@@ -159,7 +159,7 @@ return {
   {
     "nvim-treesitter/playground",
     keys = {
-      { "<leader>TS", "<Cmd>TSPlaygroundToggle<CR>", silent = true, desc = "[TSPlayground] Toggle" },
+      { "<Leader>TS", "<Cmd>TSPlaygroundToggle<CR>", silent = true, desc = "[TSPlayground] Toggle" },
     },
     opts = {
       playground = {

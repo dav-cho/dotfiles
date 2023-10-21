@@ -16,7 +16,7 @@ return {
     },
     keys = {
       {
-        "<leader>th",
+        "<Leader>th",
         function()
           local themes = {
             ["catppuccin"] = "catppuccin",
@@ -405,7 +405,7 @@ return {
     lazy = true,
     keys = {
       {
-        "<leader>mt",
+        "<Leader>mt",
         function() require("material.functions").toggle_style() end,
         silent = true,
         desc = "[Material] Toggle Style"
