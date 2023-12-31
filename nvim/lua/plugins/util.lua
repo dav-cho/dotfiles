@@ -298,34 +298,4 @@ return {
       )
     end,
   },
-  {
-    "jackMort/ChatGPT.nvim",
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim"
-    },
-    cmd = "ChatGPT",
-    keys = function()
-      local keymaps = {
-        { "<Leader>ai", "<Cmd>ChatGPT<CR>",      desc = ":ChatGPT" },
-        { "<Leader>aa", "<Cmd>ChatGPTActAs<CR>", desc = ":ChatGPTActAs" },
-        {
-          "<Leader>ae",
-          "<Cmd>ChatGPTEditWithInstructions<CR>",
-          mode = { "n", "v" },
-          desc = ":ChatGPTEditWithInstructions"
-        },
-      }
-      for _, keymap in pairs(keymaps) do
-        keymap.desc = "[ChatGPT] " .. (keymap.desc or "")
-      end
-      return keymaps
-    end,
-    opts = {
-      keymaps = {
-        submit = "<M-CR>",
-      },
-    },
-  },
 }

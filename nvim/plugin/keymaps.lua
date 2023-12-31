@@ -78,8 +78,6 @@ map("n", "zz", function()
   vim.api.nvim_input(string.format("zt%d<C-y>", rows))
 end, { desc = "Redraw cursor line top third" })
 
-map("n", "<Leader>vm", ":vertical Man ", { desc = ":Man" })
-
 map("n", "<Space>q", "<Cmd>copen<CR>", { desc = "Open qflist" })
 map("n", "<Leader>cq", function() vim.fn.setqflist({}, "f") end, { desc = "Reset qflist" })
 map("n", "<Space>]", "<Cmd>cnext<CR>", { desc = "qflist next" })
@@ -129,4 +127,6 @@ map("n", "<Leader>ms", function()
   vim.notify(string.format("Session Saved: %s/Session.vim", vim.fn.getcwd()))
 end, { silent = true, desc = "[Sessions] mksession" })
 
+map("n", "<Leader>vm", ":vertical Man ", { desc = ":Man" })
+map("n", "<Leader>mg", "<Cmd>messages<CR>", { desc = ":messages" })
 map("n", "<Leader>lz", "<Cmd>Lazy<CR>", { desc = "Lazy" })
