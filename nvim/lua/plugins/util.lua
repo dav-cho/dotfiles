@@ -178,7 +178,17 @@ return {
     dependencies = { "nvim-tree/nvim-web-devicons" },
     cmd = "Oil",
     keys = {
+      { "_", function() require("oil").open() end,       desc = "[Oil] Open" },
       { "-", function() require("oil").open_float() end, desc = "[Oil] Open float" },
+      {
+        "<Leader>ca",
+        function()
+          if vim.bo.filetype == "oil" then
+            require("oil").discard_all_changes()
+          end
+        end,
+        desc = "[Oil] Discard all changes"
+      },
     },
     opts = {
       default_file_explorer = false,
@@ -199,16 +209,27 @@ return {
         win_options = {
           winblend = 10,
         },
-        -- This is the config that will be passed to nvim_open_win.
-        -- Change values here to customize the layout
         override = function(conf)
-          local rows = vim.api.nvim_get_option("lines")
-          local cols = vim.api.nvim_get_option("columns")
+          local rows = vim.o.lines - vim.o.cmdheight
+              - ((vim.o.laststatus >= 2 and 1) or 0)
+              - ((vim.o.showtabline >= 1 and 1) or 0)
+          local cols = vim.o.columns
+
+          local opts = {
+            min_width = 60,
+            min_height = 10,
+            max_width = math.floor(cols * 0.9),
+            max_height = math.floor(rows * 0.9),
+          }
+
+          local width = math.min(math.max(math.floor(cols / 2), opts.min_width), opts.max_width)
+          local height = math.min(math.max(math.floor(rows / 2), opts.min_height), opts.max_height)
+
           return vim.tbl_deep_extend("force", conf, {
-            height = math.max(math.floor(rows * 0.25), 15),
-            width = math.max(math.floor(cols * 0.25), 50),
-            row = math.floor((rows - math.max(math.floor(rows * 0.25), 15)) / 2),
-            col = math.floor((cols - math.max(math.floor(cols * 0.25), 50)) / 2),
+            width = width,
+            height = height,
+            row = math.floor((rows - height) / 2),
+            col = math.floor((cols - width) / 2),
           })
         end,
       },
