@@ -319,4 +319,51 @@ return {
       )
     end,
   },
+  {
+    "epwalsh/obsidian.nvim",
+    version = "*",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    lazy = true,
+    event = {
+      "BufReadPre " .. vim.fn.expand("~") .. "/Library/CloudStorage/Dropbox/notes/**.md",
+      "BufNewFile " .. vim.fn.expand("~") .. "/Library/CloudStorage/Dropbox/notes/**.md",
+    },
+    keys = {
+      { "<Leader>na", "<Cmd>ObsidianOpen<CR>",           desc = "[Obsidian] New Note" },
+      { "<Leader>nn", ":ObsidianNew ",                   desc = "[Obsidian] New Note" },
+      { "<Leader>nd", "<Cmd>ObsidianToday<CR>",          desc = "[Obsidian] Today's Daily Note" },
+      { "<Leader>ns", "<Cmd>ObsidianSearch<CR>",         desc = "[Obsidian] Search" },
+      { "<Leader>nw", "<Cmd>ObsidianWorkspace main<CR>", desc = "[Obsidian] Workspace (main)" },
+    },
+    config = {
+      workspaces = {
+        {
+          name = "main",
+          path = "~/Library/CloudStorage/Dropbox/notes",
+        },
+      },
+      daily_notes = {
+        folder = "daily",
+        alias_format = "%Y-%m-%d",
+      },
+      mappings = {
+        ["<Space>-"] = {
+          action = function()
+            return require("obsidian").util.toggle_checkbox()
+          end,
+          opts = { buffer = true },
+        },
+      },
+      note_id_func = function(title)
+        if title ~= nil then
+          return title
+        end
+        return "Untitled"
+      end,
+      disable_frontmatter = true,
+      follow_url_func = function(url)
+        vim.fn.jobstart({ "open", url })
+      end,
+    },
+  },
 }
