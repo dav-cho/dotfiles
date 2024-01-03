@@ -149,6 +149,13 @@ return {
       vim.keymap.set({ "n", "x", "o" }, "t", repeat_move.builtin_t)
       vim.keymap.set({ "n", "x", "o" }, "T", repeat_move.builtin_T)
 
+      -- local cnext, cprevious = repeat_move.make_repeatable_move_pair(
+      --   function() vim.cmd("cnext") end,
+      --   function() vim.cmd("cprevious") end
+      -- )
+      -- vim.keymap.set("n", "<space>]", cnext, { desc = "qflist next" })
+      -- vim.keymap.set("n", "<space>[", cprevious, { desc = "qflist previous" })
+
       local next_fold, prev_fold = repeat_move.make_repeatable_move_pair(
         function() vim.cmd("normal! zj") end,
         function() vim.cmd("normal! zk") end

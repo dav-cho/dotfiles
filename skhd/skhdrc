@@ -4,7 +4,6 @@
 # "+": 0x18
 # "\": 0x2A
 
-
 # focus space
 ctrl - 1         : yabai -m space --focus 1
 ctrl - 2         : yabai -m space --focus 2
@@ -208,6 +207,7 @@ rctrl + rcmd + rshift - n : yabai -m space --create && \
                             yabai -m space --move "$idx"
 rctrl + rcmd + rshift - d : yabai -m space --destroy
 
+# apps
 lctrl + lcmd - space : "$HOME/dotfiles/skhd/alacritty-new-window.sh"
 # lctrl + lcmd - space : "$HOME/dotfiles/skhd/iterm-new-window.sh"
 

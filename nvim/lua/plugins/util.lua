@@ -329,11 +329,12 @@ return {
       "BufNewFile " .. vim.fn.expand("~") .. "/Library/CloudStorage/Dropbox/notes/**.md",
     },
     keys = {
-      { "<Leader>na", "<Cmd>ObsidianOpen<CR>",           desc = "[Obsidian] New Note" },
-      { "<Leader>nn", ":ObsidianNew ",                   desc = "[Obsidian] New Note" },
-      { "<Leader>nd", "<Cmd>ObsidianToday<CR>",          desc = "[Obsidian] Today's Daily Note" },
-      { "<Leader>ns", "<Cmd>ObsidianSearch<CR>",         desc = "[Obsidian] Search" },
-      { "<Leader>nw", "<Cmd>ObsidianWorkspace main<CR>", desc = "[Obsidian] Workspace (main)" },
+      { "<leader>oa", "<Cmd>ObsidianOpen<CR>",           desc = "[Obsidian] New note" },
+      { "<leader>on", ":ObsidianNew ",                   desc = "[Obsidian] New note" },
+      { "<leader>of", "<Cmd>ObsidianFollowLink<CR>",     desc = "[Obsidian] Follow link" },
+      { "<leader>od", "<Cmd>ObsidianToday<CR>",          desc = "[Obsidian] Daily note" },
+      { "<leader>os", "<Cmd>ObsidianSearch<CR>",         desc = "[Obsidian] Search" },
+      { "<leader>ow", "<Cmd>ObsidianWorkspace main<CR>", desc = "[Obsidian] Workspace (main)" },
     },
     config = {
       workspaces = {
@@ -345,6 +346,7 @@ return {
       daily_notes = {
         folder = "daily",
         alias_format = "%Y-%m-%d",
+        template = "daily.md",
       },
       mappings = {
         ["<Space>-"] = {

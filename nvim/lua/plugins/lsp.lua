@@ -332,22 +332,4 @@ return {
     lazy = true,
     config = true
   },
-  {
-    "simrat39/symbols-outline.nvim",
-    keys = {
-      { "<Leader>sy", "<cmd>SymbolsOutline<CR>", silent = true, desc = "[SymbolsOutline] Toggle" },
-    },
-    opts = {
-      position = "left",
-      relative_width = false,
-      width = 40,
-      keymaps = {
-        hover_symbol = "gh",
-        fold = "zc",
-        unfold = "zo",
-        fold_all = "zM",
-        unfold_all = "zR",
-      },
-    },
-  },
 }

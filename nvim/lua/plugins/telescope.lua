@@ -474,19 +474,25 @@ return {
         { "<Space>0",   function() require("harpoon.ui").nav_file(10) end,        desc = "[Harpoon] nav_file(10)" },
       }
 
-      for i = 1, 9 do
-        table.insert(keymaps,
-          { "<Space>" .. i, function() require("harpoon.ui").nav_file(i) end, desc = ("[Harpoon] nav_file(%d)"):format(i) })
-      end
-
-      for i = 1, 9 do
+      for i = 1, 10 do
         table.insert(keymaps,
           {
-            "<Leader>" .. i,
+            "<Space>" .. i % 10,
+            function()
+              require("harpoon.ui").nav_file(i)
+            end,
+            desc = string.format("[Harpoon] nav_file(%d)", i),
+          })
+      end
+
+      for i = 1, 10 do
+        table.insert(keymaps,
+          {
+            "<Leader>" .. i % 10,
             function()
               require("harpoon.term").gotoTerminal(i)
             end,
-            desc = ("[Harpoon] gotoTerminal(%d)"):format(i)
+            desc = string.format("[Harpoon] gotoTerminal(%d)", i)
           })
       end
 

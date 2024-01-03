@@ -182,25 +182,27 @@ return {
     "folke/trouble.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     keys = function()
-      local keymaps = {
-        { "<Space>x",   "<Cmd>TroubleToggle<CR>",                       desc = "Toggle" },
-        { "<Leader>xd", "<Cmd>TroubleToggle document_diagnostics<CR>",  desc = "Toggle document_diagnostics" },
-        { "<Leader>xw", "<Cmd>TroubleToggle workspace_diagnostics<CR>", desc = "Toggle workspace_diagnostics" },
-        { "<Leader>xq", "<Cmd>TroubleToggle quickfix<CR>",              desc = "Toggle quickfix" },
-        { "<Leader>xl", "<Cmd>TroubleToggle loclist<CR>",               desc = "Toggle loclist" },
-        { "<Leader>xr", "<Cmd>TroubleToggle lsp_references<CR>",        desc = "Toggle lsp_references" },
-        { "<Leader>xt", "<Cmd>TroubleToggle lsp_type_definitions<CR>",  desc = "Toggle lsp_type_definitions" },
-        { "<Leader>xi", "<Cmd>TroubleToggle lsp_implementations<CR>",   desc = "Toggle lsp_implementations" },
+      local trouble_next, trouble_prev = require("nvim-treesitter.textobjects.repeatable_move")
+          .make_repeatable_move_pair(
+            function() require("trouble").next({ skip_groups = true, jump = true }) end,
+            function() require("trouble").previous({ skip_groups = true, jump = true }) end
+          )
+
+      return {
+        { "<space>x",   function() require("trouble").toggle() end,                        desc = "[Trouble] Toggle" },
+        { "<leader>xd", function() require("trouble").toggle("document_diagnostics") end,  desc = "[Trouble] document_diagnostics" },
+        { "<leader>xw", function() require("trouble").toggle("workspace_diagnostics") end, desc = "[Trouble] workspace_diagnostics" },
+        { "<leader>xq", function() require("trouble").toggle("quickfix") end,              desc = "[Trouble] quickfix" },
+        { "<leader>xl", function() require("trouble").toggle("loclist") end,               desc = "[Trouble] loclist" },
+        { "<leader>xr", function() require("trouble").toggle("lsp_references") end,        desc = "[Trouble] lsp_references" },
+        { "<leader>xt", function() require("trouble").toggle("lsp_type_definitions") end,  desc = "[Trouble] lsp_type_definitions" },
+        { "<leader>xi", function() require("trouble").toggle("lsp_implementations") end,   desc = "[Trouble] lsp_implementations" },
+        { "<leader>xn", trouble_next,                                                      desc = "[Trouble] next" },
+        { "<leader>xp", trouble_prev,                                                      desc = "[Trouble] prev" },
       }
-
-      for _, keymap in pairs(keymaps) do
-        keymap.silent = true
-        keymap.desc = "[Trouble] " .. (keymap.desc or "")
-      end
-
-      return keymaps
     end,
     opts = {
+      height = 15,
       mode = "document_diagnostics",
       padding = false,
       action_keys = {
