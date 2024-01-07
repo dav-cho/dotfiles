@@ -58,5 +58,5 @@ key_bindings:
   - {
       key: K,
       mods: Command,
-      command: { program: "/opt/homebrew/bin/tmux", args: ["clear-history"] },
+      command: { program: "tmux", args: ["clear-history"] },
     }
