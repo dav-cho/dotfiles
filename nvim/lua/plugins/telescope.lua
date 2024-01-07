@@ -59,6 +59,18 @@ return {
           end,
           desc = "Find Files (hidden, no_ignore)",
         },
+        {
+          "<Space>A",
+          function()
+            require("telescope.builtin").find_files({
+              cwd = require("telescope.utils").buffer_dir(),
+              hidden = true,
+              no_ignore = true,
+              prompt_title = "Find Files (cwd, hidden, no_ignore)",
+            })
+          end,
+          desc = "Find Files (cwd, hidden, no_ignore)",
+        },
 
         {
           "<Space>e",

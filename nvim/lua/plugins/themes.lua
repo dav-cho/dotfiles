@@ -115,12 +115,11 @@ return {
       }
 
       return vim.tbl_deep_extend("force", opts, {
-        variant = "main",      -- 'auto'|'main'|'moon'|'dawn'
-        dark_variant = "main", -- 'main'|'moon'|'dawn'
-        dim_nc_background = false,
-        disable_background = true,
-        disable_float_background = true,
-        disable_italics = true,
+        variant = "main",
+        dark_variant = "main",
+        styles = {
+          italic = false,
+        },
         highlight_groups = {
           BufferlineTab              = { fg = colors.gray_7 },
           BufferlineTabSelected      = { fg = "iris" },
@@ -131,10 +130,10 @@ return {
           Cursor                     = { fg = "#1d1d1d", bg = "#e6edf3" },
           CursorLine                 = { bg = colors.gray_2 },
           CursorLineNr               = { fg = colors.gray_8 },
+          DiagnosticVirtualTextError = { fg = "#964a5f" },
           DiagnosticVirtualTextHint  = { fg = "#7d6c91", },
           DiagnosticVirtualTextInfo  = { fg = "#69878c", },
           DiagnosticVirtualTextWarn  = { fg = "#ad8957", },
-          DiagnosticVirtualTextError = { fg = "#964a5f" },
           Float                      = { link = "Number" },
           FloatBorder                = { fg = colors.gray_5, bg = "NormalFloat" },
           Folded                     = { link = "Comment" },
@@ -144,15 +143,17 @@ return {
           Include                    = { fg = "iris" },
           LineNr                     = { fg = colors.gray_6 },
           Normal                     = { fg = colors.text, bg = colors.gray_1 },
-          NormalNC                   = { link = "Normal" },
           NormalFloat                = { fg = colors.text, bg = "none" },
+          NormalNC                   = { link = "Normal" },
           Number                     = { fg = colors.orange },
           Operator                   = { fg = colors.gray_7 },
+          Pmenu                      = { bg = "NormalFloat" },
           Search                     = { fg = "base", bg = "rose" },
           String                     = { fg = colors.yellow },
           TelescopeBorder            = { fg = colors.gray_7, bg = colors.gray_1 },
           TelescopeNormal            = { bg = colors.gray_1 },
           TelescopeSelection         = { bg = colors.gray_3 },
+          WinSeparator               = { fg = colors.gray_4, bg = "none" },
           ["@attribute"]             = { fg = "iris" },
           ["@keyword.operator"]      = { link = "Keyword" },
           ["@punctuation"]           = { link = "Operator" },
