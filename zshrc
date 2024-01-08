@@ -88,6 +88,8 @@ export FZF_CTRL_R_OPTS="
 [[ -f $HOME/.fzf.zsh ]] && source $HOME/.fzf.zsh
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza --tree --color=always $realpath'
 
+[[ -e "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
+
 [[ ! -f ~/.p10k.zsh ]] || . ~/.p10k.zsh
 
 compdef _tmux _tmux-run
