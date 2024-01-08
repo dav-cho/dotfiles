@@ -90,6 +90,8 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza --tree --color=always $realpath
 
 [[ -e "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
 
+export PATH="$HOME/.local/share/solana/install/active_release/bin:$PATH"
+
 [[ ! -f ~/.p10k.zsh ]] || . ~/.p10k.zsh
 
 compdef _tmux _tmux-run
