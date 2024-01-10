@@ -54,6 +54,8 @@ map("n", "#", function()
 end, { desc = "Search word backward" })
 map("v", "*", [[y/\V<C-r>"<CR>`<]], { desc = "Search selection forward" })
 map("v", "#", [[y?\V<C-r>"<CR>`<]], { desc = "Search selection backward" })
+map("n", "n", "nzz", { desc = "Repeat search, redraw line center" })
+map("n", "N", "Nzz", { desc = "Repeat search reverse, redraw line center" })
 map("n", "<M-C-n>", "nzt", { desc = "Repeat search, redraw top" })
 
 map("v", "<M-y>", "ygv", { desc = "Yank selection and reselect" })
@@ -73,10 +75,11 @@ map("n", "<leader>ya", [[<Cmd>let @+=fnamemodify(expand("%:p"), ":~")<CR>]], { d
 map("n", "<leader>yA", [[<Cmd>let @+=expand("%:p")<CR>]], { desc = "Yank absolute file path" })
 
 map("n", "<space><CR>", "zt", { desc = "Redraw cursor line top" })
+map("n", "z.", "zz", { desc = "Redraw line center, cursor pos stays the same" })
 map("n", "zz", function()
   local rows = math.floor(vim.api.nvim_win_get_height(0) / 4) - vim.opt.scrolloff:get()
   vim.api.nvim_input(string.format("zt%d<C-y>", rows))
-end, { desc = "Redraw cursor line top third" })
+end, { desc = "Redraw cursor line top 1/4" })
 
 map("n", "<space>q", "<Cmd>copen<CR>", { desc = "Open qflist" })
 map("n", "<leader>cq", function() vim.fn.setqflist({}, "f") end, { desc = "Reset qflist" })

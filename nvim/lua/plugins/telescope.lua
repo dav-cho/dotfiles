@@ -49,7 +49,7 @@ return {
           desc = "find_files (buf dir)",
         },
         {
-          "<Space>a",
+          "<Space>A",
           function()
             require("telescope.builtin").find_files({
               hidden = true,
@@ -60,7 +60,7 @@ return {
           desc = "Find Files (hidden, no_ignore)",
         },
         {
-          "<Space>A",
+          "<Space>a",
           function()
             require("telescope.builtin").find_files({
               cwd = require("telescope.utils").buffer_dir(),

@@ -29,7 +29,7 @@ return {
             ["onedark"] = "onedark.nvim",
             ["onenord"] = "onenord.nvim",
             ["rose-pine"] = "rose-pine",
-            ["sonokai"] = "sonokai",
+            -- ["sonokai"] = "sonokai",
             ["tokyonight"] = "tokyonight.nvim",
             ["zenbones"] = "zenbones.nvim",
           }
@@ -96,7 +96,7 @@ return {
   {
     "rose-pine/neovim",
     name = "rose-pine",
-    priority = 1000,
+    lazy = true,
     opts = function(_, opts)
       local colors = {
         emerald = "#36c692",
@@ -354,28 +354,68 @@ return {
     end,
   },
   {
-    -- *After changes, make sure to run `:KanagawaCompile`
     "rebelot/kanagawa.nvim",
-    lazy = true,
+    priority = 1000,
     opts = {
+      compile = false,
       undercurl = false,
       commentStyle = { italic = false },
+      functionStyle = {},
       keywordStyle = { italic = false },
-      globalStatus = true,
-      overrides = function(colors)
+      statementStyle = { bold = false },
+      typeStyle = { italic = false },
+      transparent = false,
+      dimInactive = false,
+      terminalColors = true,
+      colors = {
+        theme = {
+          all = {
+            ui = {
+              bg_gutter = "none",
+            },
+          }
+        },
+      },
+      overrides = function(colors) -- add/modify highlights
+        local palette = colors.palette
+        local theme = colors.theme
         return {
-          IlluminatedWordText = { underline = false },
-          IlluminatedWordRead = { underline = false },
-          IlluminatedWordWrite = { underline = false },
-          Todo = { fg = colors.red },
+          -- DiagnosticError = { fg = palette.dragonRed },
+          -- DiagnosticWarn = { fg = palette.boatYellow1 },
+          -- ["@variable"] = { fg = palette.dragonWhite },
+          -- ["@variable"] = { fg = palette.fujiWhite },
+          -- ["@variable"] = { fg = palette.katanaGray },
+          BufferLineTabSelected = { fg = palette.sakuraPink },
+          Cursorline = { bg = theme.ui.bg_p1 },
+          DiagnosticError = { fg = palette.lotusRed },
+          DiagnosticSignError = { fg = palette.lotusRed },
+          DiagnosticSignWarn = { fg = palette.autumnYellow },
+          DiagnosticVirtualTextError = { fg = palette.dragonRed },
+          DiagnosticVirtualTextWarn = { fg = palette.boatYellow1 },
+          DiagnosticWarn = { fg = palette.autumnYellow },
+          IlluminatedWordRead = { bg = theme.ui.bg_p2 },
+          IlluminatedWordText = { bg = theme.ui.bg_p2 },
+          IlluminatedWordWrite = { bg = theme.ui.bg_p2 },
+          Pmenu = { fg = theme.ui.shade0, bg = theme.ui.bg_p1 }, -- add `blend = vim.o.pumblend` to enable transparency
+          PmenuSbar = { bg = theme.ui.bg_m1 },
+          PmenuSel = { fg = "NONE", bg = theme.ui.bg_p2 },
+          PmenuThumb = { bg = theme.ui.bg_p2 },
+          Todo = { fg = palette.sakuraPink, bg = "none" },
+          WinSeparator = { fg = theme.ui.bg_p2 },
+          ["@variable.builtin"] = { italic = false },
         }
       end,
+      theme = "wave",  -- Load "wave" theme when 'background' option is not set
+      background = {   -- map the value of 'background' option to a theme
+        dark = "wave", -- try "dragon" !
+        light = "lotus"
+      },
     },
     config = function(_, opts)
       require("kanagawa").setup(opts)
       vim.cmd("colorscheme kanagawa")
-      illuminate_default()
-      set_lualine_theme("kanagawa")
+      -- illuminate_default()
+      -- set_lualine_theme("kanagawa")
     end,
   },
   {
@@ -429,7 +469,7 @@ return {
     config = function()
       local material = require("material")
       local colors = require("material.colors")
-      vim.g.material_style = "palenight" -- oceanic, deep ocean, palenight, lighter, darker
+      vim.g.material_style = "darker"
       material.setup({
         plugins = {
           "dap",
@@ -447,39 +487,24 @@ return {
         }
       })
       vim.cmd("colorscheme material")
-      set_lualine_theme("material")
+      -- set_lualine_theme("material")
     end,
   },
-  {
-    "sainnhe/sonokai",
-    lazy = true,
-    opts = {
-      statusline = {
-        options = {
-          theme = "horizon",
-        },
-      },
-    },
-    config = function()
-      vim.g.sonokai_disable_italic_comment = 1
-      vim.g.sonokai_show_eob = 0
-      vim.cmd [[colorscheme sonokai]]
-      set_lualine_theme("sonokai")
-    end
-  },
-  {
-    "mcchrish/zenbones.nvim",
-    lazy = true,
-    dependencies = { "rktjmp/lush.nvim" },
-    config = function()
-      vim.g.background = "dark"
-      vim.g.zenbones_compat = 1
-      vim.g.zenbones = {
-        italic_comments = false,
-      }
-      vim.cmd [[colorscheme zenwritten]]
-      vim.cmd [[hi Constant cterm=none gui=none]]
-      set_lualine_theme("zenbones")
-    end,
-  },
+  -- {
+  --   "sainnhe/sonokai",
+  --   lazy = true,
+  --   opts = {
+  --     statusline = {
+  --       options = {
+  --         theme = "horizon",
+  --       },
+  --     },
+  --   },
+  --   config = function()
+  --     vim.g.sonokai_disable_italic_comment = 1
+  --     vim.g.sonokai_show_eob = 0
+  --     vim.cmd [[colorscheme sonokai]]
+  --     set_lualine_theme("sonokai")
+  --   end
+  -- },
 }

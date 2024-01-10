@@ -239,8 +239,8 @@ return {
     "folke/flash.nvim",
     event = "VeryLazy",
     keys = {
-      { "<Space>/", function() require("flash").jump() end,       mode = { "n", "x", "o" }, desc = "[Flash] Jump" },
-      { "<Space>?", function() require("flash").treesitter() end, mode = { "n", "x", "o" }, desc = "[Flash] Treesitter" },
+      { "<Leader>/", function() require("flash").jump() end,       mode = { "n", "x", "o" }, desc = "[Flash] Jump" },
+      { "<Leader>?", function() require("flash").treesitter() end, mode = { "n", "x", "o" }, desc = "[Flash] Treesitter" },
       { "r",        function() require("flash").remote() end,     mode = { "o" },           desc = "[Flash] Remote" },
       {
         "R",
@@ -336,7 +336,7 @@ return {
       { "<leader>os", "<Cmd>ObsidianSearch<CR>",         desc = "[Obsidian] Search" },
       { "<leader>ow", "<Cmd>ObsidianWorkspace main<CR>", desc = "[Obsidian] Workspace (main)" },
     },
-    config = {
+    opts = {
       workspaces = {
         {
           name = "main",
@@ -367,5 +367,9 @@ return {
         vim.fn.jobstart({ "open", url })
       end,
     },
+    config = function(_, opts)
+      vim.opt_local.conceallevel = 1
+      require("obsidian").setup(opts)
+    end,
   },
 }

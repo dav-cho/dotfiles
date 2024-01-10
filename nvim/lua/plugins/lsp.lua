@@ -142,7 +142,11 @@ return {
     build = ":MasonUpdate",
     lazy = true,
     cmd = "Mason",
-    config = true,
+    opts = {
+      -- ui = {
+      --   border = "single",
+      -- },
+    },
   },
   {
     "williamboman/mason-lspconfig.nvim",
@@ -322,6 +326,15 @@ return {
       )
 
       illuminate.configure(opts)
+
+      local highlight_overrides = {
+        "IlluminatedWordText",
+        "IlluminatedWordRead",
+        "IlluminatedWordWrite",
+      }
+      for _, highlight in ipairs(highlight_overrides) do
+        vim.cmd("highlight " .. highlight .. " gui=none")
+      end
     end,
   },
   {

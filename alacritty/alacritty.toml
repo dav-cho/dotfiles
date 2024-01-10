@@ -27,6 +27,9 @@ yellow = "#d4b26c"
 
 [colors.primary]
 background = "#000000"
+# background = "#0d0d0d" # 5%
+# background = "#111111" # 7%
+# background = "#1a1a1a" # 10%
 foreground = "#e6edf3"
 
 [colors.selection]
@@ -79,7 +82,7 @@ program = "tmux"
 [window]
 decorations = "none"
 dynamic_padding = true
-opacity = 0.75
+opacity = 0.75           # use background `#000000`
 option_as_alt = "Both"
 resize_increments = true
 
