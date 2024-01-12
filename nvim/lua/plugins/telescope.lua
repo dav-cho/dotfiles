@@ -480,8 +480,8 @@ return {
         { "<Leader>ma", function() require("harpoon.mark").add_file() end,        desc = "[Harpoon] add_file" },
         { "<Leader>mr", function() require("harpoon.mark").rm_file() end,         desc = "[Harpoon] rm_file" },
         { "<Leader>mt", function() require("harpoon.mark").toggle_file() end,     desc = "[Harpoon] toggle_file" },
-        { "<M-[>",      function() require("harpoon.ui").nav_prev() end,          desc = "[Harpoon] nav_prev" },
-        { "<M-]>",      function() require("harpoon.ui").nav_next() end,          desc = "[Harpoon] nav_next" },
+        { "<M-{>",      function() require("harpoon.ui").nav_prev() end,          desc = "[Harpoon] nav_prev" },
+        { "<M-}>",      function() require("harpoon.ui").nav_next() end,          desc = "[Harpoon] nav_next" },
         { "<M-h>x",     function() require("harpoon.term").clear_all() end,       desc = "[Harpoon] clear_all" },
         { "<Space>0",   function() require("harpoon.ui").nav_file(10) end,        desc = "[Harpoon] nav_file(10)" },
       }

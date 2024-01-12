@@ -29,7 +29,6 @@ return {
             ["onedark"] = "onedark.nvim",
             ["onenord"] = "onenord.nvim",
             ["rose-pine"] = "rose-pine",
-            -- ["sonokai"] = "sonokai",
             ["tokyonight"] = "tokyonight.nvim",
             ["zenbones"] = "zenbones.nvim",
           }
@@ -96,7 +95,7 @@ return {
   {
     "rose-pine/neovim",
     name = "rose-pine",
-    lazy = true,
+    priority = 1000,
     opts = function(_, opts)
       local colors = {
         emerald = "#36c692",
@@ -355,7 +354,7 @@ return {
   },
   {
     "rebelot/kanagawa.nvim",
-    priority = 1000,
+    lazy = true,
     opts = {
       compile = false,
       undercurl = false,
@@ -490,21 +489,4 @@ return {
       -- set_lualine_theme("material")
     end,
   },
-  -- {
-  --   "sainnhe/sonokai",
-  --   lazy = true,
-  --   opts = {
-  --     statusline = {
-  --       options = {
-  --         theme = "horizon",
-  --       },
-  --     },
-  --   },
-  --   config = function()
-  --     vim.g.sonokai_disable_italic_comment = 1
-  --     vim.g.sonokai_show_eob = 0
-  --     vim.cmd [[colorscheme sonokai]]
-  --     set_lualine_theme("sonokai")
-  --   end
-  -- },
 }

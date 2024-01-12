@@ -218,46 +218,79 @@ return {
     "lukas-reineke/indent-blankline.nvim",
     main = "ibl",
     keys = {
-      { "<Leader>ib", "<Cmd>IBLToggle<CR>",      silent = true, desc = "[IndentBlankline] Toggle" },
-      { "<Leader>is", "<Cmd>IBLToggleScope<CR>", silent = true, desc = "[IndentBlankline] Toggle Scope" },
+      { "<Leader>ib", "<Cmd>IBLToggle<CR>", silent = true, desc = "[IndentBlankline] Toggle" },
     },
-    opts = function(_, opts)
-      local hooks = require("ibl.hooks")
-
-      hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-        vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
-        vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
-        vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
-        vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
-        vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
-        vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
-        vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
-        vim.api.nvim_set_hl(0, "IndentBlanklineDark", { fg = "#262626" })
-      end)
-
-      return vim.tbl_deep_extend("force", opts, {
-        enabled = false,
-        indent = {
-          char = "▏",
-          highlight = "IndentBlanklineDark",
+    opts = {
+      enabled = false,
+      indent = {
+        char = "│",
+        tab_char = "│",
+      },
+      scope = { enabled = false },
+      exclude = {
+        filetypes = {
+          "help",
+          "Trouble",
+          "trouble",
+          "lazy",
+          "mason",
+          "notify",
+          "toggleterm",
         },
-        scope = {
-          show_start = false,
-          show_end = false,
-          highlight = {
-            "RainbowRed",
-            "RainbowYellow",
-            "RainbowBlue",
-            "RainbowOrange",
-            "RainbowGreen",
-            "RainbowViolet",
-            "RainbowCyan",
-          },
-          include = {
-            node_type = { ["*"] = "*" },
-          },
+      },
+    },
+  },
+  {
+    "echasnovski/mini.indentscope",
+    version = false,
+    keys = {
+      {
+        "<Leader>is",
+        function()
+          vim.g.miniindentscope_disable = not vim.g.miniindentscope_disable
+        end,
+        silent = true,
+        desc = "[mini.indentscope] Toggle"
+      },
+    },
+    opts = {
+      draw = {
+        delay = 50,
+        animation = function(s, n) return 5 end,
+      },
+      mappings = {
+        object_scope = 'ii',
+        object_scope_with_border = 'ai',
+        goto_top = '[i',
+        goto_bottom = ']i',
+      },
+      options = {
+        border = "top", -- default: "both"
+        try_as_border = true,
+      },
+      symbol = "│",
+      -- symbol = "▏",
+    },
+    config = function(_, opts)
+      vim.g.miniindentscope_disable = true
+
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = {
+          "help",
+          "Trouble",
+          "trouble",
+          "lazy",
+          "mason",
+          "notify",
+          "toggleterm",
         },
+        callback = function()
+          ---@diagnostic disable-next-line
+          vim.b.miniindentscope_disable = true
+        end,
       })
+
+      require('mini.indentscope').setup(opts)
     end,
   },
   {
@@ -267,7 +300,13 @@ return {
       {
         "<Leader>zz",
         function()
-          require("zen-mode").toggle({ plugins = { twilight = { enabled = false } } })
+          require("zen-mode").toggle({
+            plugins = {
+              twilight = {
+                enabled = false,
+              },
+            },
+          })
         end,
         silent = true,
         desc = "[Zen Mode] Toggle",
@@ -275,7 +314,13 @@ return {
       {
         "<Leader>zt",
         function()
-          require("zen-mode").toggle({ plugins = { twilight = { enabled = true } } })
+          require("zen-mode").toggle({
+            plugins = {
+              twilight = {
+                enabled = true,
+              },
+            },
+          })
         end,
         silent = true,
         desc = "[Zen Mode] Toggle with Twilight",
