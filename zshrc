@@ -166,6 +166,7 @@ alias gld="git log --pretty='format:%C(auto)%h% D %s %C(bold blue)%an%C(reset) %
 alias gll="git log --oneline --no-decorate"
 alias glo="git log"
 alias glp="git log --oneline --first-parent"
+alias gls="git log --oneline --stat"
 alias gmnf="git merge --no-ff"
 alias gs="git status --short"
 alias gu="git pull"
