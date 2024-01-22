@@ -143,9 +143,9 @@ return {
     lazy = true,
     cmd = "Mason",
     opts = {
-      -- ui = {
-      --   border = "single",
-      -- },
+      ui = {
+        border = "single",
+      },
     },
   },
   {

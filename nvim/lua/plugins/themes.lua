@@ -68,33 +68,9 @@ return {
     },
   },
   {
-    "rmehri01/onenord.nvim",
-    lazy = true,
-    opts = function()
-      local colors = require("onenord.colors").load()
-      return {
-        theme = "dark",
-        custom_highlights = {
-          CursorLineNr = { fg = "#EBCB8B" },
-          Normal = { bg = "#2B303B" },
-          NormalNC = { bg = "#2B303B" },
-          Search = { bg = colors.fg, fg = colors.bg },
-          Visual = { bg = colors.selection, fg = colors.none },
-          BufferlineTabSelected = { fg = colors.light_purple },
-          IlluminatedWordText = { style = "None", bg = colors.highlight_dark, sp = colors.yellow },
-          IlluminatedWordRead = { style = "None", bg = colors.highlight_dark, sp = colors.yellow },
-          IlluminatedWordWrite = { style = "None", bg = colors.highlight_dark, sp = colors.yellow },
-        },
-      }
-    end,
-    config = function(_, opts)
-      require("onenord").setup(opts)
-      set_lualine_theme("onenord")
-    end,
-  },
-  {
     "rose-pine/neovim",
     name = "rose-pine",
+    -- commit = "ae445417f4fde24b24fd1224624f0bedab5ae304",
     priority = 1000,
     opts = function(_, opts)
       local colors = {
@@ -109,7 +85,7 @@ return {
         gray_8 = "#a6a6a6",
         orange = "#eb9d65",
         pine_light = "#60b2c7",
-        text = "#cccccc",
+        text = "#dddddd",
         yellow = "#d9c18c",
       }
 
@@ -154,6 +130,11 @@ return {
           TelescopeSelection         = { bg = colors.gray_3 },
           WinSeparator               = { fg = colors.gray_4, bg = "none" },
           ["@attribute"]             = { fg = "iris" },
+          ["@comment.todo"]          = { fg = "iris", bg = "none", blend = 0 },
+          ["@constant"]              = { link = "Constant" },
+          ["@constant.builtin"]      = { fg = "love" },
+          ["@function.builtin"]      = { fg = "love" },
+          ["@function.method.call"]  = { link = "Function" },
           ["@keyword.operator"]      = { link = "Keyword" },
           ["@punctuation"]           = { link = "Operator" },
           ["@punctuation.special"]   = { link = "@constant.builtin" },
@@ -162,6 +143,11 @@ return {
           ["@text.diff.delete"]      = { fg = "love" },
           ["@type.builtin"]          = { fg = colors.pine_light },
           ["@variable"]              = { fg = colors.text },
+          ["@variable.builtin"]      = { fg = "love" },
+          -- ["@field"]                 = { fg = "foam" },
+          ["@variable.member"]       = { fg = "foam" },
+          -- ["@parameter"]             = { fg = "iris" },
+          ["@variable.parameter"]    = { fg = "iris" },
         },
       })
     end,
@@ -202,6 +188,31 @@ return {
         },
       })
       set_lualine_theme(lualine_theme)
+    end,
+  },
+  {
+    "rmehri01/onenord.nvim",
+    lazy = true,
+    opts = function()
+      local colors = require("onenord.colors").load()
+      return {
+        theme = "dark",
+        custom_highlights = {
+          CursorLineNr = { fg = "#EBCB8B" },
+          Normal = { bg = "#2B303B" },
+          NormalNC = { bg = "#2B303B" },
+          Search = { bg = colors.fg, fg = colors.bg },
+          Visual = { bg = colors.selection, fg = colors.none },
+          BufferlineTabSelected = { fg = colors.light_purple },
+          IlluminatedWordText = { style = "None", bg = colors.highlight_dark, sp = colors.yellow },
+          IlluminatedWordRead = { style = "None", bg = colors.highlight_dark, sp = colors.yellow },
+          IlluminatedWordWrite = { style = "None", bg = colors.highlight_dark, sp = colors.yellow },
+        },
+      }
+    end,
+    config = function(_, opts)
+      require("onenord").setup(opts)
+      set_lualine_theme("onenord")
     end,
   },
   {
