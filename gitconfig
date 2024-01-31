@@ -19,6 +19,7 @@ tool = nvimdiff
 
 [diff]
 colorMoved = default
+submodule = log
 tool = nvimdiff
 
 [interactive]

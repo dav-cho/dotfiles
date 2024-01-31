@@ -1,9 +1,7 @@
-.DS_Store
-
 Session.vim
+
+.luarc.json
 
 dav/
 install.dev
 Dockerfile.dev
-
-.luarc.json

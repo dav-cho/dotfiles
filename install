@@ -75,6 +75,6 @@ symlink "$DOTFILES/keys" "$HOME/.config/yabai"
 [[ -d "$HOME/.local/bin" ]] && mkdir "$HOME/.local/bin"
 cp "$DOTFILES/bin/*" "$HOME/.local/bin"
 
-# if [[ $USER == "dcho" ]]; then
-# 	. "$HOME/cm-settings/install"
-# fi
+if [[ "$USER" == "dcho" ]]; then
+	. "$DOTFILES/cm-dotfiles/install"
+fi
