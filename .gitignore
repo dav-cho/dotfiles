@@ -6,5 +6,4 @@ dav/
 install.dev
 Dockerfile.dev
 
-iterm2/_schemes
 .luarc.json
