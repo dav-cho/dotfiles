@@ -9,7 +9,7 @@ OMZ_CUSTOM=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}
 
 function symlink() {
 	if [[ ! $(readlink -f "$2") == "$1" ]]; then
-		ln -sfv "$1" "$2"
+		ln -sfhv "$1" "$2"
 	fi
 }
 
@@ -67,15 +67,14 @@ symlink "$DOTFILES/gitconfig" "$HOME/.gitconfig"
 symlink "$DOTFILES/vimrc" "$HOME/.vimrc"
 
 symlink "$DOTFILES/alacritty.toml" "$HOME/.config"
-symlink "$DOTFILES/gh" "$HOME/.config/gh"
 symlink "$DOTFILES/git" "$HOME/.config/git"
 symlink "$DOTFILES/nvim" "$HOME/.config/nvim"
-symlink "$DOTFILES/skhd" "$HOME/.config/skhd"
-symlink "$DOTFILES/yabai" "$HOME/.config/yabai"
+symlink "$DOTFILES/keys" "$HOME/.config/skhd"
+symlink "$DOTFILES/keys" "$HOME/.config/yabai"
 
 [[ -d "$HOME/.local/bin" ]] && mkdir "$HOME/.local/bin"
 cp "$DOTFILES/bin/*" "$HOME/.local/bin"
 
-if [[ $USER == "dcho" ]]; then
-	. "$HOME/cm-settings/install"
-fi
+# if [[ $USER == "dcho" ]]; then
+# 	. "$HOME/cm-settings/install"
+# fi
