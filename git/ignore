@@ -4,11 +4,6 @@
 
 .venv/
 __pycache__/
-Pipfile
-Pipfile.lock
 
 Session.vim
 *.session.vim
-
-*scratch*
-*scraps*

@@ -66,7 +66,7 @@ symlink "$DOTFILES/p10k.zsh" "$HOME/.p10k.zsh"
 symlink "$DOTFILES/gitconfig" "$HOME/.gitconfig"
 symlink "$DOTFILES/vimrc" "$HOME/.vimrc"
 
-symlink "$DOTFILES/alacritty/alacritty.toml" "$HOME/.config"
+symlink "$DOTFILES/alacritty.toml" "$HOME/.config"
 symlink "$DOTFILES/gh" "$HOME/.config/gh"
 symlink "$DOTFILES/git" "$HOME/.config/git"
 symlink "$DOTFILES/nvim" "$HOME/.config/nvim"
