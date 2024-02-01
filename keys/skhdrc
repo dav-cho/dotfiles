@@ -128,10 +128,10 @@ rctrl + rshift - 0x21 : yabai -m window --display prev && yabai -m display --foc
 rctrl + rshift - 0x1E : yabai -m window --display next && yabai -m display --focus next
 
 # set layer
-lctrl + lcmd - d : yabai -m window --layer above
-lctrl + lcmd - s : yabai -m window --layer normal
-lctrl + lcmd - a : yabai -m window --layer below
-lctrl + lcmd + lshift - a : "$HOME/.config/yabai/layer-all.sh" below
+lctrl + lcmd - q : yabai -m window --layer above
+lctrl + lcmd - a : yabai -m window --layer normal
+lctrl + lcmd - z : yabai -m window --layer below
+lctrl + lcmd + lshift - z : "$HOME/.config/yabai/layer-all.sh" below
 
 # set insert
 lctrl + lcmd + lshift - return : yabai -m window --insert stack

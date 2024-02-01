@@ -142,11 +142,8 @@ return {
     build = ":MasonUpdate",
     lazy = true,
     cmd = "Mason",
-    opts = {
-      ui = {
-        border = "single",
-      },
-    },
+    -- opts = {},
+    config = true,
   },
   {
     "williamboman/mason-lspconfig.nvim",
