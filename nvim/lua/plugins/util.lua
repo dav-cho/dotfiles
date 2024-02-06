@@ -49,16 +49,6 @@ return {
       },
     },
     opts = {
-      panel = {
-        auto_refresh = true,
-        keymap = {
-          jump_prev = "<M-[>",
-          jump_next = "<M-]>",
-        },
-        layout = {
-          ratio = 0.3,
-        }
-      },
       suggestion = {
         auto_trigger = true,
       },
@@ -248,7 +238,7 @@ return {
         mode = { "o", "x" },
         desc = "[Flash] Treesitter Search",
       },
-      { "<C-t>", function() require("flash").toggle() end, mode = { "c" }, desc = "[Flash] Toggle Search" },
+      { "<C-g>/", function() require("flash").toggle() end, mode = { "c" }, desc = "[Flash] Toggle Search" },
     },
     opts = {
       search = {

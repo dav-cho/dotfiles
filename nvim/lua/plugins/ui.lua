@@ -40,21 +40,6 @@ return {
           },
         },
         lualine_x = {
-          {
-            "windows",
-            cond = function()
-              return vim.fn.empty(vim.fn.expand("%")) ~= 1
-            end,
-            icons_enabled = false,
-            show_filename_only = true,
-            show_modified_status = false,
-            mode = 2,
-            disabled_buftypes = {
-              "quickfix",
-              "prompt",
-              "telescope",
-            },
-          },
           "encoding",
           "fileformat",
           "filetype",

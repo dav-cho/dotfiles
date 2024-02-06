@@ -172,6 +172,7 @@ return {
           function()
             require("telescope.builtin").diagnostics({
               bufnr = 0,
+              prompt_title = "Diagnostics (buffer)",
             })
           end,
           desc = "diagnostics (buffer)",
@@ -181,6 +182,7 @@ return {
           function()
             require("telescope.builtin").diagnostics({
               no_unlisted = true,
+              prompt_title = "Diagnostics (no unlisted)",
             })
           end,
           desc = "diagnostics (no unlisted)",
@@ -190,6 +192,7 @@ return {
           function()
             require("telescope.builtin").diagnostics({
               root_dir = require("telescope.utils").buffer_dir(),
+              prompt_title = "Diagnostics (buf dir)",
             })
           end,
           desc = "diagnostics (buf dir)",
@@ -480,8 +483,8 @@ return {
         { "<Leader>ma", function() require("harpoon.mark").add_file() end,        desc = "[Harpoon] add_file" },
         { "<Leader>mr", function() require("harpoon.mark").rm_file() end,         desc = "[Harpoon] rm_file" },
         { "<Leader>mt", function() require("harpoon.mark").toggle_file() end,     desc = "[Harpoon] toggle_file" },
-        { "<M-{>",      function() require("harpoon.ui").nav_prev() end,          desc = "[Harpoon] nav_prev" },
-        { "<M-}>",      function() require("harpoon.ui").nav_next() end,          desc = "[Harpoon] nav_next" },
+        { "<Space>[",  function() require("harpoon.ui").nav_prev() end,          desc = "[Harpoon] nav_prev" },
+        { "<Space>]",  function() require("harpoon.ui").nav_next() end,          desc = "[Harpoon] nav_next" },
         { "<M-h>x",     function() require("harpoon.term").clear_all() end,       desc = "[Harpoon] clear_all" },
         { "<Space>0",   function() require("harpoon.ui").nav_file(10) end,        desc = "[Harpoon] nav_file(10)" },
       }
