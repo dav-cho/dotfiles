@@ -117,5 +117,20 @@ return {
         },
       })
     end,
-  }
+  },
+  {
+    "tpope/vim-fugitive",
+    cmd = { "Git" },
+    keys = {
+      { "<C-g><C-g>", "<Cmd>Git<CR>",        desc = "[Fugitive] git" },
+      { "<C-g>g",     ":Git ",               desc = "[Fugitive] git" },
+      { "<C-g>b",     "<Cmd>Git blame<CR>",  desc = "[Fugitive] git blame" },
+      { "<C-g>b",     ":'<,'>Git blame<CR>", desc = "[Fugitive] git blame",     mode = "x" },
+      { "<C-g>l",     "<Cmd>Git log<CR>",    desc = "[Fugitive] git log" },
+      { "<C-g>l",     ":'<,'>Git log<CR>",   desc = "[Fugitive] git log",       mode = "x" },
+      { "<C-g>f",     "<Cmd>Git log %<CR>",  desc = "[Fugitive] git log (file)" },
+      { "<C-g>L",     "<Cmd>Gclog<CR>",      desc = "[Fugitive] git qf log" },
+      { "<C-g>L",     ":'<,'>Gclog<CR>",     desc = "[Fugitive] git qf log",    mode = "x" },
+    },
+  },
 }

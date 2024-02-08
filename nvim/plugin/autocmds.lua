@@ -18,6 +18,8 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 vim.api.nvim_create_autocmd("FileType", {
   group = vim.api.nvim_create_augroup("CloseWithQ", {}),
   pattern = {
+    "fugitive",
+    "fugitiveblame",
     "git",
     "help",
     "man",
