@@ -1,9 +1,6 @@
 [submodule "settings"]
 	path = settings
 	url = git@github.com:dav-cho/settings.git
-[submodule "cm-settings"]
-	path = cm-settings
-	url = git@github.com:dav-cho/cm-settings.git
 [submodule "cm-dotfiles"]
-	path = cm-dotfiles
+	path = cm
 	url = git@github.com:dav-cho/cm-dotfiles.git

@@ -208,8 +208,8 @@ rctrl + rcmd + rshift - n : yabai -m space --create && \
 rctrl + rcmd + rshift - d : yabai -m space --destroy
 
 # apps
-lctrl + lcmd - space : "$HOME/dotfiles/keys/alacritty-new-window.sh"
-# lctrl + lcmd - space : "$HOME/dotfiles/keys/iterm-new-window.sh"
+lctrl + lcmd - space : "$HOME/dotfiles/yabai/alacritty-new-window.sh"
+# lctrl + lcmd - space : "$HOME/dotfiles/yabai/iterm-new-window.sh"
 
 .load "partial_ultrawide"
 # .load "partial_mbp"
