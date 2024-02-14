@@ -94,6 +94,7 @@ map("n", "<Leader>ms", function()
   vim.notify(string.format("Session Saved: %s/Session.vim", vim.fn.getcwd()))
 end, { silent = true, desc = "[Sessions] mksession" })
 
+map("n", "<Leader>mn", ":Man", { desc = ":Man" })
 map("n", "<Leader>vm", ":vertical Man ", { desc = ":Man" })
 map("n", "<Leader>mg", "<Cmd>messages<CR>", { desc = ":messages" })
 map("n", "<Leader>lz", "<Cmd>Lazy<CR>", { desc = "Lazy" })

@@ -10,7 +10,7 @@ return {
         { "<Space>r",   function() require("telescope.builtin").resume() end,                    desc = "resume" },
         { "<Space>k",   function() require("telescope.builtin").keymaps() end,                   desc = "keymaps" },
         { "<Space>h",   function() require("telescope.builtin").help_tags() end,                 desc = "help_tags" },
-        { "<Leader>mn", function() require("telescope.builtin").man_pages() end,                 desc = "man_pages" },
+        { "<Leader>tm", function() require("telescope.builtin").man_pages() end,                 desc = "man_pages" },
         { "<Leader>co", function() require("telescope.builtin").commands() end,                  desc = "commands" },
         { "<Leader>cs", function() require("telescope.builtin").colorscheme() end,               desc = "colorscheme" },
         { "<Leader>oo", function() require("telescope.builtin").oldfiles() end,                  desc = "oldfiles" },
@@ -57,7 +57,7 @@ return {
               prompt_title = "Find Files (hidden, no_ignore)",
             })
           end,
-          desc = "Find Files (hidden, no_ignore)",
+          desc = "find_files (hidden, no_ignore)",
         },
         {
           "<Space>a",
@@ -66,10 +66,10 @@ return {
               cwd = require("telescope.utils").buffer_dir(),
               hidden = true,
               no_ignore = true,
-              prompt_title = "Find Files (cwd, hidden, no_ignore)",
+              prompt_title = "Find Files (buf dir, hidden, no_ignore)",
             })
           end,
-          desc = "Find Files (cwd, hidden, no_ignore)",
+          desc = "find_files (buf dir, hidden, no_ignore)",
         },
 
         {
@@ -483,8 +483,8 @@ return {
         { "<Leader>ma", function() require("harpoon.mark").add_file() end,        desc = "[Harpoon] add_file" },
         { "<Leader>mr", function() require("harpoon.mark").rm_file() end,         desc = "[Harpoon] rm_file" },
         { "<Leader>mt", function() require("harpoon.mark").toggle_file() end,     desc = "[Harpoon] toggle_file" },
-        { "<Space>[",  function() require("harpoon.ui").nav_prev() end,          desc = "[Harpoon] nav_prev" },
-        { "<Space>]",  function() require("harpoon.ui").nav_next() end,          desc = "[Harpoon] nav_next" },
+        { "<Space>[",   function() require("harpoon.ui").nav_prev() end,          desc = "[Harpoon] nav_prev" },
+        { "<Space>]",   function() require("harpoon.ui").nav_next() end,          desc = "[Harpoon] nav_next" },
         { "<M-h>x",     function() require("harpoon.term").clear_all() end,       desc = "[Harpoon] clear_all" },
         { "<Space>0",   function() require("harpoon.ui").nav_file(10) end,        desc = "[Harpoon] nav_file(10)" },
       }
