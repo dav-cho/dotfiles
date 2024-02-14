@@ -1,3 +1,4 @@
+# keycodes: https://cloud.githubusercontent.com/assets/6175959/18551554/35137fc6-7b59-11e6-81a0-bef19ed5db5e.png
 # "[": 0x21
 # "]": 0x1E
 # "-": 0x1B
@@ -32,6 +33,8 @@ lctrl + lshift - return : yabai -m window --focus recent
 lctrl + lshift - 0x21 : yabai -m window --focus stack.prev
 lctrl + lshift - 0x1E : yabai -m window --focus stack.next
 lctrl + lshift - 0x2A : yabai -m window --focus stack.recent
+lalt - 0x32           : yabai -m window --focus stack.recent
+# lctrl + lcmd - 0x32   : yabai -m window --focus stack.recent
 
 # warp window
 lctrl + lcmd - h    : yabai -m window --warp west
