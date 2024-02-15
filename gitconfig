@@ -28,9 +28,6 @@ diffFilter = delta --color-only
 [url "git@github.com:"]
 insteadOf = "https://github.com/"
 
-[includeIf "gitdir:~/cm/"]
-path = ~/dotfiles/cm/gitconfig
-
 [delta]
 navigate = true
 zero-style = normal
@@ -46,3 +43,6 @@ file-style = blue
 file-decoration-style = omit
 hunk-header-style = line-number
 hunk-header-decoration-style = blue
+
+[includeIf "gitdir:~/cm/"]
+path = ~/dotfiles/cm/gitconfig

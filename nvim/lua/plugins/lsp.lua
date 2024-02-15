@@ -199,10 +199,12 @@ return {
       "gq",
     },
     opts = {
+      -- notify_on_error = false,
       formatters_by_ft = {
         go = { { "goimports", "gofmt" } },
         javascript = { { "prettierd", "prettier" } },
         javascriptreact = { { "prettierd", "prettier" } },
+        json = { "fixjson" },
         lua = { "stylua" },
         markdown = { "mdformat", "prettierd" },
         python = { "isort", "black" },
@@ -220,9 +222,20 @@ return {
       require("conform").setup(opts)
 
       require("conform.formatters.goimports").command = vim.fn.expand("$HOME/go/bin/goimports")
-      require("conform.formatters.isort").args = { "--stdout", "--filename", "$FILENAME", "--profile", "black", "-" }
+      require("conform.formatters.isort").args = {
+        "--stdout",
+        "--filename", "$FILENAME",
+        "--profile", "black",
+        "--lines-before-imports", 1,
+        "--lines-after-imports", 1,
+        "--treat-all-comment-as-code",
+        "--float-to-top",
+        "-",
+      }
       require("conform.formatters.prettier").args = {
-        "--stdin-filepath", "$FILENAME", "--config-precedence", "prefer-file", "--single-quote",
+        "--stdin-filepath", "$FILENAME",
+        "--config-precedence", "prefer-file",
+        "--single-quote",
       }
     end,
   },

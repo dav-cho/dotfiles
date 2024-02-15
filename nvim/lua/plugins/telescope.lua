@@ -179,6 +179,11 @@ return {
         },
         {
           "<M-D>",
+          function() require("telescope.builtin").diagnostics() end,
+          desc = "diagnostics (cwd)",
+        },
+        {
+          "<Leader><M-d>",
           function()
             require("telescope.builtin").diagnostics({
               no_unlisted = true,
@@ -201,11 +206,6 @@ return {
           "<Leader>DD",
           function() require("telescope.builtin").diagnostics() end,
           desc = "diagnostics",
-        },
-        {
-          "<Leader><M-D>",
-          function() require("telescope.builtin").diagnostics() end,
-          desc = "diagnostics (cwd)",
         },
         {
           "<Space>i",
