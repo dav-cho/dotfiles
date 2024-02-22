@@ -168,8 +168,13 @@ return {
     dependencies = { "nvim-tree/nvim-web-devicons" },
     cmd = "Oil",
     keys = {
-      { "_", function() require("oil").open() end,       desc = "[Oil] Open" },
-      { "-", function() require("oil").open_float() end, desc = "[Oil] Open float" },
+      -- { "-", function() require("oil").open() end,       desc = "[Oil] Open" },
+      { "_", function() require("oil").open_float() end, desc = "[Oil] Open float" },
+      {
+        "<Leader>yf",
+        function() require("oil.actions").copy_entry_path.callback() end,
+        desc = "[Oil] "
+      },
       {
         "<Leader>ca",
         function()
@@ -182,12 +187,7 @@ return {
     },
     opts = {
       default_file_explorer = false,
-      columns = {
-        "icon",
-        -- "permissions",
-        -- "size",
-        -- "mtime",
-      },
+      columns = {},
       keymaps = {
         ["<C-v>"] = "actions.select_vsplit",
         ["<C-x>"] = "actions.select_split",
@@ -200,27 +200,9 @@ return {
           winblend = 10,
         },
         override = function(conf)
-          local rows = vim.o.lines - vim.o.cmdheight
-              - ((vim.o.laststatus >= 2 and 1) or 0)
-              - ((vim.o.showtabline >= 1 and 1) or 0)
-          local cols = vim.o.columns
-
-          local opts = {
-            min_width = 60,
-            min_height = 10,
-            max_width = math.floor(cols * 0.9),
-            max_height = math.floor(rows * 0.9),
-          }
-
-          local width = math.min(math.max(math.floor(cols / 2), opts.min_width), opts.max_width)
-          local height = math.min(math.max(math.floor(rows / 2), opts.min_height), opts.max_height)
-
-          return vim.tbl_deep_extend("force", conf, {
-            width = width,
-            height = height,
-            row = math.floor((rows - height) / 2),
-            col = math.floor((cols - width) / 2),
-          })
+          conf.height = math.floor(vim.o.lines * 0.3)
+          conf.row = (vim.o.lines - conf.height) - 4
+          return conf
         end,
       },
     },
@@ -231,7 +213,7 @@ return {
     keys = {
       { "<Leader>/", function() require("flash").jump() end,       mode = { "n", "x", "o" }, desc = "[Flash] Jump" },
       { "<Leader>?", function() require("flash").treesitter() end, mode = { "n", "x", "o" }, desc = "[Flash] Treesitter" },
-      { "r",        function() require("flash").remote() end,     mode = { "o" },           desc = "[Flash] Remote" },
+      { "r",         function() require("flash").remote() end,     mode = { "o" },           desc = "[Flash] Remote" },
       {
         "R",
         function() require("flash").treesitter_search() end,
@@ -243,6 +225,9 @@ return {
     opts = {
       search = {
         mode = "fuzzy",
+      },
+      label = {
+        min_pattern_length = 2,
       },
       highlight = {
         backdrop = false,

@@ -163,7 +163,6 @@ return {
       nls.setup({
         update_in_insert = true,
         sources = {
-          code_actions.eslint,
           code_actions.gitsigns,
           diagnostics.zsh,
         }
