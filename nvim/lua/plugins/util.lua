@@ -169,7 +169,7 @@ return {
     cmd = "Oil",
     keys = {
       -- { "-", function() require("oil").open() end,       desc = "[Oil] Open" },
-      { "_", function() require("oil").open_float() end, desc = "[Oil] Open float" },
+      { "-", function() require("oil").open_float() end, desc = "[Oil] Open float" },
       {
         "<Leader>yf",
         function() require("oil.actions").copy_entry_path.callback() end,
