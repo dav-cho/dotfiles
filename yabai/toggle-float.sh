@@ -3,7 +3,7 @@
 floating=$(yabai -m query --windows --window | jq '."is-floating"')
 
 if [ "$floating" = "false" ]; then
-	yabai -m window --toggle float --layer below
+	yabai -m window --toggle float
 fi
 
 case "$1" in

@@ -44,5 +44,3 @@ on-recent)
 	yabai -m window --focus recent && yabai -m window --stack recent && yabai -m window --focus stack.last
 	;;
 esac
-
-# yabai -m window --layer normal

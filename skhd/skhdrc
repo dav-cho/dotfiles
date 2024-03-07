@@ -92,21 +92,21 @@ lctrl + lcmd - 7 : yabai -m window --space 7  && yabai -m space --focus 7
 lctrl + lcmd - 8 : yabai -m window --space 8  && yabai -m space --focus 8
 lctrl + lcmd - 9 : yabai -m window --space 9  && yabai -m space --focus 9
 lctrl + lcmd - 0 : yabai -m window --space 10 && yabai -m space --focus 10
-rctrl + rcmd - 1 : yabai -m window --space 1  && yabai -m space --focus 1
-rctrl + rcmd - 2 : yabai -m window --space 2  && yabai -m space --focus 2
-rctrl + rcmd - 3 : yabai -m window --space 3  && yabai -m space --focus 3
-rctrl + rcmd - 4 : yabai -m window --space 4  && yabai -m space --focus 4
-rctrl + rcmd - 5 : yabai -m window --space 5  && yabai -m space --focus 5
-rctrl + rcmd - 6 : yabai -m window --space 6  && yabai -m space --focus 6
-rctrl + rcmd - 7 : yabai -m window --space 7  && yabai -m space --focus 7
-rctrl + rcmd - 8 : yabai -m window --space 8  && yabai -m space --focus 8
-rctrl + rcmd - 9 : yabai -m window --space 9  && yabai -m space --focus 9
-rctrl + rcmd - 0 : yabai -m window --space 10 && yabai -m space --focus 10
+ralt + rcmd - 1  : yabai -m window --space 1  && yabai -m space --focus 1
+ralt + rcmd - 2  : yabai -m window --space 2  && yabai -m space --focus 2
+ralt + rcmd - 3  : yabai -m window --space 3  && yabai -m space --focus 3
+ralt + rcmd - 4  : yabai -m window --space 4  && yabai -m space --focus 4
+ralt + rcmd - 5  : yabai -m window --space 5  && yabai -m space --focus 5
+ralt + rcmd - 6  : yabai -m window --space 6  && yabai -m space --focus 6
+ralt + rcmd - 7  : yabai -m window --space 7  && yabai -m space --focus 7
+ralt + rcmd - 8  : yabai -m window --space 8  && yabai -m space --focus 8
+ralt + rcmd - 9  : yabai -m window --space 9  && yabai -m space --focus 9
+ralt + rcmd - 0  : yabai -m window --space 10 && yabai -m space --focus 10
 
 # label space
-lctrl + rctrl + rshift - 1 : yabai -m space --label 's1'
-lctrl + rctrl + rshift - 2 : yabai -m space --label 's2'
-lctrl + rctrl + rshift - 3 : yabai -m space --label 's3'
+lctrl + ralt + rshift - 1 : yabai -m space --label 's1'
+lctrl + ralt + rshift - 2 : yabai -m space --label 's2'
+lctrl + ralt + rshift - 3 : yabai -m space --label 's3'
 
 # focus labeled space
 lctrl + rshift - 1 : yabai -m space --focus 's1'
@@ -114,27 +114,28 @@ lctrl + rshift - 2 : yabai -m space --focus 's2'
 lctrl + rshift - 3 : yabai -m space --focus 's3'
 
 # focus display
-rctrl + rshift - return : yabai -m display --focus recent
+ralt + rshift - return : yabai -m display --focus recent
 
 # move window to display
-rctrl + rcmd + rshift - 1    : yabai -m window --display 1
-rctrl + rcmd + rshift - 2    : yabai -m window --display 2
-rctrl + rcmd + rshift - 3    : yabai -m window --display 3
-rctrl + rcmd + rshift - 0x21 : yabai -m window --display prev
-rctrl + rcmd + rshift - 0x1E : yabai -m window --display next
+ralt + rcmd + rshift - 1    : yabai -m window --display 1
+ralt + rcmd + rshift - 2    : yabai -m window --display 2
+ralt + rcmd + rshift - 3    : yabai -m window --display 3
+ralt + rcmd + rshift - 0x21 : yabai -m window --display prev
+ralt + rcmd + rshift - 0x1E : yabai -m window --display next
 
 # move window to display and follow focus
-rctrl + rshift - 1    : yabai -m window --display 1 && yabai -m display --focus 1
-rctrl + rshift - 2    : yabai -m window --display 2 && yabai -m display --focus 2
-rctrl + rshift - 3    : yabai -m window --display 3 && yabai -m display --focus 3
-rctrl + rshift - 0x21 : yabai -m window --display prev && yabai -m display --focus prev
-rctrl + rshift - 0x1E : yabai -m window --display next && yabai -m display --focus next
+ralt + rshift - 1    : yabai -m window --display 1 && yabai -m display --focus 1
+ralt + rshift - 2    : yabai -m window --display 2 && yabai -m display --focus 2
+ralt + rshift - 3    : yabai -m window --display 3 && yabai -m display --focus 3
+ralt + rshift - 0x21 : yabai -m window --display prev && yabai -m display --focus prev
+ralt + rshift - 0x1E : yabai -m window --display next && yabai -m display --focus next
 
-# set layer
-lctrl + lcmd - q : yabai -m window --layer above
-lctrl + lcmd - a : yabai -m window --layer normal
-lctrl + lcmd - z : yabai -m window --layer below
-lctrl + lcmd + lshift - z : "$HOME/.config/yabai/layer-all.sh" below
+# set sub-layer
+lctrl + lcmd - q : yabai -m window --sub-layer above
+lctrl + lcmd - a : yabai -m window --sub-layer normal
+lctrl + lcmd - z : yabai -m window --sub-layer below
+lctrl + lcmd - x : yabai -m window --sub-layer auto
+lctrl + lcmd + lshift - z : "$HOME/.config/yabai/sub-layer-all.sh" normal
 
 # set insert
 lctrl + lcmd + lshift - return : yabai -m window --insert stack
@@ -183,7 +184,7 @@ lctrl + lalt + lcmd - o : $HOME/.config/yabai/toggle-float.sh \
                           && yabai -m window --resize abs:2044:1341         # obsidian
 
 # window actions
-lctrl + lshift - backspace : yabai -m window --toggle float --layer below
+lctrl + lshift - backspace : yabai -m window --toggle float
 lctrl + lcmd + lshift - q : yabai -m window --ratio abs:0.333
 lctrl + lcmd + lshift - w : yabai -m window --ratio abs:0.5
 lctrl + lcmd + lshift - e : yabai -m window --ratio abs:0.666
@@ -204,11 +205,11 @@ lctrl + lshift + rshift - 0x2A      : yabai -m space --layout float
 lctrl + lshift + rshift - backspace : yabai -m space --layout bsp
 
 # create/destroy space
-rctrl + rcmd + rshift - n : yabai -m space --create && \
+ralt + rcmd + rshift - n : yabai -m space --create && \
                             idx="$(("$(yabai -m query --spaces --space | jq '.index')" + 1))" && \
                             yabai -m space --focus "$(yabai -m query --spaces --display | jq 'map(select(."is-native-fullscreen" == false))[-1].index')" && \
                             yabai -m space --move "$idx"
-rctrl + rcmd + rshift - d : yabai -m space --destroy
+ralt + rcmd + rshift - d : yabai -m space --destroy
 
 # apps
 lctrl + lcmd - space : "$HOME/dotfiles/yabai/alacritty-new-window.sh"
