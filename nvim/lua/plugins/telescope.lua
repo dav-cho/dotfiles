@@ -280,10 +280,29 @@ return {
         { "<Leader>rl", function() require("telescope.builtin").reloader() end,           desc = "reloader" },
 
         { "<Leader>no", function() require("telescope").extensions.notify.notify() end,   desc = "notify" },
-        { "<Leader>mm", function() require("telescope").extensions.harpoon.marks() end,   desc = "Harpoon marks" },
         { "<Leader>yy", function() require("telescope").extensions.neoclip.default() end, desc = "neoclip" },
         { "<Leader>un", function() require("telescope").extensions.undo.undo() end,       desc = "undo" },
         { "<Leader>he", function() require("telescope").extensions.heading.heading() end, desc = "markdown heading" },
+        {
+          "<Leader>mm",
+          function()
+            local conf = require("telescope.config").values
+            local file_paths = {}
+            for _, item in ipairs(require("harpoon"):list().items) do
+              table.insert(file_paths, item.value)
+            end
+
+            require("telescope.pickers").new({}, {
+              prompt_title = "Harpoon",
+              finder = require("telescope.finders").new_table({
+                results = file_paths,
+              }),
+              previewer = conf.file_previewer({}),
+              sorter = conf.generic_sorter({}),
+            }):find()
+          end,
+          desc = "Harpoon marks",
+        },
 
         {
           "<Leader>dl",
@@ -463,57 +482,125 @@ return {
   { "nvim-telescope/telescope-fzf-native.nvim",   lazy = true, build = "make" },
   { "nvim-telescope/telescope-file-browser.nvim", lazy = true },
   { "nvim-telescope/telescope-ui-select.nvim",    lazy = true },
+  { "crispgm/telescope-heading.nvim", lazy = true, ft = "markdown" },
+  { "debugloop/telescope-undo.nvim",  lazy = true },
+  { "dhruvmanila/telescope-bookmarks.nvim", lazy = true, version = "*" },
   {
     "AckslD/nvim-neoclip.lua",
     dependencies = { "nvim-telescope/telescope.nvim" },
     keys = { "y" },
     config = true,
   },
-  { "crispgm/telescope-heading.nvim", lazy = true, ft = "markdown" },
-  { "debugloop/telescope-undo.nvim",  lazy = true },
   {
     "ThePrimeagen/harpoon",
+    branch = "harpoon2",
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope.nvim",
     },
     keys = function()
+      local harpoon = require("harpoon")
+
       local keymaps = {
-        { "<Space>m",   function() require("harpoon.ui").toggle_quick_menu() end, desc = "[Harpoon] toggle_quick_menu" },
-        { "<Leader>ma", function() require("harpoon.mark").add_file() end,        desc = "[Harpoon] add_file" },
-        { "<Leader>mr", function() require("harpoon.mark").rm_file() end,         desc = "[Harpoon] rm_file" },
-        { "<Leader>mt", function() require("harpoon.mark").toggle_file() end,     desc = "[Harpoon] toggle_file" },
-        { "<Space>[",   function() require("harpoon.ui").nav_prev() end,          desc = "[Harpoon] nav_prev" },
-        { "<Space>]",   function() require("harpoon.ui").nav_next() end,          desc = "[Harpoon] nav_next" },
-        { "<M-h>x",     function() require("harpoon.term").clear_all() end,       desc = "[Harpoon] clear_all" },
-        { "<Space>0",   function() require("harpoon.ui").nav_file(10) end,        desc = "[Harpoon] nav_file(10)" },
+        { "<Space>m",   function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, desc = "[Harpoon] toggle_quick_menu" },
+        -- -- TODO: set to alternative list (or cmd list)
+        -- { "<Space>M",   function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, desc = "[Harpoon] toggle_quick_menu" },
+        { "<Leader>ma", function() harpoon:list():append() end,                      desc = "[Harpoon] list append" },
+        { "<Leader>mp", function() harpoon:list():prepend() end,                     desc = "[Harpoon] list prepend" },
+        { "<Leader>mr", function() harpoon:list():remove() end,                      desc = "[Harpoon] list remove" },
+        { "<Leader>mX", function() harpoon:list():clear() end,                       desc = "[Harpoon] list clear" },
+        { "<Space>[",   function() harpoon:list():prev() end,                        desc = "[Harpoon] list prev" },
+        { "<Space>]",   function() harpoon:list():next() end,                        desc = "[Harpoon] list next" },
+        -- { "<Leader>mt", function() require("harpoon.mark").toggle_file() end,        desc = "[Harpoon] toggle_file" },
+        -- { "<Space>0",   function() require("harpoon.ui").nav_file(10) end,           desc = "[Harpoon] nav_file(10)" },
       }
 
       for i = 1, 10 do
-        table.insert(keymaps,
-          {
-            "<Space>" .. i % 10,
-            function()
-              require("harpoon.ui").nav_file(i)
-            end,
-            desc = string.format("[Harpoon] nav_file(%d)", i),
-          })
+        table.insert(keymaps, {
+          "<Space>" .. i % 10,
+          function() harpoon:list():select(i) end,
+          desc = string.format("[Harpoon] nav_file(%d)", i),
+        })
       end
 
-      for i = 1, 10 do
-        table.insert(keymaps,
-          {
-            "<Leader>" .. i % 10,
-            function()
-              require("harpoon.term").gotoTerminal(i)
-            end,
-            desc = string.format("[Harpoon] gotoTerminal(%d)", i)
-          })
-      end
+      -- for i = 1, 10 do
+      --   table.insert(keymaps, {
+      --     "<Leader>" .. i % 10,
+      --     function()
+      --       require("harpoon.term").gotoTerminal(i)
+      --     end,
+      --     desc = string.format("[Harpoon] gotoTerminal(%d)", i)
+      --   })
+      -- end
 
       return keymaps
     end,
-    config = true,
+    opts = {
+      settings = {
+        save_on_toggle = true,
+        -- sync_on_ui_close = true,
+      },
+      -- -- https://github.com/ThePrimeagen/harpoon/tree/harpoon2#-api
+      -- -- Setting up custom behavior for a list named "cmd"
+      -- "cmd" = {
+      --
+      --   -- When you call list:append() this function is called and the return
+      --   -- value will be put in the list at the end.
+      --   --
+      --   -- which means same behavior for prepend except where in the list the
+      --   -- return value is added
+      --   --
+      --   -- @param possible_value string only passed in when you alter the ui manual
+      --   add = function(possible_value)
+      --     -- get the current line idx
+      --     local idx = vim.fn.line(".")
+      --
+      --     -- read the current line
+      --     local cmd = vim.api.nvim_buf_get_lines(0, idx - 1, idx, false)[1]
+      --     if cmd == nil then
+      --       return nil
+      --     end
+      --
+      --     return {
+      --       value = cmd,
+      --       context = { ... any data you want ... },
+      --     }
+      --   end,
+      --
+      --   --- This function gets invoked with the options being passed in from
+      --   --- list:select(index, <...options...>)
+      --   --- @param list_item {value: any, context: any}
+      --   --- @param list { ... }
+      --   --- @param option any
+      --   select = function(list_item, list, option)
+      --     -- WOAH, IS THIS HTMX LEVEL XSS ATTACK??
+      --     vim.cmd(list_item.value)
+      --   end
+      -- }
+    },
+    config = function(_, opts)
+      local harpoon = require("harpoon")
+      local extensions = require("harpoon.extensions");
+
+      harpoon:setup(opts)
+
+      harpoon:extend({
+        UI_CREATE = function(cx)
+          vim.keymap.set("n", "<C-v>", function()
+            harpoon.ui:select_menu_item({ vsplit = true })
+          end, { buffer = cx.bufnr })
+
+          vim.keymap.set("n", "<C-x>", function()
+            harpoon.ui:select_menu_item({ split = true })
+          end, { buffer = cx.bufnr })
+
+          vim.keymap.set("n", "<C-t>", function()
+            harpoon.ui:select_menu_item({ tabedit = true })
+          end, { buffer = cx.bufnr })
+        end,
+      })
+
+      harpoon:extend(extensions.builtins.navigate_with_number());
+    end,
   },
-  { "dhruvmanila/telescope-bookmarks.nvim", lazy = true, version = "*" },
 }

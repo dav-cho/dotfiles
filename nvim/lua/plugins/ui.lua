@@ -241,7 +241,7 @@ return {
     opts = {
       draw = {
         delay = 50,
-        animation = function(s, n) return 5 end,
+        animation = function(s, n) return 3 end,
       },
       mappings = {
         object_scope = 'ii',
