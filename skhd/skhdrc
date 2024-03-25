@@ -129,12 +129,15 @@ ralt + rshift - 2    : yabai -m window --display 2 && yabai -m display --focus 2
 ralt + rshift - 3    : yabai -m window --display 3 && yabai -m display --focus 3
 ralt + rshift - 0x21 : yabai -m window --display prev && yabai -m display --focus prev
 ralt + rshift - 0x1E : yabai -m window --display next && yabai -m display --focus next
+lctrl + lcmd - q : yabai -m window --display 1 && yabai -m display --focus 1
+lctrl + lcmd - w : yabai -m window --display 2 && yabai -m display --focus 2
+lctrl + lcmd - e : yabai -m window --display 3 && yabai -m display --focus 3
 
 # set sub-layer
-lctrl + lcmd - q : yabai -m window --sub-layer above
-lctrl + lcmd - a : yabai -m window --sub-layer normal
-lctrl + lcmd - z : yabai -m window --sub-layer below
-lctrl + lcmd - x : yabai -m window --sub-layer auto
+lctrl + lalt + lcmd - q : yabai -m window --sub-layer above
+lctrl + lalt + lcmd - a : yabai -m window --sub-layer normal
+lctrl + lalt + lcmd - z : yabai -m window --sub-layer below
+lctrl + lalt + lcmd - x : yabai -m window --sub-layer auto
 lctrl + lcmd + lshift - z : "$HOME/.config/yabai/sub-layer-all.sh" normal
 
 # set insert
