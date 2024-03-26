@@ -154,7 +154,7 @@ bindkey -e '^X^I' toggle-fzf-tab
 bindkey -e '^[v' quoted-insert
 
 alias cat="bat"
-alias eza="eza --icons=auto --time-style=long-iso --smart-group"
+alias eza="eza --time-style=long-iso"
 alias rg="rg --smart-case"
 
 alias ghco="gh copilot"
@@ -174,8 +174,8 @@ alias gmnf="git merge --no-ff"
 alias gs="git status --short"
 alias gu="git pull"
 alias k="kubectl"
-alias l="eza -la"
-alias la="eza -laa"
-alias lg="eza -laaG"
-alias ll="eza -l"
-alias lt="eza --tree --icons=never -I __pycache__"
+alias l="eza -la --icons"
+alias la="eza -laa --icons"
+alias lg="eza -laaG --icons"
+alias ll="eza -l --icons"
+alias lt="eza --tree -I __pycache__"
