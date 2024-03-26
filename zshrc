@@ -157,6 +157,8 @@ alias cat="bat"
 alias eza="eza --icons=auto --time-style=long-iso --smart-group"
 alias rg="rg --smart-case"
 
+alias ghcp="gh copilot"
+
 alias gdni="git diff --no-index --"
 alias gdno="git diff --name-only"
 alias gdst="git diff --stat"
