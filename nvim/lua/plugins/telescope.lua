@@ -368,6 +368,105 @@ return {
         end
       end
 
+      local find_git_root = function()
+        -- local dot_git_path = vim.fn.finddir(".git", ".;")
+        -- return vim.fn.fnamemodify(dot_git_path, ":h")
+        return vim.fn.finddir(".git", ".;")
+      end
+
+      local change_dir = function(prompt_bufnr)
+        local entry = state.get_selected_entry()
+        if entry.ordinal == ".." then
+          local current_picker = state.get_current_picker(prompt_bufnr)
+          local current_finder = current_picker.finder
+          local path = require("plenary.path"):new(current_finder.path)
+          local parent = path:parent()
+          if parent then
+            current_picker.cwd = parent:absolute()
+            current_picker:refresh()
+          end
+        else
+          open_using(builtin.file_browser)(prompt_bufnr)
+        end
+      end
+
+      local change_dir = function(prompt_bufnr)
+        local selection = require("telescope.actions.state").get_selected_entry()
+        local dir = vim.fn.fnamemodify(selection.path, ":p:h")
+        require("telescope.actions").close(prompt_bufnr)
+        -- Depending on what you want put `cd`, `lcd`, `tcd`
+        vim.cmd(string.format("silent lcd %s", dir))
+      end
+
+      local change_dir = function(prompt_bufnr)
+        local selection = state.get_selected_entry()
+        local dir = vim.fn.fnamemodify(selection.path, ":p:h")
+        actions.close(prompt_bufnr)
+        -- Depending on what you want put `cd`, `lcd`, `tcd`
+        vim.cmd(string.format("silent cd %s", dir))
+      end
+
+
+      -- local live_grep_from_project_git_root = function()
+      local live_grep_git_root = function()
+        local function is_git_repo()
+          vim.fn.system("git rev-parse --is-inside-work-tree")
+
+          return vim.v.shell_error == 0
+        end
+
+        local function get_git_root()
+          local dot_git_path = vim.fn.finddir(".git", ".;")
+          return vim.fn.fnamemodify(dot_git_path, ":h")
+        end
+
+        local opts = {}
+
+        if is_git_repo() then
+          opts = {
+            cwd = get_git_root(),
+          }
+        end
+
+        require("telescope.builtin").live_grep(opts)
+      end
+
+      function vim.find_files_from_project_git_root()
+        local function is_git_repo()
+          vim.fn.system("git rev-parse --is-inside-work-tree")
+          return vim.v.shell_error == 0
+        end
+        local function get_git_root()
+          local dot_git_path = vim.fn.finddir(".git", ".;")
+          return vim.fn.fnamemodify(dot_git_path, ":h")
+        end
+        local opts = {}
+        if is_git_repo() then
+          opts = {
+            cwd = get_git_root(),
+          }
+        end
+        require("telescope.builtin").find_files(opts)
+      end
+
+      local find_files_from_project_git_root = function()
+        local function is_git_repo()
+          vim.fn.system("git rev-parse --is-inside-work-tree")
+          return vim.v.shell_error == 0
+        end
+        local function get_git_root()
+          local dot_git_path = vim.fn.finddir(".git", ".;")
+          return vim.fn.fnamemodify(dot_git_path, ":h")
+        end
+        local opts = {}
+        if is_git_repo() then
+          opts = {
+            cwd = get_git_root(),
+          }
+        end
+        require("telescope.builtin").find_files(opts)
+      end
+
       return {
         defaults = {
           layout_strategy = "flex",
