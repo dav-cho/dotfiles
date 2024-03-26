@@ -281,7 +281,6 @@ return {
 
         { "<Leader>no", function() require("telescope").extensions.notify.notify() end,   desc = "notify" },
         { "<Leader>yy", function() require("telescope").extensions.neoclip.default() end, desc = "neoclip" },
-        { "<Leader>un", function() require("telescope").extensions.undo.undo() end,       desc = "undo" },
         { "<Leader>he", function() require("telescope").extensions.heading.heading() end, desc = "markdown heading" },
         {
           "<Leader>mm",
@@ -314,10 +313,9 @@ return {
           function() require("telescope").extensions.dap.configurations() end,
           desc = "dap.configurations"
         },
-        { "<Leader>dpc", function() require("telescope").extensions.dap.commands() end,        desc = "dap.commands" },
-        { "<Leader>dpv", function() require("telescope").extensions.dap.variables() end,       desc = "dap.variables" },
-        { "<Leader>dpf", function() require("telescope").extensions.dap.frames() end,          desc = "dap.frames" },
-        { "<Leader>bo",  function() require("telescope").extensions.bookmarks.bookmarks() end, desc = "bookmarks" },
+        { "<Leader>dpc", function() require("telescope").extensions.dap.commands() end,  desc = "dap.commands" },
+        { "<Leader>dpv", function() require("telescope").extensions.dap.variables() end, desc = "dap.variables" },
+        { "<Leader>dpf", function() require("telescope").extensions.dap.frames() end,    desc = "dap.frames" },
       }
 
       for _, keymap in pairs(keymaps) do
@@ -437,7 +435,6 @@ return {
         },
         extensions = {
           file_browser = {
-            -- hidden = true,
             select_buffer = true,
             mappings = {
               i = {
@@ -458,13 +455,6 @@ return {
           heading = {
             treesitter = true,
           },
-          undo = {
-            use_delta = false,
-          },
-          bookmarks = {
-            selected_browser = "chrome",
-            full_path = false,
-          },
         },
       }
     end,
@@ -475,16 +465,45 @@ return {
       telescope.load_extension("file_browser")
       telescope.load_extension("ui-select")
       telescope.load_extension("heading")
-      telescope.load_extension("undo")
-      telescope.load_extension("bookmarks")
     end,
   },
   { "nvim-telescope/telescope-fzf-native.nvim",   lazy = true, build = "make" },
   { "nvim-telescope/telescope-file-browser.nvim", lazy = true },
   { "nvim-telescope/telescope-ui-select.nvim",    lazy = true },
-  { "crispgm/telescope-heading.nvim", lazy = true, ft = "markdown" },
-  { "debugloop/telescope-undo.nvim",  lazy = true },
-  { "dhruvmanila/telescope-bookmarks.nvim", lazy = true, version = "*" },
+  { "crispgm/telescope-heading.nvim",             lazy = true, ft = "markdown" },
+  {
+    "debugloop/telescope-undo.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim" },
+    keys = {
+      { "<Leader>un", function() require("telescope").extensions.undo.undo() end, desc = "[Telescope] undo" },
+    },
+    opts = {
+      extensions = {
+        undo = {
+          use_delta = false,
+        },
+      },
+    },
+    config = function(_, opts)
+      require("telescope").setup(opts)
+      require("telescope").load_extension("undo")
+    end,
+  },
+  {
+    "dhruvmanila/browser-bookmarks.nvim",
+    version = "*",
+    keys = {
+      { "<Leader>bo", function() require("telescope").extensions.bookmarks.bookmarks() end, desc = "[Telescope] bookmarks" },
+    },
+    opts = {
+      selected_browser = "chrome",
+      full_path = false,
+    },
+    config = function(_, opts)
+      require("browser_bookmarks").setup(opts)
+      require("telescope").load_extension("bookmarks")
+    end,
+  },
   {
     "AckslD/nvim-neoclip.lua",
     dependencies = { "nvim-telescope/telescope.nvim" },
