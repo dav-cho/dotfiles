@@ -94,9 +94,6 @@ export PATH="$HOME/.local/share/solana/install/active_release/bin:$PATH"
 
 [[ ! -f ~/.p10k.zsh ]] || . ~/.p10k.zsh
 
-compdef _tmux _tmux-run
-alias tmux=_tmux-run
-
 _fzf_compgen_path() {
   fd -u --follow -E ".git" -E "node_modules" -E "__pycache__" . "$1"
 }

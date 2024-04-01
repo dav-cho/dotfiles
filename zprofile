@@ -1,4 +1,4 @@
-_tmux-run() {
+if [[ -z "$TMUX" && -z "$VIM" ]]; then
   if [[ -n "$@" ]]; then
     command tmux "$@"
     return $?
@@ -11,8 +11,4 @@ _tmux-run() {
   fi
 
   exit
-}
-
-if [[ -z "$TMUX" && -z "$VIM" ]]; then
-  _tmux-run
 fi
