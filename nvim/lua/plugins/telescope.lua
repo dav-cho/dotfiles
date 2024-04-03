@@ -522,16 +522,12 @@ return {
 
       local keymaps = {
         { "<Space>m",   function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, desc = "[Harpoon] toggle_quick_menu" },
-        -- -- TODO: set to alternative list (or cmd list)
-        -- { "<Space>M",   function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, desc = "[Harpoon] toggle_quick_menu" },
-        { "<Leader>ma", function() harpoon:list():append() end,                      desc = "[Harpoon] list append" },
+        { "<Leader>ma", function() harpoon:list():add() end,                         desc = "[Harpoon] list append" },
         { "<Leader>mp", function() harpoon:list():prepend() end,                     desc = "[Harpoon] list prepend" },
         { "<Leader>mr", function() harpoon:list():remove() end,                      desc = "[Harpoon] list remove" },
         { "<Leader>mX", function() harpoon:list():clear() end,                       desc = "[Harpoon] list clear" },
         { "<Space>[",   function() harpoon:list():prev() end,                        desc = "[Harpoon] list prev" },
         { "<Space>]",   function() harpoon:list():next() end,                        desc = "[Harpoon] list next" },
-        -- { "<Leader>mt", function() require("harpoon.mark").toggle_file() end,        desc = "[Harpoon] toggle_file" },
-        -- { "<Space>0",   function() require("harpoon.ui").nav_file(10) end,           desc = "[Harpoon] nav_file(10)" },
       }
 
       for i = 1, 10 do
@@ -542,60 +538,12 @@ return {
         })
       end
 
-      -- for i = 1, 10 do
-      --   table.insert(keymaps, {
-      --     "<Leader>" .. i % 10,
-      --     function()
-      --       require("harpoon.term").gotoTerminal(i)
-      --     end,
-      --     desc = string.format("[Harpoon] gotoTerminal(%d)", i)
-      --   })
-      -- end
-
       return keymaps
     end,
     opts = {
       settings = {
         save_on_toggle = true,
-        -- sync_on_ui_close = true,
       },
-      -- -- https://github.com/ThePrimeagen/harpoon/tree/harpoon2#-api
-      -- -- Setting up custom behavior for a list named "cmd"
-      -- "cmd" = {
-      --
-      --   -- When you call list:append() this function is called and the return
-      --   -- value will be put in the list at the end.
-      --   --
-      --   -- which means same behavior for prepend except where in the list the
-      --   -- return value is added
-      --   --
-      --   -- @param possible_value string only passed in when you alter the ui manual
-      --   add = function(possible_value)
-      --     -- get the current line idx
-      --     local idx = vim.fn.line(".")
-      --
-      --     -- read the current line
-      --     local cmd = vim.api.nvim_buf_get_lines(0, idx - 1, idx, false)[1]
-      --     if cmd == nil then
-      --       return nil
-      --     end
-      --
-      --     return {
-      --       value = cmd,
-      --       context = { ... any data you want ... },
-      --     }
-      --   end,
-      --
-      --   --- This function gets invoked with the options being passed in from
-      --   --- list:select(index, <...options...>)
-      --   --- @param list_item {value: any, context: any}
-      --   --- @param list { ... }
-      --   --- @param option any
-      --   select = function(list_item, list, option)
-      --     -- WOAH, IS THIS HTMX LEVEL XSS ATTACK??
-      --     vim.cmd(list_item.value)
-      --   end
-      -- }
     },
     config = function(_, opts)
       local harpoon = require("harpoon")
