@@ -140,6 +140,10 @@ lctrl + lalt + lcmd - z : yabai -m window --sub-layer below
 lctrl + lalt + lcmd - x : yabai -m window --sub-layer auto
 lctrl + lcmd + lshift - z : "$HOME/.config/yabai/sub-layer-all.sh" normal
 
+# raise/lower window in stack
+lctrl + lalt + lshift - 0x21 : yabai -m window --raise stack.next
+lctrl + lalt + lshift - 0x1E : yabai -m window --lower stack.prev
+
 # set insert
 lctrl + lcmd + lshift - return : yabai -m window --insert stack
 lctrl + lcmd + lshift - left   : yabai -m window --insert west

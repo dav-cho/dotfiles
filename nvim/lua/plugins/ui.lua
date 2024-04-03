@@ -237,6 +237,15 @@ return {
         silent = true,
         desc = "[mini.indentscope] Toggle"
       },
+      {
+        "<Leader>ia",
+        function()
+          require("ibl").update({ enabled = not require("ibl.config").get_config(-1).enabled })
+          vim.g.miniindentscope_disable = not vim.g.miniindentscope_disable
+        end,
+        silent = true,
+        desc = "Toggle indent lines and scope",
+      }
     },
     opts = {
       draw = {

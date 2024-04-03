@@ -120,6 +120,11 @@ return {
         buf_map("n", "<Leader>vv", function()
           vim.diagnostic.config({ virtual_text = not vim.diagnostic.config().virtual_text })
         end)
+        buf_map("n", ",gv", function()
+          vim.cmd("wincmd v")
+          vim.lsp.buf.definition()
+          vim.defer_fn(function() vim.api.nvim_input("zt") end, 400)
+        end)
       end
 
       local capabilities = vim.lsp.protocol.make_client_capabilities()
