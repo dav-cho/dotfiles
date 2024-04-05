@@ -567,7 +567,29 @@ return {
         end,
       })
 
-      harpoon:extend(extensions.builtins.navigate_with_number());
+      local sync_index_with_current_file = function()
+        return {
+          SELECT = function(cx)
+            cx.list._index = cx.idx
+          end,
+          UI_CREATE = function(cx)
+            local root = vim.loop.cwd()
+            local contents = require("harpoon.buffer").get_contents(cx.bufnr)
+            local current_file = require("plenary.path"):new(cx.current_file):make_relative(root)
+            for i, file in ipairs(contents) do
+              if file == current_file then
+                harpoon:list()._index = i
+                vim.api.nvim_win_set_cursor(cx.win_id, { i, 0 })
+              end
+            end
+          end
+        }
+      end
+
+      harpoon:extend(sync_index_with_current_file())
+      harpoon:extend(extensions.builtins.command_on_nav("edit"))
+      harpoon:extend(extensions.builtins.command_on_nav("lua vim.api.nvim_input('zz')"))
+      harpoon:extend(extensions.builtins.navigate_with_number())
     end,
   },
 }

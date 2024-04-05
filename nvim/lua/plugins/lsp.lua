@@ -60,6 +60,7 @@ return {
         },
         pyright = {},
         rust_analyzer = {},
+        stylua = {},
         sqlls = {},
         taplo = {},
         tsserver = {},
@@ -147,8 +148,7 @@ return {
     build = ":MasonUpdate",
     lazy = true,
     cmd = "Mason",
-    -- opts = {},
-    config = true,
+    opts = {},
   },
   {
     "williamboman/mason-lspconfig.nvim",
