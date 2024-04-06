@@ -76,15 +76,16 @@ return {
       local lspconfig = require("lspconfig")
       local repeatable_move = require("nvim-treesitter.textobjects.repeatable_move")
 
-      local diagnostic_goto_next, diagnostic_goto_prev = repeatable_move.make_repeatable_move_pair(
-        vim.diagnostic.goto_next, vim.diagnostic.goto_prev
-      )
+      local diagnostic_goto_next, diagnostic_goto_prev =
+        repeatable_move.make_repeatable_move_pair(vim.diagnostic.goto_next, vim.diagnostic.goto_prev)
 
       vim.keymap.set("n", "gl", vim.diagnostic.open_float, { desc = "vim.diagnostic.open_float" })
       vim.keymap.set("n", "gL", vim.diagnostic.setloclist, { desc = "vim.diagnostic.setloclist" })
       vim.keymap.set("n", "[d", diagnostic_goto_prev, { desc = "vim.diagnostic.goto_prev" })
       vim.keymap.set("n", "]d", diagnostic_goto_next, { desc = "vim.diagnostic.goto_next" })
-      vim.keymap.set("n", "<Leader>lr", function() vim.cmd("LspRestart") end, { desc = "LspRestart" })
+      vim.keymap.set("n", "<Leader>lr", function()
+        vim.cmd("LspRestart")
+      end, { desc = "LspRestart" })
 
       for _, sign in ipairs(opts.signs) do
         vim.fn.sign_define(sign.name, { text = sign.text, texthl = sign.name, numhl = "" })
@@ -116,14 +117,18 @@ return {
         buf_map("n", "<Leader>ca", vim.lsp.buf.code_action)
         buf_map("n", "<Leader>Wa", vim.lsp.buf.add_workspace_folder)
         buf_map("n", "<Leader>Wr", vim.lsp.buf.remove_workspace_folder)
-        buf_map("n", "<Leader>Wl", function() vim.notify(vim.inspect(vim.lsp.buf.list_workspace_folders())) end)
+        buf_map("n", "<Leader>Wl", function()
+          vim.notify(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+        end)
         buf_map("n", "<Leader>vv", function()
           vim.diagnostic.config({ virtual_text = not vim.diagnostic.config().virtual_text })
         end)
         buf_map("n", ",gv", function()
           vim.cmd("wincmd v")
           vim.lsp.buf.definition()
-          vim.defer_fn(function() vim.api.nvim_input("zt") end, 400)
+          vim.defer_fn(function()
+            vim.api.nvim_input("zt")
+          end, 400)
         end)
       end
 
@@ -169,7 +174,7 @@ return {
         sources = {
           code_actions.gitsigns,
           diagnostics.zsh,
-        }
+        },
       })
 
       local toggle_pylint_diagnostics = function()
@@ -179,12 +184,17 @@ return {
           nls.register(diagnostics.pylint.with({
             diagnostic_config = {
               virtual_text = { prefix = "", spacing = 2 },
-            }
+            },
           }))
         end
       end
 
-      vim.keymap.set("n", "<Leader>pl", toggle_pylint_diagnostics, { silent = true, desc = "Toggle pylint diagnostics" })
+      vim.keymap.set(
+        "n",
+        "<Leader>pl",
+        toggle_pylint_diagnostics,
+        { silent = true, desc = "Toggle pylint diagnostics" }
+      )
     end,
   },
   {
@@ -268,18 +278,18 @@ return {
     event = "LspAttach",
     keys = function()
       local keymaps = {
-        { "<Leader>lf", "<Cmd>Lspsaga finder<CR>",                     desc = "lsp_finder" },
-        { "<F2>",       "<Cmd>Lspsaga rename<CR>",                     desc = "rename" },
-        { "<Space>d",   "<Cmd>Lspsaga peek_definition<CR>",            desc = "peek_definition" },
-        { "<Space>t",   "<Cmd>Lspsaga peek_type_definition<CR>",       desc = "peek_type_definition" },
-        { "<Leader>sl", "<Cmd>Lspsaga show_line_diagnostics<CR>",      desc = "show_line_diagnostics" },
-        { "<Leader>sb", "<Cmd>Lspsaga show_buf_diagnostics<CR>",       desc = "show_buf_diagnostics" },
+        { "<Leader>lf", "<Cmd>Lspsaga finder<CR>", desc = "lsp_finder" },
+        { "<F2>", "<Cmd>Lspsaga rename<CR>", desc = "rename" },
+        { "<Space>d", "<Cmd>Lspsaga peek_definition<CR>", desc = "peek_definition" },
+        { "<Space>t", "<Cmd>Lspsaga peek_type_definition<CR>", desc = "peek_type_definition" },
+        { "<Leader>sl", "<Cmd>Lspsaga show_line_diagnostics<CR>", desc = "show_line_diagnostics" },
+        { "<Leader>sb", "<Cmd>Lspsaga show_buf_diagnostics<CR>", desc = "show_buf_diagnostics" },
         { "<Leader>sw", "<Cmd>Lspsaga show_workspace_diagnostics<CR>", desc = "show_workspace_diagnostics" },
-        { "<Leader>sc", "<Cmd>Lspsaga show_cursor_diagnostics<CR>",    desc = "show_cursor_diagnostics" },
-        { "<Leader>so", "<Cmd>Lspsaga outline<CR>",                    desc = "outline" },
-        { "<Leader>gh", "<Cmd>Lspsaga hover_doc<CR>",                  desc = "hover_doc" },
-        { "<Leader>in", "<Cmd>Lspsaga incoming_calls<CR>",             desc = "incoming_calls" },
-        { "<Leader>ou", "<Cmd>Lspsaga outgoing_calls<CR>",             desc = "outgoing_calls" },
+        { "<Leader>sc", "<Cmd>Lspsaga show_cursor_diagnostics<CR>", desc = "show_cursor_diagnostics" },
+        { "<Leader>so", "<Cmd>Lspsaga outline<CR>", desc = "outline" },
+        { "<Leader>gh", "<Cmd>Lspsaga hover_doc<CR>", desc = "hover_doc" },
+        { "<Leader>in", "<Cmd>Lspsaga incoming_calls<CR>", desc = "incoming_calls" },
+        { "<Leader>ou", "<Cmd>Lspsaga outgoing_calls<CR>", desc = "outgoing_calls" },
       }
 
       for _, keymap in pairs(keymaps) do
@@ -338,9 +348,8 @@ return {
       local illuminate = require("illuminate")
       local repeatable_move = require("nvim-treesitter.textobjects.repeatable_move")
 
-      local goto_next_ref, goto_prev_ref = repeatable_move.make_repeatable_move_pair(
-        illuminate.goto_next_reference, illuminate.goto_prev_reference
-      )
+      local goto_next_ref, goto_prev_ref =
+        repeatable_move.make_repeatable_move_pair(illuminate.goto_next_reference, illuminate.goto_prev_reference)
 
       vim.keymap.set(
         { "n", "x", "o" },
@@ -375,6 +384,6 @@ return {
   {
     "folke/neodev.nvim",
     lazy = true,
-    config = true
+    config = true,
   },
 }

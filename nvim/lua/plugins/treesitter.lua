@@ -156,17 +156,19 @@ return {
       -- vim.keymap.set("n", "<space>]", cnext, { desc = "qflist next" })
       -- vim.keymap.set("n", "<space>[", cprevious, { desc = "qflist previous" })
 
-      local next_fold, prev_fold = repeat_move.make_repeatable_move_pair(
-        function() vim.cmd("normal! zj") end,
-        function() vim.cmd("normal! zk") end
-      )
+      local next_fold, prev_fold = repeat_move.make_repeatable_move_pair(function()
+        vim.cmd("normal! zj")
+      end, function()
+        vim.cmd("normal! zk")
+      end)
       vim.keymap.set({ "n", "x", "o" }, "zj", next_fold, { silent = true, desc = "Down next fold" })
       vim.keymap.set({ "n", "x", "o" }, "zk", prev_fold, { silent = true, desc = "Up next fold" })
 
-      local next_diff, prev_diff = repeat_move.make_repeatable_move_pair(
-        function() vim.cmd("normal! ]c") end,
-        function() vim.cmd("normal! [c") end
-      )
+      local next_diff, prev_diff = repeat_move.make_repeatable_move_pair(function()
+        vim.cmd("normal! ]c")
+      end, function()
+        vim.cmd("normal! [c")
+      end)
       vim.keymap.set("n", "]c", next_diff, { desc = "Jumpto next diff" })
       vim.keymap.set("n", "[c", prev_diff, { desc = "Jumpto next diff" })
 
@@ -196,7 +198,7 @@ return {
           goto_node = "<CR>",
           show_help = "?",
         },
-      }
+      },
     },
     config = function(_, opts)
       require("nvim-treesitter.configs").setup(opts)

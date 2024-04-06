@@ -1,15 +1,17 @@
 return {
   { "nvim-lua/plenary.nvim", lazy = true },
-  { "nvim-lua/popup.nvim",   lazy = true },
-  { "tpope/vim-repeat",      event = "VeryLazy" },
-  { "tpope/vim-surround",    event = "VeryLazy" },
+  { "nvim-lua/popup.nvim", lazy = true },
+  { "tpope/vim-repeat", event = "VeryLazy" },
+  { "tpope/vim-surround", event = "VeryLazy" },
   {
     "junegunn/fzf",
     lazy = true,
     keys = {
       "zf", -- nvim-bqf
     },
-    build = function() vim.fn['fzf#install']() end,
+    build = function()
+      vim.fn["fzf#install"]()
+    end,
   },
   {
     "numToStr/Comment.nvim",
@@ -17,16 +19,9 @@ return {
     config = function()
       local call = require("Comment.api").call
 
-      vim.keymap.set(
-        "n",
-        "<C-_>",
-        function()
-          return
-              vim.v.count == 0 and "<Plug>(comment_toggle_linewise_current)"
-              or "<Plug>(comment_toggle_linewise_count)"
-        end,
-        { expr = true, silent = true, desc = "[Comment] toggle linewise" }
-      )
+      vim.keymap.set("n", "<C-_>", function()
+        return vim.v.count == 0 and "<Plug>(comment_toggle_linewise_current)" or "<Plug>(comment_toggle_linewise_count)"
+      end, { expr = true, silent = true, desc = "[Comment] toggle linewise" })
       vim.keymap.set(
         "v",
         "<C-_>",
@@ -44,8 +39,10 @@ return {
     keys = {
       {
         "<Leader>cp",
-        function() require("copilot.suggestion").toggle_auto_trigger() end,
-        desc = "[copilot] Toggle auto_trigger"
+        function()
+          require("copilot.suggestion").toggle_auto_trigger()
+        end,
+        desc = "[copilot] Toggle auto_trigger",
       },
     },
     opts = {
@@ -63,17 +60,17 @@ return {
       {
         "<M-Bslash>f",
         [[<Cmd>exe v:count1 . "ToggleTerm direction=float"<CR>]],
-        desc = "[ToggleTerm] Toggle Float"
+        desc = "[ToggleTerm] Toggle Float",
       },
       {
         "<M-Bslash>h",
         [[<Cmd>exe v:count1 . "ToggleTerm direction=horizontal"<CR>]],
-        desc = "[ToggleTerm] Toggle Horizontal"
+        desc = "[ToggleTerm] Toggle Horizontal",
       },
       {
         "<M-Bslash>v",
         [[<Cmd>exe v:count1 . "ToggleTerm direction=vertical"<CR>]],
-        desc = "[ToggleTerm] Toggle Vertical"
+        desc = "[ToggleTerm] Toggle Vertical",
       },
     },
     opts = {
@@ -108,13 +105,19 @@ return {
   {
     "nvim-tree/nvim-tree.lua",
     keys = {
-      { "<Space>;", function() require("nvim-tree.api").tree.toggle() end, desc = "[Nvim-Tree] Toggle" },
+      {
+        "<Space>;",
+        function()
+          require("nvim-tree.api").tree.toggle()
+        end,
+        desc = "[Nvim-Tree] Toggle",
+      },
       {
         "<Space>'",
         function()
           require("nvim-tree.api").tree.find_file({
             open = true,
-            focus = true
+            focus = true,
           })
         end,
         desc = "[Nvim-Tree] Find File",
@@ -169,11 +172,19 @@ return {
     cmd = "Oil",
     keys = {
       -- { "-", function() require("oil").open() end,       desc = "[Oil] Open" },
-      { "-", function() require("oil").open_float() end, desc = "[Oil] Open float" },
+      {
+        "-",
+        function()
+          require("oil").open_float()
+        end,
+        desc = "[Oil] Open float",
+      },
       {
         "<Leader>yf",
-        function() require("oil.actions").copy_entry_path.callback() end,
-        desc = "[Oil] "
+        function()
+          require("oil.actions").copy_entry_path.callback()
+        end,
+        desc = "[Oil] ",
       },
       {
         "<Leader>ca",
@@ -182,7 +193,7 @@ return {
             require("oil").discard_all_changes()
           end
         end,
-        desc = "[Oil] Discard all changes"
+        desc = "[Oil] Discard all changes",
       },
     },
     opts = {
@@ -211,16 +222,46 @@ return {
     "folke/flash.nvim",
     event = "VeryLazy",
     keys = {
-      { "<Leader>/", function() require("flash").jump() end,       mode = { "n", "x", "o" }, desc = "[Flash] Jump" },
-      { "<Leader>?", function() require("flash").treesitter() end, mode = { "n", "x", "o" }, desc = "[Flash] Treesitter" },
-      { "r",         function() require("flash").remote() end,     mode = { "o" },           desc = "[Flash] Remote" },
+      {
+        "<Leader>/",
+        function()
+          require("flash").jump()
+        end,
+        mode = { "n", "x", "o" },
+        desc = "[Flash] Jump",
+      },
+      {
+        "<Leader>?",
+        function()
+          require("flash").treesitter()
+        end,
+        mode = { "n", "x", "o" },
+        desc = "[Flash] Treesitter",
+      },
+      {
+        "r",
+        function()
+          require("flash").remote()
+        end,
+        mode = { "o" },
+        desc = "[Flash] Remote",
+      },
       {
         "R",
-        function() require("flash").treesitter_search() end,
+        function()
+          require("flash").treesitter_search()
+        end,
         mode = { "o", "x" },
         desc = "[Flash] Treesitter Search",
       },
-      { "<C-g>/", function() require("flash").toggle() end, mode = { "c" }, desc = "[Flash] Toggle Search" },
+      {
+        "<C-g>/",
+        function()
+          require("flash").toggle()
+        end,
+        mode = { "c" },
+        desc = "[Flash] Toggle Search",
+      },
     },
     opts = {
       search = {
@@ -250,10 +291,12 @@ return {
   },
   {
     "iamcco/markdown-preview.nvim",
-    build = function() vim.fn["mkdp#util#install"]() end,
+    build = function()
+      vim.fn["mkdp#util#install"]()
+    end,
     ft = "markdown",
     keys = {
-      { "<Leader>md", "<Cmd>MarkdownPreviewToggle<CR>", silent = true }
+      { "<Leader>md", "<Cmd>MarkdownPreviewToggle<CR>", silent = true },
     },
     config = function()
       vim.g.mkdp_preview_options = { sync_scroll_type = "relative" }
@@ -278,20 +321,16 @@ return {
     lazy = true,
     keys = {
       { "<Leader>fz", "<Cmd>FZF<CR>", silent = true, desc = "[FZF] fzf" },
-      { "<Leader>fZ", ":FZF ",        silent = true, desc = "[FZF] :FZF" },
+      { "<Leader>fZ", ":FZF ", silent = true, desc = "[FZF] :FZF" },
     },
     config = function()
-      vim.api.nvim_create_user_command(
-        "Fzf",
-        function()
-          vim.cmd("call fzf#run(" .. vim.json.encode({
-            sink = "e",
-            source = "fd --type file --follow --hidden --no-ignore --strip-cwd-prefix",
-            tmux = "-p 80%% 80%%",
-          }) .. ")")
-        end,
-        { desc = "[FZF] open ui" }
-      )
+      vim.api.nvim_create_user_command("Fzf", function()
+        vim.cmd("call fzf#run(" .. vim.json.encode({
+          sink = "e",
+          source = "fd --type file --follow --hidden --no-ignore --strip-cwd-prefix",
+          tmux = "-p 80%% 80%%",
+        }) .. ")")
+      end, { desc = "[FZF] open ui" })
     end,
   },
   {
@@ -304,11 +343,11 @@ return {
       "BufNewFile " .. vim.fn.expand("~") .. "/Library/CloudStorage/Dropbox/notes/**.md",
     },
     keys = {
-      { "<leader>oa", "<Cmd>ObsidianOpen<CR>",           desc = "[Obsidian] New note" },
-      { "<leader>on", ":ObsidianNew ",                   desc = "[Obsidian] New note" },
-      { "<leader>of", "<Cmd>ObsidianFollowLink<CR>",     desc = "[Obsidian] Follow link" },
-      { "<leader>od", "<Cmd>ObsidianToday<CR>",          desc = "[Obsidian] Daily note" },
-      { "<leader>os", "<Cmd>ObsidianSearch<CR>",         desc = "[Obsidian] Search" },
+      { "<leader>oa", "<Cmd>ObsidianOpen<CR>", desc = "[Obsidian] New note" },
+      { "<leader>on", ":ObsidianNew ", desc = "[Obsidian] New note" },
+      { "<leader>of", "<Cmd>ObsidianFollowLink<CR>", desc = "[Obsidian] Follow link" },
+      { "<leader>od", "<Cmd>ObsidianToday<CR>", desc = "[Obsidian] Daily note" },
+      { "<leader>os", "<Cmd>ObsidianSearch<CR>", desc = "[Obsidian] Search" },
       { "<leader>ow", "<Cmd>ObsidianWorkspace main<CR>", desc = "[Obsidian] Workspace (main)" },
     },
     opts = {

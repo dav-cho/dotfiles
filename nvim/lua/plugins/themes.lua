@@ -33,26 +33,24 @@ return {
             ["zenbones"] = "zenbones.nvim",
           }
           local choices = {}
-          for theme, _ in pairs(themes) do table.insert(choices, theme) end
+          for theme, _ in pairs(themes) do
+            table.insert(choices, theme)
+          end
           table.sort(choices)
-          vim.ui.select(
-            choices,
-            { prompt = "Select Theme:" },
-            function(choice)
-              if not (choice and themes[choice]) then
-                return
-              end
-
-              if package.loaded[choice] then
-                vim.cmd("colorscheme " .. choice)
-                return
-              end
-
-              require("lazy").load({ plugins = { themes[choice] } })
+          vim.ui.select(choices, { prompt = "Select Theme:" }, function(choice)
+            if not (choice and themes[choice]) then
+              return
             end
-          )
+
+            if package.loaded[choice] then
+              vim.cmd("colorscheme " .. choice)
+              return
+            end
+
+            require("lazy").load({ plugins = { themes[choice] } })
+          end)
         end,
-        desc = "[Custom] Set theme"
+        desc = "[Custom] Set theme",
       },
       {
         "<Leader>ty",
@@ -63,14 +61,13 @@ return {
           end
           require("lazy").load({ plugins = { "tokyonight.nvim" } })
         end,
-        desc = "[Theme] Tokyonight"
+        desc = "[Theme] Tokyonight",
       },
     },
   },
   {
     "rose-pine/neovim",
     name = "rose-pine",
-    -- commit = "ae445417f4fde24b24fd1224624f0bedab5ae304",
     priority = 1000,
     opts = function(_, opts)
       local colors = {
@@ -98,60 +95,60 @@ return {
           italic = false,
         },
         highlight_groups = {
-          BufferlineTab              = { fg = colors.gray_7 },
-          BufferlineTabSelected      = { fg = "iris" },
-          ColorColumn                = { bg = colors.gray_2 },
-          Comment                    = { fg = colors.gray_7 },
-          Constant                   = { fg = colors.pine_light },
-          CurSearch                  = { fg = "base", bg = "love", inherit = false, blend = 85 },
-          Cursor                     = { fg = "#1d1d1d", bg = "#e6edf3" },
-          CursorLine                 = { bg = colors.gray_1 },
-          CursorLineNr               = { fg = colors.gray_8 },
+          BufferlineTab = { fg = colors.gray_7 },
+          BufferlineTabSelected = { fg = "iris" },
+          ColorColumn = { bg = colors.gray_2 },
+          Comment = { fg = colors.gray_7 },
+          Constant = { fg = colors.pine_light },
+          CurSearch = { fg = "base", bg = "love", inherit = false, blend = 85 },
+          Cursor = { fg = "#1d1d1d", bg = "#e6edf3" },
+          CursorLine = { bg = colors.gray_1 },
+          CursorLineNr = { fg = colors.gray_8 },
           DiagnosticVirtualTextError = { fg = "#964a5f", bg = "none" },
-          DiagnosticVirtualTextHint  = { fg = "#7d6c91", bg = "none" },
-          DiagnosticVirtualTextInfo  = { fg = "#69878c", bg = "none" },
-          DiagnosticVirtualTextWarn  = { fg = "#ad8957", bg = "none" },
-          FlashLabel                 = { bg = "iris" },
-          Float                      = { link = "Number" },
-          FloatBorder                = { fg = colors.gray_5, bg = "NormalFloat" },
-          Folded                     = { link = "Comment" },
-          IlluminatedWordRead        = { bg = colors.gray_3 },
-          IlluminatedWordText        = { bg = colors.gray_3 },
-          IlluminatedWordWrite       = { bg = colors.gray_3 },
-          Include                    = { fg = "iris" },
-          LineNr                     = { fg = colors.gray_6 },
-          Normal                     = { fg = colors.text, bg = colors.gray_0 },
-          NormalFloat                = { fg = colors.text, bg = "none" },
-          NormalNC                   = { link = "Normal" },
-          Number                     = { fg = colors.orange },
-          Operator                   = { fg = colors.gray_7 },
-          Pmenu                      = { bg = "NormalFloat" },
-          Search                     = { fg = "base", bg = "rose", blend = 85 },
-          String                     = { fg = colors.yellow },
-          TelescopeBorder            = { fg = colors.gray_7, bg = colors.gray_0 },
-          TelescopeNormal            = { bg = colors.gray_0 },
-          TelescopeSelection         = { bg = colors.gray_3 },
-          Todo                       = { fg = "iris", bg = "none", blend = 0 },
-          WinSeparator               = { fg = colors.gray_4, bg = "none" },
-          ["@attribute"]             = { fg = "iris" },
-          ["@comment.todo"]          = { link = "Todo" },
-          ["@constant"]              = { link = "Constant" },
-          ["@constant.builtin"]      = { fg = "love" },
-          ["@function.builtin"]      = { fg = "love" },
-          ["@function.method.call"]  = { link = "Function" },
-          ["@keyword.operator"]      = { link = "Keyword" },
-          ["@punctuation"]           = { link = "Operator" },
-          ["@punctuation.special"]   = { link = "@constant.builtin" },
-          ["@text"]                  = { fg = colors.text },
-          ["@text.diff.add"]         = { fg = colors.emerald },
-          ["@text.diff.delete"]      = { fg = "love" },
-          ["@type.builtin"]          = { fg = colors.pine_light },
-          ["@variable"]              = { fg = colors.text },
-          ["@variable.builtin"]      = { fg = "love" },
+          DiagnosticVirtualTextHint = { fg = "#7d6c91", bg = "none" },
+          DiagnosticVirtualTextInfo = { fg = "#69878c", bg = "none" },
+          DiagnosticVirtualTextWarn = { fg = "#ad8957", bg = "none" },
+          FlashLabel = { bg = "iris" },
+          Float = { link = "Number" },
+          FloatBorder = { fg = colors.gray_5, bg = "NormalFloat" },
+          Folded = { link = "Comment" },
+          IlluminatedWordRead = { bg = colors.gray_3 },
+          IlluminatedWordText = { bg = colors.gray_3 },
+          IlluminatedWordWrite = { bg = colors.gray_3 },
+          Include = { fg = "iris" },
+          LineNr = { fg = colors.gray_6 },
+          Normal = { fg = colors.text, bg = colors.gray_0 },
+          NormalFloat = { fg = colors.text, bg = "none" },
+          NormalNC = { link = "Normal" },
+          Number = { fg = colors.orange },
+          Operator = { fg = colors.gray_7 },
+          Pmenu = { bg = "NormalFloat" },
+          Search = { fg = "base", bg = "rose", blend = 85 },
+          String = { fg = colors.yellow },
+          TelescopeBorder = { fg = colors.gray_7, bg = colors.gray_0 },
+          TelescopeNormal = { bg = colors.gray_0 },
+          TelescopeSelection = { bg = colors.gray_3 },
+          Todo = { fg = "iris", bg = "none", blend = 0 },
+          WinSeparator = { fg = colors.gray_4, bg = "none" },
+          ["@attribute"] = { fg = "iris" },
+          ["@comment.todo"] = { link = "Todo" },
+          ["@constant"] = { link = "Constant" },
+          ["@constant.builtin"] = { fg = "love" },
+          ["@function.builtin"] = { fg = "love" },
+          ["@function.method.call"] = { link = "Function" },
+          ["@keyword.operator"] = { link = "Keyword" },
+          ["@punctuation"] = { link = "Operator" },
+          ["@punctuation.special"] = { link = "@constant.builtin" },
+          ["@text"] = { fg = colors.text },
+          ["@text.diff.add"] = { fg = colors.emerald },
+          ["@text.diff.delete"] = { fg = "love" },
+          ["@type.builtin"] = { fg = colors.pine_light },
+          ["@variable"] = { fg = colors.text },
+          ["@variable.builtin"] = { fg = "love" },
           -- ["@field"]                 = { fg = "foam" },
-          ["@variable.member"]       = { fg = "foam" },
+          ["@variable.member"] = { fg = "foam" },
           -- ["@parameter"]             = { fg = "iris" },
-          ["@variable.parameter"]    = { fg = "iris" },
+          ["@variable.parameter"] = { fg = "iris" },
         },
       })
     end,
@@ -284,8 +281,8 @@ return {
           comments = "none",
         },
         diagnostics = {
-          darker = true,     -- darker colors for diagnostic
-          undercurl = true,  -- use undercurl instead of underline for diagnostics
+          darker = true, -- darker colors for diagnostic
+          undercurl = true, -- use undercurl instead of underline for diagnostics
           background = true, -- use background color for virtual text
         },
         colors = {
@@ -296,7 +293,7 @@ return {
           IlluminatedWordText = { bg = colors.bg3 },
           IlluminatedWordRead = { bg = colors.bg3 },
           IlluminatedWordWrite = { bg = colors.bg3 },
-        }
+        },
       })
     end,
     config = function(_, opts)
@@ -323,13 +320,13 @@ return {
     name = "catppuccin",
     lazy = true,
     opts = function(_, opts)
-      local ucolors = require "catppuccin.utils.colors"
+      local ucolors = require("catppuccin.utils.colors")
       local colors = require("catppuccin.palettes").get_palette()
 
       return vim.tbl_deep_extend("force", opts, {
         compile = {
           enabled = true,
-          path = vim.fn.stdpath "cache" .. "/catppuccin",
+          path = vim.fn.stdpath("cache") .. "/catppuccin",
         },
         styles = {
           comments = {},
@@ -357,7 +354,7 @@ return {
           options = {
             theme = "palenight",
           },
-        }
+        },
       })
     end,
     config = function(_, opts)
@@ -387,18 +384,13 @@ return {
             ui = {
               bg_gutter = "none",
             },
-          }
+          },
         },
       },
       overrides = function(colors) -- add/modify highlights
         local palette = colors.palette
         local theme = colors.theme
         return {
-          -- DiagnosticError = { fg = palette.dragonRed },
-          -- DiagnosticWarn = { fg = palette.boatYellow1 },
-          -- ["@variable"] = { fg = palette.dragonWhite },
-          -- ["@variable"] = { fg = palette.fujiWhite },
-          -- ["@variable"] = { fg = palette.katanaGray },
           BufferLineTabSelected = { fg = palette.sakuraPink },
           Cursorline = { bg = theme.ui.bg_p1 },
           DiagnosticError = { fg = palette.lotusRed },
@@ -419,10 +411,10 @@ return {
           ["@variable.builtin"] = { italic = false },
         }
       end,
-      theme = "wave",  -- Load "wave" theme when 'background' option is not set
-      background = {   -- map the value of 'background' option to a theme
+      theme = "wave", -- Load "wave" theme when 'background' option is not set
+      background = { -- map the value of 'background' option to a theme
         dark = "wave", -- try "dragon" !
-        light = "lotus"
+        light = "lotus",
       },
     },
     config = function(_, opts)
@@ -470,8 +462,8 @@ return {
       vim.cmd("colorscheme darkplus")
 
       set_highlights(highlight_overrides)
-      vim.cmd [[highlight @text.todo guifg=#d16d9e]]
-      vim.cmd [[highlight PmenuSel blend=0]]
+      vim.cmd([[highlight @text.todo guifg=#d16d9e]])
+      vim.cmd([[highlight PmenuSel blend=0]])
 
       illuminate_default()
       set_lualine_theme("base16")
@@ -498,7 +490,7 @@ return {
           IlluminatedWordText = { bg = colors.editor.active },
           IlluminatedWordRead = { bg = colors.editor.active },
           IlluminatedWordWrite = { bg = colors.editor.active },
-        }
+        },
       })
       vim.cmd("colorscheme material")
       -- set_lualine_theme("material")

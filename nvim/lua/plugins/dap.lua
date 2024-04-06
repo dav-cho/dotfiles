@@ -9,38 +9,107 @@ return {
       "leoluz/nvim-dap-go",
     },
     keys = {
-      { "<Leader>db", function() require("dap").toggle_breakpoint() end, desc = "[DAP] toggle breakpoint" },
+      {
+        "<Leader>db",
+        function()
+          require("dap").toggle_breakpoint()
+        end,
+        desc = "[DAP] toggle breakpoint",
+      },
       {
         "<Leader>dB",
         function()
-          require("dap").set_breakpoint(vim.fn.input "[DAP] Condition: ")
+          require("dap").set_breakpoint(vim.fn.input("[DAP] Condition: "))
         end,
-        desc = "[DAP] toggle breakpoint (condition)"
+        desc = "[DAP] toggle breakpoint (condition)",
       },
-      { "<Leader>DB", function() require("dap").clear_breakpoints() end, desc = "[DAP] clear breakpoints" },
-      { "<Leader>de", function() require("dap").eval() end,              desc = "[DAP] eval" },
+      {
+        "<Leader>DB",
+        function()
+          require("dap").clear_breakpoints()
+        end,
+        desc = "[DAP] clear breakpoints",
+      },
+      {
+        "<Leader>de",
+        function()
+          require("dap").eval()
+        end,
+        desc = "[DAP] eval",
+      },
       {
         "<Leader>dE",
         function()
           require("dap").eval(vim.fn.input("[DAP] Expression: "))
         end,
-        desc = "[DAP] eval (expression)"
+        desc = "[DAP] eval (expression)",
       },
-      { "<Leader>dr", function() require("dap").repl.toggle() end, desc = "[DAP] toggle REPL" },
-      { "<Leader>dx", function() require("dap").terminate() end,   desc = "[DAP] terminate" },
-      { "<F6>",       function() require("dap").restart() end,     desc = "[DAP] restart" },
-      { "<F7>",       function() require("dap").step_back() end,   desc = "[DAP] step back" },
-      { "<F8>",       function() require("dap").step_out() end,    desc = "[DAP] step out" },
-      { "<F9>",       function() require("dap").step_into() end,   desc = "[DAP] step into" },
-      { "<F10>",      function() require("dap").continue() end,    desc = "[DAP] continue" },
-      { "<F11>",      function() require("dap").step_over() end,   desc = "[DAP] step over" },
+      {
+        "<Leader>dr",
+        function()
+          require("dap").repl.toggle()
+        end,
+        desc = "[DAP] toggle REPL",
+      },
+      {
+        "<Leader>dx",
+        function()
+          require("dap").terminate()
+        end,
+        desc = "[DAP] terminate",
+      },
+      {
+        "<F6>",
+        function()
+          require("dap").restart()
+        end,
+        desc = "[DAP] restart",
+      },
+      {
+        "<F7>",
+        function()
+          require("dap").step_back()
+        end,
+        desc = "[DAP] step back",
+      },
+      {
+        "<F8>",
+        function()
+          require("dap").step_out()
+        end,
+        desc = "[DAP] step out",
+      },
+      {
+        "<F9>",
+        function()
+          require("dap").step_into()
+        end,
+        desc = "[DAP] step into",
+      },
+      {
+        "<F10>",
+        function()
+          require("dap").continue()
+        end,
+        desc = "[DAP] continue",
+      },
+      {
+        "<F11>",
+        function()
+          require("dap").step_over()
+        end,
+        desc = "[DAP] step over",
+      },
     },
     config = function()
       local dap = require("dap")
       local dapui = require("dapui")
 
       vim.fn.sign_define("DapBreakpoint", { text = " ", texthl = "DiagnosticHint", linehl = "", numhl = "" })
-      vim.fn.sign_define("DapBreakpointCondition", { text = " ", texthl = "DiagnosticInfo", linehl = "", numhl = "" })
+      vim.fn.sign_define(
+        "DapBreakpointCondition",
+        { text = " ", texthl = "DiagnosticInfo", linehl = "", numhl = "" }
+      )
 
       dap.listeners.after.event_initialized["dapui_config"] = dapui.open
       dap.listeners.before.event_terminated["dapui_config"] = dapui.close
@@ -50,9 +119,27 @@ return {
   {
     "mfussenegger/nvim-dap-python",
     keys = {
-      { "<Leader>dtm",       function() require("dap-python").test_method() end,     desc = "[DAP Python] test method" },
-      { "<Leader>ptc",       function() require("dap-python").test_class() end,      desc = "[DAP Python] test class" },
-      { "<Leader>ps <ESC>", function() require("dap-python").debug_selection() end, desc = "[DAP Python] debug selection" },
+      {
+        "<Leader>dtm",
+        function()
+          require("dap-python").test_method()
+        end,
+        desc = "[DAP Python] test method",
+      },
+      {
+        "<Leader>ptc",
+        function()
+          require("dap-python").test_class()
+        end,
+        desc = "[DAP Python] test class",
+      },
+      {
+        "<Leader>ps <ESC>",
+        function()
+          require("dap-python").debug_selection()
+        end,
+        desc = "[DAP Python] debug selection",
+      },
     },
     config = function()
       local dap = require("dap")

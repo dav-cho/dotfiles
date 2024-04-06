@@ -58,7 +58,7 @@ return {
         lualine_c = { "filename" },
         lualine_x = { "location" },
         lualine_y = {},
-        lualine_z = {}
+        lualine_z = {},
       },
       tabline = {},
       winbar = {},
@@ -73,20 +73,104 @@ return {
     event = "UIEnter",
     keys = function()
       local keymaps = {
-        { "<Tab>",      function() require("bufferline").cycle(1) end,                      desc = "BufferLineCyclePrev" },
-        { "<C-Tab>",    function() require("bufferline").cycle(-1) end,                     desc = "BufferLineCyclePrev" },
-        { "<Space>>",   function() require("bufferline").move(1) end,                       desc = "BufferLineMoveNext" },
-        { "<Space><",   function() require("bufferline").move(-1) end,                      desc = "BufferLineMovePrev" },
-        { "<Space>p",   function() require("bufferline").pick() end,                        desc = "BufferlinePick" },
-        { "<Space>c",   function() require("bufferline").close_with_pick() end,             desc = "BufferLinePickClose" },
-        { "<Leader>bp", function() require("bufferline.groups").toggle_pin() end,           desc = "BufferLineTogglePin" },
-        { "<Leader>br", function() require("bufferline").restore_positions() end,           desc = "restore_positions()" },
-        { "<Leader>Bh", function() require("bufferline").close_in_direction("left") end,    desc = "BufferLineCloseLeft" },
-        { "<Leader>Bl", function() require("bufferline").close_in_direction("right") end,   desc = "BufferLineCloseRight" },
-        { "<Leader>Bt", function() require("bufferline").sort_by("tabs") end,               desc = "BufferLineSortByTabs" },
-        { "<Leader>Be", function() require("bufferline").sort_by("extension") end,          desc = "BufferLineSortByExtension" },
-        { "<Leader>Bd", function() require("bufferline").sort_by("directory") end,          desc = "BufferLineSortByDirectory" },
-        { "<Leader>Br", function() require("bufferline").sort_by("relative_directory") end, desc = "BufferLineSortByRelativeDirectory" },
+        {
+          "<Tab>",
+          function()
+            require("bufferline").cycle(1)
+          end,
+          desc = "BufferLineCyclePrev",
+        },
+        {
+          "<C-Tab>",
+          function()
+            require("bufferline").cycle(-1)
+          end,
+          desc = "BufferLineCyclePrev",
+        },
+        {
+          "<Space>>",
+          function()
+            require("bufferline").move(1)
+          end,
+          desc = "BufferLineMoveNext",
+        },
+        {
+          "<Space><",
+          function()
+            require("bufferline").move(-1)
+          end,
+          desc = "BufferLineMovePrev",
+        },
+        {
+          "<Space>p",
+          function()
+            require("bufferline").pick()
+          end,
+          desc = "BufferlinePick",
+        },
+        {
+          "<Space>c",
+          function()
+            require("bufferline").close_with_pick()
+          end,
+          desc = "BufferLinePickClose",
+        },
+        {
+          "<Leader>bp",
+          function()
+            require("bufferline.groups").toggle_pin()
+          end,
+          desc = "BufferLineTogglePin",
+        },
+        {
+          "<Leader>br",
+          function()
+            require("bufferline").restore_positions()
+          end,
+          desc = "restore_positions()",
+        },
+        {
+          "<Leader>Bh",
+          function()
+            require("bufferline").close_in_direction("left")
+          end,
+          desc = "BufferLineCloseLeft",
+        },
+        {
+          "<Leader>Bl",
+          function()
+            require("bufferline").close_in_direction("right")
+          end,
+          desc = "BufferLineCloseRight",
+        },
+        {
+          "<Leader>Bt",
+          function()
+            require("bufferline").sort_by("tabs")
+          end,
+          desc = "BufferLineSortByTabs",
+        },
+        {
+          "<Leader>Be",
+          function()
+            require("bufferline").sort_by("extension")
+          end,
+          desc = "BufferLineSortByExtension",
+        },
+        {
+          "<Leader>Bd",
+          function()
+            require("bufferline").sort_by("directory")
+          end,
+          desc = "BufferLineSortByDirectory",
+        },
+        {
+          "<Leader>Br",
+          function()
+            require("bufferline").sort_by("relative_directory")
+          end,
+          desc = "BufferLineSortByRelativeDirectory",
+        },
       }
 
       for _, keymap in pairs(keymaps) do
@@ -128,7 +212,9 @@ return {
     keys = {
       {
         "<Leader>nx",
-        function() require("notify").dismiss({ silent = true, pending = true }) end,
+        function()
+          require("notify").dismiss({ silent = true, pending = true })
+        end,
         desc = "[Notify] Delete all Notifications",
       },
     },
@@ -139,11 +225,11 @@ return {
     config = function(_, _opts)
       require("notify").setup(_opts)
 
-      local log = require("plenary.log").new {
+      local log = require("plenary.log").new({
         plugin = "notify",
         level = "debug",
         use_console = false,
-      }
+      })
 
       vim.notify = function(msg, level, opts)
         log.info(msg, level, opts)
@@ -167,23 +253,74 @@ return {
     "folke/trouble.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     keys = function()
-      local trouble_next, trouble_prev = require("nvim-treesitter.textobjects.repeatable_move")
-          .make_repeatable_move_pair(
-            function() require("trouble").next({ skip_groups = true, jump = true }) end,
-            function() require("trouble").previous({ skip_groups = true, jump = true }) end
-          )
+      local trouble_next, trouble_prev = require("nvim-treesitter.textobjects.repeatable_move").make_repeatable_move_pair(
+        function()
+          require("trouble").next({ skip_groups = true, jump = true })
+        end,
+        function()
+          require("trouble").previous({ skip_groups = true, jump = true })
+        end
+      )
 
       return {
-        { "<space>x",   function() require("trouble").toggle() end,                        desc = "[Trouble] Toggle" },
-        { "<leader>xd", function() require("trouble").toggle("document_diagnostics") end,  desc = "[Trouble] document_diagnostics" },
-        { "<leader>xw", function() require("trouble").toggle("workspace_diagnostics") end, desc = "[Trouble] workspace_diagnostics" },
-        { "<leader>xq", function() require("trouble").toggle("quickfix") end,              desc = "[Trouble] quickfix" },
-        { "<leader>xl", function() require("trouble").toggle("loclist") end,               desc = "[Trouble] loclist" },
-        { "<leader>xr", function() require("trouble").toggle("lsp_references") end,        desc = "[Trouble] lsp_references" },
-        { "<leader>xt", function() require("trouble").toggle("lsp_type_definitions") end,  desc = "[Trouble] lsp_type_definitions" },
-        { "<leader>xi", function() require("trouble").toggle("lsp_implementations") end,   desc = "[Trouble] lsp_implementations" },
-        { "<leader>xn", trouble_next,                                                      desc = "[Trouble] next" },
-        { "<leader>xp", trouble_prev,                                                      desc = "[Trouble] prev" },
+        {
+          "<space>x",
+          function()
+            require("trouble").toggle()
+          end,
+          desc = "[Trouble] Toggle",
+        },
+        {
+          "<leader>xd",
+          function()
+            require("trouble").toggle("document_diagnostics")
+          end,
+          desc = "[Trouble] document_diagnostics",
+        },
+        {
+          "<leader>xw",
+          function()
+            require("trouble").toggle("workspace_diagnostics")
+          end,
+          desc = "[Trouble] workspace_diagnostics",
+        },
+        {
+          "<leader>xq",
+          function()
+            require("trouble").toggle("quickfix")
+          end,
+          desc = "[Trouble] quickfix",
+        },
+        {
+          "<leader>xl",
+          function()
+            require("trouble").toggle("loclist")
+          end,
+          desc = "[Trouble] loclist",
+        },
+        {
+          "<leader>xr",
+          function()
+            require("trouble").toggle("lsp_references")
+          end,
+          desc = "[Trouble] lsp_references",
+        },
+        {
+          "<leader>xt",
+          function()
+            require("trouble").toggle("lsp_type_definitions")
+          end,
+          desc = "[Trouble] lsp_type_definitions",
+        },
+        {
+          "<leader>xi",
+          function()
+            require("trouble").toggle("lsp_implementations")
+          end,
+          desc = "[Trouble] lsp_implementations",
+        },
+        { "<leader>xn", trouble_next, desc = "[Trouble] next" },
+        { "<leader>xp", trouble_prev, desc = "[Trouble] prev" },
       }
     end,
     opts = {
@@ -235,7 +372,7 @@ return {
           vim.g.miniindentscope_disable = not vim.g.miniindentscope_disable
         end,
         silent = true,
-        desc = "[mini.indentscope] Toggle"
+        desc = "[mini.indentscope] Toggle",
       },
       {
         "<Leader>ia",
@@ -245,18 +382,20 @@ return {
         end,
         silent = true,
         desc = "Toggle indent lines and scope",
-      }
+      },
     },
     opts = {
       draw = {
         delay = 50,
-        animation = function(s, n) return 3 end,
+        animation = function(s, n)
+          return 3
+        end,
       },
       mappings = {
-        object_scope = 'ii',
-        object_scope_with_border = 'ai',
-        goto_top = '[i',
-        goto_bottom = ']i',
+        object_scope = "ii",
+        object_scope_with_border = "ai",
+        goto_top = "[i",
+        goto_bottom = "]i",
       },
       options = {
         border = "top", -- default: "both"
@@ -284,7 +423,7 @@ return {
         end,
       })
 
-      require('mini.indentscope').setup(opts)
+      require("mini.indentscope").setup(opts)
     end,
   },
   {
@@ -337,7 +476,7 @@ return {
           require("twilight").toggle()
         end,
         silent = true,
-        desc = "[Twilight] Toggle"
+        desc = "[Twilight] Toggle",
       },
       {
         "<Leader>tf",
