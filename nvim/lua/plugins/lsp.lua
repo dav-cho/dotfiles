@@ -60,7 +60,6 @@ return {
         },
         pyright = {},
         rust_analyzer = {},
-        stylua = {},
         sqlls = {},
         taplo = {},
         tsserver = {},
@@ -195,15 +194,49 @@ return {
     keys = {
       {
         "<Space>\\",
-        function() require("conform").format({ async = true, lsp_fallback = true }) end,
+        function()
+          require("conform").format({ async = true, lsp_fallback = true })
+        end,
         mode = { "n", "v" },
-        desc = "[Conform] Format"
+        desc = "[Conform] Format",
       },
       { "<Leader>ci", "<Cmd>ConformInfo<CR>", desc = "[Conform] Info" },
       "gq",
     },
     opts = {
       -- notify_on_error = false,
+      formatters = {
+        goimports = {
+          command = vim.fn.expand("$HOME/go/bin/goimports"),
+        },
+        isort = {
+          prepend_args = {
+            "--profile",
+            "black",
+            "--lines-before-imports",
+            1,
+            "--lines-after-imports",
+            1,
+            "--treat-all-comment-as-code",
+            "--float-to-top",
+          },
+        },
+        prettier = {
+          prepend_args = {
+            "--config-precedence",
+            "prefer-file",
+            "--single-quote",
+          },
+        },
+        -- stylua = {
+        --   prepend_args = {
+        --     "--indent-type",
+        --     "Spaces",
+        --     "--indent-width",
+        --     2,
+        --   },
+        -- },
+      },
       formatters_by_ft = {
         go = { { "goimports", "gofmt" } },
         javascript = { { "prettierd", "prettier" } },
@@ -224,23 +257,6 @@ return {
     config = function(_, opts)
       vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
       require("conform").setup(opts)
-
-      require("conform.formatters.goimports").command = vim.fn.expand("$HOME/go/bin/goimports")
-      require("conform.formatters.isort").args = {
-        "--stdout",
-        "--filename", "$FILENAME",
-        "--profile", "black",
-        "--lines-before-imports", 1,
-        "--lines-after-imports", 1,
-        "--treat-all-comment-as-code",
-        "--float-to-top",
-        "-",
-      }
-      require("conform.formatters.prettier").args = {
-        "--stdin-filepath", "$FILENAME",
-        "--config-precedence", "prefer-file",
-        "--single-quote",
-      }
     end,
   },
   {
