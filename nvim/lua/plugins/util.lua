@@ -4,18 +4,26 @@ return {
   { "tpope/vim-repeat", event = "VeryLazy" },
   { "tpope/vim-surround", event = "VeryLazy" },
   {
-    "junegunn/fzf",
-    lazy = true,
-    keys = {
-      "zf", -- nvim-bqf
-    },
-    build = function()
-      vim.fn["fzf#install"]()
-    end,
-  },
-  {
     "numToStr/Comment.nvim",
     event = "VeryLazy",
+    keys = {
+      {
+        "<M-Y>",
+        function()
+          vim.cmd("normal! ygv")
+          vim.api.nvim_input("gc")
+        end,
+        mode = "v",
+        desc = "Yank selection and comment",
+      },
+      {
+        "<M-?>",
+        function()
+          vim.cmd("normal! vip")
+          vim.api.nvim_input("gc")
+        end
+      },
+    },
     config = function()
       local call = require("Comment.api").call
 
@@ -30,6 +38,62 @@ return {
       )
 
       require("Comment").setup()
+    end,
+  },
+  {
+    "junegunn/fzf",
+    lazy = true,
+    keys = {
+      "zf", -- nvim-bqf
+    },
+    build = function()
+      vim.fn["fzf#install"]()
+    end,
+  },
+  {
+    "junegunn/fzf.vim",
+    dependencies = { "junegunn/fzf" },
+    lazy = true,
+    cmd = { "FZF" },
+    keys = {
+      { "<Leader>fz", "<Cmd>FZF<CR>", silent = true, desc = "[FZF] FZF" },
+      { "<Leader>rg", "<Cmd>Rg<CR>", silent = true, desc = "[FZF] Rg" },
+      { "<Leader>fl", "<Cmd>Lines<CR>", silent = true, desc = "[FZF] Lines" },
+      { "<Leader>bl", "<Cmd>BLines<CR>", silent = true, desc = "[FZF] BLines" },
+      { "<Leader>fh", "<Cmd>History<CR>", silent = true, desc = "[FZF] History" },
+      {
+        "<Leader>FZ",
+        function()
+          local input = vim.fn.input("FZF: ")
+          if input ~= "" then
+            vim.cmd("FZF " .. input)
+          end
+        end,
+        silent = true,
+        desc = "[FZF] :FZF {args}",
+      },
+      {
+        "<Leader>RG",
+        function()
+          local input = vim.fn.input("Rg: ")
+          if input ~= "" then
+            vim.cmd("Rg " .. input)
+          end
+        end,
+        silent = true,
+        desc = "[FZF] :Rg {pattern}",
+      },
+    },
+    config = function()
+      -- vim.g.fzf_layout = { tmux = "-p85%,85%"}
+      vim.g.fzf_layout = { window = { width = 0.85, height = 0.85 } }
+      vim.api.nvim_create_user_command("Fzf", function()
+        vim.cmd("call fzf#run(" .. vim.json.encode({
+          sink = "e",
+          source = "fd --type file --follow --hidden --no-ignore --strip-cwd-prefix",
+          tmux = "-p 80%% 80%%",
+        }) .. ")")
+      end, { desc = "[FZF] open ui" })
     end,
   },
   {
@@ -313,24 +377,6 @@ return {
       vim.g.undotree_SplitWidth = 40
       vim.g.undotree_DiffpanelHeight = 15
       vim.g.undotree_SetFocusWhenToggle = 1
-    end,
-  },
-  {
-    "junegunn/fzf.vim",
-    dependencies = { "junegunn/fzf" },
-    lazy = true,
-    keys = {
-      { "<Leader>fz", "<Cmd>FZF<CR>", silent = true, desc = "[FZF] fzf" },
-      { "<Leader>fZ", ":FZF ", silent = true, desc = "[FZF] :FZF" },
-    },
-    config = function()
-      vim.api.nvim_create_user_command("Fzf", function()
-        vim.cmd("call fzf#run(" .. vim.json.encode({
-          sink = "e",
-          source = "fd --type file --follow --hidden --no-ignore --strip-cwd-prefix",
-          tmux = "-p 80%% 80%%",
-        }) .. ")")
-      end, { desc = "[FZF] open ui" })
     end,
   },
   {

@@ -20,6 +20,7 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = {
     "fugitive",
     "fugitiveblame",
+    "fzf",
     "git",
     "help",
     "man",
@@ -29,5 +30,14 @@ vim.api.nvim_create_autocmd("FileType", {
   callback = function(event)
     vim.bo[event.buf].buflisted = false
     vim.keymap.set("n", "q", "<Cmd>close<CR>", { buffer = event.buf, silent = true })
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup("Fzf", {}),
+  pattern = { "fzf" },
+  callback = function(event)
+    vim.bo[event.buf].buflisted = false
+    vim.keymap.set("n", "<Esc>", "<Cmd>close<CR>", { buffer = event.buf, silent = true })
   end,
 })
