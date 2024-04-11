@@ -102,13 +102,14 @@ return {
       end
 
       local on_attach = function(_, bufnr)
-        local buf_map = function(mode, lhs, rhs)
-          vim.keymap.set(mode, lhs, rhs, { silent = true, buffer = bufnr })
+        local buf_map = function(mode, lhs, rhs, options)
+          options = vim.tbl_deep_extend("force", { silent = true, buffer = bufnr }, options or {})
+          vim.keymap.set(mode, lhs, rhs, options)
         end
 
         buf_map("n", "gh", vim.lsp.buf.hover)
         buf_map("n", "gd", vim.lsp.buf.definition)
-        buf_map("n", "gD", vim.lsp.buf.type_definition)
+        buf_map("n", "gD", vim.lsp.buf.type_definition, { desc = "vim.lsp.buf.type_definition" })
         buf_map("n", "<Leader>gi", vim.lsp.buf.implementation)
         buf_map("n", "gr", vim.lsp.buf.references)
         buf_map({ "n", "i" }, "<C-s>", vim.lsp.buf.signature_help)
@@ -119,17 +120,20 @@ return {
         buf_map("n", "<Leader>Wr", vim.lsp.buf.remove_workspace_folder)
         buf_map("n", "<Leader>Wl", function()
           vim.notify(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-        end)
+        end, { desc = "notify inspect vim.lsp.buf.list_workspace_folders()" })
         buf_map("n", "<Leader>vv", function()
           vim.diagnostic.config({ virtual_text = not vim.diagnostic.config().virtual_text })
-        end)
-        buf_map("n", ",gv", function()
-          vim.cmd("wincmd v")
-          vim.lsp.buf.definition()
-          vim.defer_fn(function()
+        end, { desc = "buf toggle virtual text" })
+        buf_map("n", "<Leader>gv", function()
+          local original_handler = vim.lsp.handlers["textDocument/definition"]
+          vim.lsp.handlers["textDocument/definition"] = function(err, result, ctx, config)
+            vim.cmd("wincmd v")
+            original_handler(err, result, ctx, config)
             vim.api.nvim_input("zt")
-          end, 400)
-        end)
+            vim.lsp.handlers["textDocument/definition"] = original_handler
+          end
+          vim.lsp.buf.definition()
+        end, { desc = "vim.lsp.buf.definition() vsplit redraw top" })
       end
 
       local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -249,8 +253,8 @@ return {
       },
       formatters_by_ft = {
         go = { { "goimports", "gofmt" } },
-        javascript = { { "prettierd", "prettier" } },
-        javascriptreact = { { "prettierd", "prettier" } },
+        javascript = { { "prettier", "prettierd" } },
+        javascriptreact = { { "prettier", "prettierd" } },
         json = { "fixjson" },
         lua = { "stylua" },
         markdown = { "mdformat", "prettierd" },
@@ -258,8 +262,8 @@ return {
         rust = { "rustfmt" },
         sh = { "shfmt" },
         toml = { "taplo" },
-        typescript = { { "prettierd", "prettier" } },
-        typescriptreact = { { "prettierd", "prettier" } },
+        typescript = { { "prettier", "prettierd" } },
+        typescriptreact = { { "prettier", "prettierd" } },
         yaml = { { "prettierd", "prettier", "yamlfmt" } },
         ["_"] = { "trim_whitespace" },
       },

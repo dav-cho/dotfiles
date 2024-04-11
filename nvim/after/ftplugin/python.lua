@@ -13,7 +13,7 @@ vim.keymap.set("n", "<Space>$", "A  # TODO: ", { buffer = true, desc = "Append T
 vim.keymap.set("n", "<Leader>#", "O# TODO<Esc>", { buffer = true, desc = "Add TODO above" })
 vim.keymap.set("n", "<Leader>$", "A  # TODO<Esc>", { buffer = true, desc = "Append TODO EOL" })
 vim.keymap.set("n", "<Leader>==", "o<Esc>88i#<Esc>0o<Esc>k", { buffer = true, desc = "Insert line break comment" })
-vim.keymap.set("n", "<Leader>--", 'oprint("-" * 200)<Esc>', { buffer = true, desc = "Insert line break comment" })
+vim.keymap.set("n", "<Leader>pp", 'oprint("-" * 200)<Esc>', { buffer = true, desc = "Insert line break comment" })
 vim.keymap.set("n", "<Leader>ym", function()
   local module = vim.fn.expand("%:~:.")
   module = string.gsub(module, "/", ".")
