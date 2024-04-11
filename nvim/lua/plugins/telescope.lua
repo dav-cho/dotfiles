@@ -821,6 +821,14 @@ return {
           desc = "[Harpoon] list remove",
         },
         {
+          "<Leader>mu",
+          function()
+            harpoon:list():remove()
+            harpoon:list():add()
+          end,
+          desc = "[Harpoon] update",
+        },
+        {
           "<Leader>mX",
           function()
             harpoon:list():clear()
@@ -866,7 +874,7 @@ return {
 
       harpoon:setup(opts)
 
-      harpoon:extend({
+      local extend_ui_keys = {
         UI_CREATE = function(cx)
           vim.keymap.set("n", "<C-v>", function()
             harpoon.ui:select_menu_item({ vsplit = true })
@@ -880,28 +888,36 @@ return {
             harpoon.ui:select_menu_item({ tabedit = true })
           end, { buffer = cx.bufnr })
         end,
-      })
+      }
 
-      local sync_index_with_current_file = function()
-        return {
-          SELECT = function(cx)
-            cx.list._index = cx.idx
-          end,
-          UI_CREATE = function(cx)
-            local root = vim.loop.cwd()
-            local contents = require("harpoon.buffer").get_contents(cx.bufnr)
-            local current_file = require("plenary.path"):new(cx.current_file):make_relative(root)
-            for i, file in ipairs(contents) do
-              if file == current_file then
-                harpoon:list()._index = i
-                vim.api.nvim_win_set_cursor(cx.win_id, { i, 0 })
-              end
-            end
-          end,
-        }
+      local make_relative = function(abs_path, dir)
+        local path = require("plenary.path"):new(abs_path)
+        return path:make_relative(dir or vim.loop.cwd())
       end
 
-      harpoon:extend(sync_index_with_current_file())
+      local sync_index_with_current_file = {
+        LIST_READ = function(list)
+          local file = make_relative(vim.api.nvim_buf_get_name(0))
+          for i, item in ipairs(list.items) do
+            if item.value == file then
+              list._index = i
+            end
+          end
+        end,
+        UI_CREATE = function(cx)
+          local current_file = make_relative(cx.current_file)
+          local contents = require("harpoon.buffer").get_contents(cx.bufnr)
+          for i, file in ipairs(contents) do
+            if file == current_file then
+              harpoon:list()._index = i
+              vim.api.nvim_win_set_cursor(cx.win_id, { i, 0 })
+            end
+          end
+        end,
+      }
+
+      harpoon:extend(extend_ui_keys)
+      harpoon:extend(sync_index_with_current_file)
       harpoon:extend(extensions.builtins.command_on_nav("edit"))
       harpoon:extend(extensions.builtins.command_on_nav("lua vim.api.nvim_input('zz')"))
       harpoon:extend(extensions.builtins.navigate_with_number())
