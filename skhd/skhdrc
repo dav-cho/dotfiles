@@ -29,12 +29,20 @@ lctrl + lshift - 0x1B   : yabai -m window --focus prev
 lctrl + lshift - 0x18   : yabai -m window --focus next
 lctrl + lshift - return : yabai -m window --focus recent
 
+# focus display
+lctrl + lalt - q : yabai -m display --focus 1
+lctrl + lalt - w : yabai -m display --focus 2
+lctrl + lalt - e : yabai -m display --focus 3
+ralt + rshift - return : yabai -m display --focus recent
+
 # focus stack
 lctrl + lshift - 0x21 : yabai -m window --focus stack.prev
 lctrl + lshift - 0x1E : yabai -m window --focus stack.next
 lctrl + lshift - 0x2A : yabai -m window --focus stack.recent
-lalt - 0x32           : yabai -m window --focus stack.recent
-# lctrl + lcmd - 0x32   : yabai -m window --focus stack.recent
+lctrl + lcmd - z      : yabai -m window --focus stack.prev
+lctrl + lcmd - a      : yabai -m window --focus stack.next
+lctrl + lcmd - s      : yabai -m window --focus stack.recent
+alt - 0x32            : yabai -m window --focus stack.recent
 
 # warp window
 lctrl + lcmd - h    : yabai -m window --warp west
@@ -80,6 +88,7 @@ lctrl + lcmd + lshift - 7 : yabai -m window --space 7
 lctrl + lcmd + lshift - 8 : yabai -m window --space 8
 lctrl + lcmd + lshift - 9 : yabai -m window --space 9
 lctrl + lcmd + lshift - 0 : yabai -m window --space 10
+lctrl + lcmd + lshift - tab : yabai -m window --space next
 
 # move window to space and follow focus
 lctrl + lcmd - 1 : yabai -m window --space 1  && yabai -m space --focus 1
@@ -113,9 +122,6 @@ lctrl + rshift - 1 : yabai -m space --focus 's1'
 lctrl + rshift - 2 : yabai -m space --focus 's2'
 lctrl + rshift - 3 : yabai -m space --focus 's3'
 
-# focus display
-ralt + rshift - return : yabai -m display --focus recent
-
 # move window to display
 ralt + rcmd + rshift - 1    : yabai -m window --display 1
 ralt + rcmd + rshift - 2    : yabai -m window --display 2
@@ -124,14 +130,14 @@ ralt + rcmd + rshift - 0x21 : yabai -m window --display prev
 ralt + rcmd + rshift - 0x1E : yabai -m window --display next
 
 # move window to display and follow focus
+lctrl + lcmd - q : yabai -m window --display 1 && yabai -m display --focus 1
+lctrl + lcmd - w : yabai -m window --display 2 && yabai -m display --focus 2
+lctrl + lcmd - e : yabai -m window --display 3 && yabai -m display --focus 3
 ralt + rshift - 1    : yabai -m window --display 1 && yabai -m display --focus 1
 ralt + rshift - 2    : yabai -m window --display 2 && yabai -m display --focus 2
 ralt + rshift - 3    : yabai -m window --display 3 && yabai -m display --focus 3
 ralt + rshift - 0x21 : yabai -m window --display prev && yabai -m display --focus prev
 ralt + rshift - 0x1E : yabai -m window --display next && yabai -m display --focus next
-lctrl + lcmd - q : yabai -m window --display 1 && yabai -m display --focus 1
-lctrl + lcmd - w : yabai -m window --display 2 && yabai -m display --focus 2
-lctrl + lcmd - e : yabai -m window --display 3 && yabai -m display --focus 3
 
 # set sub-layer
 lctrl + lalt + lcmd - q : yabai -m window --sub-layer above
@@ -192,6 +198,8 @@ lctrl + lalt + lcmd - o : $HOME/.config/yabai/toggle-float.sh \
 
 # window actions
 lctrl + lshift - backspace : yabai -m window --toggle float
+lctrl + lcmd - tab         : yabai -m window --toggle float
+ralt + rcmd - return       : yabai -m window --toggle float
 lctrl + lcmd + lshift - q : yabai -m window --ratio abs:0.333
 lctrl + lcmd + lshift - w : yabai -m window --ratio abs:0.5
 lctrl + lcmd + lshift - e : yabai -m window --ratio abs:0.666
