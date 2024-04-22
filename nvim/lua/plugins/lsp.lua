@@ -39,6 +39,7 @@ return {
         bashls = {},
         cssls = {},
         cssmodules_ls = {},
+        docker_compose_language_service = {},
         dockerls = {},
         emmet_ls = {},
         eslint = {},
@@ -64,9 +65,18 @@ return {
         taplo = {},
         tsserver = {},
         yamlls = {
+          on_attach = function(client)
+            client.server_capabilities.documentFormattingProvider = true
+          end,
           settings = {
             yaml = {
-              keyOrdering = false,
+              format = {
+                bracketSpacing = false,
+              },
+              -- keyOrdering = false,
+              customTags = {
+                "{{.*}}",
+              },
             },
           },
         },
@@ -87,6 +97,53 @@ return {
         vim.cmd("LspRestart")
       end, { desc = "LspRestart" })
 
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+        callback = function(ev)
+          local buf_map = function(mode, lhs, rhs, options)
+            options = vim.tbl_deep_extend("force", { silent = true, buffer = ev.buf }, options or {})
+            vim.keymap.set(mode, lhs, rhs, options)
+          end
+
+          buf_map("n", "gh", vim.lsp.buf.hover)
+          buf_map("n", "gd", vim.lsp.buf.definition)
+          buf_map("n", "gD", vim.lsp.buf.type_definition, { desc = "vim.lsp.buf.type_definition" })
+          buf_map("n", "<Leader>gi", vim.lsp.buf.implementation)
+          buf_map("n", "gr", vim.lsp.buf.references)
+          buf_map({ "n", "i" }, "<C-s>", vim.lsp.buf.signature_help)
+          buf_map("n", "<Leader>gd", vim.lsp.buf.declaration)
+          buf_map("n", "<Leader>rn", vim.lsp.buf.rename)
+          buf_map("n", "<Leader>ca", vim.lsp.buf.code_action)
+          buf_map("n", "<Leader>fm", vim.lsp.buf.format)
+          buf_map("n", "<Leader>Wa", vim.lsp.buf.add_workspace_folder)
+          buf_map("n", "<Leader>Wr", vim.lsp.buf.remove_workspace_folder)
+          buf_map("n", "<Leader>Wl", function()
+            vim.notify(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+          end, { desc = "notify inspect vim.lsp.buf.list_workspace_folders()" })
+          buf_map("n", "<Leader>vv", function()
+            vim.diagnostic.config({ virtual_text = not vim.diagnostic.config().virtual_text })
+          end, { desc = "buf toggle virtual text" })
+
+          local gd_split = function(split)
+            local original_handler = vim.lsp.handlers["textDocument/definition"]
+            vim.lsp.handlers["textDocument/definition"] = function(err, result, ctx, config)
+              vim.cmd("wincmd " .. split)
+              original_handler(err, result, ctx, config)
+              vim.api.nvim_input("zt")
+              vim.lsp.handlers["textDocument/definition"] = original_handler
+            end
+            vim.lsp.buf.definition()
+          end
+
+          buf_map("n", "<Leader>gv", function()
+            gd_split("v")
+          end, { desc = "vim.lsp.buf.definition() vsplit redraw top" })
+          buf_map("n", "<Leader>gx", function()
+            gd_split("s")
+          end, { desc = "vim.lsp.buf.definition() vsplit redraw top" })
+        end,
+      })
+
       for _, sign in ipairs(opts.signs) do
         vim.fn.sign_define(sign.name, { text = sign.text, texthl = sign.name, numhl = "" })
       end
@@ -101,41 +158,6 @@ return {
         client.config.flags.allow_incremental_sync = true
       end
 
-      local on_attach = function(_, bufnr)
-        local buf_map = function(mode, lhs, rhs, options)
-          options = vim.tbl_deep_extend("force", { silent = true, buffer = bufnr }, options or {})
-          vim.keymap.set(mode, lhs, rhs, options)
-        end
-
-        buf_map("n", "gh", vim.lsp.buf.hover)
-        buf_map("n", "gd", vim.lsp.buf.definition)
-        buf_map("n", "gD", vim.lsp.buf.type_definition, { desc = "vim.lsp.buf.type_definition" })
-        buf_map("n", "<Leader>gi", vim.lsp.buf.implementation)
-        buf_map("n", "gr", vim.lsp.buf.references)
-        buf_map({ "n", "i" }, "<C-s>", vim.lsp.buf.signature_help)
-        buf_map("n", "<Leader>gd", vim.lsp.buf.declaration)
-        buf_map("n", "<Leader>rn", vim.lsp.buf.rename)
-        buf_map("n", "<Leader>ca", vim.lsp.buf.code_action)
-        buf_map("n", "<Leader>Wa", vim.lsp.buf.add_workspace_folder)
-        buf_map("n", "<Leader>Wr", vim.lsp.buf.remove_workspace_folder)
-        buf_map("n", "<Leader>Wl", function()
-          vim.notify(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-        end, { desc = "notify inspect vim.lsp.buf.list_workspace_folders()" })
-        buf_map("n", "<Leader>vv", function()
-          vim.diagnostic.config({ virtual_text = not vim.diagnostic.config().virtual_text })
-        end, { desc = "buf toggle virtual text" })
-        buf_map("n", "<Leader>gv", function()
-          local original_handler = vim.lsp.handlers["textDocument/definition"]
-          vim.lsp.handlers["textDocument/definition"] = function(err, result, ctx, config)
-            vim.cmd("wincmd v")
-            original_handler(err, result, ctx, config)
-            vim.api.nvim_input("zt")
-            vim.lsp.handlers["textDocument/definition"] = original_handler
-          end
-          vim.lsp.buf.definition()
-        end, { desc = "vim.lsp.buf.definition() vsplit redraw top" })
-      end
-
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
       capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -143,7 +165,6 @@ return {
       for server, config in pairs(opts.servers) do
         config = vim.tbl_deep_extend("force", {
           on_init = on_init,
-          on_attach = on_attach,
           capabilities = capabilities,
         }, config)
 

@@ -7,7 +7,6 @@ opt.cursorline = true
 opt.diffopt:append({ "vertical" })
 opt.expandtab = true
 opt.formatoptions = "jncrql"
-opt.guicursor:append("a:Cursor/lCursor")
 opt.ignorecase = true
 opt.linebreak = true
 opt.mouse = "a"

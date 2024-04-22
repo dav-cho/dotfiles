@@ -244,11 +244,11 @@ return {
         desc = "[Oil] Open float",
       },
       {
-        "<Leader>yf",
+        "<Leader>yp",
         function()
           require("oil.actions").copy_entry_path.callback()
         end,
-        desc = "[Oil] ",
+        desc = "[Oil] copy_entry_path",
       },
       {
         "<Leader>ca",
