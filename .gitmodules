@@ -4,3 +4,6 @@
 [submodule "cm-dotfiles"]
 	path = cm
 	url = git@github.com:dav-cho/cm-dotfiles.git
+[submodule "debian"]
+	path = debian
+	url = git@github.com:dav-cho/dotfiles-debian.git
