@@ -22,6 +22,7 @@ plugins=(
   gh
   git
   gitfast
+  kubectl
   ripgrep
   zoxide
   zsh-autosuggestions
@@ -170,9 +171,11 @@ alias gls="git log --oneline --stat"
 alias gmnf="git merge --no-ff"
 alias gs="git status --short"
 alias gu="git pull"
-alias k="kubectl"
-alias l="eza -la --icons"
-alias la="eza -laa --icons"
-alias lg="eza -laaG --icons"
-alias ll="eza -l --icons"
+
+alias l="eza -la --icons=auto"
+alias la="eza -laa --icons=auto"
+alias lg="eza -laaG --icons=auto"
+alias ll="eza -l --icons=auto"
 alias lt="eza --tree -I __pycache__"
+
+[[ "$USER" == "dcho" ]] && source "$HOME/dotfiles/cm/cm.zsh"

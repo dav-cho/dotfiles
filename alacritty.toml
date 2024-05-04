@@ -1,5 +1,4 @@
 # https://alacritty.org/config-alacritty.html
-# https://toml.io/en/
 
 [colors]
 draw_bold_text_with_bright_colors = true
@@ -50,9 +49,6 @@ size = 14.0
 family = "JetBrainsMono Nerd Font"
 style = "Regular"
 
-[font.offset]
-y = 2
-
 [[keyboard.bindings]]
 chars = "\u001F"
 key = "Slash"
@@ -92,3 +88,6 @@ resize_increments = true
 [window.dimensions]
 columns = 100
 lines = 25
+
+[window.padding]
+x = 2
