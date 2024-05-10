@@ -178,4 +178,6 @@ alias lg="eza -laaG --icons=auto"
 alias ll="eza -l --icons=auto"
 alias lt="eza --tree -I __pycache__"
 
-[[ "$USER" == "dcho" ]] && source "$HOME/dotfiles/cm/cm.zsh"
+if [[ "$USER" == "dcho" ]]; then
+  source "$HOME/dotfiles/cm/cm.zsh"
+fi

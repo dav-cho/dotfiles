@@ -73,7 +73,6 @@ return {
               format = {
                 bracketSpacing = false,
               },
-              -- keyOrdering = false,
               customTags = {
                 "{{.*}}",
               },
@@ -124,10 +123,10 @@ return {
             vim.diagnostic.config({ virtual_text = not vim.diagnostic.config().virtual_text })
           end, { desc = "buf toggle virtual text" })
 
-          local gd_split = function(split)
+          local gd_cmd = function(cmd)
             local original_handler = vim.lsp.handlers["textDocument/definition"]
             vim.lsp.handlers["textDocument/definition"] = function(err, result, ctx, config)
-              vim.cmd("wincmd " .. split)
+              vim.cmd(cmd)
               original_handler(err, result, ctx, config)
               vim.api.nvim_input("zt")
               vim.lsp.handlers["textDocument/definition"] = original_handler
@@ -136,11 +135,14 @@ return {
           end
 
           buf_map("n", "<Leader>gv", function()
-            gd_split("v")
+            gd_cmd("wincmd v")
           end, { desc = "vim.lsp.buf.definition() vsplit redraw top" })
           buf_map("n", "<Leader>gx", function()
-            gd_split("s")
+            gd_cmd("wincmd s")
           end, { desc = "vim.lsp.buf.definition() vsplit redraw top" })
+          buf_map("n", "<Leader>gt", function()
+            gd_cmd("tabe %")
+          end, { desc = "vim.lsp.buf.definition() tabe redraw top" })
         end,
       })
 

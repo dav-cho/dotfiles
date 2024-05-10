@@ -135,9 +135,17 @@ return {
       { "<C-g>L", ":Git log<CR>", mode = { "n", "x" }, desc = "[Fugitive] :Git log" },
       { "<C-g>cl", ":Gclog! %<CR>", mode = { "n", "x" }, desc = "[Fugitive] :Gclog! %" },
       { "<C-g>cL", ":Gclog!<CR>", mode = { "n", "x" }, desc = "[Fugitive] :Gclog!" },
+      { "<C-g>cc", ":Git commit<CR>", mode = { "n", "x" }, desc = "[Fugitive] :Git commit" },
+      { "<C-g>ca", ":Git commit --amend<CR>", mode = { "n", "x" }, desc = "[Fugitive] :Git commit --amend" },
+      {
+        "<C-g>c!",
+        ":Git commit --amend --no-edit<CR>",
+        mode = { "n", "x" },
+        desc = "[Fugitive] :Git commit --amend --no-edit",
+      },
+      { "<C-g>ni", ":tab Git diff --no-index ", desc = "[Fugitive] :tab Git diff --no-index ..." },
       { "<C-g>ds", "<Cmd>Gdiffsplit<CR>", desc = "[Fugitive] :Gdiffsplit" },
       { "<C-g>dt", "<Cmd>Git! difftool<CR>", desc = "[Fugitive] :Git! difftool" },
-      { "<C-g>ni", ":tab Git diff --no-index ", desc = "[Fugitive] :tab Git diff --no-index ..." },
     },
   },
 }

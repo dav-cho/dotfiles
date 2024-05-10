@@ -161,7 +161,8 @@ return {
           type = "python",
           request = "launch",
           redirectOutput = true,
-          python = vim.fn.expand("~/.pyenv/shims/python"),
+          -- python = vim.fn.expand("~/.pyenv/shims/python"),
+          python = vim.fn.exepath("~/.pyenv/shims/python"),
           module = module_fmt,
         },
         {
@@ -169,7 +170,8 @@ return {
           type = "python",
           request = "launch",
           redirectOutput = true,
-          python = vim.fn.expand("~/.pyenv/shims/python"),
+          -- python = vim.fn.expand("~/.pyenv/shims/python"),
+          python = vim.fn.exepath("~/.pyenv/shims/python"),
           module = module_fmt,
           args = function()
             local args_string = vim.fn.input("Arguments: ")

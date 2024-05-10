@@ -4,6 +4,7 @@ set -x
 
 if command -v pyenv &>/dev/null && command -v pip &>/dev/null; then
 	pip install -U \
+		aiohttp \
 		black \
 		debugpy \
 		matplotlib \
@@ -18,5 +19,5 @@ if command -v pyenv &>/dev/null && command -v pip &>/dev/null; then
 		requests \
 		tabulate
 
-  pip install -U --user pipenv
+	pip install -U --user pipenv
 fi
