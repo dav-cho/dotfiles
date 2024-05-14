@@ -1,0 +1,13 @@
+filter_mode_shell_up_key_binding = "directory"
+# style = "compact"
+show_preview = true
+show_tabs = false
+max_preview_height = 10
+enter_accept = true
+
+[stats]
+
+[keys]
+
+[sync]
+records = true

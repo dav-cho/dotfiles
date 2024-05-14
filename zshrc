@@ -89,6 +89,8 @@ export FZF_CTRL_R_OPTS="
 [[ -f $HOME/.fzf.zsh ]] && source $HOME/.fzf.zsh
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza --tree --color=always $realpath'
 
+eval "$(atuin init zsh)"
+
 [[ -e "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
 
 export PATH="$HOME/.local/share/solana/install/active_release/bin:$PATH"
@@ -142,6 +144,8 @@ zle -N _rfv
 bindkey -e '^V' _nvim
 bindkey -e '^[M' _nvim-man
 bindkey -e '^G' _rfv
+
+bindkey -e '^[r' fzf-history-widget
 
 bindkey -e '^[ ' autosuggest-execute
 bindkey -e '^[l' autosuggest-execute

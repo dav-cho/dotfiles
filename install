@@ -69,6 +69,7 @@ symlink "$DOTFILES/vimrc" "$HOME/.vimrc"
 symlink "$DOTFILES/alacritty.toml" "$HOME/.config"
 symlink "$DOTFILES/nvim" "$HOME/.config/nvim"
 symlink "$DOTFILES/skhd" "$HOME/.config/skhd"
+symlink "$DOTFILES/atuin" "$HOME/.config/atuin"
 
 [[ -d "$HOME/.config/git" ]] || mkdir "$HOME/.config/git"
 symlink "$DOTFILES/git/ignore" "$HOME/.config/git/ignore"
