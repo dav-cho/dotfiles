@@ -14,7 +14,7 @@ opt.number = true
 opt.pumblend = 10
 opt.pumheight = 15
 opt.relativenumber = true
-opt.scrolloff = 3
+opt.scrolloff = 2
 opt.sessionoptions:append("globals")
 opt.shiftwidth = 2
 opt.signcolumn = "yes"

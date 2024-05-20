@@ -511,13 +511,14 @@ return {
           desc = "reloader",
         },
 
-        {
-          "<Leader>no",
-          function()
-            require("telescope").extensions.notify.notify()
-          end,
-          desc = "notify",
-        },
+        -- WIP
+        -- {
+        --   "<Leader>no",
+        --   function()
+        --     require("telescope").extensions.notify.notify()
+        --   end,
+        --   desc = "notify",
+        -- },
         {
           "<Leader>yy",
           function()
