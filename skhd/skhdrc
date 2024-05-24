@@ -33,14 +33,15 @@ lctrl + lshift - return : yabai -m window --focus recent
 lctrl + lalt - q : yabai -m display --focus 1
 lctrl + lalt - w : yabai -m display --focus 2
 lctrl + lalt - e : yabai -m display --focus 3
+lctrl + lalt - backspace : yabai -m display --focus recent
 ralt + rshift - return : yabai -m display --focus recent
 
 # focus stack
 lctrl + lshift - 0x21 : yabai -m window --focus stack.prev
 lctrl + lshift - 0x1E : yabai -m window --focus stack.next
 lctrl + lshift - 0x2A : yabai -m window --focus stack.recent
-lctrl + lcmd - z      : yabai -m window --focus stack.prev
-lctrl + lcmd - a      : yabai -m window --focus stack.next
+lctrl + lcmd - a      : yabai -m window --focus stack.prev
+lctrl + lcmd - z      : yabai -m window --focus stack.next
 lctrl + lcmd - s      : yabai -m window --focus stack.recent
 alt - 0x32            : yabai -m window --focus stack.recent
 
@@ -62,20 +63,20 @@ lctrl + lalt - 0x1E : yabai -m window --swap next
 lctrl + lalt - 0x2A : yabai -m window --swap recent
 
 # stack window
-lalt + lcmd - h    : "$HOME/.config/yabai/stack.sh" west
-lalt + lcmd - j    : "$HOME/.config/yabai/stack.sh" south
-lalt + lcmd - k    : "$HOME/.config/yabai/stack.sh" north
-lalt + lcmd - l    : "$HOME/.config/yabai/stack.sh" east
-lalt + lcmd - 0x21 : "$HOME/.config/yabai/stack.sh" prev
-lalt + lcmd - 0x1E : "$HOME/.config/yabai/stack.sh" next
-lalt + lcmd - 0x2A : "$HOME/.config/yabai/stack.sh" recent
-lctrl + lcmd + lshift - h    : "$HOME/.config/yabai/stack.sh" on-west
-lctrl + lcmd + lshift - j    : "$HOME/.config/yabai/stack.sh" on-south
-lctrl + lcmd + lshift - k    : "$HOME/.config/yabai/stack.sh" on-north
-lctrl + lcmd + lshift - l    : "$HOME/.config/yabai/stack.sh" on-east
-lctrl + lcmd + lshift - 0x21 : "$HOME/.config/yabai/stack.sh" on-prev
-lctrl + lcmd + lshift - 0x1E : "$HOME/.config/yabai/stack.sh" on-next
-lctrl + lcmd + lshift - 0x2A : "$HOME/.config/yabai/stack.sh" on-recent
+lalt + lcmd - h    : yabai -m window --stack west && yabai -m window --focus stack.next
+lalt + lcmd - j    : yabai -m window --stack south && yabai -m window --focus stack.next
+lalt + lcmd - k    : yabai -m window --stack north && yabai -m window --focus stack.next
+lalt + lcmd - l    : yabai -m window --stack east && yabai -m window --focus stack.next
+lalt + lcmd - 0x21 : yabai -m window --stack prev && yabai -m window --focus stack.next
+lalt + lcmd - 0x1E : yabai -m window --stack next && yabai -m window --focus stack.next
+lalt + lcmd - 0x2A : yabai -m window --stack recent && yabai -m window --focus stack.next
+lctrl + lcmd + lshift - h    : yabai -m window --focus west && yabai -m window --stack east && yabai -m window --focus stack.last
+lctrl + lcmd + lshift - j    : yabai -m window --focus south && yabai -m window --stack north && yabai -m window --focus stack.last
+lctrl + lcmd + lshift - k    : yabai -m window --focus north && yabai -m window --stack south && yabai -m window --focus stack.last
+lctrl + lcmd + lshift - l    : yabai -m window --focus east && yabai -m window --stack west && yabai -m window --focus stack.last
+lctrl + lcmd + lshift - 0x21 : yabai -m window --focus prev && yabai -m window --stack next && yabai -m window --focus stack.last
+lctrl + lcmd + lshift - 0x1E : yabai -m window --focus next && yabai -m window --stack prev && yabai -m window --focus stack.last
+lctrl + lcmd + lshift - 0x2A : yabai -m window --focus recent && yabai -m window --stack recent && yabai -m window --focus stack.last
 
 # move window to space
 lctrl + lcmd + lshift - 1 : yabai -m window --space 1
@@ -140,15 +141,15 @@ ralt + rshift - 0x21 : yabai -m window --display prev && yabai -m display --focu
 ralt + rshift - 0x1E : yabai -m window --display next && yabai -m display --focus next
 
 # set sub-layer
-lctrl + lalt + lcmd - q : yabai -m window --sub-layer above
-lctrl + lalt + lcmd - a : yabai -m window --sub-layer normal
-lctrl + lalt + lcmd - z : yabai -m window --sub-layer below
-lctrl + lalt + lcmd - x : yabai -m window --sub-layer auto
+lctrl + lalt + lshift - e : yabai -m window --sub-layer above
+lctrl + lalt + lshift - d : yabai -m window --sub-layer normal
+lctrl + lalt + lshift - c : yabai -m window --sub-layer below
+lctrl + lalt + lshift - x : yabai -m window --sub-layer auto
 lctrl + lcmd + lshift - z : "$HOME/.config/yabai/sub-layer-all.sh" normal
 
-# raise/lower window in stack
-lctrl + lalt + lshift - 0x21 : yabai -m window --raise stack.next
-lctrl + lalt + lshift - 0x1E : yabai -m window --lower stack.prev
+# swap stack
+lctrl + lalt + lcmd - a : yabai -m window --swap stack.prev && yabai -m window --focus recent
+lctrl + lalt + lcmd - z : yabai -m window --swap stack.next && yabai -m window --focus recent
 
 # set insert
 lctrl + lcmd + lshift - return : yabai -m window --insert stack
