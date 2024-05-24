@@ -512,20 +512,6 @@ return {
         },
 
         {
-          "<Leader>no",
-          function()
-            require("telescope").extensions.notify.notify()
-          end,
-          desc = "notify",
-        },
-        {
-          "<Leader>yy",
-          function()
-            require("telescope").extensions.neoclip.default()
-          end,
-          desc = "neoclip",
-        },
-        {
           "<Leader>he",
           function()
             require("telescope").extensions.heading.heading()
@@ -755,30 +741,18 @@ return {
     end,
   },
   {
-    "dhruvmanila/browser-bookmarks.nvim",
-    version = "*",
-    keys = {
-      {
-        "<Leader>bo",
-        function()
-          require("telescope").extensions.bookmarks.bookmarks()
-        end,
-        desc = "[Telescope] bookmarks",
-      },
-    },
-    opts = {
-      selected_browser = "chrome",
-      full_path = false,
-    },
-    config = function(_, opts)
-      require("browser_bookmarks").setup(opts)
-      require("telescope").load_extension("bookmarks")
-    end,
-  },
-  {
     "AckslD/nvim-neoclip.lua",
     dependencies = { "nvim-telescope/telescope.nvim" },
-    keys = { "y" },
+    event = "TextYankPost",
+    keys = {
+      {
+        "<Leader>yy",
+        function()
+          require("telescope").extensions.neoclip.default()
+        end,
+        desc = "neoclip",
+      },
+    },
     config = true,
   },
   {

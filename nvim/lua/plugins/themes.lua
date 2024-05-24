@@ -192,6 +192,27 @@ return {
     end,
   },
   {
+    "folke/tokyonight.nvim",
+    lazy = true,
+    opts = {
+      style = "moon", -- storm, moon, night, day
+      styles = {
+        comments = { italic = false },
+        keywords = { italic = false },
+      },
+      on_highlights = function(hl, colors)
+        hl.WinSeparator = { fg = colors.fg_gutter }
+        hl.Todo = { fg = colors.magenta2 }
+        hl.Folded = { link = "Comment" }
+      end,
+    },
+    config = function(_, opts)
+      require("tokyonight").setup(opts)
+      vim.cmd("colorscheme tokyonight")
+      set_lualine_theme("tokyonight")
+    end,
+  },
+  {
     "rmehri01/onenord.nvim",
     lazy = true,
     opts = function()
@@ -214,27 +235,6 @@ return {
     config = function(_, opts)
       require("onenord").setup(opts)
       set_lualine_theme("onenord")
-    end,
-  },
-  {
-    "folke/tokyonight.nvim",
-    lazy = true,
-    opts = {
-      style = "moon", -- storm, moon, night, day
-      styles = {
-        comments = { italic = false },
-        keywords = { italic = false },
-      },
-      on_highlights = function(hl, colors)
-        hl.WinSeparator = { fg = colors.fg_gutter }
-        hl.Todo = { fg = colors.magenta2 }
-        hl.Folded = { link = "Comment" }
-      end,
-    },
-    config = function(_, opts)
-      require("tokyonight").setup(opts)
-      vim.cmd("colorscheme tokyonight")
-      set_lualine_theme("tokyonight")
     end,
   },
   {
