@@ -83,8 +83,5 @@ done
 cp "$DOTFILES"/bin/* "$HOME/.local/bin"
 
 if [[ "$USER" == "$CM_USER" ]]; then
-	CM_DOTFILES="$DOTFILES/cm"
-	symlink "$CM_DOTFILES/git/ignore" "$HOME/.config/git/ignore"
-	symlink "$CM_DOTFILES/yabai/yabairc" "$HOME/.config/yabai/yabairc"
-	cp "$CM_DOTFILES"/bin/* "$HOME/.local/bin"
+  source "$DOTFILES/cm/install"
 fi
