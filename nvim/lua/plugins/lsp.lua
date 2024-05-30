@@ -60,6 +60,7 @@ return {
           },
         },
         pyright = {},
+        ruff = {},
         rust_analyzer = {},
         sqlls = {},
         taplo = {},
@@ -110,7 +111,6 @@ return {
           buf_map("n", "<Leader>gi", vim.lsp.buf.implementation)
           buf_map("n", "gr", vim.lsp.buf.references)
           buf_map({ "n", "i" }, "<C-s>", vim.lsp.buf.signature_help)
-          buf_map("n", "<Leader>gd", vim.lsp.buf.declaration)
           buf_map("n", "<Leader>rn", vim.lsp.buf.rename)
           buf_map("n", "<Leader>ca", vim.lsp.buf.code_action)
           buf_map("n", "<Leader>fm", vim.lsp.buf.format)
@@ -126,7 +126,9 @@ return {
           local gd_cmd = function(cmd)
             local original_handler = vim.lsp.handlers["textDocument/definition"]
             vim.lsp.handlers["textDocument/definition"] = function(err, result, ctx, config)
-              vim.cmd(cmd)
+              if cmd ~= nil then
+                vim.cmd(cmd)
+              end
               original_handler(err, result, ctx, config)
               vim.api.nvim_input("zt")
               vim.lsp.handlers["textDocument/definition"] = original_handler
@@ -134,12 +136,15 @@ return {
             vim.lsp.buf.definition()
           end
 
+          buf_map("n", "<Leader>gd", function()
+            gd_cmd()
+          end, { desc = "vim.lsp.buf.definition() redraw top" })
           buf_map("n", "<Leader>gv", function()
             gd_cmd("wincmd v")
           end, { desc = "vim.lsp.buf.definition() vsplit redraw top" })
           buf_map("n", "<Leader>gx", function()
             gd_cmd("wincmd s")
-          end, { desc = "vim.lsp.buf.definition() vsplit redraw top" })
+          end, { desc = "vim.lsp.buf.definition() split redraw top" })
           buf_map("n", "<Leader>gt", function()
             gd_cmd("tabe %")
           end, { desc = "vim.lsp.buf.definition() tabe redraw top" })
@@ -204,7 +209,7 @@ return {
         },
       })
 
-      local toggle_pylint_diagnostics = function()
+      vim.keymap.set("n", "<Leader>pl", function()
         if nls.is_registered("pylint") then
           nls.toggle("pylint")
         else
@@ -214,14 +219,15 @@ return {
             },
           }))
         end
-      end
+      end, { silent = true, desc = "Toggle pylint diagnostics" })
 
-      vim.keymap.set(
-        "n",
-        "<Leader>pl",
-        toggle_pylint_diagnostics,
-        { silent = true, desc = "Toggle pylint diagnostics" }
-      )
+      vim.keymap.set("n", "<Leader>mt", function()
+        if nls.is_registered("mypy") then
+          nls.toggle("mypy")
+        else
+          nls.register(diagnostics.mypy)
+        end
+      end, { silent = true, desc = "Toggle mypy diagnostics" })
     end,
   },
   {
@@ -246,23 +252,24 @@ return {
         goimports = {
           command = vim.fn.expand("$HOME/go/bin/goimports"),
         },
-        isort = {
-          prepend_args = {
-            "--profile",
-            "black",
-            "--lines-before-imports",
-            1,
-            "--lines-after-imports",
-            1,
-            "--treat-all-comment-as-code",
-            "--float-to-top",
-          },
-        },
         prettier = {
           prepend_args = {
             "--config-precedence",
             "prefer-file",
             "--single-quote",
+          },
+        },
+        ruff_fix = {
+          prepend_args = {
+            "--ignore=F401", -- ignore unused imports
+          },
+        },
+        ruff_organize_imports = {
+          prepend_args = {
+            "--config",
+            "lint.isort.section-order=['future', 'standard-library', 'third-party', 'common', 'first-party', 'local-folder']",
+            "--config",
+            "lint.isort.sections.common=['common']",
           },
         },
         -- stylua = {
@@ -281,7 +288,7 @@ return {
         json = { "fixjson" },
         lua = { "stylua" },
         markdown = { "mdformat", "prettierd" },
-        python = { "isort", "black" },
+        python = { "ruff_organize_imports", "ruff_fix", "ruff_format" },
         rust = { "rustfmt" },
         sh = { "shfmt" },
         toml = { "taplo" },
@@ -405,7 +412,31 @@ return {
   },
   {
     "j-hui/fidget.nvim",
-    event = "LspAttach",
+    event = "LspNotify",
+    keys = {
+      {
+        "<Leader>nh",
+        function()
+          require("fidget.notification").show_history()
+        end,
+        desc = ":Fidget history",
+      },
+      {
+        "<Leader>nx",
+        function()
+          require("fidget.notification").clear()
+        end,
+        desc = ":Fidget clear",
+      },
+    },
+    opts = {
+      notification = {
+        override_vim_notify = true,
+      },
+      integration = {
+        ["nvim-tree"] = { enable = false },
+      },
+    },
     config = true,
   },
   {

@@ -625,7 +625,7 @@ return {
               ["<M-p>"] = actions.cycle_previewers_next,
               ["<M-P>"] = layout.toggle_preview,
               ["<M-l>"] = layout.cycle_layout_next,
-              ["<M-x>"] = require("trouble.providers.telescope").open_with_trouble,
+              ["<M-x>"] = require("trouble.sources.telescope").open,
             },
             n = {
               ["<C-j>"] = actions.move_selection_next,
@@ -633,7 +633,7 @@ return {
               ["<M-p>"] = actions.cycle_previewers_next,
               ["<M-P>"] = layout.toggle_preview,
               ["<M-l>"] = layout.cycle_layout_next,
-              ["<M-x>"] = require("trouble.providers.telescope").open_with_trouble,
+              ["<M-x>"] = require("trouble.sources.telescope").open,
             },
           },
           layout_config = {

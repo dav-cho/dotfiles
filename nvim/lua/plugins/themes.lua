@@ -145,9 +145,7 @@ return {
           ["@type.builtin"] = { fg = colors.pine_light },
           ["@variable"] = { fg = colors.text },
           ["@variable.builtin"] = { fg = "love" },
-          -- ["@field"]                 = { fg = "foam" },
           ["@variable.member"] = { fg = "foam" },
-          -- ["@parameter"]             = { fg = "iris" },
           ["@variable.parameter"] = { fg = "iris" },
         },
       })

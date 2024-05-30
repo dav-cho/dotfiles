@@ -1,5 +1,8 @@
 return {
-  { "nvim-tree/nvim-web-devicons" },
+  {
+    "nvim-tree/nvim-web-devicons",
+    lazy = true,
+  },
   {
     "onsails/lspkind-nvim",
     lazy = true,
@@ -232,76 +235,69 @@ return {
 
       return {
         {
-          "<space>x",
+          "<Leader>xx",
           function()
-            require("trouble").toggle()
+            require("trouble").toggle("lsp_document_symbols")
           end,
           desc = "[Trouble] Toggle",
         },
         {
-          "<leader>xd",
+          "<Leader>xd",
           function()
             require("trouble").toggle("document_diagnostics")
           end,
           desc = "[Trouble] document_diagnostics",
         },
         {
-          "<leader>xw",
+          "<Leader>xw",
           function()
             require("trouble").toggle("workspace_diagnostics")
           end,
           desc = "[Trouble] workspace_diagnostics",
         },
         {
-          "<leader>xq",
+          "<Leader>xq",
           function()
             require("trouble").toggle("quickfix")
           end,
           desc = "[Trouble] quickfix",
         },
         {
-          "<leader>xl",
+          "<Leader>xl",
           function()
             require("trouble").toggle("loclist")
           end,
           desc = "[Trouble] loclist",
         },
         {
-          "<leader>xr",
+          "<Leader>xr",
           function()
             require("trouble").toggle("lsp_references")
           end,
           desc = "[Trouble] lsp_references",
         },
         {
-          "<leader>xt",
+          "<Leader>xt",
           function()
             require("trouble").toggle("lsp_type_definitions")
           end,
           desc = "[Trouble] lsp_type_definitions",
         },
         {
-          "<leader>xi",
+          "<Leader>xi",
           function()
             require("trouble").toggle("lsp_implementations")
           end,
           desc = "[Trouble] lsp_implementations",
         },
-        { "<leader>xn", trouble_next, desc = "[Trouble] next" },
-        { "<leader>xp", trouble_prev, desc = "[Trouble] prev" },
+        { "<Leader>xn", trouble_next, desc = "[Trouble] next" },
+        { "<Leader>xp", trouble_prev, desc = "[Trouble] prev" },
       }
     end,
     opts = {
-      height = 15,
-      mode = "document_diagnostics",
-      padding = false,
-      action_keys = {
-        jump = { "<CR>", "<2-leftmouse>" },
-        hover = { "K", "gh" },
-        previous = { "k", "<S-Tab>" },
-        next = { "j", "<Tab>" },
-      },
-      auto_jump = {},
+      auto_preview = true,
+      focus = true,
+      follow = false,
     },
   },
   {

@@ -12,7 +12,7 @@ return {
       "L3MON4D3/LuaSnip",
       "windwp/nvim-autopairs",
     },
-    event = { "LspAttach", "InsertEnter", "CmdlineEnter" },
+    event = { "InsertEnter", "CmdlineEnter" },
     opts = function(_, opts)
       local cmp = require("cmp")
       local luasnip = require("luasnip")
@@ -142,17 +142,6 @@ return {
 
             return vim_item
           end,
-          --- TODO
-          -- format = require("lspkind").cmp_format({
-          --   mode = "symbol_text",
-          --   menu = {
-          --     buffer = "[Buf]",
-          --     nvim_lsp = "[LSP]",
-          --     luasnip = "[LuaSnip]",
-          --     nvim_lua = "[Lua]",
-          --     path = "[Path]",
-          --   },
-          -- }),
         },
         sources = cmp.config.sources({
           { name = "nvim_lsp" },

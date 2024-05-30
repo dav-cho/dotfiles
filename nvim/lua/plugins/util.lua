@@ -5,8 +5,27 @@ return {
   { "tpope/vim-surround", event = "VeryLazy" },
   {
     "numToStr/Comment.nvim",
-    event = "VeryLazy",
     keys = {
+      {
+        "<C-_>",
+        function()
+          return vim.api.nvim_get_vvar("count") == 0 and "<Plug>(comment_toggle_linewise_current)"
+            or "<Plug>(comment_toggle_linewise_count)"
+        end,
+        expr = true,
+        silent = true,
+        desc = "<Plug>(comment_toggle_linewise_current|comment_toggle_linewise_count)",
+      },
+      {
+        "<C-_>",
+        function()
+          return "<Plug>(comment_toggle_linewise_visual)"
+        end,
+        mode = "v",
+        expr = true,
+        silent = true,
+        desc = "<Plug>(comment_toggle_linewise_visual)",
+      },
       {
         "<M-Y>",
         function()
@@ -14,30 +33,79 @@ return {
           vim.api.nvim_input("gc")
         end,
         mode = "v",
-        desc = "Yank selection and comment",
+        desc = "[Comment] Yank selection and comment",
       },
       {
         "<M-?>",
         function()
           vim.cmd("normal! vip")
           vim.api.nvim_input("gc")
-        end
+        end,
+        desc = "[Comment] Comment paragraph",
+      },
+      {
+        "<Leader>#",
+        function()
+          vim.api.nvim_input("gcOTODO<Esc>")
+        end,
+        desc = "[Comment] TODO above",
+      },
+      {
+        "<Leader>$",
+        function()
+          vim.api.nvim_input("gcATODO<Esc>")
+        end,
+        desc = "[Comment] TODO EOL",
+      },
+      {
+        "<Space>#",
+        function()
+          vim.api.nvim_input("gcOTODO: ")
+        end,
+        desc = "[Comment] TODO above (insert mode)",
+      },
+      {
+        "<Space>$",
+        function()
+          vim.api.nvim_input("gcATODO: ")
+        end,
+        desc = "[Comment] TODO EOL (insert mode)",
       },
     },
     config = function()
-      local call = require("Comment.api").call
-
-      vim.keymap.set("n", "<C-_>", function()
-        return vim.v.count == 0 and "<Plug>(comment_toggle_linewise_current)" or "<Plug>(comment_toggle_linewise_count)"
-      end, { expr = true, silent = true, desc = "[Comment] toggle linewise" })
-      vim.keymap.set(
-        "v",
-        "<C-_>",
-        call("toggle.linewise", "g@"),
-        { expr = true, silent = true, desc = "[Comment] toggle linewise" }
-      )
-
       require("Comment").setup()
+    end,
+  },
+  {
+    "rcarriga/nvim-notify",
+    event = "UIEnter",
+    keys = {
+      {
+        "<Leader>nx",
+        function()
+          require("notify").dismiss({ silent = true, pending = true })
+        end,
+        desc = "[Notify] Delete all Notifications",
+      },
+    },
+    opts = {
+      stages = "static",
+      timeout = 3000,
+    },
+    config = function(_, _opts)
+      require("notify").setup(_opts)
+
+      local log = require("plenary.log").new({
+        plugin = "notify",
+        level = "debug",
+        use_console = false,
+      })
+
+      vim.notify = function(msg, level, opts)
+        log.info(msg, level, opts)
+
+        require("notify")(msg, level, opts)
+      end
     end,
   },
   {
@@ -377,6 +445,142 @@ return {
       vim.g.undotree_SplitWidth = 40
       vim.g.undotree_DiffpanelHeight = 15
       vim.g.undotree_SetFocusWhenToggle = 1
+    end,
+  },
+  -- https://github.com/danymat/neogen?tab=readme-ov-file
+  {
+    "danymat/neogen",
+    cmd = "Neogen",
+    keys = {
+      {
+        "<Leader>ng",
+        function()
+          require("neogen").generate()
+        end,
+        desc = "[Neogen] generate()",
+      },
+      {
+        "<Leader>nt",
+        function()
+          require("neogen").generate({
+            annotation_convention = {
+              python = "reST_typed",
+            },
+          })
+        end,
+        desc = "[Neogen] generate() (typed)",
+      },
+      {
+        "<Leader>nc",
+        function()
+          local choice = vim.ui.select({ "func", "class", "type", "file" }, {}, function(choice)
+            require("neogen").generate({ type = choice })
+          end)
+          print(choice)
+        end,
+        desc = "[Neogen] generate()",
+      },
+      {
+        "<M-d><M-s>",
+        function()
+          require("neogen").generate()
+        end,
+        mode = { "i" },
+        desc = "[Neogen] generate()",
+      },
+      {
+        "<M-D><M-S>",
+        function()
+          require("neogen").generate({
+            annotation_convention = {
+              python = "reST_typed",
+            },
+          })
+        end,
+        mode = { "i" },
+        desc = "[Neogen] generate() (typed)",
+      },
+    },
+    opts = function()
+      local rest_typed = function()
+        local i = require("neogen.types.template").item
+        return {
+          { nil, '"""$1"""', { no_results = true, type = { "class", "func" } } },
+          { nil, '"""$1', { no_results = true, type = { "file" } } },
+          { nil, "", { no_results = true, type = { "file" } } },
+          { nil, "$1", { no_results = true, type = { "file" } } },
+          { nil, '"""', { no_results = true, type = { "file" } } },
+          { nil, "", { no_results = true, type = { "file" } } },
+
+          { nil, "# $1", { no_results = true, type = { "type" } } },
+
+          { nil, '"""$1' },
+          { nil, "" },
+          {
+            i.Parameter,
+            ":param %s: $1",
+            {
+              type = { "func" },
+              after_each = ":type %s: $1",
+            },
+          },
+          {
+            { i.Parameter, i.Type },
+            ":param %s: $1",
+            {
+              type = { "func" },
+              required = i.Tparam,
+              after_each = ":type %s: %s",
+            },
+          },
+          {
+            i.ClassAttribute,
+            ":param %s: $1",
+            {
+              type = { "class" },
+              after_each = ":type %s: $1",
+            },
+          },
+          {
+            i.Throw,
+            ":raises %s: $1",
+            {
+              type = { "func" },
+            },
+          },
+          {
+            i.Return,
+            ":return: $1",
+            {
+              after_each = ":rtype: $1",
+              type = { "func" },
+            },
+          },
+          {
+            i.ReturnTypeHint,
+            ":return: $1",
+            {
+              after_each = ":rtype: %s",
+              type = { "func" },
+            },
+          },
+          { nil, '"""' },
+        }
+      end
+
+      return {
+        snippet_engine = "luasnip",
+        enable_placeholders = false,
+        placeholders_hl = "None",
+        languages = {
+          python = {
+            template = {
+              annotation_convention = "reST", -- google_docstrings | numpydoc | reST
+              reST_typed = rest_typed(),
+            },
+          },
+        },
+      }
     end,
   },
 }

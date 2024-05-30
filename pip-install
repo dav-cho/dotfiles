@@ -17,6 +17,7 @@ if command -v pyenv &>/dev/null && command -v pip &>/dev/null; then
 		pytest-xdist \
 		pyyaml \
 		requests \
+		ruff \
 		tabulate
 
 	pip install -U --user pipenv

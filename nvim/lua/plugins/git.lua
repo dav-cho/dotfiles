@@ -143,6 +143,12 @@ return {
         mode = { "n", "x" },
         desc = "[Fugitive] :Git commit --amend --no-edit",
       },
+      {
+        "<C-g>!!",
+        ":Git commit --all --amend --no-edit<CR>",
+        mode = { "n", "x" },
+        desc = "[Fugitive] :Git commit --amend --no-edit",
+      },
       { "<C-g>ni", ":tab Git diff --no-index ", desc = "[Fugitive] :tab Git diff --no-index ..." },
       { "<C-g>ds", "<Cmd>Gdiffsplit<CR>", desc = "[Fugitive] :Gdiffsplit" },
       { "<C-g>dt", "<Cmd>Git! difftool<CR>", desc = "[Fugitive] :Git! difftool" },
