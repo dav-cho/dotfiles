@@ -188,19 +188,6 @@ return {
         winblend = 10,
       },
     },
-    config = function(_, opts)
-      require("toggleterm").setup(opts)
-
-      local set_terminal_keymaps = function()
-        local options = { buffer = 0 }
-        vim.keymap.set("t", "<Esc>", "<C-Bslash><C-n>", options)
-      end
-
-      vim.api.nvim_create_autocmd("TermOpen", {
-        pattern = "term://*",
-        callback = set_terminal_keymaps,
-      })
-    end,
   },
   {
     "nvim-tree/nvim-tree.lua",

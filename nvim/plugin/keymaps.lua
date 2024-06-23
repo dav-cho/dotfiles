@@ -81,6 +81,8 @@ map("n", "zz", function()
   vim.api.nvim_input(string.format("zt%d<C-y>", rows))
 end, { desc = "Redraw cursor line top 1/4" })
 
+map("n", "<Leader>tt", ":vert term<CR>", { desc = "Terminal" })
+
 map("n", "<Space>q", "<Cmd>copen<CR>", { desc = "Open qflist" })
 map("n", "<Space>-", "<Cmd>cprevious<CR>", { desc = "qflist previous" })
 map("n", "<Space>=", "<Cmd>cnext<CR>", { desc = "qflist next" })
