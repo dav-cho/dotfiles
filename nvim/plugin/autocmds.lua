@@ -15,6 +15,24 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   end,
 })
 
+vim.api.nvim_create_augroup("RelativeNumberToggle", {})
+vim.api.nvim_create_autocmd({ "InsertLeave", "BufEnter", "WinEnter", "FocusGained" }, {
+  group = "RelativeNumberToggle",
+  callback = function()
+    if vim.api.nvim_get_option_value("number", {}) then
+      vim.opt.relativenumber = true
+    end
+  end,
+})
+vim.api.nvim_create_autocmd({ "InsertEnter", "BufLeave", "WinLeave", "FocusLost" }, {
+  group = "RelativeNumberToggle",
+  callback = function()
+    if vim.api.nvim_get_option_value("relativenumber", {}) then
+      vim.opt.relativenumber = false
+    end
+  end,
+})
+
 vim.api.nvim_create_autocmd("FileType", {
   group = vim.api.nvim_create_augroup("CloseWithQ", {}),
   pattern = {
