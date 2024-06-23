@@ -6,7 +6,6 @@ export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="powerlevel10k/powerlevel10k"
 export DISABLE_MAGIC_FUNCTIONS=true
 export _ZO_FZF_OPTS="$FZF_DEFAULT_OPTS --height=~80%"
-export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=245"
 typeset -A ZSH_HIGHLIGHT_STYLES
 ZSH_HIGHLIGHT_STYLES[autodirectory]="fg=green"
