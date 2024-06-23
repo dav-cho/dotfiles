@@ -210,6 +210,38 @@ return {
     end,
   },
   {
+    "rcarriga/nvim-notify",
+    event = "UIEnter",
+    keys = {
+      {
+        "<Leader>nx",
+        function()
+          require("notify").dismiss({ silent = true, pending = true })
+        end,
+        desc = "[Notify] Delete all Notifications",
+      },
+    },
+    opts = {
+      stages = "static",
+      timeout = 3000,
+    },
+    config = function(_, _opts)
+      require("notify").setup(_opts)
+
+      local log = require("plenary.log").new({
+        plugin = "notify",
+        level = "debug",
+        use_console = false,
+      })
+
+      vim.notify = function(msg, level, opts)
+        log.info(msg, level, opts)
+
+        require("notify")(msg, level, opts)
+      end
+    end,
+  },
+  {
     "kevinhwang91/nvim-bqf",
     dependencies = { "junegunn/fzf" },
     ft = "qf",
@@ -320,6 +352,7 @@ return {
           "trouble",
           "lazy",
           "mason",
+          "notify",
           "toggleterm",
         },
       },
@@ -377,6 +410,7 @@ return {
           "trouble",
           "lazy",
           "mason",
+          "notify",
           "toggleterm",
         },
         callback = function()

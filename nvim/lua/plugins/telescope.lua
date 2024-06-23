@@ -512,6 +512,13 @@ return {
         },
 
         {
+          "<Leader>no",
+          function()
+            require("telescope").extensions.notify.notify()
+          end,
+          desc = "notify",
+        },
+        {
           "<Leader>he",
           function()
             require("telescope").extensions.heading.heading()

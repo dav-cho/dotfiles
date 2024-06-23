@@ -77,38 +77,6 @@ return {
     end,
   },
   {
-    "rcarriga/nvim-notify",
-    event = "UIEnter",
-    keys = {
-      {
-        "<Leader>nx",
-        function()
-          require("notify").dismiss({ silent = true, pending = true })
-        end,
-        desc = "[Notify] Delete all Notifications",
-      },
-    },
-    opts = {
-      stages = "static",
-      timeout = 3000,
-    },
-    config = function(_, _opts)
-      require("notify").setup(_opts)
-
-      local log = require("plenary.log").new({
-        plugin = "notify",
-        level = "debug",
-        use_console = false,
-      })
-
-      vim.notify = function(msg, level, opts)
-        log.info(msg, level, opts)
-
-        require("notify")(msg, level, opts)
-      end
-    end,
-  },
-  {
     "junegunn/fzf",
     lazy = true,
     keys = {
@@ -258,16 +226,16 @@ return {
         "<Space>:",
         function()
           local nvim_tree = require("nvim-tree")
-          local api = require("nvim-tree.api")
           local config = nvim_tree.get_config()
           config.view.float.enable = not config.view.float.enable
           nvim_tree.setup(config)
-          api.tree.toggle()
+          require("nvim-tree.api").tree.toggle()
         end,
         desc = "[Nvim-Tree] Toggle float",
       },
     },
     opts = {
+      hijack_netrw = false,
       view = {
         width = {
           min = 45,
@@ -290,11 +258,7 @@ return {
       },
     },
     config = function(_, opts)
-      vim.g.loaded_netrw = 1
-      vim.g.loaded_netrwPlugin = 1
-
       require("nvim-tree").setup(opts)
-
       vim.cmd("hi link NvimTreeNormalFloat NvimTreeNormal")
     end,
   },
