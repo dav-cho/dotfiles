@@ -79,26 +79,40 @@ return {
         {
           "<Tab>",
           function()
-            require("bufferline").cycle(1)
+            require("bufferline").cycle(math.max(1, vim.v.count))
           end,
           desc = "BufferLineCyclePrev",
         },
         {
-          "<C-Tab>",
+          "<S-Tab>",
           function()
-            require("bufferline").cycle(-1)
+            require("bufferline").cycle(math.min(-1, -vim.v.count))
           end,
           desc = "BufferLineCyclePrev",
         },
         {
-          "<Space>>",
+          "<Right>",
+          function()
+            require("bufferline").cycle(math.max(1, vim.v.count))
+          end,
+          desc = "BufferLineCyclePrev",
+        },
+        {
+          "<Left>",
+          function()
+            require("bufferline").cycle(math.min(-1, -vim.v.count))
+          end,
+          desc = "BufferLineCyclePrev",
+        },
+        {
+          "<Space><Right>",
           function()
             require("bufferline").move(1)
           end,
           desc = "BufferLineMoveNext",
         },
         {
-          "<Space><",
+          "<Space><Left>",
           function()
             require("bufferline").move(-1)
           end,

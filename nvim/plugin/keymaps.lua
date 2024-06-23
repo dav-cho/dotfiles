@@ -29,13 +29,13 @@ map("n", "<Leader><", "<Cmd>tabm -1<CR>", { desc = "Move tab left" })
 map("n", "<Leader>>", "<Cmd>tabm +1<CR>", { desc = "Move tab right" })
 map("n", "<PageUp>", "<Cmd>tabnext<CR>", { desc = "Next tab" })
 map("n", "<PageDown>", "<Cmd>tabprevious<CR>", { desc = "Previous tab" })
-map("n", "<S-Tab>", function()
+map("n", "<S-Right>", function()
   if vim.v.count > 0 then
     return vim.cmd("tabnext " .. vim.v.count)
   end
   return vim.cmd("tabnext")
 end, { desc = "Next tab" })
-map("n", "<C-S-Tab>", "<Cmd>tabprevious<CR>", { desc = "Previous tab" })
+map("n", "<S-Left>", "<Cmd>tabprevious<CR>", { desc = "Previous tab" })
 
 map("n", "<Esc>", function()
   return vim.v.hlsearch == 1 and "<Cmd>nohlsearch<CR><ESC>" or "<Esc>"
