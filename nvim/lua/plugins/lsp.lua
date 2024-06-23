@@ -247,10 +247,18 @@ return {
       "gq",
     },
     opts = {
-      -- notify_on_error = false,
       formatters = {
         goimports = {
           command = vim.fn.expand("$HOME/go/bin/goimports"),
+        },
+        isort = {
+          prepend_args = {
+            "--profile=black",
+            "--lines-before-imports=1",
+            "--lines-after-imports=1",
+            "--treat-all-comment-as-code",
+            "--float-to-top",
+          },
         },
         prettier = {
           prepend_args = {
@@ -261,23 +269,19 @@ return {
         },
         ruff_fix = {
           prepend_args = {
-            "--ignore=F401", -- ignore unused imports
+            "--ignore=F401", -- unused-import
           },
         },
         ruff_organize_imports = {
           prepend_args = {
-            "--config",
-            "lint.isort.section-order=['future', 'standard-library', 'third-party', 'common', 'first-party', 'local-folder']",
-            "--config",
-            "lint.isort.sections.common=['common']",
+            "--config=lint.isort.section-order=['future', 'standard-library', 'third-party', 'common', 'first-party', 'local-folder']",
+            "--config=lint.isort.sections.common=['common']",
           },
         },
         -- stylua = {
         --   prepend_args = {
-        --     "--indent-type",
-        --     "Spaces",
-        --     "--indent-width",
-        --     2,
+        --     "--indent-type=Spaces",
+        --     "--indent-width=2",
         --   },
         -- },
       },
@@ -288,6 +292,7 @@ return {
         json = { "fixjson" },
         lua = { "stylua" },
         markdown = { "mdformat", "prettierd" },
+        -- python = { "isort", "black" },
         python = { "ruff_organize_imports", "ruff_fix", "ruff_format" },
         rust = { "rustfmt" },
         sh = { "shfmt" },
@@ -422,19 +427,11 @@ return {
         desc = ":Fidget history",
       },
       {
-        "<Leader>nx",
+        "<Leader>fx",
         function()
           require("fidget.notification").clear()
         end,
         desc = ":Fidget clear",
-      },
-    },
-    opts = {
-      notification = {
-        override_vim_notify = true,
-      },
-      integration = {
-        ["nvim-tree"] = { enable = false },
       },
     },
     config = true,
