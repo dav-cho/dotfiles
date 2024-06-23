@@ -17,7 +17,7 @@ lctrl + lshift - r : "$HOME/.config/yabai/toggle-float.sh" --grid 6:4:3:0:1:2   
 lctrl + lshift - f : "$HOME/.config/yabai/toggle-float.sh" --grid 6:4:3:2:1:2      # XS mid right
 lctrl + lshift - v : "$HOME/.config/yabai/toggle-float.sh" --grid 6:4:3:4:1:2      # XS bottom right
 
-lctrl + lalt + lshift - q : "$HOME/.config/yabai/toggle-float.sh" --grid 6:5:2:2:1:2        # XS center
-lctrl + lalt + lshift - a : "$HOME/.config/yabai/toggle-float.sh" --grid 19:31:10:1:11:17   # L portrait center
-lctrl + lalt + lshift - z : "$HOME/.config/yabai/toggle-float.sh" --grid 11:16:6:2:4:7      # S portrait center
-lctrl + lalt + lshift - x : "$HOME/.config/yabai/toggle-float.sh" --grid 11:14:5:1:4:8      # M portrait center
+lctrl + lalt + lcmd - q : "$HOME/.config/yabai/toggle-float.sh" --grid 6:5:2:2:1:2        # XS center
+lctrl + lalt + lcmd - a : "$HOME/.config/yabai/toggle-float.sh" --grid 19:31:10:1:11:17   # L portrait center
+lctrl + lalt + lcmd - z : "$HOME/.config/yabai/toggle-float.sh" --grid 11:16:6:2:4:7      # S portrait center
+lctrl + lalt + lcmd - x : "$HOME/.config/yabai/toggle-float.sh" --grid 11:14:5:1:4:8      # M portrait center
