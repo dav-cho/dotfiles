@@ -77,26 +77,29 @@ return {
     end,
   },
   {
-    "junegunn/fzf",
-    lazy = true,
-    keys = {
-      "zf", -- nvim-bqf
+    "echasnovski/mini.nvim",
+    event = "VeryLazy",
+    version = false,
+    opts = {
+      ai = {
+        n_lines = 1000,
+      },
     },
-    build = function()
-      vim.fn["fzf#install"]()
+    config = function(_, opts)
+      require("mini.ai").setup(opts.ai)
+      require("mini.splitjoin").setup()
     end,
   },
   {
     "junegunn/fzf.vim",
     dependencies = { "junegunn/fzf" },
-    lazy = true,
     cmd = { "FZF" },
     keys = {
-      { "<Leader>fz", "<Cmd>FZF<CR>", silent = true, desc = "[FZF] FZF" },
-      { "<Leader>rg", "<Cmd>Rg<CR>", silent = true, desc = "[FZF] Rg" },
-      { "<Leader>fl", "<Cmd>Lines<CR>", silent = true, desc = "[FZF] Lines" },
-      { "<Leader>bl", "<Cmd>BLines<CR>", silent = true, desc = "[FZF] BLines" },
-      { "<Leader>fh", "<Cmd>History<CR>", silent = true, desc = "[FZF] History" },
+      { "<Leader>fz", "<Cmd>FZF<CR>", desc = "[FZF] FZF" },
+      { "<Leader>rg", "<Cmd>Rg<CR>", desc = "[FZF] Rg" },
+      { "<Leader>fl", "<Cmd>Lines<CR>", desc = "[FZF] Lines" },
+      { "<Leader>bl", "<Cmd>BLines<CR>", desc = "[FZF] BLines" },
+      { "<Leader>fh", "<Cmd>History<CR>", desc = "[FZF] History" },
       {
         "<Leader>FZ",
         function()
@@ -122,7 +125,7 @@ return {
     },
     config = function()
       -- vim.g.fzf_layout = { tmux = "-p85%,85%"}
-      vim.g.fzf_layout = { window = { width = 0.85, height = 0.85 } }
+      vim.g.fzf_layout = { window = { width = 0.80, height = 0.80 } }
       vim.api.nvim_create_user_command("Fzf", function()
         vim.cmd("call fzf#run(" .. vim.json.encode({
           sink = "e",
@@ -251,7 +254,7 @@ return {
   },
   {
     "stevearc/oil.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    dependencies = { "nvim-web-devicons" },
     cmd = "Oil",
     keys = {
       -- { "-", function() require("oil").open() end,       desc = "[Oil] Open" },
@@ -303,7 +306,6 @@ return {
   },
   {
     "folke/flash.nvim",
-    event = "VeryLazy",
     keys = {
       {
         "<Leader>/",
@@ -388,18 +390,7 @@ return {
     end,
   },
   {
-    "mbbill/undotree",
-    keys = {
-      { "<Leader>ut", "<Cmd>UndotreeToggle<CR>", desc = "[Undotree] toggle" },
-    },
-    config = function()
-      vim.g.undotree_SplitWidth = 40
-      vim.g.undotree_DiffpanelHeight = 15
-      vim.g.undotree_SetFocusWhenToggle = 1
-    end,
-  },
-  -- https://github.com/danymat/neogen?tab=readme-ov-file
-  {
+    -- https://github.com/danymat/neogen?tab=readme-ov-file
     "danymat/neogen",
     cmd = "Neogen",
     keys = {

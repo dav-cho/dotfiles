@@ -56,7 +56,7 @@ vim.api.nvim_create_autocmd("TermOpen", {
   group = vim.api.nvim_create_augroup("TermBufOpts", {}),
   pattern = "term://*",
   callback = function()
-    -- vim.opt_local.number = false
+    vim.opt_local.number = false
     vim.opt_local.relativenumber = false
     vim.opt_local.scrolloff = 0
     vim.keymap.set("t", "<Esc>", "<C-Bslash><C-n>", { buffer = 0 }) -- also for toggleterm

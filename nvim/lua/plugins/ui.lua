@@ -72,7 +72,7 @@ return {
   {
     "akinsho/bufferline.nvim",
     version = "*",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    dependencies = { "nvim-web-devicons" },
     event = "UIEnter",
     keys = function()
       local keymaps = {
@@ -268,7 +268,7 @@ return {
   },
   {
     "folke/trouble.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    dependencies = { "nvim-web-devicons" },
     keys = function()
       local trouble_next, trouble_prev = require("nvim-treesitter.textobjects.repeatable_move").make_repeatable_move_pair(
         function()
@@ -397,7 +397,7 @@ return {
     opts = {
       draw = {
         delay = 50,
-        animation = function(s, n)
+        animation = function(_, _)
           return 3
         end,
       },
@@ -408,7 +408,7 @@ return {
         goto_bottom = "]i",
       },
       options = {
-        border = "top", -- default: "both"
+        border = "top",
         try_as_border = true,
       },
       symbol = "│",
@@ -428,7 +428,6 @@ return {
           "toggleterm",
         },
         callback = function()
-          ---@diagnostic disable-next-line
           vim.b.miniindentscope_disable = true
         end,
       })
@@ -445,9 +444,7 @@ return {
         function()
           require("zen-mode").toggle({
             plugins = {
-              twilight = {
-                enabled = false,
-              },
+              twilight = { enabled = false },
             },
           })
         end,
@@ -459,9 +456,7 @@ return {
         function()
           require("zen-mode").toggle({
             plugins = {
-              twilight = {
-                enabled = true,
-              },
+              twilight = { enabled = true },
             },
           })
         end,
@@ -472,7 +467,6 @@ return {
     opts = {
       window = {
         backdrop = 1,
-        width = 300,
       },
     },
   },

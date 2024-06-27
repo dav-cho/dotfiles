@@ -1,8 +1,4 @@
-local map = function(mode, lhs, rhs, opts)
-  opts = opts or {}
-  opts.silent = true
-  vim.keymap.set(mode, lhs, rhs, opts)
-end
+local map = vim.keymap.set
 
 map("n", "<Space>w", "<Cmd>w<CR>", { desc = "Write" })
 map("n", "<Space>W", "<Cmd>wa<CR>", { desc = "Write All" })

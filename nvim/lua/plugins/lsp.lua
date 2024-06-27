@@ -2,10 +2,9 @@ return {
   {
     "neovim/nvim-lspconfig",
     dependencies = {
-      "williamboman/mason.nvim",
-      "williamboman/mason-lspconfig.nvim",
-      "nvimtools/none-ls.nvim",
-      "folke/neodev.nvim",
+      "mason.nvim",
+      "mason-lspconfig.nvim",
+      "none-ls.nvim",
     },
     event = { "BufReadPre", "BufNewFile" },
     opts = {
@@ -84,27 +83,52 @@ return {
     },
     config = function(_, opts)
       local lspconfig = require("lspconfig")
-      local repeatable_move = require("nvim-treesitter.textobjects.repeatable_move")
 
-      local diagnostic_goto_next, diagnostic_goto_prev =
-        repeatable_move.make_repeatable_move_pair(vim.diagnostic.goto_next, vim.diagnostic.goto_prev)
+      for _, sign in ipairs(opts.signs) do
+        vim.fn.sign_define(sign.name, { text = sign.text, texthl = sign.name, numhl = "" })
+      end
 
-      vim.keymap.set("n", "gl", vim.diagnostic.open_float, { desc = "vim.diagnostic.open_float" })
-      vim.keymap.set("n", "gL", vim.diagnostic.setloclist, { desc = "vim.diagnostic.setloclist" })
-      vim.keymap.set("n", "[d", diagnostic_goto_prev, { desc = "vim.diagnostic.goto_prev" })
-      vim.keymap.set("n", "]d", diagnostic_goto_next, { desc = "vim.diagnostic.goto_next" })
-      vim.keymap.set("n", "<Leader>lr", function()
-        vim.cmd("LspRestart")
-      end, { desc = "LspRestart" })
+      vim.diagnostic.config(opts.diagnostic)
+
+      vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, opts.hover)
+      vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, opts.hover)
+
+      local on_init = function(client)
+        client.config.flags = client.config.flags or {}
+        client.config.flags.allow_incremental_sync = true
+      end
+
+      local capabilities = nil
+      if pcall(require, "cmp_nvim_lsp") then
+        capabilities = require("cmp_nvim_lsp").default_capabilities()
+      end
+
+      for server, config in pairs(opts.servers) do
+        config = vim.tbl_deep_extend("force", {
+          on_init = on_init,
+          capabilities = capabilities,
+        }, config)
+
+        lspconfig[server].setup(config)
+      end
 
       vim.api.nvim_create_autocmd("LspAttach", {
-        group = vim.api.nvim_create_augroup("UserLspConfig", {}),
         callback = function(ev)
+          local repeatable_move = require("nvim-treesitter.textobjects.repeatable_move")
+
+          local diagnostic_goto_next, diagnostic_goto_prev =
+            repeatable_move.make_repeatable_move_pair(vim.diagnostic.goto_next, vim.diagnostic.goto_prev)
+
           local buf_map = function(mode, lhs, rhs, options)
-            options = vim.tbl_deep_extend("force", { silent = true, buffer = ev.buf }, options or {})
+            options = vim.tbl_deep_extend("force", { buffer = ev.buf }, options or {})
             vim.keymap.set(mode, lhs, rhs, options)
           end
 
+          buf_map("n", "[d", diagnostic_goto_prev, { desc = "vim.diagnostic.goto_prev" })
+          buf_map("n", "]d", diagnostic_goto_next, { desc = "vim.diagnostic.goto_next" })
+          buf_map("n", "<Leader>lr", ":LspRestart<CR>", { desc = "LspRestart" })
+          buf_map("n", "gl", vim.diagnostic.open_float, { desc = "vim.diagnostic.open_float" })
+          buf_map("n", "gL", vim.diagnostic.setloclist, { desc = "vim.diagnostic.setloclist" })
           buf_map("n", "gh", vim.lsp.buf.hover)
           buf_map("n", "gd", vim.lsp.buf.definition)
           buf_map("n", "gD", vim.lsp.buf.type_definition, { desc = "vim.lsp.buf.type_definition" })
@@ -150,33 +174,6 @@ return {
           end, { desc = "vim.lsp.buf.definition() tabe redraw top" })
         end,
       })
-
-      for _, sign in ipairs(opts.signs) do
-        vim.fn.sign_define(sign.name, { text = sign.text, texthl = sign.name, numhl = "" })
-      end
-
-      vim.diagnostic.config(opts.diagnostic)
-
-      vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, opts.hover)
-      vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, opts.hover)
-
-      local on_init = function(client)
-        client.config.flags = client.config.flags or {}
-        client.config.flags.allow_incremental_sync = true
-      end
-
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
-      capabilities.textDocument.completion.completionItem.snippetSupport = true
-
-      for server, config in pairs(opts.servers) do
-        config = vim.tbl_deep_extend("force", {
-          on_init = on_init,
-          capabilities = capabilities,
-        }, config)
-
-        lspconfig[server].setup(config)
-      end
     end,
   },
   {
@@ -232,7 +229,6 @@ return {
   },
   {
     "stevearc/conform.nvim",
-    event = "BufWritePre",
     cmd = "ConformInfo",
     keys = {
       {
@@ -434,11 +430,16 @@ return {
         desc = ":Fidget clear",
       },
     },
-    config = true,
+    opts = {
+      integration = {
+        ["nvim-tree"] = { enable = false },
+      },
+    },
   },
   {
-    "folke/neodev.nvim",
+    "folke/lazydev.nvim",
     lazy = true,
-    config = true,
+    ft = "lua",
+    opts = {},
   },
 }

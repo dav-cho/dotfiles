@@ -2,8 +2,8 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope-fzf-native.nvim",
+      "plenary.nvim",
+      "telescope-fzf-native.nvim",
     },
     keys = function()
       local keymaps = {
@@ -547,42 +547,6 @@ return {
           end,
           desc = "Harpoon marks",
         },
-
-        {
-          "<Leader>dl",
-          function()
-            require("telescope").extensions.dap.list_breakpoints()
-          end,
-          desc = "dap.list_breakpoints",
-        },
-        {
-          "<Leader>dpC",
-          function()
-            require("telescope").extensions.dap.configurations()
-          end,
-          desc = "dap.configurations",
-        },
-        {
-          "<Leader>dpc",
-          function()
-            require("telescope").extensions.dap.commands()
-          end,
-          desc = "dap.commands",
-        },
-        {
-          "<Leader>dpv",
-          function()
-            require("telescope").extensions.dap.variables()
-          end,
-          desc = "dap.variables",
-        },
-        {
-          "<Leader>dpf",
-          function()
-            require("telescope").extensions.dap.frames()
-          end,
-          desc = "dap.frames",
-        },
       }
 
       for _, keymap in pairs(keymaps) do
@@ -766,8 +730,8 @@ return {
     "ThePrimeagen/harpoon",
     branch = "harpoon2",
     dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim",
+      "plenary.nvim",
+      "telescope.nvim",
     },
     keys = function()
       local harpoon = require("harpoon")
