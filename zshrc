@@ -136,6 +136,22 @@ _rfv() {
   rfv
 }
 
+# WIP
+# function yy() {
+# 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+# 	yazi "$@" --cwd-file="$tmp"
+# 	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+# 		cd -- "$cwd"
+# 	fi
+# 	rm -f -- "$tmp"
+# }
+
+# _yazi() {
+#   yazi
+# }
+# zle -N _yazi
+# bindkey -e '^[Y' _yazi
+
 zle -N _nvim
 zle -N _nvim-man
 zle -N _rfv
@@ -182,5 +198,5 @@ alias ll="eza -l --icons=auto"
 alias lt="eza --tree -I __pycache__"
 
 if [[ "$USER" == "dcho" ]]; then
-  source "$HOME/dotfiles/cm/cm.zsh"
+  source "$HOME/dotfiles/cm/cm.zshrc"
 fi

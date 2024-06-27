@@ -83,6 +83,7 @@ return {
     opts = {
       ai = {
         n_lines = 1000,
+        -- search_method = "cover_or_nearest",
       },
     },
     config = function(_, opts)
@@ -228,7 +229,7 @@ return {
       hijack_netrw = false,
       view = {
         width = {
-          min = 45,
+          min = 50,
         },
         preserve_window_proportions = true,
         float = {
@@ -248,6 +249,9 @@ return {
       },
     },
     config = function(_, opts)
+      -- TODO
+      -- vim.g.loaded_netrw = 1
+      -- vim.g.loaded_netrwPlugin = 1
       require("nvim-tree").setup(opts)
       vim.cmd("hi link NvimTreeNormalFloat NvimTreeNormal")
     end,

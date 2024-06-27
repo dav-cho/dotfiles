@@ -1,9 +1,9 @@
-vim.api.nvim_create_autocmd("FileType", {
-  group = vim.api.nvim_create_augroup("GlobalOptions", {}),
-  callback = function()
-    vim.opt.formatoptions:remove("o")
-  end,
-})
+-- vim.api.nvim_create_autocmd("FileType", {
+--   group = vim.api.nvim_create_augroup("GlobalOptions", {}),
+--   callback = function()
+--     vim.opt.formatoptions:remove("o")
+--   end,
+-- })
 
 vim.api.nvim_create_autocmd("TextYankPost", {
   group = vim.api.nvim_create_augroup("HighlightYank", {}),
@@ -14,6 +14,18 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     })
   end,
 })
+
+-- vim.api.nvim_create_autocmd("TextYankPost", {
+--   group = vim.api.nvim_create_augroup("SmallDeleteNumberedRegister", {}),
+--   callback = function()
+--     -- print(vim.inspect(vim.v.event))
+--     -- print(vim.inspect(vim.fn.getreg(vim.v.event.regname)))
+--     local ev = vim.v.event
+--     -- if ev.operator == "d" and ev.regtype == "v" then
+--     --   vim.fn.setreg(ev.regname, vim.fn.getreg(ev.regname), "V")
+--     -- end
+--   end,
+-- })
 
 vim.api.nvim_create_augroup("RelativeNumberToggle", {})
 vim.api.nvim_create_autocmd({ "InsertLeave", "BufEnter", "WinEnter", "FocusGained" }, {

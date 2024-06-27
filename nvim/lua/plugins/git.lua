@@ -3,6 +3,9 @@ return {
     "lewis6991/gitsigns.nvim",
     event = "LspAttach",
     opts = {
+      -- attach_to_untracked = true,
+      -- signs_staged_enable = false,
+      -- _refresh_staged_on_update = true,
       current_line_blame_opts = {
         virt_text = true,
         virt_text_pos = "eol",
@@ -111,6 +114,37 @@ return {
     },
   },
   {
+    "tpope/vim-fugitive",
+    cmd = { "G", "Git" },
+    keys = {
+      { "<C-g><C-g>", "<Cmd>Git<CR>", desc = "[Fugitive] :Git (:G)" },
+      { "<C-g><C-d>", "<Cmd>tab Git diff<CR>", desc = "[Fugitive] :tab Git diff" },
+      { "<C-g>b", ":Git blame<CR>", mode = { "n", "x" }, desc = "[Fugitive] :Git blame" },
+      { "<C-g>g", ":Ggrep ", desc = "[Fugitive] :Ggrep ..." },
+      { "<C-g>l", ":Git log<CR>", mode = { "n", "x" }, desc = "[Fugitive] :Git log" },
+      { "<C-g>L", "<Cmd>Git log %<CR>", desc = "[Fugitive] :Git log %" },
+      { "<C-g>cl", ":Gclog!<CR>", mode = { "n", "x" }, desc = "[Fugitive] :Gclog!" },
+      { "<C-g>cL", ":Gclog! %<CR>", mode = { "n", "x" }, desc = "[Fugitive] :Gclog! %" },
+      { "<C-g>cc", ":Git commit<CR>", mode = { "n", "x" }, desc = "[Fugitive] :Git commit" },
+      { "<C-g>ca", ":Git commit --amend<CR>", mode = { "n", "x" }, desc = "[Fugitive] :Git commit --amend" },
+      {
+        "<C-g>!!",
+        ":Git commit --amend --no-edit<CR>",
+        mode = { "n", "x" },
+        desc = "[Fugitive] :Git commit --amend --no-edit",
+      },
+      {
+        "<M-g>!!",
+        ":Git commit --all --amend --no-edit<CR>",
+        mode = { "n", "x" },
+        desc = "[Fugitive] :Git commit --amend --no-edit",
+      },
+      { "<C-g>ni", ":tab Git diff --no-index ", desc = "[Fugitive] :tab Git diff --no-index ..." },
+      { "<C-g>ds", "<Cmd>Gdiffsplit<CR>", desc = "[Fugitive] :Gdiffsplit" },
+      { "<C-g>dt", "<Cmd>Git! difftool<CR>", desc = "[Fugitive] :Git! difftool" },
+    },
+  },
+  {
     "sindrets/diffview.nvim",
     cmd = "DiffviewOpen",
     keys = {
@@ -155,36 +189,5 @@ return {
         },
       })
     end,
-  },
-  {
-    "tpope/vim-fugitive",
-    cmd = { "G", "Git" },
-    keys = {
-      { "<C-g><C-g>", "<Cmd>Git<CR>", desc = "[Fugitive] :Git (:G)" },
-      { "<C-g><C-d>", "<Cmd>tab Git diff<CR>", desc = "[Fugitive] :tab Git diff" },
-      { "<C-g>b", ":Git blame<CR>", mode = { "n", "x" }, desc = "[Fugitive] :Git blame" },
-      { "<C-g>g", ":Ggrep ", desc = "[Fugitive] :Ggrep ..." },
-      { "<C-g>l", ":Git log<CR>", mode = { "n", "x" }, desc = "[Fugitive] :Git log" },
-      { "<C-g>L", "<Cmd>Git log %<CR>", desc = "[Fugitive] :Git log %" },
-      { "<C-g>cl", ":Gclog!<CR>", mode = { "n", "x" }, desc = "[Fugitive] :Gclog!" },
-      { "<C-g>cL", ":Gclog! %<CR>", mode = { "n", "x" }, desc = "[Fugitive] :Gclog! %" },
-      { "<C-g>cc", ":Git commit<CR>", mode = { "n", "x" }, desc = "[Fugitive] :Git commit" },
-      { "<C-g>ca", ":Git commit --amend<CR>", mode = { "n", "x" }, desc = "[Fugitive] :Git commit --amend" },
-      {
-        "<C-g>!!",
-        ":Git commit --amend --no-edit<CR>",
-        mode = { "n", "x" },
-        desc = "[Fugitive] :Git commit --amend --no-edit",
-      },
-      {
-        "<M-g>!!",
-        ":Git commit --all --amend --no-edit<CR>",
-        mode = { "n", "x" },
-        desc = "[Fugitive] :Git commit --amend --no-edit",
-      },
-      { "<C-g>ni", ":tab Git diff --no-index ", desc = "[Fugitive] :tab Git diff --no-index ..." },
-      { "<C-g>ds", "<Cmd>Gdiffsplit<CR>", desc = "[Fugitive] :Gdiffsplit" },
-      { "<C-g>dt", "<Cmd>Git! difftool<CR>", desc = "[Fugitive] :Git! difftool" },
-    },
   },
 }

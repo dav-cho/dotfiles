@@ -79,6 +79,10 @@ return {
             },
           },
         },
+        -- mdformat = {}, -- TODO
+        -- prettier = {}, -- TODO
+        -- prettierd = {}, -- TODO
+        -- stylua = {}, -- TODO
       },
     },
     config = function(_, opts)
@@ -90,6 +94,7 @@ return {
 
       vim.diagnostic.config(opts.diagnostic)
 
+      -- TODO: need? hover and signature help don't work without, but is there another way?
       vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, opts.hover)
       vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, opts.hover)
 
@@ -98,10 +103,13 @@ return {
         client.config.flags.allow_incremental_sync = true
       end
 
+      -- local capabilities = vim.lsp.protocol.make_client_capabilities()
+      -- capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
       local capabilities = nil
       if pcall(require, "cmp_nvim_lsp") then
         capabilities = require("cmp_nvim_lsp").default_capabilities()
       end
+      -- capabilities.textDocument.completion.completionItem.snippetSupport = true -- TODO: need ?
 
       for server, config in pairs(opts.servers) do
         config = vim.tbl_deep_extend("force", {
@@ -187,6 +195,33 @@ return {
     "williamboman/mason-lspconfig.nvim",
     lazy = true,
     opts = {
+      -- WIP
+      -- ensure_installed = {
+      --   "bashls",
+      --   "clangd",
+      --   "cssls",
+      --   "cssmodules_ls",
+      --   "docker_compose_language_service",
+      --   "dockerls",
+      --   "emmet_ls",
+      --   "eslint",
+      --   "gopls",
+      --   "html",
+      --   "jsonls",
+      --   "kotlin_language_server",
+      --   "lua_ls",
+      --   "mdformat",
+      --   "prettier",
+      --   "prettierd",
+      --   "pyright",
+      --   "ruff",
+      --   "rust_analyzer",
+      --   "sqlls",
+      --   "stylua",
+      --   "taplo",
+      --   "tsserver",
+      --   "yamlls",
+      -- },
       automatic_installation = true,
     },
   },
@@ -263,13 +298,25 @@ return {
             "--single-quote",
           },
         },
+        -- ruff_fix = {
+        --   prepend_args = {
+        --     "--ignore=F401", -- unused-import
+        --   },
+        -- },
+        -- ruff_organize_imports = {
+        --   prepend_args = {
+        --     "--config=lint.isort.section-order=['future', 'standard-library', 'third-party', 'common', 'first-party', 'local-folder']",
+        --     "--config=lint.isort.sections.common=['common']",
+        --   },
+        -- },
+        -- TODO: [ERROR] Formatter 'ruff_organize_imports' error: error: `ruff <path>` has been removed. Use `ruff check <path>` instead.
         ruff_fix = {
-          prepend_args = {
+          append_args = {
             "--ignore=F401", -- unused-import
           },
         },
         ruff_organize_imports = {
-          prepend_args = {
+          append_args = {
             "--config=lint.isort.section-order=['future', 'standard-library', 'third-party', 'common', 'first-party', 'local-folder']",
             "--config=lint.isort.sections.common=['common']",
           },
@@ -308,7 +355,7 @@ return {
     "glepnir/lspsaga.nvim",
     dependencies = {
       "nvim-tree/nvim-web-devicons",
-      "nvim-treesitter/nvim-treesitter",
+      -- "nvim-treesitter/nvim-treesitter", -- TODO
     },
     event = "LspAttach",
     keys = function()
@@ -436,10 +483,34 @@ return {
       },
     },
   },
+  -- WIP
   {
     "folke/lazydev.nvim",
     lazy = true,
     ft = "lua",
     opts = {},
   },
+  -- {
+  --   "folke/lazydev.nvim",
+  --   ft = "lua", -- only load on lua files
+  --   opts = {
+  --     library = {
+  --       -- See the configuration section for more details
+  --       -- Load luvit types when the `vim.uv` word is found
+  --       { path = "luvit-meta/library", words = { "vim%.uv" } },
+  --     },
+  --   },
+  -- },
+  -- { "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
+  -- { -- optional completion source for require statements and module annotations
+  --   "hrsh7th/nvim-cmp",
+  --   opts = function(_, opts)
+  --     opts.sources = opts.sources or {}
+  --     table.insert(opts.sources, {
+  --       name = "lazydev",
+  --       group_index = 0, -- set group index to 0 to skip loading LuaLS completions
+  --     })
+  --   end,
+  -- },
+  -- -- { "folke/neodev.nvim", enabled = false }, -- make sure to uninstall or disable neodev.nvim
 }

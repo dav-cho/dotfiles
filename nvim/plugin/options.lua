@@ -7,7 +7,9 @@ opt.cursorline = true
 opt.diffopt:append({ "vertical" })
 opt.expandtab = true
 opt.formatoptions = "jncrql"
+-- opt.formatoptions:remove("o") -- TODO
 opt.ignorecase = true
+opt.inccommand = "split"
 opt.linebreak = true
 opt.mouse = "a"
 opt.number = true

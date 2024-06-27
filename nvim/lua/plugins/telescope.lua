@@ -677,10 +677,11 @@ return {
     config = function(_, opts)
       local telescope = require("telescope")
       telescope.setup(opts)
-      telescope.load_extension("fzf")
-      telescope.load_extension("file_browser")
+      -- WIP
+      -- telescope.load_extension("fzf")
+      -- telescope.load_extension("file_browser")
       telescope.load_extension("ui-select")
-      telescope.load_extension("heading")
+      -- telescope.load_extension("heading")
     end,
   },
   { "nvim-telescope/telescope-fzf-native.nvim", lazy = true, build = "make" },

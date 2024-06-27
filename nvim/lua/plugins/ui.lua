@@ -206,14 +206,20 @@ return {
           max_name_length = 30,
           diagnostics = "nvim_lsp",
           diagnostics_update_in_insert = true,
-          diagnostics_indicator = function(count, level, _, context)
-            local icon = level:match("error") and " " or " "
-            if context.buffer:current() then
-              return icon .. count
-            end
-            return ""
-          end,
+          -- WIP
+          -- diagnostics_indicator = function(count, level, _, context)
+          --   local icon = level:match("error") and " " or " "
+          --   if context.buffer:current() then
+          --     return icon .. count
+          --   end
+          --   return ""
+          -- end,
           sort_by = "insert_after_current",
+          -- TODO: which one?
+          -- sort_by = "relative_directory",
+          -- sort_by = "directory",
+          -- sort_by = "insert_at_end",
+          -- sort_by = "id", -- default
           groups = {
             items = {
               require("bufferline.groups").builtin.pinned:with({ icon = "" }),
