@@ -15,6 +15,18 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   end,
 })
 
+-- vim.api.nvim_create_autocmd("TextYankPost", {
+--   group = vim.api.nvim_create_augroup("SmallDeleteNumberedRegister", {}),
+--   callback = function()
+--     -- print(vim.inspect(vim.v.event))
+--     -- print(vim.inspect(vim.fn.getreg(vim.v.event.regname)))
+--     local ev = vim.v.event
+--     -- if ev.operator == "d" and ev.regtype == "v" then
+--     --   vim.fn.setreg(ev.regname, vim.fn.getreg(ev.regname), "V")
+--     -- end
+--   end,
+-- })
+
 vim.api.nvim_create_augroup("RelativeNumberToggle", {})
 vim.api.nvim_create_autocmd({ "InsertLeave", "BufEnter", "WinEnter", "FocusGained" }, {
   group = "RelativeNumberToggle",
@@ -42,7 +54,6 @@ vim.api.nvim_create_autocmd("FileType", {
     "git",
     "help",
     "man",
-    "oil",
     "qf",
     "toggleterm",
   },
@@ -56,20 +67,11 @@ vim.api.nvim_create_autocmd("TermOpen", {
   group = vim.api.nvim_create_augroup("TermBufOpts", {}),
   pattern = "term://*",
   callback = function()
-    -- vim.opt_local.number = false
+    vim.opt_local.number = false
     vim.opt_local.relativenumber = false
     vim.opt_local.scrolloff = 0
     vim.keymap.set("t", "<Esc>", "<C-Bslash><C-n>", { buffer = 0 }) -- also for toggleterm
     vim.cmd("normal! i")
-  end,
-})
-
-vim.api.nvim_create_autocmd("FileType", {
-  group = vim.api.nvim_create_augroup("Fzf", {}),
-  pattern = { "fzf" },
-  callback = function(ev)
-    vim.bo[ev.buf].buflisted = false
-    vim.keymap.set("n", "<Esc>", "<Cmd>close<CR>", { buffer = ev.buf, silent = true })
   end,
 })
 

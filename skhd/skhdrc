@@ -27,8 +27,8 @@ lctrl + lshift - k    : yabai -m window --focus north
 lctrl + lshift - l    : yabai -m window --focus east
 lctrl + lshift - 0x1B : yabai -m window --focus prev
 lctrl + lshift - 0x18 : yabai -m window --focus next
-lctrl + lshift - 0x2A : yabai -m window --focus recent
-# lctrl + lshift - return : yabai -m window --focus recent
+lctrl + lshift - backspace : yabai -m window --focus recent
+# lctrl + lshift - 0x2A : yabai -m window --focus recent
 
 # focus display
 lctrl + lalt - q : yabai -m display --focus 1
@@ -38,12 +38,14 @@ lctrl + lalt - backspace : yabai -m display --focus recent
 ralt + rshift - return : yabai -m display --focus recent
 
 # focus stack
-lctrl + lshift - 0x21 : yabai -m window --focus stack.prev
-lctrl + lshift - 0x1E : yabai -m window --focus stack.next
+# lctrl + lshift - 0x21 : yabai -m window --focus stack.prev
+# lctrl + lshift - 0x1E : yabai -m window --focus stack.next
 lctrl + lcmd - a      : yabai -m window --focus stack.prev
 lctrl + lcmd - z      : yabai -m window --focus stack.next
 lctrl + lcmd - s      : yabai -m window --focus stack.recent
 alt - 0x32            : yabai -m window --focus stack.recent
+lctrl + lalt + lcmd - a : yabai -m window --focus stack.first
+lctrl + lalt + lcmd - z : yabai -m window --focus stack.last
 
 # warp window
 lctrl + lcmd - h    : yabai -m window --warp west
@@ -89,7 +91,6 @@ lctrl + lcmd + lshift - 7 : yabai -m window --space 7
 lctrl + lcmd + lshift - 8 : yabai -m window --space 8
 lctrl + lcmd + lshift - 9 : yabai -m window --space 9
 lctrl + lcmd + lshift - 0 : yabai -m window --space 10
-lctrl + lcmd + lshift - tab : yabai -m window --space next
 
 # move window to space and follow focus
 lctrl + lcmd - 1 : yabai -m window --space 1  && yabai -m space --focus 1
@@ -113,16 +114,6 @@ ralt + rcmd - 8  : yabai -m window --space 8  && yabai -m space --focus 8
 ralt + rcmd - 9  : yabai -m window --space 9  && yabai -m space --focus 9
 ralt + rcmd - 0  : yabai -m window --space 10 && yabai -m space --focus 10
 
-# label space
-lctrl + ralt + rshift - 1 : yabai -m space --label 's1'
-lctrl + ralt + rshift - 2 : yabai -m space --label 's2'
-lctrl + ralt + rshift - 3 : yabai -m space --label 's3'
-
-# focus labeled space
-lctrl + rshift - 1 : yabai -m space --focus 's1'
-lctrl + rshift - 2 : yabai -m space --focus 's2'
-lctrl + rshift - 3 : yabai -m space --focus 's3'
-
 # move window to display
 ralt + rcmd + rshift - 1    : yabai -m window --display 1
 ralt + rcmd + rshift - 2    : yabai -m window --display 2
@@ -139,6 +130,16 @@ ralt + rshift - 2    : yabai -m window --display 2 && yabai -m display --focus 2
 ralt + rshift - 3    : yabai -m window --display 3 && yabai -m display --focus 3
 ralt + rshift - 0x21 : yabai -m window --display prev && yabai -m display --focus prev
 ralt + rshift - 0x1E : yabai -m window --display next && yabai -m display --focus next
+
+# label space
+lctrl + ralt + rshift - 1 : yabai -m space --label 's1'
+lctrl + ralt + rshift - 2 : yabai -m space --label 's2'
+lctrl + ralt + rshift - 3 : yabai -m space --label 's3'
+
+# focus labeled space
+lctrl + rshift - 1 : yabai -m space --focus 's1'
+lctrl + rshift - 2 : yabai -m space --focus 's2'
+lctrl + rshift - 3 : yabai -m space --focus 's3'
 
 # set sub-layer
 lctrl + lalt + lshift - e : yabai -m window --sub-layer above
@@ -198,12 +199,13 @@ lctrl + lalt + lcmd - o : $HOME/.config/yabai/toggle-float.sh \
                           && yabai -m window --resize abs:2044:1341         # obsidian
 
 # window actions
-lctrl + lshift - backspace : yabai -m window --toggle float
-lctrl + lcmd - tab         : yabai -m window --toggle float
-ralt + rcmd - return       : yabai -m window --toggle float
-lctrl + lcmd + lshift - q : yabai -m window --ratio abs:0.333
-lctrl + lcmd + lshift - w : yabai -m window --ratio abs:0.5
-lctrl + lcmd + lshift - e : yabai -m window --ratio abs:0.666
+lctrl + lcmd - tab   : yabai -m window --toggle float
+ralt + rcmd - return : yabai -m window --toggle float
+lctrl + lcmd + lshift - tab : yabai -m window --ratio abs:0.333
+lctrl + lcmd + lshift - q   : yabai -m window --ratio abs:0.4
+lctrl + lcmd + lshift - w   : yabai -m window --ratio abs:0.5
+lctrl + lcmd + lshift - e   : yabai -m window --ratio abs:0.6
+lctrl + lcmd + lshift - r   : yabai -m window --ratio abs:0.666
 lctrl + lcmd + lshift - s : yabai -m window --toggle split
 lctrl + lshift + rshift - s : yabai -m window --toggle sticky
 lctrl + lshift + rshift - p : yabai -m window --toggle sticky --toggle topmost --toggle pip
@@ -228,8 +230,11 @@ ralt + rcmd + rshift - n : yabai -m space --create && \
 ralt + rcmd + rshift - d : yabai -m space --destroy
 
 # apps
-lctrl + lcmd - space : "$HOME/dotfiles/yabai/alacritty-new-window.sh"
 # lctrl + lcmd - space : "$HOME/dotfiles/yabai/iterm-new-window.sh"
+# lctrl + lcmd - space : "$HOME/dotfiles/yabai/alacritty-new-window.sh"
+lctrl + lcmd - return : "$HOME/dotfiles/yabai/alacritty-new-window.sh"
+# lctrl + lcmd - space : kitty --single-instance --directory $HOME
+lctrl + lcmd - space : open /Applications/kitty.app -n --args --single-instance --directory $HOME
 
 .load "partial_ultrawide"
 # .load "partial_mbp"

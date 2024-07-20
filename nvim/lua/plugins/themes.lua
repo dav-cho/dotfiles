@@ -11,9 +11,7 @@ end
 return {
   {
     dir = "dav.themes",
-    dependencies = {
-      "nvim-telescope/telescope.nvim",
-    },
+    dependencies = { "telescope.nvim" },
     keys = {
       {
         "<Leader>th",
@@ -65,6 +63,11 @@ return {
       },
     },
   },
+  -- { -- WIP
+  --   "rose-pine/neovim",
+  --   name = "rose-pine",
+  --   priority = 1000,
+  -- },
   {
     "rose-pine/neovim",
     name = "rose-pine",

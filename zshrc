@@ -17,12 +17,10 @@ plugins=(
   docker-compose
   fancy-ctrl-z
   fzf
-  fd
   gh
   git
   gitfast
   kubectl
-  ripgrep
   zoxide
   zsh-autosuggestions
   zsh-syntax-highlighting
@@ -49,6 +47,7 @@ export EZA_COLORS='xx=38;5;246:xa=38;5;246:'\
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init --path)"
+export PIPENV_VENV_IN_PROJECT=1
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh" --no-use
@@ -132,16 +131,39 @@ _nvim-man() {
   zle accept-line
 }
 
+_delta() {
+  BUFFER+=" | delta"
+  zle accept-line
+}
+
 _rfv() {
   rfv
 }
 
+# WIP
+# function yy() {
+# 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+# 	yazi "$@" --cwd-file="$tmp"
+# 	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+# 		cd -- "$cwd"
+# 	fi
+# 	rm -f -- "$tmp"
+# }
+
+# _yazi() {
+#   yazi
+# }
+# zle -N _yazi
+# bindkey -e '^[Y' _yazi
+
 zle -N _nvim
 zle -N _nvim-man
+zle -N _delta
 zle -N _rfv
 
 bindkey -e '^V' _nvim
 bindkey -e '^[M' _nvim-man
+bindkey -e '^[D' _delta
 bindkey -e '^G' _rfv
 
 bindkey -e '^[r' fzf-history-widget
@@ -157,6 +179,7 @@ bindkey -e '^[v' quoted-insert
 alias cat="bat"
 alias eza="eza --time-style=long-iso"
 alias rg="rg --smart-case"
+alias docker-compose="docker compose"
 
 alias ghco="gh copilot"
 
@@ -182,5 +205,5 @@ alias ll="eza -l --icons=auto"
 alias lt="eza --tree -I __pycache__"
 
 if [[ "$USER" == "dcho" ]]; then
-  source "$HOME/dotfiles/cm/cm.zsh"
+  source "$HOME/dotfiles/cm/zshrc-cm"
 fi

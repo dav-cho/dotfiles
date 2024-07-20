@@ -67,6 +67,7 @@ symlink "$DOTFILES/gitconfig" "$HOME/.gitconfig"
 symlink "$DOTFILES/vimrc" "$HOME/.vimrc"
 
 symlink "$DOTFILES/alacritty.toml" "$HOME/.config"
+symlink "$DOTFILES/kitty/kitty.conf" "$HOME/.config/kitty"
 symlink "$DOTFILES/nvim" "$HOME/.config/nvim"
 symlink "$DOTFILES/skhd" "$HOME/.config/skhd"
 symlink "$DOTFILES/atuin" "$HOME/.config/atuin"
@@ -81,6 +82,12 @@ done
 
 [[ -d "$HOME/.local/bin" ]] || mkdir "$HOME/.local/bin"
 cp "$DOTFILES"/bin/* "$HOME/.local/bin"
+
+KITTY="/Applications/kitty.app/Contents/MacOS/kitty"
+if [[ -d "$KITTY" ]]; then
+  symlink "$KITTY/kitty" "$HOME/.local/bin"
+  symlink "$KITTY/kitten" "$HOME/.local/bin"
+fi
 
 if [[ "$USER" == "$CM_USER" ]]; then
   source "$DOTFILES/cm/install"

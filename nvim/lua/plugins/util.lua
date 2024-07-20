@@ -43,6 +43,8 @@ return {
         end,
         desc = "[Comment] Comment paragraph",
       },
+      -- TODO: change to Ex-commands?
+      -- see note from: https://github.com/chrisgrieser/nvim-various-textobjs/blob/main/README.md#configuration
       {
         "<Leader>#",
         function()
@@ -75,81 +77,6 @@ return {
     config = function()
       require("Comment").setup()
     end,
-  },
-  {
-    "junegunn/fzf",
-    lazy = true,
-    keys = {
-      "zf", -- nvim-bqf
-    },
-    build = function()
-      vim.fn["fzf#install"]()
-    end,
-  },
-  {
-    "junegunn/fzf.vim",
-    dependencies = { "junegunn/fzf" },
-    lazy = true,
-    cmd = { "FZF" },
-    keys = {
-      { "<Leader>fz", "<Cmd>FZF<CR>", silent = true, desc = "[FZF] FZF" },
-      { "<Leader>rg", "<Cmd>Rg<CR>", silent = true, desc = "[FZF] Rg" },
-      { "<Leader>fl", "<Cmd>Lines<CR>", silent = true, desc = "[FZF] Lines" },
-      { "<Leader>bl", "<Cmd>BLines<CR>", silent = true, desc = "[FZF] BLines" },
-      { "<Leader>fh", "<Cmd>History<CR>", silent = true, desc = "[FZF] History" },
-      {
-        "<Leader>FZ",
-        function()
-          local input = vim.fn.input("FZF: ")
-          if input ~= "" then
-            vim.cmd("FZF " .. input)
-          end
-        end,
-        silent = true,
-        desc = "[FZF] :FZF {args}",
-      },
-      {
-        "<Leader>RG",
-        function()
-          local input = vim.fn.input("Rg: ")
-          if input ~= "" then
-            vim.cmd("Rg " .. input)
-          end
-        end,
-        silent = true,
-        desc = "[FZF] :Rg {pattern}",
-      },
-    },
-    config = function()
-      -- vim.g.fzf_layout = { tmux = "-p85%,85%"}
-      vim.g.fzf_layout = { window = { width = 0.85, height = 0.85 } }
-      vim.api.nvim_create_user_command("Fzf", function()
-        vim.cmd("call fzf#run(" .. vim.json.encode({
-          sink = "e",
-          source = "fd --type file --follow --hidden --no-ignore --strip-cwd-prefix",
-          tmux = "-p 80%% 80%%",
-        }) .. ")")
-      end, { desc = "[FZF] open ui" })
-    end,
-  },
-  {
-    "zbirenbaum/copilot.lua",
-    event = "InsertEnter",
-    cmd = "Copilot",
-    keys = {
-      {
-        "<Leader>cp",
-        function()
-          require("copilot.suggestion").toggle_auto_trigger()
-        end,
-        desc = "[copilot] Toggle auto_trigger",
-      },
-    },
-    opts = {
-      suggestion = {
-        auto_trigger = true,
-      },
-    },
   },
   {
     "akinsho/toggleterm.nvim",
@@ -190,6 +117,83 @@ return {
     },
   },
   {
+    "stevearc/oil.nvim",
+    dependencies = { "nvim-web-devicons" },
+    cmd = "Oil",
+    keys = {
+      {
+        "-",
+        function()
+          require("oil").open_float()
+        end,
+        desc = "[Oil] Open float",
+      },
+      {
+        -- "<M-->", -- TODO
+        "_",
+        function()
+          require("oil").open()
+          -- vim.defer_fn(function()
+          --   require("oil").open_preview()
+          -- end, 100)
+        end,
+        desc = "[Oil] Open",
+      },
+      {
+        "<Leader>yp",
+        function()
+          require("oil.actions").copy_entry_path.callback()
+        end,
+        desc = "[Oil] copy_entry_path",
+      },
+      {
+        "<Leader>ca",
+        function()
+          if vim.bo.filetype == "oil" then
+            require("oil").discard_all_changes()
+          end
+        end,
+        desc = "[Oil] Discard all changes",
+      },
+    },
+    opts = function()
+      local detail = false
+
+      return {
+        default_file_explorer = false,
+        keymaps = {
+          ["q"] = "actions.close",
+          ["<C-v>"] = "actions.select_vsplit",
+          ["<C-x>"] = "actions.select_split",
+          ["gd"] = {
+            desc = "Toggle file detail view",
+            callback = function()
+              detail = not detail
+              if detail then
+                require("oil").set_columns({ "icon", "permissions", "size", "mtime" })
+              else
+                require("oil").set_columns({ "icon" })
+              end
+            end,
+          },
+        },
+        view_options = {
+          show_hidden = true,
+        },
+        float = {
+          win_options = {
+            winblend = 10,
+          },
+          override = function(conf)
+            conf.height = math.floor(vim.o.lines * 0.3)
+            conf.row = (vim.o.lines - conf.height) - 4
+            return conf
+          end,
+        },
+      }
+    end,
+  },
+  {
     "nvim-tree/nvim-tree.lua",
     keys = {
       {
@@ -225,7 +229,7 @@ return {
       hijack_netrw = false,
       view = {
         width = {
-          min = 45,
+          min = 50,
         },
         preserve_window_proportions = true,
         float = {
@@ -245,160 +249,67 @@ return {
       },
     },
     config = function(_, opts)
+      -- vim.g.loaded_netrw = 1
+      -- vim.g.loaded_netrwPlugin = 1
       require("nvim-tree").setup(opts)
       vim.cmd("hi link NvimTreeNormalFloat NvimTreeNormal")
     end,
   },
   {
-    "stevearc/oil.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    cmd = "Oil",
+    "junegunn/fzf.vim",
+    dependencies = { "junegunn/fzf" },
+    cmd = { "FZF" },
     keys = {
-      -- { "-", function() require("oil").open() end,       desc = "[Oil] Open" },
+      { "<Leader>fz", "<Cmd>FZF<CR>", desc = "[FZF] FZF" },
+      { "<Leader>rg", "<Cmd>Rg<CR>", desc = "[FZF] Rg" },
+      { "<Leader>fl", "<Cmd>Lines<CR>", desc = "[FZF] Lines" },
+      { "<Leader>bl", "<Cmd>BLines<CR>", desc = "[FZF] BLines" },
+      { "<Leader>fh", "<Cmd>History<CR>", desc = "[FZF] History" },
       {
-        "-",
+        "<Leader>FZ",
         function()
-          require("oil").open_float()
-        end,
-        desc = "[Oil] Open float",
-      },
-      {
-        "<Leader>yp",
-        function()
-          require("oil.actions").copy_entry_path.callback()
-        end,
-        desc = "[Oil] copy_entry_path",
-      },
-      {
-        "<Leader>ca",
-        function()
-          if vim.bo.filetype == "oil" then
-            require("oil").discard_all_changes()
+          local input = vim.fn.input("FZF: ")
+          if input ~= "" then
+            vim.cmd("FZF " .. input)
           end
         end,
-        desc = "[Oil] Discard all changes",
-      },
-    },
-    opts = {
-      default_file_explorer = false,
-      columns = {},
-      keymaps = {
-        ["<C-v>"] = "actions.select_vsplit",
-        ["<C-x>"] = "actions.select_split",
-      },
-      view_options = {
-        show_hidden = true,
-      },
-      float = {
-        win_options = {
-          winblend = 10,
-        },
-        override = function(conf)
-          conf.height = math.floor(vim.o.lines * 0.3)
-          conf.row = (vim.o.lines - conf.height) - 4
-          return conf
-        end,
-      },
-    },
-  },
-  {
-    "folke/flash.nvim",
-    event = "VeryLazy",
-    keys = {
-      {
-        "<Leader>/",
-        function()
-          require("flash").jump()
-        end,
-        mode = { "n", "x", "o" },
-        desc = "[Flash] Jump",
+        silent = true,
+        desc = "[FZF] :FZF {args}",
       },
       {
-        "<Leader>?",
+        "<Leader>RG",
         function()
-          require("flash").treesitter()
+          local input = vim.fn.input("Rg: ")
+          if input ~= "" then
+            vim.cmd("Rg " .. input)
+          end
         end,
-        mode = { "n", "x", "o" },
-        desc = "[Flash] Treesitter",
+        silent = true,
+        desc = "[FZF] :Rg {pattern}",
       },
-      {
-        "r",
-        function()
-          require("flash").remote()
-        end,
-        mode = { "o" },
-        desc = "[Flash] Remote",
-      },
-      {
-        "R",
-        function()
-          require("flash").treesitter_search()
-        end,
-        mode = { "o", "x" },
-        desc = "[Flash] Treesitter Search",
-      },
-      {
-        "<C-g>/",
-        function()
-          require("flash").toggle()
-        end,
-        mode = { "c" },
-        desc = "[Flash] Toggle Search",
-      },
-    },
-    opts = {
-      search = {
-        mode = "fuzzy",
-      },
-      label = {
-        min_pattern_length = 2,
-      },
-      highlight = {
-        backdrop = false,
-      },
-      modes = {
-        char = {
-          enabled = false,
-          highlight = { backdrop = false },
-        },
-      },
-      prompt = {
-        win_config = {
-          row = -3,
-        },
-      },
-      remote_op = {
-        restore = true,
-      },
-    },
-  },
-  {
-    "iamcco/markdown-preview.nvim",
-    build = function()
-      vim.fn["mkdp#util#install"]()
-    end,
-    ft = "markdown",
-    keys = {
-      { "<Leader>md", "<Cmd>MarkdownPreviewToggle<CR>", silent = true },
     },
     config = function()
-      vim.g.mkdp_preview_options = { sync_scroll_type = "relative" }
-      vim.g.mkdp_filetypes = { "markdown" }
-      vim.g.mkdp_echo_preview_url = 1
+      -- vim.g.fzf_layout = { tmux = "-p85%,85%"}
+      vim.g.fzf_layout = { window = { width = 0.80, height = 0.80 } }
+
+      vim.api.nvim_create_user_command("Fzf", function()
+        vim.cmd("call fzf#run(" .. vim.json.encode({
+          sink = "e",
+          source = "fd --type file --follow --hidden --no-ignore --strip-cwd-prefix",
+          tmux = "-p 80%% 80%%",
+        }) .. ")")
+      end, { desc = "[FZF] open ui" })
+
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup("Fzf", {}),
+        pattern = { "fzf" },
+        callback = function(ev)
+          vim.bo[ev.buf].buflisted = false
+          vim.keymap.set("n", "<Esc>", "<Cmd>close<CR>", { buffer = ev.buf, silent = true })
+        end,
+      })
     end,
   },
-  {
-    "mbbill/undotree",
-    keys = {
-      { "<Leader>ut", "<Cmd>UndotreeToggle<CR>", desc = "[Undotree] toggle" },
-    },
-    config = function()
-      vim.g.undotree_SplitWidth = 40
-      vim.g.undotree_DiffpanelHeight = 15
-      vim.g.undotree_SetFocusWhenToggle = 1
-    end,
-  },
-  -- https://github.com/danymat/neogen?tab=readme-ov-file
   {
     "danymat/neogen",
     cmd = "Neogen",
@@ -526,12 +437,97 @@ return {
         languages = {
           python = {
             template = {
-              annotation_convention = "reST", -- google_docstrings | numpydoc | reST
+              annotation_convention = "reST",
               reST_typed = rest_typed(),
             },
           },
         },
       }
     end,
+  },
+  {
+    "iamcco/markdown-preview.nvim",
+    build = function()
+      vim.fn["mkdp#util#install"]()
+    end,
+    ft = "markdown",
+    keys = {
+      { "<Leader>md", "<Cmd>MarkdownPreviewToggle<CR>", silent = true },
+    },
+    config = function()
+      vim.g.mkdp_preview_options = { sync_scroll_type = "relative" }
+      vim.g.mkdp_filetypes = { "markdown" }
+      vim.g.mkdp_echo_preview_url = 1
+    end,
+  },
+  {
+    -- TODO: move mini.indentscope to here from ui.lua?
+    "echasnovski/mini.nvim",
+    event = "VeryLazy",
+    version = false,
+    opts = {
+      -- ai = {
+      --   n_lines = 1000,
+      --   -- search_method = "cover_or_nearest",
+      -- },
+    },
+    config = function(_, opts)
+      -- require("mini.ai").setup(opts.ai) -- WIP
+      require("mini.splitjoin").setup()
+    end,
+  },
+  {
+    "mikesmithgh/kitty-scrollback.nvim",
+    enabled = true,
+    lazy = true,
+    cmd = { "KittyScrollbackGenerateKittens", "KittyScrollbackCheckHealth" },
+    event = { "User KittyScrollbackLaunch" },
+    version = "*",
+    -- version = "^5.0.0",
+    opts = {
+      global = {
+        paste_window = {
+          winblend = 30,
+        },
+      },
+      tmux = {
+        kitty_get_text = {
+          extent = "last_cmd_output",
+        },
+      },
+    },
+
+    config = function(_, opts)
+      require("kitty-scrollback").setup(opts)
+      vim.keymap.set("n", "q", "<Cmd>q!<CR>", { buffer = 0, silent = true })
+    end,
+  },
+  {
+    "folke/which-key.nvim",
+    enabled = false,
+    event = "VeryLazy",
+    opts = {
+      preset = "modern",
+      delay = function(ctx)
+        return ctx.plugin and 200 or 400
+      end,
+      win = {
+        wo = {
+          winblend = 10,
+        },
+      },
+      layout = {
+        align = "center",
+      },
+    },
+    keys = {
+      {
+        "<Space>?",
+        function()
+          require("which-key").show({ global = false })
+        end,
+        desc = "Buffer Local Keymaps (which-key)",
+      },
+    },
   },
 }
