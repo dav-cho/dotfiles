@@ -11,6 +11,7 @@ return {
     end,
   },
   {
+    -- WIP
     "nvim-lualine/lualine.nvim",
     event = "UIEnter",
     opts = {
@@ -28,21 +29,25 @@ return {
             "diagnostics",
             symbols = { error = " ", warn = " ", hint = " ", info = " " },
           },
-          {
-            require("lazy.status").updates,
-            cond = require("lazy.status").has_updates,
-            color = { fg = "#ff9e64" },
-          },
         },
         lualine_c = {
-          {
-            "%F %m",
-            cond = function()
-              return vim.fn.empty(vim.fn.expand("%")) ~= 1
-            end,
-          },
+          { "filename", path = 1 },
         },
         lualine_x = {
+          {
+            function()
+              -- return string.gsub(
+              --   vim.fn.expand("%:p:s?" .. vim.fn.expand("$HOME") .. "/" .. "??"),
+              --   "/" .. vim.fn.expand("%:."),
+              --   ""
+              -- )
+              -- return string.gsub(vim.fn.expand("%:p"), "/" .. vim.fn.expand("%:."), "")
+              return string.gsub(vim.fn.expand("%:~"), "/" .. vim.fn.expand("%:."), "")
+            end,
+            -- cond = function()
+            --   return vim.fn.empty(vim.fn.expand("%")) ~= 1
+            -- end,
+          },
           "encoding",
           "fileformat",
           "filetype",
@@ -72,7 +77,7 @@ return {
   {
     "akinsho/bufferline.nvim",
     version = "*",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    dependencies = { "nvim-web-devicons" },
     event = "UIEnter",
     keys = function()
       local keymaps = {
@@ -196,31 +201,68 @@ return {
 
       return keymaps
     end,
-    opts = function(_, opts)
-      return vim.tbl_deep_extend("force", opts, {
+    -- WIP
+    -- opts = function(_, opts)
+    --   return vim.tbl_deep_extend("force", opts, {
+    --     options = {
+    --       style_preset = 4, -- bufferline style preset no italics
+    --       close_command = "bdelete %d",
+    --       left_mouse_command = "buffer %d",
+    --       right_mouse_command = "bdelete %d",
+    --       max_name_length = 30,
+    --       diagnostics = "nvim_lsp",
+    --       diagnostics_update_in_insert = true,
+    --       -- TODO
+    --       -- diagnostics_indicator = function(count, level, _, context)
+    --       --   local icon = level:match("error") and " " or " "
+    --       --   if context.buffer:current() then
+    --       --     return icon .. count
+    --       --   end
+    --       --   return ""
+    --       -- end,
+    --       sort_by = "insert_after_current",
+    --       -- TODO: which one?
+    --       -- sort_by = "relative_directory",
+    --       -- sort_by = "directory",
+    --       -- sort_by = "insert_at_end",
+    --       -- sort_by = "id", -- default
+    --       groups = {
+    --         items = {
+    --           require("bufferline.groups").builtin.pinned:with({ icon = "" }),
+    --         },
+    --       },
+    --     },
+    --   })
+    -- end,
+    opts = function(_, _)
+      return {
         options = {
           style_preset = 4, -- bufferline style preset no italics
           close_command = "bdelete %d",
-          left_mouse_command = "buffer %d",
           right_mouse_command = "bdelete %d",
           max_name_length = 30,
           diagnostics = "nvim_lsp",
-          diagnostics_update_in_insert = true,
-          diagnostics_indicator = function(count, level, _, context)
-            local icon = level:match("error") and " " or " "
-            if context.buffer:current() then
-              return icon .. count
-            end
-            return ""
-          end,
+          -- TODO
+          -- diagnostics_indicator = function(count, level, _, context)
+          --   local icon = level:match("error") and " " or " "
+          --   if context.buffer:current() then
+          --     return icon .. count
+          --   end
+          --   return ""
+          -- end,
           sort_by = "insert_after_current",
+          -- TODO: which one?
+          -- sort_by = "relative_directory",
+          -- sort_by = "directory",
+          -- sort_by = "insert_at_end",
+          -- sort_by = "id", -- default
           groups = {
             items = {
               require("bufferline.groups").builtin.pinned:with({ icon = "" }),
             },
           },
         },
-      })
+      }
     end,
   },
   {
@@ -268,7 +310,7 @@ return {
   },
   {
     "folke/trouble.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    dependencies = { "nvim-web-devicons" },
     keys = function()
       local trouble_next, trouble_prev = require("nvim-treesitter.textobjects.repeatable_move").make_repeatable_move_pair(
         function()
@@ -397,7 +439,7 @@ return {
     opts = {
       draw = {
         delay = 50,
-        animation = function(s, n)
+        animation = function(_, _)
           return 3
         end,
       },
@@ -408,7 +450,7 @@ return {
         goto_bottom = "]i",
       },
       options = {
-        border = "top", -- default: "both"
+        border = "top",
         try_as_border = true,
       },
       symbol = "│",
@@ -428,7 +470,6 @@ return {
           "toggleterm",
         },
         callback = function()
-          ---@diagnostic disable-next-line
           vim.b.miniindentscope_disable = true
         end,
       })
@@ -445,9 +486,7 @@ return {
         function()
           require("zen-mode").toggle({
             plugins = {
-              twilight = {
-                enabled = false,
-              },
+              twilight = { enabled = false },
             },
           })
         end,
@@ -459,9 +498,7 @@ return {
         function()
           require("zen-mode").toggle({
             plugins = {
-              twilight = {
-                enabled = true,
-              },
+              twilight = { enabled = true },
             },
           })
         end,
@@ -472,7 +509,8 @@ return {
     opts = {
       window = {
         backdrop = 1,
-        width = 300,
+        width = 0.8,
+        height = 0.8,
       },
     },
   },

@@ -40,6 +40,11 @@ text = "#1d1d1d"
 [font]
 size = 14.0
 
+# [font]
+# size = 13.0
+# [font.offset]
+# x = 1
+
 [font.normal]
 family = "JetBrainsMono Nerd Font"
 style = "Regular"

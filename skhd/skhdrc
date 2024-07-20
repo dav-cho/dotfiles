@@ -44,6 +44,8 @@ lctrl + lcmd - a      : yabai -m window --focus stack.prev
 lctrl + lcmd - z      : yabai -m window --focus stack.next
 lctrl + lcmd - s      : yabai -m window --focus stack.recent
 alt - 0x32            : yabai -m window --focus stack.recent
+lctrl + lalt + lcmd - a : yabai -m window --focus stack.first
+lctrl + lalt + lcmd - z : yabai -m window --focus stack.last
 
 # warp window
 lctrl + lcmd - h    : yabai -m window --warp west
@@ -228,8 +230,10 @@ ralt + rcmd + rshift - n : yabai -m space --create && \
 ralt + rcmd + rshift - d : yabai -m space --destroy
 
 # apps
-lctrl + lcmd - space : "$HOME/dotfiles/yabai/alacritty-new-window.sh"
 # lctrl + lcmd - space : "$HOME/dotfiles/yabai/iterm-new-window.sh"
+# lctrl + lcmd - space : "$HOME/dotfiles/yabai/alacritty-new-window.sh"
+lctrl + lcmd - return : "$HOME/dotfiles/yabai/alacritty-new-window.sh"
+lctrl + lcmd - space : kitty --single-instance --directory $HOME
 
 .load "partial_ultrawide"
 # .load "partial_mbp"

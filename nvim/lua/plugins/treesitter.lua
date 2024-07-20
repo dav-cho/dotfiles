@@ -2,11 +2,11 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     dependencies = {
-      "nvim-treesitter/nvim-treesitter-textobjects",
+      { "nvim-treesitter/nvim-treesitter-textobjects", lazy = true },
     },
     build = ":TSUpdate",
     event = { "BufReadPre", "BufNewFile" },
-    ft = { "diff" },
+    ft = { "diff" }, -- TODO: need?
     opts = {
       ensure_installed = {
         "comment",
@@ -196,5 +196,124 @@ return {
     config = function(_, opts)
       require("nvim-treesitter.configs").setup(opts)
     end,
+  },
+  {
+    -- WIP
+    "chrisgrieser/nvim-various-textobjs",
+    event = "VeryLazy",
+    keys = {
+      {
+        "iI",
+        "<Cmd>lua require('various-textobjs').indentation('inner', 'outer')<CR>",
+        mode = { "o", "x" },
+        { desc = "[various-textobjs] inner-outer indentation" },
+      },
+      {
+        "io",
+        "<Cmd>lua require('various-textobjs').greedyOuterIndentation('inner')<CR>",
+        mode = { "o", "x" },
+        { desc = "[various-textobjs] greedyOuterIndentation('inner')" },
+      },
+      {
+        "ao",
+        "<Cmd>lua require('various-textobjs').greedyOuterIndentation('outer')<CR>",
+        mode = { "o", "x" },
+        { desc = "[various-textobjs] greedyOuterIndentation('outer')" },
+      },
+      {
+        "iB",
+        "<Cmd>lua require('various-textobjs').anyBracket('inner')<CR>",
+        mode = { "o", "x" },
+        { desc = "[various-textobjs] anyBracket('inner')" },
+      },
+      {
+        "aB",
+        "<Cmd>lua require('various-textobjs').anyBracket('outer')<CR>",
+        mode = { "o", "x" },
+        { desc = "[various-textobjs] anyBracket('outer')" },
+      },
+      {
+        "P",
+        "<Cmd>lua require('various-textobjs').restOfParagraph()<CR>",
+        mode = { "o", "x" },
+        { desc = "[various-textobjs] restOfParagraph()" },
+      },
+      {
+        "g-",
+        "<Cmd>lua require('various-textobjs').nearEoL()<CR>",
+        mode = { "o", "x" },
+        { desc = "[various-textobjs] nearEoL()" },
+      },
+      {
+        "i|",
+        "<Cmd>lua require('various-textobjs').column()<CR>",
+        mode = { "o", "x" },
+        { desc = "[various-textobjs] column()" },
+      },
+      {
+        "iu",
+        "<Cmd>lua require('various-textobjs').url()<CR>",
+        mode = { "o", "x" },
+        { desc = "[various-textobjs] url()" },
+      },
+      {
+        "id",
+        "<Cmd>lua require('various-textobjs').diagnostic()<CR>",
+        mode = { "o", "x" },
+        { desc = "[various-textobjs] diagnostic()" },
+      },
+      {
+        "gx",
+        function()
+          require("various-textobjs").url()
+          if vim.fn.mode():find("v") then
+            vim.cmd.normal({ '"zy', bang = true })
+            local url = vim.fn.getreg("z")
+            vim.ui.open(url)
+          end
+        end,
+        desc = "[various-textobjs] URL Opener",
+      },
+      { -- TODO: not working well
+        -- ">p",
+        ">P",
+        function()
+          require("various-textobjs").lastChange()
+          if vim.fn.mode():find("v") then
+            vim.cmd.normal({ ">", bang = true })
+          end
+        end,
+        desc = "[various-textobjs] indent last put",
+      },
+      { -- TODO: not working well
+        -- "<p",
+        "<P",
+        function()
+          require("various-textobjs").lastChange()
+          if vim.fn.mode():find("v") then
+            vim.cmd.normal({ "<", bang = true })
+          end
+        end,
+        desc = "[various-textobjs] dedent last put",
+      },
+    },
+    opts = {
+      useDefaultKeymaps = true,
+      disabledKeymaps = {
+        "iI", -- indentation: mapped to `indentation('inner', 'outer')`
+        "ig", -- greedyOuterIndentation: conflicts with `ts-textobjects @class.inner`, mapped to `io`
+        "ag", -- greedyOuterIndentation: conflicts with `ts-textobjects @class.outer`, mapped to `ao`
+        "Q", -- toNextQuotationMark: conflicts with `v_Q (repeat last recorded register)`, unmapped
+        "iq", -- anyQuote: conflicts with `ts-textobjects @block.inner`, unmapped
+        "aq", -- anyQuote: conflicts with `ts-textobjects @block.outer`, unmapped
+        "io", -- anyBracket: replaced with greedyOuterIndentation, mapped to `iB` (`anyBracket('inner')`)
+        "ao", -- anyBracket: replaced with greedyOuterIndentation, mapped to `aB` (`anyBracket('outer')`)
+        "r", -- restOfParagraph: conflicts with `r{char} (replace)`, mapped to `<M-]>`
+        "n", -- nearEol: conflicts with `n (next search result)`, mapped to `g-`
+        "|", -- column: conflicts with `| (move to column)`, mapped to `i|`
+        "L", -- url: conflicts with `L (move to bottom of screen)`, mapped to `iu`
+        "!", -- diagnostic: replaced with nearEoL, mapped to `id`
+      },
+    },
   },
 }

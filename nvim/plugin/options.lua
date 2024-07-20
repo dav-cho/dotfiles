@@ -7,14 +7,16 @@ opt.cursorline = true
 opt.diffopt:append({ "vertical" })
 opt.expandtab = true
 opt.formatoptions = "jncrql"
+-- opt.formatoptions:remove("o")
 opt.ignorecase = true
+opt.inccommand = "split"
 opt.linebreak = true
 opt.mouse = "a"
 opt.number = true
 opt.pumblend = 10
 opt.pumheight = 15
 opt.relativenumber = true
-opt.scrolloff = 2
+-- opt.scrolloff = 2 -- WIP
 opt.sessionoptions:append("globals")
 opt.shiftwidth = 2
 opt.signcolumn = "yes"

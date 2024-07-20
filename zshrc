@@ -136,6 +136,22 @@ _rfv() {
   rfv
 }
 
+# WIP
+# function yy() {
+# 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+# 	yazi "$@" --cwd-file="$tmp"
+# 	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+# 		cd -- "$cwd"
+# 	fi
+# 	rm -f -- "$tmp"
+# }
+
+# _yazi() {
+#   yazi
+# }
+# zle -N _yazi
+# bindkey -e '^[Y' _yazi
+
 zle -N _nvim
 zle -N _nvim-man
 zle -N _rfv
@@ -181,6 +197,29 @@ alias lg="eza -laaG --icons=auto"
 alias ll="eza -l --icons=auto"
 alias lt="eza --tree -I __pycache__"
 
+# from omz docker
+# not working on current docker desktop version
+# docker-compose is deprecated
+alias dcb='docker compose build'
+alias dcdn='docker compose down'
+alias dce='docker compose exec'
+alias dck='docker compose kill'
+alias dcl='docker compose logs'
+alias dclF='docker compose logs -f --tail 0'
+alias dclf='docker compose logs -f'
+alias dco='docker compose'
+alias dcps='docker compose ps'
+alias dcpull='docker compose pull'
+alias dcr='docker compose run'
+alias dcrestart='docker compose restart'
+alias dcrm='docker compose rm'
+alias dcstart='docker compose start'
+alias dcstop='docker compose stop'
+alias dcup='docker compose up'
+alias dcupb='docker compose up --build'
+alias dcupd='docker compose up -d'
+alias dcupdb='docker compose up -d --build'
+
 if [[ "$USER" == "dcho" ]]; then
-  source "$HOME/dotfiles/cm/cm.zsh"
+  source "$HOME/dotfiles/cm/cm.zshrc"
 fi

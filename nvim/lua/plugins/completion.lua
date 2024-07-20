@@ -2,15 +2,12 @@ return {
   {
     "hrsh7th/nvim-cmp",
     dependencies = {
-      "hrsh7th/cmp-buffer",
-      "hrsh7th/cmp-path",
-      "hrsh7th/cmp-cmdline",
-      "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-nvim-lsp-document-symbol",
-      "hrsh7th/cmp-nvim-lua",
-      "onsails/lspkind-nvim",
-      "L3MON4D3/LuaSnip",
-      "windwp/nvim-autopairs",
+      { "hrsh7th/cmp-buffer", lazy = true },
+      { "hrsh7th/cmp-path", lazy = true },
+      { "hrsh7th/cmp-cmdline", lazy = true },
+      { "hrsh7th/cmp-nvim-lsp", lazy = true },
+      { "hrsh7th/cmp-nvim-lsp-document-symbol", lazy = true },
+      { "hrsh7th/cmp-nvim-lua", lazy = true },
     },
     event = { "InsertEnter", "CmdlineEnter" },
     opts = function(_, opts)
@@ -39,8 +36,6 @@ return {
           { name = "nvim_lsp_document_symbol" },
         },
       })
-
-      cmp.event:on("confirm_done", require("nvim-autopairs.completion.cmp").on_confirm_done())
 
       return vim.tbl_deep_extend("force", opts, {
         performance = {
@@ -156,8 +151,10 @@ return {
   },
   {
     "L3MON4D3/LuaSnip",
-    dependencies = { "saadparwaiz1/cmp_luasnip" },
-    event = "InsertEnter",
+    dependencies = {
+      { "saadparwaiz1/cmp_luasnip", lazy = true },
+    },
+    lazy = true,
     config = function()
       local luasnip = require("luasnip")
       luasnip.filetype_extend("javascriptreact", { "javascript" })
@@ -169,7 +166,10 @@ return {
   },
   {
     "windwp/nvim-autopairs",
-    lazy = true,
+    dependencies = {
+      "nvim-cmp",
+    },
+    event = "InsertEnter",
     opts = {
       check_ts = true,
     },
@@ -179,6 +179,8 @@ return {
       local cond = require("nvim-autopairs.conds")
 
       npairs.setup(opts)
+
+      require("cmp").event:on("confirm_done", require("nvim-autopairs.completion.cmp").on_confirm_done())
 
       local brackets = { { "(", ")" }, { "[", "]" }, { "{", "}" } }
       npairs.add_rules({

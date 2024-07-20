@@ -1,7 +1,11 @@
 return {
   { "nvim-lua/plenary.nvim", lazy = true },
   { "nvim-lua/popup.nvim", lazy = true },
-  { "tpope/vim-repeat", event = "VeryLazy" },
+  {
+    "tpope/vim-repeat",
+    -- commit = "a89a4d0760240e8b9ef6fd272b1f3f9da769d530", -- TODO: HEAD is broken
+    event = "VeryLazy",
+  },
   { "tpope/vim-surround", event = "VeryLazy" },
   {
     "numToStr/Comment.nvim",
@@ -43,6 +47,8 @@ return {
         end,
         desc = "[Comment] Comment paragraph",
       },
+      -- TODO: change to Ex-commands?
+      -- see note from: https://github.com/chrisgrieser/nvim-various-textobjs/blob/main/README.md#configuration
       {
         "<Leader>#",
         function()
@@ -77,26 +83,31 @@ return {
     end,
   },
   {
-    "junegunn/fzf",
-    lazy = true,
-    keys = {
-      "zf", -- nvim-bqf
+    "echasnovski/mini.nvim",
+    event = "VeryLazy",
+    version = false,
+    opts = {
+      -- WIP
+      -- ai = {
+      --   n_lines = 1000,
+      --   -- search_method = "cover_or_nearest",
+      -- },
     },
-    build = function()
-      vim.fn["fzf#install"]()
+    config = function(_, opts)
+      -- require("mini.ai").setup(opts.ai) -- WIP
+      require("mini.splitjoin").setup()
     end,
   },
   {
     "junegunn/fzf.vim",
     dependencies = { "junegunn/fzf" },
-    lazy = true,
     cmd = { "FZF" },
     keys = {
-      { "<Leader>fz", "<Cmd>FZF<CR>", silent = true, desc = "[FZF] FZF" },
-      { "<Leader>rg", "<Cmd>Rg<CR>", silent = true, desc = "[FZF] Rg" },
-      { "<Leader>fl", "<Cmd>Lines<CR>", silent = true, desc = "[FZF] Lines" },
-      { "<Leader>bl", "<Cmd>BLines<CR>", silent = true, desc = "[FZF] BLines" },
-      { "<Leader>fh", "<Cmd>History<CR>", silent = true, desc = "[FZF] History" },
+      { "<Leader>fz", "<Cmd>FZF<CR>", desc = "[FZF] FZF" },
+      { "<Leader>rg", "<Cmd>Rg<CR>", desc = "[FZF] Rg" },
+      { "<Leader>fl", "<Cmd>Lines<CR>", desc = "[FZF] Lines" },
+      { "<Leader>bl", "<Cmd>BLines<CR>", desc = "[FZF] BLines" },
+      { "<Leader>fh", "<Cmd>History<CR>", desc = "[FZF] History" },
       {
         "<Leader>FZ",
         function()
@@ -122,7 +133,8 @@ return {
     },
     config = function()
       -- vim.g.fzf_layout = { tmux = "-p85%,85%"}
-      vim.g.fzf_layout = { window = { width = 0.85, height = 0.85 } }
+      vim.g.fzf_layout = { window = { width = 0.80, height = 0.80 } }
+
       vim.api.nvim_create_user_command("Fzf", function()
         vim.cmd("call fzf#run(" .. vim.json.encode({
           sink = "e",
@@ -130,6 +142,15 @@ return {
           tmux = "-p 80%% 80%%",
         }) .. ")")
       end, { desc = "[FZF] open ui" })
+
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup("Fzf", {}),
+        pattern = { "fzf" },
+        callback = function(ev)
+          vim.bo[ev.buf].buflisted = false
+          vim.keymap.set("n", "<Esc>", "<Cmd>close<CR>", { buffer = ev.buf, silent = true })
+        end,
+      })
     end,
   },
   {
@@ -225,7 +246,7 @@ return {
       hijack_netrw = false,
       view = {
         width = {
-          min = 45,
+          min = 50,
         },
         preserve_window_proportions = true,
         float = {
@@ -245,16 +266,26 @@ return {
       },
     },
     config = function(_, opts)
+      -- TODO: need?
+      -- vim.g.loaded_netrw = 1
+      -- vim.g.loaded_netrwPlugin = 1
       require("nvim-tree").setup(opts)
       vim.cmd("hi link NvimTreeNormalFloat NvimTreeNormal")
     end,
   },
   {
+    -- TODO
     "stevearc/oil.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    dependencies = { "nvim-web-devicons" },
     cmd = "Oil",
     keys = {
-      -- { "-", function() require("oil").open() end,       desc = "[Oil] Open" },
+      {
+        "<M-->",
+        function()
+          require("oil").open()
+        end,
+        desc = "[Oil] Open",
+      },
       {
         "-",
         function()
@@ -280,9 +311,15 @@ return {
       },
     },
     opts = {
-      default_file_explorer = false,
-      columns = {},
+      default_file_explorer = false, -- TODO
+      -- columns = {
+      --   -- "icon",
+      --   -- "permissions",
+      --   -- "size",
+      --   -- "mtime",
+      -- },
       keymaps = {
+        ["q"] = "actions.close",
         ["<C-v>"] = "actions.select_vsplit",
         ["<C-x>"] = "actions.select_split",
       },
@@ -303,7 +340,6 @@ return {
   },
   {
     "folke/flash.nvim",
-    event = "VeryLazy",
     keys = {
       {
         "<Leader>/",
@@ -321,6 +357,7 @@ return {
         mode = { "n", "x", "o" },
         desc = "[Flash] Treesitter",
       },
+      -- WIP: conflicts with various-textobjs
       {
         "r",
         function()
@@ -329,6 +366,7 @@ return {
         mode = { "o" },
         desc = "[Flash] Remote",
       },
+      -- WIP: conflicts with various-textobjs
       {
         "R",
         function()
@@ -388,18 +426,7 @@ return {
     end,
   },
   {
-    "mbbill/undotree",
-    keys = {
-      { "<Leader>ut", "<Cmd>UndotreeToggle<CR>", desc = "[Undotree] toggle" },
-    },
-    config = function()
-      vim.g.undotree_SplitWidth = 40
-      vim.g.undotree_DiffpanelHeight = 15
-      vim.g.undotree_SetFocusWhenToggle = 1
-    end,
-  },
-  -- https://github.com/danymat/neogen?tab=readme-ov-file
-  {
+    -- https://github.com/danymat/neogen?tab=readme-ov-file
     "danymat/neogen",
     cmd = "Neogen",
     keys = {
@@ -533,5 +560,33 @@ return {
         },
       }
     end,
+  },
+  {
+    "folke/which-key.nvim",
+    -- enabled = false,
+    event = "VeryLazy",
+    opts = {
+      preset = "modern",
+      delay = function(ctx)
+        return ctx.plugin and 200 or 400
+      end,
+      win = {
+        wo = {
+          winblend = 10,
+        },
+      },
+      layout = {
+        align = "center",
+      },
+    },
+    keys = {
+      {
+        "<Space>?",
+        function()
+          require("which-key").show({ global = false })
+        end,
+        desc = "Buffer Local Keymaps (which-key)",
+      },
+    },
   },
 }
