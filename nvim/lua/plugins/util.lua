@@ -462,6 +462,31 @@ return {
     end,
   },
   {
+    "mikesmithgh/kitty-scrollback.nvim",
+    enabled = true,
+    lazy = true,
+    cmd = { "KittyScrollbackGenerateKittens", "KittyScrollbackCheckHealth" },
+    event = { "User KittyScrollbackLaunch" },
+    version = "*",
+    opts = {
+      global = {
+        paste_window = {
+          winblend = 30,
+        },
+      },
+      tmux = {
+        kitty_get_text = {
+          extent = "last_cmd_output",
+        },
+      },
+    },
+
+    config = function(_, opts)
+      require("kitty-scrollback").setup(opts)
+      vim.keymap.set("n", "q", "<Cmd>q!<CR>", { buffer = 0, silent = true })
+    end,
+  },
+  {
     "folke/which-key.nvim",
     enabled = false,
     event = "VeryLazy",

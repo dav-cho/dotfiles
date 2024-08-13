@@ -126,7 +126,7 @@ _nvim() {
 }
 
 _nvim-man() {
-  BUFFER+=" | nvim +Man!"
+  BUFFER+=" | nvim +Man! +colorscheme\ tokyonight"
   zle accept-line
 }
 
@@ -163,9 +163,8 @@ alias cat="bat"
 alias docker-compose="docker compose"
 alias eza="eza --time-style=long-iso"
 alias ghco="gh copilot"
-alias rg="rg --smart-case"
-
 alias mann="MANPAGER='nvim +Man! +colorscheme\ tokyonight' man"
+alias rg="rg --smart-case"
 
 alias gdni="git diff --no-index --"
 alias gdno="git diff --name-only"
