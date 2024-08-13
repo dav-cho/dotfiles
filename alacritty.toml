@@ -38,7 +38,10 @@ cursor = "#e6edf3"
 text = "#1d1d1d"
 
 [font]
-size = 14.0
+size = 13.0
+
+[font.offset]
+x = 1
 
 [font.normal]
 family = "JetBrainsMono Nerd Font"
@@ -85,4 +88,5 @@ columns = 100
 lines = 25
 
 [window.padding]
-x = 2
+x = 4
+y = 4
