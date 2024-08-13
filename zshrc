@@ -17,12 +17,10 @@ plugins=(
   docker-compose
   fancy-ctrl-z
   fzf
-  fd
   gh
   git
   gitfast
   kubectl
-  ripgrep
   zoxide
   zsh-autosuggestions
   zsh-syntax-highlighting
@@ -32,7 +30,6 @@ plugins=(
 export EDITOR=nvim
 export VISUAL=nvim
 export LESS="--mouse -R"
-export MANPAGER='nvim +Man!'
 
 export BAT_STYLE="plain"
 export BAT_THEME="Coldark-Dark"
@@ -49,6 +46,7 @@ export EZA_COLORS='xx=38;5;246:xa=38;5;246:'\
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init --path)"
+export PIPENV_VENV_IN_PROJECT=1
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh" --no-use
@@ -132,16 +130,23 @@ _nvim-man() {
   zle accept-line
 }
 
+_delta() {
+  BUFFER+=" | delta"
+  zle accept-line
+}
+
 _rfv() {
   rfv
 }
 
 zle -N _nvim
 zle -N _nvim-man
+zle -N _delta
 zle -N _rfv
 
 bindkey -e '^V' _nvim
 bindkey -e '^[M' _nvim-man
+bindkey -e '^[D' _delta
 bindkey -e '^G' _rfv
 
 bindkey -e '^[r' fzf-history-widget
@@ -155,10 +160,12 @@ bindkey -e '^X^I' toggle-fzf-tab
 bindkey -e '^[v' quoted-insert
 
 alias cat="bat"
+alias docker-compose="docker compose"
 alias eza="eza --time-style=long-iso"
+alias ghco="gh copilot"
 alias rg="rg --smart-case"
 
-alias ghco="gh copilot"
+alias mann="MANPAGER='nvim +Man! +colorscheme\ tokyonight' man"
 
 alias gdni="git diff --no-index --"
 alias gdno="git diff --name-only"
@@ -171,8 +178,10 @@ alias gll="git log --oneline --no-decorate"
 alias glo="git log"
 alias glp="git log --oneline --first-parent"
 alias gls="git log --oneline --stat"
+alias glt="git log --oneline -10"
 alias gmnf="git merge --no-ff"
 alias gs="git status --short"
+alias gshs="git show --stat"
 alias gu="git pull"
 
 alias l="eza -la --icons=auto"
@@ -182,5 +191,5 @@ alias ll="eza -l --icons=auto"
 alias lt="eza --tree -I __pycache__"
 
 if [[ "$USER" == "dcho" ]]; then
-  source "$HOME/dotfiles/cm/cm.zsh"
+  source "$HOME/dotfiles/cm/zshrc-cm"
 fi
