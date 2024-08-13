@@ -2,7 +2,7 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     dependencies = {
-      "nvim-treesitter/nvim-treesitter-textobjects",
+      { "nvim-treesitter/nvim-treesitter-textobjects", lazy = true },
     },
     build = ":TSUpdate",
     event = { "BufReadPre", "BufNewFile" },
@@ -196,5 +196,225 @@ return {
     config = function(_, opts)
       require("nvim-treesitter.configs").setup(opts)
     end,
+  },
+  {
+    "chrisgrieser/nvim-various-textobjs",
+    event = "VeryLazy",
+    keys = {
+      {
+        "iI",
+        "<Cmd>lua require('various-textobjs').indentation('inner', 'outer')<CR>",
+        mode = { "o", "x" },
+        desc = "[various-textobjs] inner-outer indentation",
+      },
+      {
+        "io",
+        "<Cmd>lua require('various-textobjs').greedyOuterIndentation('inner')<CR>",
+        mode = { "o", "x" },
+        desc = "[various-textobjs] greedyOuterIndentation('inner')",
+      },
+      {
+        "ao",
+        "<Cmd>lua require('various-textobjs').greedyOuterIndentation('outer')<CR>",
+        mode = { "o", "x" },
+        desc = "[various-textobjs] greedyOuterIndentation('outer')",
+      },
+      {
+        "i<M-b>",
+        "<Cmd>lua require('various-textobjs').anyBracket('inner')<CR>",
+        mode = { "o", "x" },
+        desc = "[various-textobjs] anyBracket('inner')",
+      },
+      {
+        "a<M-b>",
+        "<Cmd>lua require('various-textobjs').anyBracket('outer')<CR>",
+        mode = { "o", "x" },
+        desc = "[various-textobjs] anyBracket('outer')",
+      },
+      {
+        "<M-]>",
+        "<Cmd>lua require('various-textobjs').restOfParagraph()<CR>",
+        mode = { "o", "x" },
+        desc = "[various-textobjs] restOfParagraph()",
+      },
+      {
+        "g-",
+        "<Cmd>lua require('various-textobjs').nearEoL()<CR>",
+        mode = { "o", "x" },
+        desc = "[various-textobjs] nearEoL()",
+      },
+      {
+        "i|",
+        "<Cmd>lua require('various-textobjs').column()<CR>",
+        mode = { "o", "x" },
+        desc = "[various-textobjs] column()",
+      },
+      {
+        "iu",
+        "<Cmd>lua require('various-textobjs').url()<CR>",
+        mode = { "o", "x" },
+        desc = "[various-textobjs] url()",
+      },
+      {
+        "id",
+        "<Cmd>lua require('various-textobjs').diagnostic()<CR>",
+        mode = { "o", "x" },
+        desc = "[various-textobjs] diagnostic()",
+      },
+      {
+        "gx",
+        function()
+          require("various-textobjs").url()
+          if vim.fn.mode():find("v") then
+            vim.cmd.normal({ '"zy', bang = true })
+            local url = vim.fn.getreg("z")
+            vim.ui.open(url)
+          end
+        end,
+        desc = "[various-textobjs] URL Opener",
+      },
+      {
+        ">P",
+        function()
+          require("various-textobjs").lastChange()
+          if vim.fn.mode():find("v") then
+            vim.cmd.normal({ ">", bang = true })
+          end
+        end,
+        desc = "[various-textobjs] indent last put",
+      },
+      {
+        "<lt>P",
+        function()
+          require("various-textobjs").lastChange()
+          if vim.fn.mode():find("v") then
+            vim.cmd.normal({ "<", bang = true })
+          end
+        end,
+        desc = "[various-textobjs] dedent last put",
+      },
+    },
+    opts = {
+      useDefaultKeymaps = true,
+      disabledKeymaps = {
+        "iI",
+        "ig",
+        "ag",
+        "Q",
+        "iq",
+        "aq",
+        "io",
+        "ao",
+        "r",
+        "n",
+        "|",
+        "L",
+        "!",
+      },
+    },
+  },
+  {
+    "folke/flash.nvim",
+    keys = {
+      {
+        "<Space>/",
+        function()
+          require("flash").jump()
+        end,
+        mode = { "n", "x", "o" },
+        desc = "[Flash] Jump (fuzzy)",
+      },
+      {
+        "<Leader>/",
+        function()
+          require("flash").jump({ search = { mode = "exact" } })
+        end,
+        mode = { "n", "x", "o" },
+        desc = "[Flash] Jump (exact)",
+      },
+      {
+        "<M-/>",
+        function()
+          require("flash").jump({ continue = true })
+        end,
+        desc = "[Flash] Jump (fuzzy)",
+      },
+      {
+        "<Leader>?",
+        function()
+          require("flash").treesitter()
+        end,
+        mode = { "n", "x", "o" },
+        desc = "[Flash] Treesitter",
+      },
+      {
+        "r",
+        function()
+          require("flash").remote()
+        end,
+        mode = { "o" },
+        desc = "[Flash] Remote",
+      },
+      {
+        "<M-r>",
+        function()
+          require("flash").treesitter_search()
+        end,
+        mode = { "o", "x" },
+        desc = "[Flash] Treesitter Search",
+      },
+      {
+        "<C-g>/",
+        function()
+          require("flash").toggle()
+        end,
+        mode = { "c" },
+        desc = "[Flash] Toggle Search",
+      },
+      {
+        "gL",
+        function()
+          require("flash").jump({
+            search = { mode = "search", max_length = 0 },
+            label = { after = { 0, 0 }, min_pattern_length = 0 },
+            pattern = "^",
+            action = function(match, state)
+              vim.api.nvim_win_call(match.win, function()
+                vim.api.nvim_win_set_cursor(match.win, match.pos)
+                vim.diagnostic.open_float()
+              end)
+              state:restore()
+            end,
+            labels = "abcdefghijklmnopqrstuvwxyz1234567890",
+          })
+        end,
+        desc = "[Flash] show diagnostics at target line",
+      },
+    },
+    opts = {
+      search = {
+        mode = "fuzzy",
+      },
+      label = {
+        min_pattern_length = 2,
+      },
+      highlight = {
+        backdrop = false,
+      },
+      modes = {
+        char = {
+          enabled = false,
+          highlight = { backdrop = false },
+        },
+      },
+      prompt = {
+        win_config = {
+          row = -3,
+        },
+      },
+      remote_op = {
+        restore = true,
+      },
+    },
   },
 }

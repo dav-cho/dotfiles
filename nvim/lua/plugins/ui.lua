@@ -13,66 +13,117 @@ return {
   {
     "nvim-lualine/lualine.nvim",
     event = "UIEnter",
-    opts = {
-      options = {
-        component_separators = "",
-        section_separators = "",
-        globalstatus = true,
-      },
-      sections = {
-        lualine_a = { "mode" },
-        lualine_b = {
-          "branch",
-          "diff",
-          {
-            "diagnostics",
-            symbols = { error = " ", warn = " ", hint = " ", info = " " },
+    opts = function()
+      -- function on_click(cnt, btn, mods)
+      -- params: num clicks, button, modifiers
+      local onclick = {
+        echo_git_branch = function()
+          local branch = vim.fn.system("git branch --show-current"):gsub("%s+", "")
+          vim.api.nvim_echo({ { branch, "Normal" } }, false, {})
+        end,
+        copy_abs_path = function()
+          vim.fn.system(string.format('echo "%s" | pbcopy', vim.fn.expand("%:~")))
+        end,
+        echo_abs_path = function()
+          vim.api.nvim_echo({ { vim.fn.expand("%:~"), "Normal" } }, false, {})
+        end,
+        repo_view = function()
+          local ok, _ = pcall(function()
+            vim.fn.system("gh repo view -w")
+          end)
+          return ok
+        end,
+      }
+
+      local cm = {
+        fmt_jira_id = function(str)
+          return str:match("^%u+%-%d+")
+        end,
+        open_jira = function()
+          local id = vim.fn.system("git branch --show-current"):match("^%u+%-%d+")
+          local ok, _ = pcall(function()
+            vim.ui.open(vim.fn.expand("$CM_JIRA_URL") .. id)
+          end)
+          return ok
+        end,
+      }
+
+      return {
+        options = {
+          component_separators = "",
+          section_separators = "",
+          globalstatus = true,
+        },
+        sections = {
+          lualine_a = { "mode" },
+          lualine_b = {
+            {
+              "branch",
+              fmt = function(str)
+                return cm.fmt_jira_id(str) or str
+              end,
+              on_click = function(_, btn, _)
+                onclick.echo_git_branch()
+                if btn == "m" then
+                  return cm.open_jira() or onclick.repo_view()
+                end
+              end,
+            },
+            "diff",
+            {
+              "diagnostics",
+              symbols = { error = " ", warn = " ", hint = " ", info = " " },
+            },
           },
-          {
-            require("lazy.status").updates,
-            cond = require("lazy.status").has_updates,
-            color = { fg = "#ff9e64" },
+          lualine_c = {
+            {
+              "filename",
+              path = 1,
+              on_click = function(_, btn, _)
+                onclick.echo_abs_path()
+                if btn == "r" then
+                  onclick.copy_abs_path()
+                end
+              end,
+            },
+          },
+          lualine_x = {
+            {
+              function()
+                return vim.fn.getcwd():gsub(vim.fn.expand("$HOME"), "~")
+              end,
+            },
+            "encoding",
+            "fileformat",
+            "filetype",
+            "filesize",
+          },
+          lualine_y = {
+            "progress",
+          },
+          lualine_z = {
+            "location",
           },
         },
-        lualine_c = {
-          {
-            "%F %m",
-            cond = function()
-              return vim.fn.empty(vim.fn.expand("%")) ~= 1
-            end,
-          },
+        inactive_sections = {
+          lualine_a = {},
+          lualine_b = {},
+          lualine_c = { "filename" },
+          lualine_x = { "location" },
+          lualine_y = {},
+          lualine_z = {},
         },
-        lualine_x = {
-          "encoding",
-          "fileformat",
-          "filetype",
-          "filesize",
-        },
-        lualine_y = {
-          "progress",
-        },
-        lualine_z = {
-          "location",
-        },
-      },
-      inactive_sections = {
-        lualine_a = {},
-        lualine_b = {},
-        lualine_c = { "filename" },
-        lualine_x = { "location" },
-        lualine_y = {},
-        lualine_z = {},
-      },
-      tabline = {},
-      winbar = {},
-      inactive_winbar = {},
-      extensions = {},
-    },
+        tabline = {},
+        winbar = {},
+        inactive_winbar = {},
+        extensions = {},
+      }
+    end,
   },
   {
     "akinsho/bufferline.nvim",
     version = "*",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    dependencies = { "nvim-web-devicons" },
     event = "UIEnter",
     keys = function()
       local keymaps = {
@@ -81,6 +132,7 @@ return {
           function()
             require("bufferline").cycle(math.max(1, vim.v.count))
           end,
+          mode = { "n", "v" },
           desc = "BufferLineCyclePrev",
         },
         {
@@ -88,6 +140,7 @@ return {
           function()
             require("bufferline").cycle(math.min(-1, -vim.v.count))
           end,
+          mode = { "n", "v" },
           desc = "BufferLineCyclePrev",
         },
         {
@@ -95,6 +148,7 @@ return {
           function()
             require("bufferline").cycle(math.max(1, vim.v.count))
           end,
+          mode = { "n", "v" },
           desc = "BufferLineCyclePrev",
         },
         {
@@ -102,6 +156,7 @@ return {
           function()
             require("bufferline").cycle(math.min(-1, -vim.v.count))
           end,
+          mode = { "n", "v" },
           desc = "BufferLineCyclePrev",
         },
         {
@@ -109,6 +164,7 @@ return {
           function()
             require("bufferline").move(1)
           end,
+          mode = { "n", "v" },
           desc = "BufferLineMoveNext",
         },
         {
@@ -116,6 +172,7 @@ return {
           function()
             require("bufferline").move(-1)
           end,
+          mode = { "n", "v" },
           desc = "BufferLineMovePrev",
         },
         {
@@ -123,6 +180,7 @@ return {
           function()
             require("bufferline").pick()
           end,
+          mode = { "n", "v" },
           desc = "BufferlinePick",
         },
         {
@@ -196,31 +254,25 @@ return {
 
       return keymaps
     end,
-    opts = function(_, opts)
-      return vim.tbl_deep_extend("force", opts, {
+    opts = function()
+      return {
         options = {
           style_preset = 4, -- bufferline style preset no italics
           close_command = "bdelete %d",
-          left_mouse_command = "buffer %d",
           right_mouse_command = "bdelete %d",
           max_name_length = 30,
           diagnostics = "nvim_lsp",
-          diagnostics_update_in_insert = true,
-          diagnostics_indicator = function(count, level, _, context)
-            local icon = level:match("error") and " " or " "
-            if context.buffer:current() then
-              return icon .. count
-            end
-            return ""
-          end,
-          sort_by = "insert_after_current",
+          show_buffer_close_icons = false,
+          show_close_icon = false,
+          persist_buffer_sort = true,
+          move_wraps_at_ends = true,
           groups = {
             items = {
               require("bufferline.groups").builtin.pinned:with({ icon = "" }),
             },
           },
         },
-      })
+      }
     end,
   },
   {
@@ -267,8 +319,47 @@ return {
     },
   },
   {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "rcarriga/nvim-notify",
+    },
+    opts = {
+      cmdline = { enabled = false },
+      messages = { enabled = false },
+      popupmenu = { enabled = false },
+      notify = { enabled = false },
+      health = { checker = false },
+      lsp = {
+        progress = { enabled = false },
+        message = { enabled = false },
+        override = {
+          ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+          ["vim.lsp.util.stylize_markdown"] = true,
+          -- ["cmp.entry.get_documentation"] = true,
+          ["cmp.entry.get_documentation"] = false,
+        },
+        -- signature = {},
+        documentation = {
+          opts = {
+            border = {
+              padding = { 0, 0 },
+            },
+            win_options = {
+              winblend = 30,
+            },
+          },
+        },
+      },
+      presets = {
+        lsp_doc_border = true,
+      },
+    },
+  },
+  {
     "folke/trouble.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    dependencies = { "nvim-web-devicons" },
     keys = function()
       local trouble_next, trouble_prev = require("nvim-treesitter.textobjects.repeatable_move").make_repeatable_move_pair(
         function()
@@ -385,7 +476,7 @@ return {
         desc = "[mini.indentscope] Toggle",
       },
       {
-        "<Leader>ia",
+        "<Leader>ii",
         function()
           require("ibl").update({ enabled = not require("ibl.config").get_config(-1).enabled })
           vim.g.miniindentscope_disable = not vim.g.miniindentscope_disable
@@ -397,7 +488,7 @@ return {
     opts = {
       draw = {
         delay = 50,
-        animation = function(s, n)
+        animation = function(_, _)
           return 3
         end,
       },
@@ -408,7 +499,7 @@ return {
         goto_bottom = "]i",
       },
       options = {
-        border = "top", -- default: "both"
+        border = "top",
         try_as_border = true,
       },
       symbol = "│",
@@ -428,7 +519,6 @@ return {
           "toggleterm",
         },
         callback = function()
-          ---@diagnostic disable-next-line
           vim.b.miniindentscope_disable = true
         end,
       })
@@ -443,13 +533,15 @@ return {
       {
         "<Leader>zz",
         function()
-          require("zen-mode").toggle({
-            plugins = {
-              twilight = {
-                enabled = false,
-              },
-            },
-          })
+          require("zen-mode").toggle()
+        end,
+        silent = true,
+        desc = "[Zen Mode] Toggle",
+      },
+      {
+        "<Leader>zc",
+        function()
+          require("zen-mode").toggle({ window = { width = 0.5 } })
         end,
         silent = true,
         desc = "[Zen Mode] Toggle",
@@ -459,9 +551,7 @@ return {
         function()
           require("zen-mode").toggle({
             plugins = {
-              twilight = {
-                enabled = true,
-              },
+              twilight = { enabled = true },
             },
           })
         end,
@@ -471,8 +561,11 @@ return {
     },
     opts = {
       window = {
-        backdrop = 1,
-        width = 300,
+        width = 1,
+        height = 1,
+      },
+      plugins = {
+        twilight = { enabled = false },
       },
     },
   },

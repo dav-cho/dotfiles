@@ -2,8 +2,8 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope-fzf-native.nvim",
+      "plenary.nvim",
+      "telescope-fzf-native.nvim",
     },
     keys = function()
       local keymaps = {
@@ -215,6 +215,7 @@ return {
           function()
             require("telescope").extensions.file_browser.file_browser({
               cwd = require("telescope.utils").buffer_dir(),
+              hidden = true,
               prompt_title = "File Browser (buf dir)",
             })
           end,
@@ -223,7 +224,9 @@ return {
         {
           "<Space>E",
           function()
-            require("telescope").extensions.file_browser.file_browser()
+            require("telescope").extensions.file_browser.file_browser({
+              hidden = true,
+            })
           end,
           desc = "file_browser",
         },
@@ -547,42 +550,6 @@ return {
           end,
           desc = "Harpoon marks",
         },
-
-        {
-          "<Leader>dl",
-          function()
-            require("telescope").extensions.dap.list_breakpoints()
-          end,
-          desc = "dap.list_breakpoints",
-        },
-        {
-          "<Leader>dpC",
-          function()
-            require("telescope").extensions.dap.configurations()
-          end,
-          desc = "dap.configurations",
-        },
-        {
-          "<Leader>dpc",
-          function()
-            require("telescope").extensions.dap.commands()
-          end,
-          desc = "dap.commands",
-        },
-        {
-          "<Leader>dpv",
-          function()
-            require("telescope").extensions.dap.variables()
-          end,
-          desc = "dap.variables",
-        },
-        {
-          "<Leader>dpf",
-          function()
-            require("telescope").extensions.dap.frames()
-          end,
-          desc = "dap.frames",
-        },
       }
 
       for _, keymap in pairs(keymaps) do
@@ -622,13 +589,24 @@ return {
 
       return {
         defaults = {
+          -- sorting_strategy = "ascending",
           layout_strategy = "flex",
           dynamic_preview_title = true,
           winblend = 10,
+          layout_config = {
+            horizontal = {
+              preview_width = 0.5,
+            },
+            flex = {
+              flip_columns = 150,
+            },
+          },
           mappings = {
             i = {
               ["<C-j>"] = actions.move_selection_next,
               ["<C-k>"] = actions.move_selection_previous,
+              ["<C-n>"] = actions.cycle_history_next,
+              ["<C-p>"] = actions.cycle_history_prev,
               ["<M-p>"] = actions.cycle_previewers_next,
               ["<M-P>"] = layout.toggle_preview,
               ["<M-l>"] = layout.cycle_layout_next,
@@ -641,11 +619,6 @@ return {
               ["<M-P>"] = layout.toggle_preview,
               ["<M-l>"] = layout.cycle_layout_next,
               ["<M-x>"] = require("trouble.sources.telescope").open,
-            },
-          },
-          layout_config = {
-            flex = {
-              flip_columns = 150,
             },
           },
         },
@@ -713,10 +686,7 @@ return {
     config = function(_, opts)
       local telescope = require("telescope")
       telescope.setup(opts)
-      telescope.load_extension("fzf")
-      telescope.load_extension("file_browser")
       telescope.load_extension("ui-select")
-      telescope.load_extension("heading")
     end,
   },
   { "nvim-telescope/telescope-fzf-native.nvim", lazy = true, build = "make" },
@@ -766,8 +736,8 @@ return {
     "ThePrimeagen/harpoon",
     branch = "harpoon2",
     dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim",
+      "plenary.nvim",
+      "telescope.nvim",
     },
     keys = function()
       local harpoon = require("harpoon")

@@ -2,11 +2,9 @@ return {
   {
     "mfussenegger/nvim-dap",
     dependencies = {
-      "nvim-telescope/telescope-dap.nvim",
-      "theHamsta/nvim-dap-virtual-text",
-      "rcarriga/nvim-dap-ui",
-      "mfussenegger/nvim-dap-python",
-      "leoluz/nvim-dap-go",
+      "nvim-dap-virtual-text",
+      "nvim-dap-python",
+      { "leoluz/nvim-dap-go", lazy = true },
     },
     keys = {
       {
@@ -117,7 +115,85 @@ return {
     end,
   },
   {
+    "rcarriga/nvim-dap-ui",
+    dependencies = {
+      { "nvim-neotest/nvim-nio", lazy = true },
+    },
+    lazy = true,
+    opts = {
+      layouts = {
+        {
+          elements = {
+            "repl",
+            "scopes",
+            "console",
+          },
+          position = "bottom",
+          size = 20,
+        },
+        {
+          elements = {
+            "breakpoints",
+            "stacks",
+            "watches",
+          },
+          position = "left",
+          size = 40,
+        },
+      },
+    },
+  },
+  {
+    "theHamsta/nvim-dap-virtual-text",
+    lazy = true,
+    opts = {
+      highlight_new_as_changed = true,
+    },
+  },
+  {
+    "nvim-telescope/telescope-dap.nvim",
+    lazy = true,
+    keys = {
+      {
+        "<Leader>dl",
+        function()
+          require("telescope").extensions.dap.list_breakpoints()
+        end,
+        desc = "dap.list_breakpoints",
+      },
+      {
+        "<Leader>dpC",
+        function()
+          require("telescope").extensions.dap.configurations()
+        end,
+        desc = "dap.configurations",
+      },
+      {
+        "<Leader>dpc",
+        function()
+          require("telescope").extensions.dap.commands()
+        end,
+        desc = "dap.commands",
+      },
+      {
+        "<Leader>dpv",
+        function()
+          require("telescope").extensions.dap.variables()
+        end,
+        desc = "dap.variables",
+      },
+      {
+        "<Leader>dpf",
+        function()
+          require("telescope").extensions.dap.frames()
+        end,
+        desc = "dap.frames",
+      },
+    },
+  },
+  {
     "mfussenegger/nvim-dap-python",
+    lazy = true,
     keys = {
       {
         "<Leader>dtm",
@@ -201,38 +277,5 @@ return {
         table.insert(dap.configurations.python, config)
       end
     end,
-  },
-  {
-    "theHamsta/nvim-dap-virtual-text",
-    lazy = true,
-    opts = {
-      highlight_new_as_changed = true,
-    },
-  },
-  {
-    "rcarriga/nvim-dap-ui",
-    lazy = true,
-    opts = {
-      layouts = {
-        {
-          elements = {
-            "repl",
-            "scopes",
-            "console",
-          },
-          position = "bottom",
-          size = 20,
-        },
-        {
-          elements = {
-            "breakpoints",
-            "stacks",
-            "watches",
-          },
-          position = "left",
-          size = 40,
-        },
-      },
-    },
   },
 }

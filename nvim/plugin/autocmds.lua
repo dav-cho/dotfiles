@@ -42,7 +42,6 @@ vim.api.nvim_create_autocmd("FileType", {
     "git",
     "help",
     "man",
-    "oil",
     "qf",
     "toggleterm",
   },
@@ -56,20 +55,11 @@ vim.api.nvim_create_autocmd("TermOpen", {
   group = vim.api.nvim_create_augroup("TermBufOpts", {}),
   pattern = "term://*",
   callback = function()
-    -- vim.opt_local.number = false
+    vim.opt_local.number = false
     vim.opt_local.relativenumber = false
     vim.opt_local.scrolloff = 0
     vim.keymap.set("t", "<Esc>", "<C-Bslash><C-n>", { buffer = 0 }) -- also for toggleterm
     vim.cmd("normal! i")
-  end,
-})
-
-vim.api.nvim_create_autocmd("FileType", {
-  group = vim.api.nvim_create_augroup("Fzf", {}),
-  pattern = { "fzf" },
-  callback = function(ev)
-    vim.bo[ev.buf].buflisted = false
-    vim.keymap.set("n", "<Esc>", "<Cmd>close<CR>", { buffer = ev.buf, silent = true })
   end,
 })
 

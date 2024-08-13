@@ -11,9 +11,7 @@ end
 return {
   {
     dir = "dav.themes",
-    dependencies = {
-      "nvim-telescope/telescope.nvim",
-    },
+    dependencies = { "telescope.nvim" },
     keys = {
       {
         "<Leader>th",
@@ -38,16 +36,9 @@ return {
           end
           table.sort(choices)
           vim.ui.select(choices, { prompt = "Select Theme:" }, function(choice)
-            if not (choice and themes[choice]) then
-              return
-            end
-
-            if package.loaded[choice] then
+            if choice and themes[choice] then
               vim.cmd("colorscheme " .. choice)
-              return
             end
-
-            require("lazy").load({ plugins = { themes[choice] } })
           end)
         end,
         desc = "[Custom] Set theme",
@@ -71,65 +62,72 @@ return {
     priority = 1000,
     opts = function(_, opts)
       local colors = {
+        -- grays
+        bg = "#111111",
+        -- bg_alt = "#121212",
+        cursor_line = "#1d1d1d",
+        -- color_column = "#262626",
+        cursor_line_bright = "#333333",
+        win_separator = "#404040",
+        line_nr = "#595959",
+        float_border = "#777777",
+        comment = "#808080",
+        cursor_line_nr = "#a6a6a6",
+        text = "#dddddd",
+        -- colors
+        diagnostic_virtual_text_error = "#964a5f",
+        diagnostic_virtual_text_hint = "#7d6c91",
+        diagnostic_virtual_text_info = "#69878c",
+        diagnostic_virtual_text_warn = "#ad8957",
         emerald = "#36c692",
-        gray_0 = "#111111",
-        -- gray_0 = "#121212",
-        gray_1 = "#1d1d1d",
-        gray_2 = "#262626",
-        gray_3 = "#333333",
-        gray_4 = "#404040",
-        gray_5 = "#555555",
-        gray_6 = "#595959",
-        gray_7 = "#808080",
-        gray_8 = "#a6a6a6",
         orange = "#eb9d65",
         pine_light = "#60b2c7",
-        text = "#dddddd",
         yellow = "#d9c18c",
       }
 
       return vim.tbl_deep_extend("force", opts, {
         variant = "main",
         dark_variant = "main",
-        styles = {
-          italic = false,
-        },
+        dim_inactive_windows = false,
+        extend_background_behind_borders = false,
+        styles = { italic = false },
         highlight_groups = {
-          BufferlineTab = { fg = colors.gray_7 },
+          -- Cursor = { fg = "#1d1d1d", bg = "#e6edf3" },
+          -- Float = { link = "Number" },
+          -- TelescopeNormal = { bg = colors.bg },
+          BufferlineTab = { fg = colors.comment },
           BufferlineTabSelected = { fg = "iris" },
-          ColorColumn = { bg = colors.gray_2 },
-          Comment = { fg = colors.gray_7 },
+          ColorColumn = { bg = colors.cursor_line },
+          Comment = { fg = colors.comment },
           Constant = { fg = colors.pine_light },
           CurSearch = { fg = "base", bg = "love", inherit = false, blend = 85 },
-          Cursor = { fg = "#1d1d1d", bg = "#e6edf3" },
-          CursorLine = { bg = colors.gray_1 },
-          CursorLineNr = { fg = colors.gray_8 },
-          DiagnosticVirtualTextError = { fg = "#964a5f", bg = "none" },
-          DiagnosticVirtualTextHint = { fg = "#7d6c91", bg = "none" },
-          DiagnosticVirtualTextInfo = { fg = "#69878c", bg = "none" },
-          DiagnosticVirtualTextWarn = { fg = "#ad8957", bg = "none" },
+          CursorLine = { bg = colors.cursor_line },
+          CursorLineNr = { fg = colors.cursor_line_nr },
+          DiagnosticVirtualTextError = { fg = colors.diagnostic_virtual_text_error, bg = "none" },
+          DiagnosticVirtualTextHint = { fg = colors.diagnostic_virtual_text_hint, bg = "none" },
+          DiagnosticVirtualTextInfo = { fg = colors.diagnostic_virtual_text_info, bg = "none" },
+          DiagnosticVirtualTextWarn = { fg = colors.diagnostic_virtual_text_warn, bg = "none" },
           FlashLabel = { bg = "iris" },
-          Float = { link = "Number" },
-          FloatBorder = { fg = colors.gray_5, bg = "NormalFloat" },
+          FloatBorder = { fg = colors.float_border },
           Folded = { link = "Comment" },
-          IlluminatedWordRead = { bg = colors.gray_3 },
-          IlluminatedWordText = { bg = colors.gray_3 },
-          IlluminatedWordWrite = { bg = colors.gray_3 },
+          IlluminatedWordRead = { bg = colors.cursor_line_bright },
+          IlluminatedWordText = { bg = colors.cursor_line_bright },
+          IlluminatedWordWrite = { bg = colors.cursor_line_bright },
           Include = { fg = "iris" },
-          LineNr = { fg = colors.gray_6 },
-          Normal = { fg = colors.text, bg = colors.gray_0 },
-          NormalFloat = { fg = colors.text, bg = "none" },
+          LineNr = { fg = colors.line_nr },
+          LspSignatureActiveParameter = { link = "LspReferenceRead" },
+          Normal = { fg = colors.text, bg = colors.bg },
+          NormalFloat = { bg = "none" },
           NormalNC = { link = "Normal" },
           Number = { fg = colors.orange },
-          Operator = { fg = colors.gray_7 },
+          Operator = { fg = colors.comment },
           Pmenu = { bg = "NormalFloat" },
           Search = { fg = "base", bg = "rose", blend = 85 },
           String = { fg = colors.yellow },
-          TelescopeBorder = { fg = colors.gray_7, bg = colors.gray_0 },
-          TelescopeNormal = { bg = colors.gray_0 },
-          TelescopeSelection = { bg = colors.gray_3 },
+          TelescopeBorder = { link = "FloatBorder" },
+          TelescopeSelection = { bg = colors.cursor_line_bright },
           Todo = { fg = "iris", bg = "none", blend = 0 },
-          WinSeparator = { fg = colors.gray_4, bg = "none" },
+          WinSeparator = { fg = colors.win_separator },
           ["@attribute"] = { fg = "iris" },
           ["@comment.todo"] = { link = "Todo" },
           ["@constant"] = { link = "Constant" },
@@ -153,16 +151,19 @@ return {
     config = function(_, opts)
       require("rose-pine").setup(opts)
       vim.cmd("colorscheme rose-pine")
+      set_lualine_theme("rose-pine")
 
       local lualine_theme = require("lualine.themes.rose-pine")
       local colors = {
         light = "#404040",
+        -- light = "#3b3b3b",
         dark = "#2e2e2e",
       }
 
       lualine_theme = vim.tbl_deep_extend("force", lualine_theme, {
         normal = {
-          b = { bg = colors.light },
+          -- b = { bg = colors.light },
+          b = { bg = colors.light, gui = "none" },
           c = { bg = colors.dark },
         },
         insert = {

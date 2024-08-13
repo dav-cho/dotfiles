@@ -2,20 +2,25 @@ return {
   {
     "neovim/nvim-lspconfig",
     dependencies = {
-      "williamboman/mason.nvim",
-      "williamboman/mason-lspconfig.nvim",
-      "nvimtools/none-ls.nvim",
-      "folke/neodev.nvim",
+      "mason.nvim",
+      "mason-lspconfig.nvim",
+      "none-ls.nvim",
     },
-    event = { "BufReadPre", "BufNewFile" },
-    opts = {
-      signs = {
+    event = { "BufRead", "BufNewFile" },
+    config = function()
+      local lspconfig = require("lspconfig")
+
+      local signs = {
         { name = "DiagnosticSignError", text = "" },
         { name = "DiagnosticSignWarn", text = "" },
         { name = "DiagnosticSignHint", text = "" },
         { name = "DiagnosticSignInfo", text = "" },
-      },
-      diagnostic = {
+      }
+      for _, sign in ipairs(signs) do
+        vim.fn.sign_define(sign.name, { text = sign.text, texthl = sign.name, numhl = "" })
+      end
+
+      vim.diagnostic.config({
         underline = false,
         virtual_text = true,
         update_in_insert = true,
@@ -30,12 +35,18 @@ return {
           style = "minimal",
           border = "rounded",
         },
-      },
-      hover = {
+      })
+
+      local hover = {
         focusable = true,
         border = "rounded",
-      },
-      servers = {
+      }
+      vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, hover)
+      vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, hover)
+
+      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+      local servers = {
         bashls = {},
         cssls = {},
         cssmodules_ls = {},
@@ -60,7 +71,13 @@ return {
           },
         },
         pyright = {},
-        ruff = {},
+        ruff = {
+          on_attach = function(client)
+            if client.name == "ruff" then
+              client.server_capabilities.hoverProvider = false
+            end
+          end,
+        },
         rust_analyzer = {},
         sqlls = {},
         taplo = {},
@@ -80,37 +97,38 @@ return {
             },
           },
         },
-      },
-    },
-    config = function(_, opts)
-      local lspconfig = require("lspconfig")
-      local repeatable_move = require("nvim-treesitter.textobjects.repeatable_move")
+      }
 
-      local diagnostic_goto_next, diagnostic_goto_prev =
-        repeatable_move.make_repeatable_move_pair(vim.diagnostic.goto_next, vim.diagnostic.goto_prev)
-
-      vim.keymap.set("n", "gl", vim.diagnostic.open_float, { desc = "vim.diagnostic.open_float" })
-      vim.keymap.set("n", "gL", vim.diagnostic.setloclist, { desc = "vim.diagnostic.setloclist" })
-      vim.keymap.set("n", "[d", diagnostic_goto_prev, { desc = "vim.diagnostic.goto_prev" })
-      vim.keymap.set("n", "]d", diagnostic_goto_next, { desc = "vim.diagnostic.goto_next" })
-      vim.keymap.set("n", "<Leader>lr", function()
-        vim.cmd("LspRestart")
-      end, { desc = "LspRestart" })
+      for server, config in pairs(servers) do
+        lspconfig[server].setup(vim.tbl_deep_extend("force", {
+          -- on_init = on_init,
+          capabilities = capabilities,
+        }, config))
+      end
 
       vim.api.nvim_create_autocmd("LspAttach", {
-        group = vim.api.nvim_create_augroup("UserLspConfig", {}),
         callback = function(ev)
+          local diagnostic_goto_next, diagnostic_goto_prev =
+            require("nvim-treesitter.textobjects.repeatable_move").make_repeatable_move_pair(
+              vim.diagnostic.goto_next,
+              vim.diagnostic.goto_prev
+            )
+
           local buf_map = function(mode, lhs, rhs, options)
-            options = vim.tbl_deep_extend("force", { silent = true, buffer = ev.buf }, options or {})
+            options = vim.tbl_deep_extend("force", { buffer = ev.buf }, options or {})
             vim.keymap.set(mode, lhs, rhs, options)
           end
 
+          buf_map("n", "[d", diagnostic_goto_prev, { desc = "vim.diagnostic.goto_prev" })
+          buf_map("n", "]d", diagnostic_goto_next, { desc = "vim.diagnostic.goto_next" })
+          buf_map("n", "<Leader>lr", ":LspRestart<CR>", { desc = "LspRestart" })
+          buf_map("n", "gl", vim.diagnostic.open_float, { desc = "vim.diagnostic.open_float" })
           buf_map("n", "gh", vim.lsp.buf.hover)
           buf_map("n", "gd", vim.lsp.buf.definition)
           buf_map("n", "gD", vim.lsp.buf.type_definition, { desc = "vim.lsp.buf.type_definition" })
           buf_map("n", "<Leader>gi", vim.lsp.buf.implementation)
           buf_map("n", "gr", vim.lsp.buf.references)
-          buf_map({ "n", "i" }, "<C-s>", vim.lsp.buf.signature_help)
+          buf_map({ "n", "i" }, "<M-s>", vim.lsp.buf.signature_help)
           buf_map("n", "<Leader>rn", vim.lsp.buf.rename)
           buf_map("n", "<Leader>ca", vim.lsp.buf.code_action)
           buf_map("n", "<Leader>fm", vim.lsp.buf.format)
@@ -120,7 +138,7 @@ return {
             vim.notify(vim.inspect(vim.lsp.buf.list_workspace_folders()))
           end, { desc = "notify inspect vim.lsp.buf.list_workspace_folders()" })
           buf_map("n", "<Leader>vv", function()
-            vim.diagnostic.config({ virtual_text = not vim.diagnostic.config().virtual_text })
+            vim.diagnostic.config({ virtual_text = not vim.diagnostic.config()["virtual_text"] })
           end, { desc = "buf toggle virtual text" })
 
           local gd_cmd = function(cmd)
@@ -150,33 +168,6 @@ return {
           end, { desc = "vim.lsp.buf.definition() tabe redraw top" })
         end,
       })
-
-      for _, sign in ipairs(opts.signs) do
-        vim.fn.sign_define(sign.name, { text = sign.text, texthl = sign.name, numhl = "" })
-      end
-
-      vim.diagnostic.config(opts.diagnostic)
-
-      vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, opts.hover)
-      vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, opts.hover)
-
-      local on_init = function(client)
-        client.config.flags = client.config.flags or {}
-        client.config.flags.allow_incremental_sync = true
-      end
-
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
-      capabilities.textDocument.completion.completionItem.snippetSupport = true
-
-      for server, config in pairs(opts.servers) do
-        config = vim.tbl_deep_extend("force", {
-          on_init = on_init,
-          capabilities = capabilities,
-        }, config)
-
-        lspconfig[server].setup(config)
-      end
     end,
   },
   {
@@ -232,7 +223,6 @@ return {
   },
   {
     "stevearc/conform.nvim",
-    event = "BufWritePre",
     cmd = "ConformInfo",
     keys = {
       {
@@ -268,12 +258,12 @@ return {
           },
         },
         ruff_fix = {
-          prepend_args = {
+          append_args = {
             "--ignore=F401", -- unused-import
           },
         },
         ruff_organize_imports = {
-          prepend_args = {
+          append_args = {
             "--config=lint.isort.section-order=['future', 'standard-library', 'third-party', 'common', 'first-party', 'local-folder']",
             "--config=lint.isort.sections.common=['common']",
           },
@@ -286,20 +276,20 @@ return {
         -- },
       },
       formatters_by_ft = {
-        go = { { "goimports", "gofmt" } },
-        javascript = { { "prettier", "prettierd" } },
-        javascriptreact = { { "prettier", "prettierd" } },
+        go = { "goimports", "gofmt", stop_after_first = true },
+        javascript = { "prettier", "prettierd", stop_after_first = true },
+        javascriptreact = { "prettier", "prettierd", stop_after_first = true },
         json = { "fixjson" },
         lua = { "stylua" },
         markdown = { "mdformat", "prettierd" },
         -- python = { "isort", "black" },
-        python = { "ruff_organize_imports", "ruff_fix", "ruff_format" },
+        python = { "ruff_fix", "ruff_format", "ruff_organize_imports" },
         rust = { "rustfmt" },
         sh = { "shfmt" },
         toml = { "taplo" },
-        typescript = { { "prettier", "prettierd" } },
-        typescriptreact = { { "prettier", "prettierd" } },
-        yaml = { { "prettierd", "prettier", "yamlfmt" } },
+        typescript = { "prettier", "prettierd", stop_after_first = true },
+        typescriptreact = { "prettier", "prettierd", stop_after_first = true },
+        yaml = { "prettierd", "prettier", "yamlfmt", stop_after_first = true },
         ["_"] = { "trim_whitespace" },
       },
     },
@@ -312,7 +302,6 @@ return {
     "glepnir/lspsaga.nvim",
     dependencies = {
       "nvim-tree/nvim-web-devicons",
-      "nvim-treesitter/nvim-treesitter",
     },
     event = "LspAttach",
     keys = function()
@@ -342,7 +331,7 @@ return {
         enable = false,
       },
       definition = {
-        width = 0.7,
+        width = 1,
         keys = {
           edit = "<Leader>we",
           vsplit = "<Leader>wv",
@@ -416,6 +405,25 @@ return {
     end,
   },
   {
+    "zbirenbaum/copilot.lua",
+    event = "InsertEnter",
+    cmd = "Copilot",
+    keys = {
+      {
+        "<Leader>cp",
+        function()
+          require("copilot.suggestion").toggle_auto_trigger()
+        end,
+        desc = "[copilot] Toggle auto_trigger",
+      },
+    },
+    opts = {
+      suggestion = {
+        auto_trigger = true,
+      },
+    },
+  },
+  {
     "j-hui/fidget.nvim",
     event = "LspNotify",
     keys = {
@@ -434,11 +442,16 @@ return {
         desc = ":Fidget clear",
       },
     },
-    config = true,
+    opts = {
+      integration = {
+        ["nvim-tree"] = { enable = false },
+      },
+    },
   },
   {
-    "folke/neodev.nvim",
+    "folke/lazydev.nvim",
     lazy = true,
-    config = true,
+    ft = "lua",
+    opts = {},
   },
 }
