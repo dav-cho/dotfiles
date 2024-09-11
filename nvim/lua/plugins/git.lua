@@ -3,6 +3,8 @@ return {
     "lewis6991/gitsigns.nvim",
     event = "LspAttach",
     opts = {
+      attach_to_untracked = true,
+      signs_staged_enable = false,
       current_line_blame_opts = {
         virt_text = true,
         virt_text_pos = "eol",

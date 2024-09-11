@@ -71,21 +71,12 @@ return {
           },
         },
         pyright = {},
-        ruff = {
-          on_attach = function(client)
-            if client.name == "ruff" then
-              client.server_capabilities.hoverProvider = false
-            end
-          end,
-        },
+        ruff = {},
         rust_analyzer = {},
         sqlls = {},
         taplo = {},
-        tsserver = {},
+        ts_ls = {},
         yamlls = {
-          on_attach = function(client)
-            client.server_capabilities.documentFormattingProvider = true
-          end,
           settings = {
             yaml = {
               format = {
@@ -166,6 +157,19 @@ return {
           buf_map("n", "<Leader>gt", function()
             gd_cmd("tabe %")
           end, { desc = "vim.lsp.buf.definition() tabe redraw top" })
+
+          local client = vim.lsp.get_client_by_id(ev.data.client_id)
+          if client == nil then
+            return
+          end
+
+          if client.name == "ruff" then
+            client.server_capabilities.hoverProvider = false
+          end
+
+          if client.name == "yamlls" then
+            client.server_capabilities.documentFormattingProvider = true
+          end
         end,
       })
     end,
@@ -315,6 +319,7 @@ return {
         { "<Leader>sw", "<Cmd>Lspsaga show_workspace_diagnostics<CR>", desc = "show_workspace_diagnostics" },
         { "<Leader>sc", "<Cmd>Lspsaga show_cursor_diagnostics<CR>", desc = "show_cursor_diagnostics" },
         { "<Leader>so", "<Cmd>Lspsaga outline<CR>", desc = "outline" },
+        { "<Leader>sr", "<Cmd>Lspsaga finder<CR>", desc = "finder" },
         { "<Leader>gh", "<Cmd>Lspsaga hover_doc<CR>", desc = "hover_doc" },
         { "<Leader>in", "<Cmd>Lspsaga incoming_calls<CR>", desc = "incoming_calls" },
         { "<Leader>ou", "<Cmd>Lspsaga outgoing_calls<CR>", desc = "outgoing_calls" },
@@ -341,6 +346,9 @@ return {
         },
       },
       finder = {
+        max_height = 0.9,
+        left_width = 0.3,
+        right_width = 0.7,
         keys = {
           split = "x",
         },
