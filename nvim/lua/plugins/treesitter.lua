@@ -29,6 +29,14 @@ return {
       auto_install = true,
       highlight = {
         enable = true,
+        ---@diagnostic disable-next-line: unused-local
+        disable = function(lang, buf)
+          local max_lines = 10000
+          local ok, count = pcall(vim.api.nvim_buf_line_count, buf)
+          if ok and count and count > max_lines then
+            return true
+          end
+        end,
       },
       indent = {
         enable = true,
@@ -148,6 +156,15 @@ return {
       vim.keymap.set({ "n", "x", "o" }, "F", repeat_move.builtin_F_expr, { expr = true })
       vim.keymap.set({ "n", "x", "o" }, "t", repeat_move.builtin_t_expr, { expr = true })
       vim.keymap.set({ "n", "x", "o" }, "T", repeat_move.builtin_T_expr, { expr = true })
+
+      vim.keymap.set({ "n", "x", "o" }, "<M-;>", function()
+        repeat_move.repeat_last_move_next()
+        vim.cmd("normal! zz")
+      end, { desc = "repeat_last_move_next() + redraw top 1/5" })
+      vim.keymap.set({ "n", "x", "o" }, "<M-Bslash>", function()
+        repeat_move.repeat_last_move_previous()
+        vim.cmd("normal! zz")
+      end, { desc = "repeat_last_move_previous() + redraw top 1/5" })
 
       local next_fold, prev_fold = repeat_move.make_repeatable_move_pair(function()
         vim.cmd("normal! zj")
