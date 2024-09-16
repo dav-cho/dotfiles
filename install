@@ -72,6 +72,7 @@ symlink "$DOTFILES/atuin" "$CONFIG/.config/atuin"
 symlink "$DOTFILES/kitty" "$CONFIG/.config/kitty"
 symlink "$DOTFILES/nvim" "$CONFIG/.config/nvim"
 symlink "$DOTFILES/skhd" "$CONFIG/.config/skhd"
+symlink "$DOTFILES/ruff" "$CONFIG/.config/ruff"
 
 [[ -d "$HOME/.config/git" ]] || mkdir "$HOME/.config/git"
 symlink "$DOTFILES/git/ignore" "$HOME/.config/git/ignore"
