@@ -76,6 +76,7 @@ lctrl + lcmd + lshift - l : yabai -m window --focus east  && yabai -m window --s
 lctrl + lcmd + lshift - 0x21 : yabai -m window --focus prev   && yabai -m window --stack next   && yabai -m window --focus recent
 lctrl + lcmd + lshift - 0x1E : yabai -m window --focus next   && yabai -m window --stack prev   && yabai -m window --focus recent
 lctrl + lcmd + lshift - 0x2A : yabai -m window --focus recent && yabai -m window --stack recent && yabai -m window --focus recent
+hyper - tab                  : yabai -m window --focus recent && yabai -m window --stack recent && yabai -m window --focus recent
 lcmd + lshift - tab : yabai -m window --focus sibling && yabai -m window --stack sibling && yabai -m window --focus recent
 
 # move window to space
