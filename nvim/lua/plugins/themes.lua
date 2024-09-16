@@ -12,49 +12,63 @@ return {
   {
     dir = "dav.themes",
     dependencies = { "telescope.nvim" },
-    keys = {
-      {
-        "<Leader>th",
-        function()
-          local themes = {
-            ["catppuccin"] = "catppuccin",
-            ["codedark"] = "vim-code-dark",
-            ["darkplus"] = "darkplus.nvim",
-            ["everforest"] = "everforest",
-            ["kanagawa"] = "kanagawa.nvim",
-            ["material"] = "material.nvim",
-            ["moonfly"] = "moonfly",
-            ["onedark"] = "onedark.nvim",
-            ["onenord"] = "onenord.nvim",
-            ["rose-pine"] = "rose-pine",
-            ["tokyonight"] = "tokyonight.nvim",
-            ["zenbones"] = "zenbones.nvim",
-          }
-          local choices = {}
-          for theme, _ in pairs(themes) do
-            table.insert(choices, theme)
-          end
-          table.sort(choices)
-          vim.ui.select(choices, { prompt = "Select Theme:" }, function(choice)
-            if choice and themes[choice] then
-              vim.cmd("colorscheme " .. choice)
+    keys = function()
+      local themes = {
+        ["catppuccin"] = "catppuccin",
+        ["codedark"] = "vim-code-dark",
+        ["darkplus"] = "darkplus.nvim",
+        ["everforest"] = "everforest",
+        ["kanagawa"] = "kanagawa.nvim",
+        ["material"] = "material.nvim",
+        ["moonfly"] = "moonfly",
+        ["onedark"] = "onedark.nvim",
+        ["onenord"] = "onenord.nvim",
+        ["rose-pine"] = "rose-pine",
+        ["tokyonight"] = "tokyonight.nvim",
+        ["zenbones"] = "zenbones.nvim",
+      }
+
+      local function set_theme(theme)
+        if package.loaded[theme] then
+          vim.cmd("colorscheme " .. theme)
+          return
+        end
+        require("lazy").load({ plugins = { themes[theme] } })
+      end
+
+      return {
+        {
+          "<Leader>th",
+          function()
+            local choices = {}
+            for theme, _ in pairs(themes) do
+              table.insert(choices, theme)
             end
-          end)
-        end,
-        desc = "[Custom] Set theme",
-      },
-      {
-        "<Leader>ty",
-        function()
-          if package.loaded["tokyonight"] then
-            vim.cmd("colorscheme tokyonight")
-            return
-          end
-          require("lazy").load({ plugins = { "tokyonight.nvim" } })
-        end,
-        desc = "[Theme] Tokyonight",
-      },
-    },
+            table.sort(choices)
+            vim.ui.select(choices, { prompt = "Select Theme:" }, function(choice)
+              if choice and themes[choice] then
+                vim.cmd("colorscheme " .. choice)
+              end
+            end)
+          end,
+          desc = "[Custom] Set theme",
+        },
+        {
+          "<Leader>ty",
+          function()
+            set_theme("tokyonight")
+          end,
+          desc = "[Theme] Tokyonight",
+        },
+        {
+          "<Leader>on",
+          function()
+            set_theme("onenord")
+          end,
+          desc = "[Theme] onenord",
+        },
+      }
+    end,
   },
   {
     "rose-pine/neovim",
@@ -64,9 +78,7 @@ return {
       local colors = {
         -- grays
         bg = "#111111",
-        -- bg_alt = "#121212",
         cursor_line = "#1d1d1d",
-        -- color_column = "#262626",
         cursor_line_bright = "#333333",
         win_separator = "#404040",
         line_nr = "#595959",
@@ -92,9 +104,6 @@ return {
         extend_background_behind_borders = false,
         styles = { italic = false },
         highlight_groups = {
-          -- Cursor = { fg = "#1d1d1d", bg = "#e6edf3" },
-          -- Float = { link = "Number" },
-          -- TelescopeNormal = { bg = colors.bg },
           BufferlineTab = { fg = colors.comment },
           BufferlineTabSelected = { fg = "iris" },
           ColorColumn = { bg = colors.cursor_line },
@@ -156,13 +165,11 @@ return {
       local lualine_theme = require("lualine.themes.rose-pine")
       local colors = {
         light = "#404040",
-        -- light = "#3b3b3b",
         dark = "#2e2e2e",
       }
 
       lualine_theme = vim.tbl_deep_extend("force", lualine_theme, {
         normal = {
-          -- b = { bg = colors.light },
           b = { bg = colors.light, gui = "none" },
           c = { bg = colors.dark },
         },
@@ -419,8 +426,6 @@ return {
     config = function(_, opts)
       require("kanagawa").setup(opts)
       vim.cmd("colorscheme kanagawa")
-      -- illuminate_default()
-      -- set_lualine_theme("kanagawa")
     end,
   },
   {
@@ -492,7 +497,6 @@ return {
         },
       })
       vim.cmd("colorscheme material")
-      -- set_lualine_theme("material")
     end,
   },
 }

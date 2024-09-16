@@ -83,17 +83,17 @@ return {
     keys = {
       "<C-Bslash>",
       {
-        "<M-Bslash>f",
+        "<M-Bar>f",
         [[<Cmd>exe v:count1 . "ToggleTerm direction=float"<CR>]],
         desc = "[ToggleTerm] Toggle Float",
       },
       {
-        "<M-Bslash>h",
+        "<M-Bar>h",
         [[<Cmd>exe v:count1 . "ToggleTerm direction=horizontal"<CR>]],
         desc = "[ToggleTerm] Toggle Horizontal",
       },
       {
-        "<M-Bslash>v",
+        "<M-Bar>v",
         [[<Cmd>exe v:count1 . "ToggleTerm direction=vertical"<CR>]],
         desc = "[ToggleTerm] Toggle Vertical",
       },

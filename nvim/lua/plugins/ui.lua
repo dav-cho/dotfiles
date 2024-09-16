@@ -14,39 +14,16 @@ return {
     "nvim-lualine/lualine.nvim",
     event = "UIEnter",
     opts = function()
-      -- function on_click(cnt, btn, mods)
-      -- params: num clicks, button, modifiers
-      local onclick = {
-        echo_git_branch = function()
-          local branch = vim.fn.system("git branch --show-current"):gsub("%s+", "")
-          vim.api.nvim_echo({ { branch, "Normal" } }, false, {})
-        end,
-        copy_abs_path = function()
-          vim.fn.system(string.format('echo "%s" | pbcopy', vim.fn.expand("%:~")))
-        end,
-        echo_abs_path = function()
-          vim.api.nvim_echo({ { vim.fn.expand("%:~"), "Normal" } }, false, {})
-        end,
-        repo_view = function()
-          local ok, _ = pcall(function()
-            vim.fn.system("gh repo view -w")
-          end)
-          return ok
-        end,
-      }
-
       local cm = {
-        fmt_jira_id = function(str)
-          return str:match("^%u+%-%d+")
-        end,
-        open_jira = function()
-          local id = vim.fn.system("git branch --show-current"):match("^%u+%-%d+")
-          local ok, _ = pcall(function()
-            vim.ui.open(vim.fn.expand("$CM_JIRA_URL") .. id)
-          end)
-          return ok
-        end,
+        jira_url = vim.fn.expand("$CM_JIRA_URL"),
       }
+      function cm:open_jira()
+        local id = vim.fn.system("git branch --show-current"):match("^%u+%-%d+")
+        local ok, _ = pcall(function()
+          vim.ui.open(self.jira_url .. id)
+        end)
+        return ok
+      end
 
       return {
         options = {
@@ -60,12 +37,15 @@ return {
             {
               "branch",
               fmt = function(str)
-                return cm.fmt_jira_id(str) or str
+                return str:match("^%u+%-%d+") or str
               end,
               on_click = function(_, btn, _)
-                onclick.echo_git_branch()
+                local branch = vim.fn.system("git branch --show-current"):gsub("%s+", "")
                 if btn == "m" then
-                  return cm.open_jira() or onclick.repo_view()
+                  vim.api.nvim_echo({ { branch, "Directory" } }, false, {})
+                  return cm:open_jira() or pcall(vim.fn.system, "gh repo view -w")
+                else
+                  print(branch)
                 end
               end,
             },
@@ -79,10 +59,15 @@ return {
             {
               "filename",
               path = 1,
+              -- function on_click(cnt, btn, mods)
+              -- params: num clicks, button, modifiers
               on_click = function(_, btn, _)
-                onclick.echo_abs_path()
+                local path = vim.fn.expand("%:~")
                 if btn == "r" then
-                  onclick.copy_abs_path()
+                  vim.fn.system(string.format('echo "%s" | pbcopy', path))
+                  vim.api.nvim_echo({ { path, "Directory" } }, false, {})
+                else
+                  print(path)
                 end
               end,
             },
@@ -162,7 +147,7 @@ return {
         {
           "<Space><Right>",
           function()
-            require("bufferline").move(1)
+            require("bufferline").move(math.max(1, vim.v.count))
           end,
           mode = { "n", "v" },
           desc = "BufferLineMoveNext",
@@ -170,10 +155,26 @@ return {
         {
           "<Space><Left>",
           function()
-            require("bufferline").move(-1)
+            require("bufferline").move(math.min(-1, -vim.v.count))
           end,
           mode = { "n", "v" },
           desc = "BufferLineMovePrev",
+        },
+        {
+          "<Leader>b<Tab>",
+          function()
+            require("bufferline").move_to(math.max(1, vim.v.count))
+          end,
+          mode = { "n", "v" },
+          desc = "BufferLineMoveTo (positive index)",
+        },
+        {
+          "<Leader>b<Bslash>",
+          function()
+            require("bufferline").move_to(math.min(-1, -vim.v.count))
+          end,
+          mode = { "n", "v" },
+          desc = "BufferLineMoveTo (negative index)",
         },
         {
           "<Space>p",
@@ -217,6 +218,13 @@ return {
             require("bufferline").close_in_direction("right")
           end,
           desc = "BufferLineCloseRight",
+        },
+        {
+          "<Leader>Bo",
+          function()
+            require("bufferline").close_others()
+          end,
+          desc = "BufferLineCloseOthers",
         },
         {
           "<Leader>Bt",
@@ -314,7 +322,9 @@ return {
     opts = {
       auto_resize_height = true,
       preview = {
-        win_height = 24,
+        border = "single",
+        win_height = 50,
+        win_vheight = 50,
       },
     },
   },
@@ -347,7 +357,7 @@ return {
               padding = { 0, 0 },
             },
             win_options = {
-              winblend = 30,
+              winblend = 20,
             },
           },
         },
