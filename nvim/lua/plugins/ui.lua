@@ -145,36 +145,73 @@ return {
           desc = "BufferLineCyclePrev",
         },
         {
-          "<Space><Right>",
-          function()
-            require("bufferline").move(math.max(1, vim.v.count))
-          end,
-          mode = { "n", "v" },
-          desc = "BufferLineMoveNext",
-        },
-        {
           "<Space><Left>",
           function()
-            require("bufferline").move(math.min(-1, -vim.v.count))
+            local buf_count = require("bufferline.utils").get_buf_count()
+            local idx = require("bufferline.commands").get_current_element_index(require("bufferline.state"))
+            local target = (idx - vim.v.count1 - 1) % buf_count + 1
+            if target ~= idx then
+              local dir = target > idx and 1 or -1
+              local move = require("bufferline").move
+              for _ = 1, math.abs(target - idx) do
+                move(dir)
+              end
+            end
           end,
           mode = { "n", "v" },
-          desc = "BufferLineMovePrev",
+          desc = "[count] move left",
         },
         {
-          "<Leader>b<Tab>",
+          "<Space><Right>",
           function()
-            require("bufferline").move_to(math.max(1, vim.v.count))
+            local buf_count = require("bufferline.utils").get_buf_count()
+            local idx = require("bufferline.commands").get_current_element_index(require("bufferline.state"))
+            local target = (idx + vim.v.count1 - 1) % buf_count + 1
+            if target ~= idx then
+              local dir = target > idx and 1 or -1
+              local move = require("bufferline").move
+              for _ = 1, math.abs(target - idx) do
+                move(dir)
+              end
+            end
           end,
           mode = { "n", "v" },
-          desc = "BufferLineMoveTo (positive index)",
+          desc = "[count] move right",
         },
         {
-          "<Leader>b<Bslash>",
+          "<Space><S-Left>",
           function()
-            require("bufferline").move_to(math.min(-1, -vim.v.count))
+            local buf_count = require("bufferline.utils").get_buf_count()
+            local state = require("bufferline.state")
+            local idx = require("bufferline.commands").get_current_element_index(state)
+            local delta = math.abs(idx - vim.v.count1) % buf_count
+            if delta > 0 then
+              local move = require("bufferline").move
+              local dir = vim.v.count1 > idx and 1 or -1
+              for _ = 1, delta do
+                move(dir)
+              end
+            end
           end,
-          mode = { "n", "v" },
-          desc = "BufferLineMoveTo (negative index)",
+          desc = "[count] move to (positive index)",
+        },
+
+        {
+          "<Space><S-Right>",
+          function()
+            local buf_count = require("bufferline.utils").get_buf_count()
+            local state = require("bufferline.state")
+            local idx = require("bufferline.commands").get_current_element_index(state)
+            local target = (buf_count - vim.v.count1) % buf_count + 1
+            if target ~= idx then
+              local dir = target > idx and 1 or -1
+              local move = require("bufferline").move
+              for _ = 1, math.abs(target - idx) do
+                move(dir)
+              end
+            end
+          end,
+          desc = "[count] move to (negative index)",
         },
         {
           "<Space>p",
