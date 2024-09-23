@@ -99,14 +99,14 @@ return {
           desc = "marks",
         },
         {
-          "<Leader>qf",
+          "<Leader>qF",
           function()
             require("telescope.builtin").quickfix()
           end,
           desc = "quickfix",
         },
         {
-          "<Leader>qF",
+          "<Leader>qf",
           function()
             require("telescope.builtin").quickfixhistory()
           end,

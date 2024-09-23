@@ -2,6 +2,7 @@ vim.opt_local.shiftwidth = 2
 vim.opt_local.tabstop = 2
 vim.opt_local.softtabstop = 2
 
+-- https://github.com/nvim-treesitter/nvim-treesitter#folding
 vim.keymap.set("n", "<Leader>zf", function()
   vim.opt_local.foldnestmax = 1
   vim.opt_local.foldmethod = "expr"

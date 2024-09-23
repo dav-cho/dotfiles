@@ -170,6 +170,7 @@ alias gcnn!='git commit --verbose --no-edit --amend --date=now'
 alias gdni="git diff --no-index --"
 alias gdno="git diff --name-only"
 alias gdst="git diff --stat"
+alias ghn="MANPAGER='nvim +Man! +colorscheme\ tokyonight' git help"
 alias gl1="git log -1 --stat --pretty=fuller"
 alias gl="git log --oneline"
 alias gla="git log --oneline --all"

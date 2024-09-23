@@ -47,7 +47,7 @@ return {
             table.sort(choices)
             vim.ui.select(choices, { prompt = "Select Theme:" }, function(choice)
               if choice and themes[choice] then
-                vim.cmd("colorscheme " .. choice)
+                set_theme(themes[choice])
               end
             end)
           end,

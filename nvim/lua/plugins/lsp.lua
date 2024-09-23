@@ -92,7 +92,6 @@ return {
 
       for server, config in pairs(servers) do
         lspconfig[server].setup(vim.tbl_deep_extend("force", {
-          -- on_init = on_init,
           capabilities = capabilities,
         }, config))
       end
