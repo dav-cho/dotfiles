@@ -61,27 +61,18 @@ return {
             ["if"] = "@function.inner",
             ["aa"] = "@parameter.outer",
             ["ia"] = "@parameter.inner",
-            ["ar"] = "@loop.outer",
-            ["ir"] = "@loop.inner",
-            ["av"] = "@conditional.outer",
-            ["iv"] = "@conditonal.inner",
-            ["aq"] = "@block.outer",
-            ["iq"] = "@block.inner",
-            ["ax"] = "@comment.outer",
+            ["al"] = "@loop.outer",
+            ["il"] = "@loop.inner",
+            ["a;"] = "@conditional.outer",
+            ["i;"] = "@conditional.inner",
+            ["a/"] = "@comment.*",
           },
-          selection_modes = {
-            ["@class.outer"] = "V",
-            ["@class.inner"] = "V",
-            ["@function.outer"] = "V",
-            ["@function.inner"] = "V",
-            ["@loop.outer"] = "V",
-            ["@loop.inner"] = "V",
-            ["@conditional.outer"] = "V",
-            ["@conditional.inner"] = "V",
-            ["@block.outer"] = "V",
-            ["@block.inner"] = "V",
-            ["@comment.outer"] = "V",
-          },
+          selection_modes = function(opts)
+            if opts.query_string:match("@parameter.*") then
+              return "v"
+            end
+            return "V"
+          end,
         },
         move = {
           enable = true,
@@ -89,37 +80,33 @@ return {
             ["]g"] = "@class.outer",
             ["]f"] = "@function.outer",
             ["]a"] = "@parameter.inner",
-            ["]r"] = "@loop.outer",
-            ["]v"] = "@conditional.outer",
-            ["]q"] = "@block.outer",
-            ["]x"] = "@comment.outer",
+            ["]l"] = "@loop.outer",
+            ["];"] = "@conditional.outer",
+            ["]/"] = "@comment.*",
           },
           goto_next_end = {
             ["]G"] = "@class.outer",
             ["]F"] = "@function.outer",
             ["]A"] = "@parameter.outer",
-            ["]R"] = "@loop.outer",
-            ["]V"] = "@conditional.outer",
-            ["]Q"] = "@block.outer",
-            ["]X"] = "@comment.outer",
+            ["]L"] = "@loop.outer",
+            ["]:"] = "@conditional.outer",
+            ["]?"] = "@comment.*",
           },
           goto_previous_start = {
             ["[g"] = "@class.outer",
             ["[f"] = "@function.outer",
             ["[a"] = "@parameter.inner",
-            ["[r"] = "@loop.outer",
-            ["[v"] = "@conditional.outer",
-            ["[q"] = "@block.outer",
-            ["[x"] = "@comment.outer",
+            ["[l"] = "@loop.outer",
+            ["[;"] = "@conditional.outer",
+            ["[/"] = "@comment.*",
           },
           goto_previous_end = {
             ["[G"] = "@class.outer",
             ["[F"] = "@function.outer",
             ["[A"] = "@parameter.outer",
-            ["[R"] = "@loop.outer",
-            ["[V"] = "@conditional.outer",
-            ["[Q"] = "@block.outer",
-            ["[X"] = "@comment.outer",
+            ["[L"] = "@loop.outer",
+            ["[:"] = "@conditional.outer",
+            ["[?"] = "@comment.*",
           },
         },
         swap = {
@@ -128,21 +115,15 @@ return {
             ["<M-CR><M-g>"] = "@class.outer",
             ["<M-CR><M-f>"] = "@function.outer",
             ["<M-CR><M-CR>"] = "@parameter.inner",
-            ["<M-CR><M-r>"] = "@loop.outer",
-            ["<M-CR><M-v>"] = "@conditional.outer",
-            ["<M-CR><M-q>"] = "@block.outer",
-            ["<M-CR><M-x>"] = "@comment.outer",
-            ["<M-CR><M-e>"] = "@element",
+            ["<M-CR><M-l>"] = "@loop.outer",
+            ["<M-CR><M-;>"] = "@conditional.outer",
           },
           swap_previous = {
             ["<M-BS><M-g>"] = "@class.outer",
             ["<M-BS><M-f>"] = "@function.outer",
             ["<M-BS><M-BS>"] = "@parameter.inner",
-            ["<M-BS><M-r>"] = "@loop.outer",
-            ["<M-BS><M-v>"] = "@conditional.outer",
-            ["<M-BS><M-q>"] = "@block.outer",
-            ["<M-BS><M-x>"] = "@comment.outer",
-            ["<M-BS><M-e>"] = "@element",
+            ["<M-BS><M-l>"] = "@loop.outer",
+            ["<M-BS><M-;>"] = "@conditional.outer",
           },
         },
       },
@@ -219,61 +200,55 @@ return {
     event = "VeryLazy",
     keys = {
       {
-        "iI",
-        "<Cmd>lua require('various-textobjs').indentation('inner', 'outer')<CR>",
-        mode = { "o", "x" },
-        desc = "[various-textobjs] inner-outer indentation",
-      },
-      {
-        "io",
+        "i<M-i>", -- override: ig
         "<Cmd>lua require('various-textobjs').greedyOuterIndentation('inner')<CR>",
         mode = { "o", "x" },
         desc = "[various-textobjs] greedyOuterIndentation('inner')",
       },
       {
-        "ao",
+        "a<M-i>", -- override: ag
         "<Cmd>lua require('various-textobjs').greedyOuterIndentation('outer')<CR>",
         mode = { "o", "x" },
         desc = "[various-textobjs] greedyOuterIndentation('outer')",
       },
       {
-        "i<M-b>",
+        "i<M-b>", -- override: io
         "<Cmd>lua require('various-textobjs').anyBracket('inner')<CR>",
         mode = { "o", "x" },
         desc = "[various-textobjs] anyBracket('inner')",
       },
       {
-        "a<M-b>",
+        "a<M-b>", -- override: ao
         "<Cmd>lua require('various-textobjs').anyBracket('outer')<CR>",
         mode = { "o", "x" },
         desc = "[various-textobjs] anyBracket('outer')",
       },
       {
-        "<M-]>",
+        "<M-]>", -- override: r
         "<Cmd>lua require('various-textobjs').restOfParagraph()<CR>",
         mode = { "o", "x" },
         desc = "[various-textobjs] restOfParagraph()",
       },
       {
-        "g-",
+        "g-", -- override: n
         "<Cmd>lua require('various-textobjs').nearEoL()<CR>",
         mode = { "o", "x" },
         desc = "[various-textobjs] nearEoL()",
       },
       {
-        "i|",
+        "i|", -- override: |
         "<Cmd>lua require('various-textobjs').column()<CR>",
         mode = { "o", "x" },
         desc = "[various-textobjs] column()",
       },
       {
-        "iu",
+        "iu", -- override: L
         "<Cmd>lua require('various-textobjs').url()<CR>",
         mode = { "o", "x" },
         desc = "[various-textobjs] url()",
       },
       {
-        "id",
+        "id", -- override: !
         "<Cmd>lua require('various-textobjs').diagnostic()<CR>",
         mode = { "o", "x" },
         desc = "[various-textobjs] diagnostic()",
@@ -283,9 +258,14 @@ return {
         function()
           require("various-textobjs").url()
           if vim.fn.mode():find("v") then
-            vim.cmd.normal({ '"zy', bang = true })
-            local url = vim.fn.getreg("z")
-            vim.ui.open(url)
+            local unnamed = [["]]
+            local orig = vim.fn.getreg(unnamed)
+            local orig_type = vim.fn.getregtype(unnamed)
+            vim.cmd.normal({ "y", bang = true })
+            vim.ui.open(vim.fn.getreg(unnamed))
+            for _, reg in ipairs({ unnamed, "+", "*" }) do
+              vim.fn.setreg(reg, orig, orig_type)
+            end
           end
         end,
         desc = "[various-textobjs] URL Opener",
@@ -314,12 +294,9 @@ return {
     opts = {
       useDefaultKeymaps = true,
       disabledKeymaps = {
-        "iI",
         "ig",
         "ag",
         "Q",
-        "iq",
-        "aq",
         "io",
         "ao",
         "r",
