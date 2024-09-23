@@ -150,42 +150,53 @@ return {
         desc = "[Oil] Discard all changes",
       },
     },
-    opts = function()
-      local detail = false
-
-      return {
-        default_file_explorer = false,
-        keymaps = {
-          ["q"] = "actions.close",
-          ["<C-v>"] = "actions.select_vsplit",
-          ["<C-x>"] = "actions.select_split",
-          ["gd"] = {
-            desc = "Toggle file detail view",
-            callback = function()
-              detail = not detail
-              if detail then
-                require("oil").set_columns({ "icon", "permissions", "size", "mtime" })
-              else
-                require("oil").set_columns({ "icon" })
-              end
-            end,
-          },
-        },
-        view_options = {
-          show_hidden = true,
-        },
-        float = {
-          win_options = {
-            winblend = 10,
-          },
-          override = function(conf)
-            conf.height = math.floor(vim.o.lines * 0.3)
-            conf.row = (vim.o.lines - conf.height) - 4
-            return conf
+    opts = {
+      default_file_explorer = false,
+      keymaps = {
+        ["q"] = "actions.close",
+        ["<Leader>wv"] = "actions.select_vsplit",
+        ["<Leader>ws"] = "actions.select_split",
+        ["<Leader>yy"] = { "actions.yank_entry", opts = { modify = ":~:." }, desc = "[Oil] Yank relative path" },
+        ["<Leader>YY"] = { "actions.yank_entry", desc = "[Oil] Yank absolute path" },
+        ["<Leader>yf"] = { "actions.yank_entry", opts = { modify = ":t" }, desc = "[Oil] Yank file name" },
+        ["<Leader>qa"] = {
+          desc = "Append entry to quickfix list",
+          callback = function()
+            require("oil.actions").add_to_qflist.callback()
           end,
         },
-      }
-    end,
+        ["gd"] = {
+          desc = "[Oil] Toggle file detail view",
+          callback = (function()
+            local default = nil
+            local all = { "icon", "permissions", "size", "mtime" }
+            return function()
+              default = default or require("oil.config").columns
+              if vim.deep_equal(default, require("oil.config").columns) then
+                require("oil").set_columns(all)
+              else
+                require("oil").set_columns(default)
+              end
+            end
+          end)(),
+        },
+      },
+      view_options = {
+        show_hidden = true,
+      },
+      float = {
+        win_options = {
+          winblend = 10,
+        },
+        override = function(conf)
+          local height = math.floor(vim.o.lines * 0.25)
+          local count = #vim.fn.split(vim.fn.glob(vim.fn.expand("%:p:h") .. "/*"), "\n") + 1
+          conf.height = math.max(height, count)
+          conf.row = (vim.o.lines - conf.height) - 4
+          return conf
+        end,
+      },
+    },
   },
   {
     "nvim-tree/nvim-tree.lua",
