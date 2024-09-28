@@ -98,16 +98,16 @@ return {
 
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(ev)
+          local buf_map = function(mode, lhs, rhs, options)
+            options = vim.tbl_deep_extend("force", { buffer = ev.buf }, options or {})
+            vim.keymap.set(mode, lhs, rhs, options)
+          end
+
           local diagnostic_goto_next, diagnostic_goto_prev =
             require("nvim-treesitter.textobjects.repeatable_move").make_repeatable_move_pair(
               vim.diagnostic.goto_next,
               vim.diagnostic.goto_prev
             )
-
-          local buf_map = function(mode, lhs, rhs, options)
-            options = vim.tbl_deep_extend("force", { buffer = ev.buf }, options or {})
-            vim.keymap.set(mode, lhs, rhs, options)
-          end
 
           buf_map("n", "[d", diagnostic_goto_prev, { desc = "vim.diagnostic.goto_prev" })
           buf_map("n", "]d", diagnostic_goto_next, { desc = "vim.diagnostic.goto_next" })

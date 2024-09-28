@@ -148,7 +148,7 @@ return {
         desc = "[Fugitive] :Git commit --amend --no-edit",
       },
       {
-        "<C-g>~!",
+        "<C-g>!~",
         "<Cmd>Git commit --amend --no-edit --date=now<CR>",
         mode = { "n", "x" },
         desc = "[Fugitive] :Git commit --amend --no-edit",
@@ -160,7 +160,7 @@ return {
         desc = "[Fugitive] :Git commit --amend --no-edit",
       },
       {
-        "<M-g>~!",
+        "<M-g>!~",
         "<Cmd>Git commit --all --amend --no-edit --date=now<CR>",
         mode = { "n", "x" },
         desc = "[Fugitive] :Git commit --amend --no-edit",
