@@ -30,6 +30,7 @@ plugins=(
 export EDITOR=nvim
 export VISUAL=nvim
 export LESS="--mouse -R"
+# export MANPAGER='nvim +Man!'
 
 export BAT_STYLE="plain"
 export BAT_THEME="Coldark-Dark"
@@ -90,6 +91,7 @@ export FZF_CTRL_R_OPTS="
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza --tree --color=always $realpath'
 
 eval "$(atuin init zsh)"
+# . "$HOME/.atuin/bin/env"
 
 [[ -e "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
 
@@ -168,6 +170,9 @@ alias eza="eza --time-style=long-iso"
 alias ghco="gh copilot"
 alias mann="MANPAGER='nvim +Man! +colorscheme\ tokyonight' man"
 alias rg="rg --smart-case"
+# alias mann="MANPAGER='nvim +Man! +colorscheme\ onenord' man"
+# alias nvimm="nvim +syntax\ off +filetype\ off +set\ noswapfile +set\ norelativenumber"
+# alias nvimm="nvim +syntax\ off +filetype\ off +set\ noswapfile +set\ noundofile +set\ norelativenumber"
 
 alias gcnn!='git commit --verbose --no-edit --amend --date=now'
 alias gdni="git diff --no-index --"

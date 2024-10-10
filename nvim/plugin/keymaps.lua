@@ -1,5 +1,10 @@
 local map = vim.keymap.set
 
+-- TODO
+-- local function goto_window(dir)
+--   return string.format([[<Cmd>exe v:count1 . "wincmd %s"<CR>]], dir)
+-- end
+
 local function goto_tab(cmd)
   if vim.v.count > 0 then
     return vim.cmd(cmd .. vim.v.count)

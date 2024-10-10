@@ -43,6 +43,8 @@ return {
         end,
         desc = "[Comment] Comment paragraph",
       },
+      -- TODO: enable dot repeat - change to Ex-commands?
+      -- see note from: https://github.com/chrisgrieser/nvim-various-textobjs/blob/main/README.md#configuration
       {
         "<Leader>#",
         function()
@@ -50,6 +52,18 @@ return {
         end,
         desc = "[Comment] TODO above",
       },
+
+      -- {
+      --   "<Leader>#",
+      --   function()
+      --     local keys = "gcOTODO<Esc>"
+      --     vim.api.nvim_input(keys)
+      --     -- Register the keys for repeating with the dot command
+      --     vim.fn["repeat#set"](vim.api.nvim_replace_termcodes(keys, true, false, true))
+      --   end,
+      --   desc = "[Comment] TODO above",
+      -- },
+
       {
         "<Leader>$",
         function()
@@ -149,6 +163,14 @@ return {
         end,
         desc = "[Oil] Discard all changes",
       },
+      {
+        "<C-v>",
+        function()
+          require("oil.actions").select_vsplit.callback()
+        end,
+        ft = "oil",
+        desc = "[Oil] Select vsplit",
+      },
     },
     opts = {
       default_file_explorer = false,
@@ -160,6 +182,9 @@ return {
         ["<Leader>YY"] = { "actions.yank_entry", desc = "[Oil] Yank absolute path" },
         ["<Leader>yf"] = { "actions.yank_entry", opts = { modify = ":t" }, desc = "[Oil] Yank file name" },
         ["<Leader>qa"] = {
+          -- TODO: oil.actions.add_to_qflist.callback but for single file
+          -- separate qf list by name?
+          -- loclist?
           desc = "Append entry to quickfix list",
           callback = function()
             require("oil.actions").add_to_qflist.callback()
@@ -188,6 +213,7 @@ return {
         win_options = {
           winblend = 10,
         },
+        -- TODO: set dynamic height and/or width
         override = function(conf)
           local height = math.floor(vim.o.lines * 0.25)
           local count = #vim.fn.split(vim.fn.glob(vim.fn.expand("%:p:h") .. "/*"), "\n") + 1
@@ -195,6 +221,11 @@ return {
           conf.row = (vim.o.lines - conf.height) - 4
           return conf
         end,
+        -- override = function(conf)
+        --   conf.height = math.floor(vim.o.lines * 0.3)
+        --   conf.row = (vim.o.lines - conf.height) - 4
+        --   return conf
+        -- end,
       },
     },
   },
@@ -313,6 +344,14 @@ return {
         end,
       })
     end,
+  },
+  { -- TODO
+    "folke/persistence.nvim",
+    enabled = false,
+    event = "BufReadPre", -- this will only start session saving when an actual file was opened
+    opts = {
+      -- add any custom options here
+    },
   },
   {
     "danymat/neogen",

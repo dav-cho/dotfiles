@@ -356,6 +356,11 @@ return {
     "kevinhwang91/nvim-bqf",
     dependencies = { "junegunn/fzf" },
     ft = "qf",
+    -- keys = {
+    --   { "<Space>q", "<Cmd>copen<CR>", desc = "[bqf] Open qflist" },
+    --   { "<Space>-", "<Cmd>cprevious<CR>", desc = "qflist previous" },
+    --   { "<Space>=", "<Cmd>cnext<CR>", desc = "qflist next" },
+    -- },
     opts = {
       auto_resize_height = true,
       preview = {
@@ -387,6 +392,16 @@ return {
       end
 
       layout.initialize = initialize
+
+      -- vim.api.nvim_create_autocmd("FileType", {
+      --   group = vim.api.nvim_create_augroup("UserBqf", { clear = false }),
+      --   pattern = "qf",
+      --   callback = function()
+      --     vim.api.nvim_set_option_value("winfixheight", false, { win = 0 })
+      --     vim.api.nvim_win_set_height(0, math.min(self.custom.max_height, vim.api.nvim_buf_line_count(0)))
+      --     vim.api.nvim_set_option_value("winfixheight", true, { win = 0 })
+      --   end,
+      -- })
     end,
   },
   {
@@ -600,18 +615,33 @@ return {
     "folke/zen-mode.nvim",
     dependencies = { "folke/twilight.nvim" },
     keys = {
+      -- {
+      --   "<Leader>zz",
+      --   function()
+      --     require("zen-mode").toggle()
+      --   end,
+      --   silent = true,
+      --   desc = "[Zen Mode] Toggle",
+      -- },
       {
         "<Leader>zz",
         function()
+          if require("zen-mode.view").is_open() then
+            require("zen-mode").toggle()
+            return
+          end
+          local view = vim.fn.winsaveview()
+          view.lnum = view.lnum + 2
           require("zen-mode").toggle()
+          vim.fn.winrestview(view)
         end,
         silent = true,
         desc = "[Zen Mode] Toggle",
       },
       {
-        "<Leader>zc",
+        "<Leader>zl",
         function()
-          require("zen-mode").toggle({ window = { width = 0.5 } })
+          require("zen-mode").toggle({ window = { width = 1 } })
         end,
         silent = true,
         desc = "[Zen Mode] Toggle",
@@ -630,11 +660,12 @@ return {
       },
     },
     opts = {
-      window = {
-        width = 1,
-        height = 1,
-      },
+      -- window = {
+      --   width = 1,
+      --   height = 1,
+      -- },
       plugins = {
+        options = { enabled = false },
         twilight = { enabled = false },
       },
     },

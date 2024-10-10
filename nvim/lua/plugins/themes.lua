@@ -77,7 +77,14 @@ return {
     opts = function(_, opts)
       local colors = {
         -- grays
-        bg = "#111111",
+        -- TODO
+        -- bg = "#111111", -- orig: 7%
+        bg = "#0d0d0d", -- 5%
+        -- bg = "#0a0a0a", -- 4%
+        -- bg = "#080808", -- 3%
+        -- bg = "#050505", -- 2%
+        -- bg = "#030303", -- 1%
+        -- bg = "#010101", -- 0%
         cursor_line = "#1d1d1d",
         cursor_line_bright = "#333333",
         win_separator = "#404040",
@@ -85,7 +92,12 @@ return {
         float_border = "#777777",
         comment = "#808080",
         cursor_line_nr = "#a6a6a6",
-        text = "#dddddd",
+        -- TODO
+        -- text = "#dddddd", -- orig: 87%
+        text = "#e0e0e0", -- 88%
+        -- text = "#e3e3e3", -- 89%
+        -- text = "#e6e6e6", -- 90%
+        -- text = "#eeeeee", -- 93%
         -- colors
         diagnostic_virtual_text_error = "#964a5f",
         diagnostic_virtual_text_hint = "#7d6c91",

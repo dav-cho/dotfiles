@@ -113,6 +113,7 @@ return {
           buf_map("n", "]d", diagnostic_goto_next, { desc = "vim.diagnostic.goto_next" })
           buf_map("n", "<Leader>lr", ":LspRestart<CR>", { desc = "LspRestart" })
           buf_map("n", "gl", vim.diagnostic.open_float, { desc = "vim.diagnostic.open_float" })
+          -- buf_map("n", "gL", vim.diagnostic.setloclist, { desc = "vim.diagnostic.setloclist" })
           buf_map("n", "gh", vim.lsp.buf.hover)
           buf_map("n", "gd", vim.lsp.buf.definition)
           buf_map("n", "gD", vim.lsp.buf.type_definition, { desc = "vim.lsp.buf.type_definition" })
@@ -293,6 +294,10 @@ return {
         typescript = { "prettier", "prettierd", stop_after_first = true },
         typescriptreact = { "prettier", "prettierd", stop_after_first = true },
         yaml = { "prettierd", "prettier", "yamlfmt", stop_after_first = true },
+        -- TODO
+        -- yaml = { "prettierd", "prettier", "yamlfmt" },
+        -- yaml = { "yamlfmt", "prettierd", "prettier", stop_after_first = true },
+        -- yaml = { "yamlfmt", "prettierd", "prettier" },
         ["_"] = { "trim_whitespace" },
       },
     },
@@ -311,8 +316,24 @@ return {
       local keymaps = {
         { "<Leader>lf", "<Cmd>Lspsaga finder<CR>", desc = "lsp_finder" },
         { "<F2>", "<Cmd>Lspsaga rename<CR>", desc = "rename" },
-        { "<Space>d", "<Cmd>Lspsaga peek_definition<CR>", desc = "peek_definition" },
-        { "<Space>t", "<Cmd>Lspsaga peek_type_definition<CR>", desc = "peek_type_definition" },
+        -- { "<Space>d", "<Cmd>Lspsaga peek_definition<CR>", desc = "peek_definition" },
+        -- { "<Space>t", "<Cmd>Lspsaga peek_type_definition<CR>", desc = "peek_type_definition" },
+        {
+          "<Space>d",
+          function()
+            vim.cmd("Lspsaga peek_definition")
+            vim.defer_fn(function()
+              vim.cmd("normal! zt")
+            end, 50)
+          end,
+          desc = "peek_definition",
+        },
+        { "<Space>t", function()
+            vim.cmd("Lspsaga peek_type_definition")
+            vim.defer_fn(function()
+              vim.cmd("normal! zt")
+            end, 50)
+        end, desc = "peek_type_definition" },
         { "<Leader>sl", "<Cmd>Lspsaga show_line_diagnostics<CR>", desc = "show_line_diagnostics" },
         { "<Leader>sb", "<Cmd>Lspsaga show_buf_diagnostics<CR>", desc = "show_buf_diagnostics" },
         { "<Leader>sw", "<Cmd>Lspsaga show_workspace_diagnostics<CR>", desc = "show_workspace_diagnostics" },
@@ -345,9 +366,9 @@ return {
         },
       },
       finder = {
-        max_height = 0.9,
-        left_width = 0.3,
-        right_width = 0.7,
+        max_height = 0.8,
+        -- left_width = 0.3,
+        -- right_width = 0.7,
         keys = {
           split = "x",
         },
