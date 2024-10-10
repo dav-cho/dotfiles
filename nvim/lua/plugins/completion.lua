@@ -165,6 +165,7 @@ return {
     end,
   },
   {
+    -- TODO: enable if next is char?
     "windwp/nvim-autopairs",
     dependencies = {
       "nvim-cmp",
@@ -172,6 +173,20 @@ return {
     event = "InsertEnter",
     opts = {
       check_ts = true,
+      -- TODO
+      -- fast_wrap = {
+      --   map = "<M-e>",
+      --   chars = { "{", "[", "(", '"', "'" },
+      --   pattern = [=[[%'%"%>%]%)%}%,]]=],
+      --   end_key = "$",
+      --   before_key = "h",
+      --   after_key = "l",
+      --   cursor_pos_before = true,
+      --   keys = "qwertyuiopzxcvbnmasdfghjkl",
+      --   manual_position = true,
+      --   highlight = "Search",
+      --   highlight_grey = "Comment",
+      -- },
     },
     config = function(_, opts)
       local npairs = require("nvim-autopairs")
@@ -220,6 +235,27 @@ return {
             end),
         })
       end
+
+      -- -- TODO
+      -- -- move past commas and semicolons
+      -- for _, punct in pairs({ ",", ";" }) do
+      --   require("nvim-autopairs").add_rules({
+      --     require("nvim-autopairs.rule")("", punct)
+      --       :with_move(function(opts)
+      --         return opts.char == punct
+      --       end)
+      --       :with_pair(function()
+      --         return false
+      --       end)
+      --       :with_del(function()
+      --         return false
+      --       end)
+      --       :with_cr(function()
+      --         return false
+      --       end)
+      --       :use_key(punct),
+      --   })
+      -- end
     end,
   },
 }
