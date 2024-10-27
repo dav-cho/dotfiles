@@ -603,15 +603,22 @@ return {
       {
         "<Leader>zz",
         function()
+          if require("zen-mode.view").is_open() then
+            require("zen-mode").toggle()
+            return
+          end
+          local view = vim.fn.winsaveview()
+          view.lnum = view.lnum + 2
           require("zen-mode").toggle()
+          vim.fn.winrestview(view)
         end,
         silent = true,
         desc = "[Zen Mode] Toggle",
       },
       {
-        "<Leader>zc",
+        "<Leader>zl",
         function()
-          require("zen-mode").toggle({ window = { width = 0.5 } })
+          require("zen-mode").toggle({ window = { width = 1 } })
         end,
         silent = true,
         desc = "[Zen Mode] Toggle",
@@ -630,11 +637,8 @@ return {
       },
     },
     opts = {
-      window = {
-        width = 1,
-        height = 1,
-      },
       plugins = {
+        options = { enabled = false },
         twilight = { enabled = false },
       },
     },

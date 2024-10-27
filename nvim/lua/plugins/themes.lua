@@ -77,7 +77,7 @@ return {
     opts = function(_, opts)
       local colors = {
         -- grays
-        bg = "#111111",
+        bg = "#0d0d0d", -- 5%
         cursor_line = "#1d1d1d",
         cursor_line_bright = "#333333",
         win_separator = "#404040",
@@ -85,7 +85,7 @@ return {
         float_border = "#777777",
         comment = "#808080",
         cursor_line_nr = "#a6a6a6",
-        text = "#dddddd",
+        text = "#e0e0e0", -- 88%
         -- colors
         diagnostic_virtual_text_error = "#964a5f",
         diagnostic_virtual_text_hint = "#7d6c91",

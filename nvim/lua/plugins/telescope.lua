@@ -187,7 +187,7 @@ return {
           desc = "find_files (buf dir)",
         },
         {
-          "<Space>A",
+          "<Space>a",
           function()
             require("telescope.builtin").find_files({
               hidden = true,
@@ -198,7 +198,7 @@ return {
           desc = "find_files (hidden, no_ignore)",
         },
         {
-          "<Space>a",
+          "<Space>A",
           function()
             require("telescope.builtin").find_files({
               cwd = require("telescope.utils").buffer_dir(),
@@ -589,7 +589,6 @@ return {
 
       return {
         defaults = {
-          -- sorting_strategy = "ascending",
           layout_strategy = "flex",
           dynamic_preview_title = true,
           winblend = 10,
@@ -598,7 +597,7 @@ return {
               preview_width = 0.5,
             },
             flex = {
-              flip_columns = 150,
+              flip_columns = 160,
             },
           },
           mappings = {
@@ -872,6 +871,27 @@ return {
       harpoon:extend(extensions.builtins.command_on_nav("edit"))
       harpoon:extend(extensions.builtins.command_on_nav("lua vim.api.nvim_input('zz')"))
       harpoon:extend(extensions.builtins.navigate_with_number())
+
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup("HarpoonCustom", {}),
+        pattern = "harpoon",
+        callback = function(_)
+          local length = require("harpoon"):list()._length
+          local max_width = math.floor(vim.o.columns * 0.5)
+          local max_height = math.floor(vim.o.lines * 0.5)
+
+          local config = vim.api.nvim_win_get_config(0)
+          local height = math.max(10, math.min(max_height, length))
+          local width = math.min(max_width, config.width)
+          local cfg = {
+            height = height,
+            width = width,
+            row = math.floor((vim.o.lines - height) / 2),
+            col = math.floor((vim.o.columns - width) / 2),
+          }
+          vim.api.nvim_win_set_config(0, vim.tbl_deep_extend("force", config, cfg))
+        end,
+      })
     end,
   },
 }

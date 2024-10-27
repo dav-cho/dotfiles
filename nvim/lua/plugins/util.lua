@@ -149,6 +149,14 @@ return {
         end,
         desc = "[Oil] Discard all changes",
       },
+      {
+        "<C-v>",
+        function()
+          require("oil.actions").select_vsplit.callback()
+        end,
+        ft = "oil",
+        desc = "[Oil] Select vsplit",
+      },
     },
     opts = {
       default_file_explorer = false,
