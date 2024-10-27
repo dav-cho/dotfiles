@@ -1,12 +1,12 @@
-# 21:9
+# 16:9
 
 # toggle window float
-lctrl + lshift - 1 : "$HOME/.config/yabai/toggle-float.sh" --grid 1:6:0:0:4:1        # 2/3 left
-lctrl + lshift - 2 : "$HOME/.config/yabai/toggle-float.sh" --grid 1:6:1:0:4:1        # 2/3 center
-lctrl + lshift - 3 : "$HOME/.config/yabai/toggle-float.sh" --grid 1:6:2:0:4:1        # 2/3 right
-lctrl + lshift - a : "$HOME/.config/yabai/toggle-float.sh" --grid 1:15:4:0:7:1       # XL center
-lctrl + lshift - q : "$HOME/.config/yabai/toggle-float.sh" --grid 1:15:0:0:7:1       # XL left
-lctrl + lshift - w : "$HOME/.config/yabai/toggle-float.sh" --grid 1:15:8:0:7:1       # XL right
+lctrl + lshift - 1 : "$HOME/.config/yabai/toggle-float.sh" --grid 1:15:0:0:7:1       # 1/2 left
+lctrl + lshift - 2 : "$HOME/.config/yabai/toggle-float.sh" --grid 1:15:4:0:7:1       # 1/2 center
+lctrl + lshift - 3 : "$HOME/.config/yabai/toggle-float.sh" --grid 1:15:8:0:7:1       # 1/2 right
+lctrl + lshift - q : "$HOME/.config/yabai/toggle-float.sh" --grid 1:6:0:0:4:1        # XL left
+lctrl + lshift - a : "$HOME/.config/yabai/toggle-float.sh" --grid 1:6:1:0:4:1        # XL center
+lctrl + lshift - w : "$HOME/.config/yabai/toggle-float.sh" --grid 1:6:2:0:4:1        # XL right
 lctrl + lshift - z : "$HOME/.config/yabai/toggle-float.sh" --resize abs:1133:825 \
 			&& "$HOME/.config/yabai/float-center.sh" # S center
 lctrl + lshift - s : "$HOME/.config/yabai/toggle-float.sh" --grid 15:7:2:1:3:13      # L center
@@ -22,5 +22,5 @@ ralt + rshift - z : "$HOME/.config/yabai/toggle-float.sh" --grid 11:16:6:2:4:7  
 
 # obsidian
 lctrl + lalt + lcmd - o : $HOME/.config/yabai/toggle-float.sh \
-                          && yabai -m window --move abs:698:50 \
-                          && yabai -m window --resize abs:2044:1341
+                          && yabai -m window --resize abs:2044:1341 \
+                          && "$HOME/.config/yabai/float-center.sh"
