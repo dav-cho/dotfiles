@@ -19,8 +19,3 @@ ralt + rshift - x : "$HOME/.config/yabai/toggle-float.sh" --grid 6:5:2:2:1:2    
 ralt + rshift - q : "$HOME/.config/yabai/toggle-float.sh" --grid 19:31:10:1:11:17   # L portrait center
 ralt + rshift - a : "$HOME/.config/yabai/toggle-float.sh" --grid 11:14:5:1:4:8      # M portrait center
 ralt + rshift - z : "$HOME/.config/yabai/toggle-float.sh" --grid 11:16:6:2:4:7      # S portrait center
-
-# obsidian
-lctrl + lalt + lcmd - o : $HOME/.config/yabai/toggle-float.sh \
-                          && yabai -m window --resize abs:2044:1341 \
-                          && "$HOME/.config/yabai/float-center.sh"
