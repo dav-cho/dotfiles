@@ -19,5 +19,10 @@ yabai -m rule --add \
     manage=off
 
 yabai -m signal --add \
-    event=window_created \
+    event=window_focused \
     action="yabai -m window $YABAI_WINDOW_ID --sub-layer normal"
+
+yabai -m rule --add \
+    app="Google Chrome" \
+    title="Bitwarden" \
+    manage=off
