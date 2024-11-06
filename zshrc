@@ -60,10 +60,18 @@ export FZF_ALT_C_COMMAND="fd --type d --unrestricted --exclude .git --exclude no
 export FZF_DEFAULT_OPTS="
   --cycle
   --multi
+  --layout=reverse
+  --height=100%
+  --tmux=80%
   --scrollbar='▐'
   --preview='if [[ -f {1} ]]; then bat --color=always --style=numbers --line-range=:500 {}; else eza --tree --color=always {}; fi'
+  --bind='ctrl-\:toggle'
+  --bind='ctrl-n:toggle+down'
+  --bind='ctrl-p:toggle+up'
   --bind='ctrl-f:page-down'
   --bind='ctrl-b:page-up'
+  --bind='ctrl-v:become(nvim {+} < /dev/tty > /dev/tty)'
+  --bind='ctrl-y:execute-silent(echo {+} | tr -d '\''\n'\'' | pbcopy)'
   --bind='ctrl-d:preview-page-down'
   --bind='ctrl-u:preview-page-up'
   --bind='ctrl-_:toggle-preview'
@@ -71,11 +79,8 @@ export FZF_DEFAULT_OPTS="
   --bind='alt-f:change-prompt(󰈙 > )+reload(fd -t f -u -E .git -E node_modules -E __pycache__)'
   --bind='alt-d:change-prompt(󰉋 > )+reload(fd -t d -u -E .git -E node_modules -E __pycache__)'
   --bind='alt-.:change-prompt(.> )+reload(fd -t d -u)'
-  --bind='ctrl-v:become(nvim {+} < /dev/tty > /dev/tty)'
-  --bind='ctrl-y:execute-silent(echo {+} | tr -d '\''\n'\'' | pbcopy)'
-  --bind='ctrl-\:toggle'
-  --bind='alt-j:toggle+down'
-  --bind='alt-k:toggle+up'
+  --bind='alt-enter:select-all+accept'
+  --bind='alt-\:toggle-all'
   --bind='alt-space:jump'
   --bind='alt-/:jump-accept'
 "
@@ -87,7 +92,7 @@ export FZF_CTRL_R_OPTS="
   --bind='ctrl-y:execute-silent(echo -n {2..} | pbcopy)'
 "
 [[ -f $HOME/.fzf.zsh ]] && source $HOME/.fzf.zsh
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza --tree --color=always $realpath'
+zstyle ':fzf-tab:complete:*' fzf-preview 'if [[ -f $realpath ]]; then bat --color=always --style=numbers --line-range=:500 $realpath; else eza --tree --color=always $realpath; fi'
 
 eval "$(atuin init zsh)"
 
@@ -138,6 +143,11 @@ _delta() {
   zle accept-line
 }
 
+_fzf-pipe() {
+  BUFFER+=" | fzf"
+  zle accept-line
+}
+
 _rfv() {
   rfv
 }
@@ -145,11 +155,13 @@ _rfv() {
 zle -N _nvim
 zle -N _nvim-man
 zle -N _delta
+zle -N _fzf-pipe
 zle -N _rfv
 
 bindkey -e '^V' _nvim
 bindkey -e '^[M' _nvim-man
 bindkey -e '^[D' _delta
+bindkey -e '^[F' _fzf-pipe
 bindkey -e '^G' _rfv
 
 bindkey -e '^[r' fzf-history-widget
