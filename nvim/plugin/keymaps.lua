@@ -84,7 +84,7 @@ map("n", "<Leader>yr", [[<Cmd>let @+=expand("%:~:.")<CR>]], { desc = "Yank relat
 map("n", "<Leader>ya", [[<Cmd>let @+=fnamemodify(expand("%:p"), ":~")<CR>]], { desc = "Yank abbreviated file path" })
 map("n", "<Leader>yA", [[<Cmd>let @+=expand("%:p")<CR>]], { desc = "Yank absolute file path" })
 
-map({ "n", "v" }, "z<CR>", "zt", { noremap = true, desc = "zt" })
+map({ "n", "v" }, "z<CR>", "zt<C-y>", { noremap = true, desc = "zt<C-y>" })
 map({ "n", "v" }, "<Space><CR>", function()
   local rows = math.floor(vim.api.nvim_win_get_height(0) / 5)
   rows = rows - vim.opt.scrolloff:get()

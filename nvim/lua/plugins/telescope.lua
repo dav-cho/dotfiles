@@ -589,16 +589,21 @@ return {
 
       return {
         defaults = {
+          sorting_strategy = "ascending",
           layout_strategy = "flex",
           dynamic_preview_title = true,
           winblend = 10,
           layout_config = {
-            horizontal = {
-              preview_width = 0.5,
-            },
+            prompt_position = "top",
             flex = {
               flip_columns = 160,
             },
+            horizontal = {
+              preview_width = 0.5,
+            },
+            vertical = {
+              mirror = true,
+            }
           },
           mappings = {
             i = {
@@ -665,11 +670,15 @@ return {
                 ["<C-t>"] = actions.select_tab,
                 ["<M-t>"] = fb_actions.change_cwd,
                 ["<M-i>"] = fb_actions.toggle_respect_gitignore,
+                ["<M-c>"] = fb_actions.create,
               },
               n = {
                 ["h"] = false,
+                ["c"] = false,
+                ["w"] = false,
                 ["<C-h>"] = fb_actions.toggle_hidden,
                 ["<M-i>"] = fb_actions.toggle_respect_gitignore,
+                ["<M-c>"] = fb_actions.create,
               },
             },
           },

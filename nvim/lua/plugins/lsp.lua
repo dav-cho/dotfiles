@@ -138,7 +138,7 @@ return {
                 vim.cmd(cmd)
               end
               original_handler(err, result, ctx, config)
-              vim.api.nvim_input("zt")
+              vim.api.nvim_input("zt<C-y>")
               vim.lsp.handlers["textDocument/definition"] = original_handler
             end
             vim.lsp.buf.definition()

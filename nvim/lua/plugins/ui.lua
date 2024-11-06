@@ -387,6 +387,12 @@ return {
       end
 
       layout.initialize = initialize
+
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup("UserBqf", { clear = false }),
+        pattern = "qf",
+        command = "wincmd J",
+      })
     end,
   },
   {
@@ -608,7 +614,6 @@ return {
             return
           end
           local view = vim.fn.winsaveview()
-          view.lnum = view.lnum + 2
           require("zen-mode").toggle()
           vim.fn.winrestview(view)
         end,
