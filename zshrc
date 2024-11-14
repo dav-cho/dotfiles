@@ -91,7 +91,7 @@ export FZF_CTRL_R_OPTS="
   --preview-window='up:3:hidden:wrap'
   --bind='ctrl-y:execute-silent(echo -n {2..} | pbcopy)'
 "
-[[ -f $HOME/.fzf.zsh ]] && source $HOME/.fzf.zsh
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 zstyle ':fzf-tab:complete:*' fzf-preview 'if [[ -f $realpath ]]; then bat --color=always --style=numbers --line-range=:500 $realpath; else eza --tree --color=always $realpath; fi'
 
 eval "$(atuin init zsh)"
