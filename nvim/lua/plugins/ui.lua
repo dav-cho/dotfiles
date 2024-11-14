@@ -293,6 +293,16 @@ return {
         },
       }
 
+      for i = 1, 10 do
+        table.insert(keymaps, {
+          "<Leader>" .. i % 10,
+          function()
+            require("bufferline").go_to(i)
+          end,
+          desc = string.format("BufferLineGoToBuffer %d", i),
+        })
+      end
+
       for _, keymap in pairs(keymaps) do
         keymap.desc = "[BufferLine] " .. (keymap.desc or "")
       end

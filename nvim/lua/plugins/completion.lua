@@ -37,7 +37,7 @@ return {
         },
       })
 
-      return vim.tbl_deep_extend("force", opts, {
+      return {
         performance = {
           fetching_timeout = 100,
         },
@@ -63,6 +63,7 @@ return {
           ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
           ["<C-u>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
           ["<CR>"] = cmp.mapping(cmp.mapping.confirm({ select = true })),
+          ["<M-CR>"] = cmp.mapping(cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true })),
           ["<M-/>"] = cmp.mapping(cmp.mapping.close(), { "i", "c" }),
           ["<C-_>"] = cmp.mapping(function()
             if cmp.visible() then
@@ -74,8 +75,8 @@ return {
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
-            elseif luasnip.expand_or_locally_jumpable() then
-              luasnip.expand_or_jump()
+            elseif luasnip.locally_jumpable(1) then
+              luasnip.jump(1)
             elseif has_words_before() then
               cmp.complete()
             else
@@ -85,7 +86,7 @@ return {
           ["<S-Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_prev_item()
-            elseif luasnip.jumpable(-1) then
+            elseif luasnip.locally_jumpable(-1) then
               luasnip.jump(-1)
             else
               fallback()
@@ -146,7 +147,7 @@ return {
           { name = "buffer" },
           { name = "path" },
         }),
-      })
+      }
     end,
   },
   {

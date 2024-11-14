@@ -147,6 +147,15 @@ return {
         vim.cmd("normal! zz")
       end, { desc = "repeat_last_move_previous() + redraw top 1/5" })
 
+      vim.keymap.set({ "n", "x", "o" }, "<M-:>", function()
+        repeat_move.repeat_last_move_next()
+        vim.cmd("normal! zt")
+      end, { desc = "repeat_last_move_next() + redraw top" })
+      vim.keymap.set({ "n", "x", "o" }, "<M-Bar>", function()
+        repeat_move.repeat_last_move_previous()
+        vim.cmd("normal! zt")
+      end, { desc = "repeat_last_move_previous() + redraw top" })
+
       local next_fold, prev_fold = repeat_move.make_repeatable_move_pair(function()
         vim.cmd("normal! zj")
       end, function()
@@ -296,6 +305,7 @@ return {
       disabledKeymaps = {
         "ig",
         "ag",
+        "C",
         "Q",
         "io",
         "ao",

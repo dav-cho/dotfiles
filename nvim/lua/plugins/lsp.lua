@@ -311,22 +311,8 @@ return {
       local keymaps = {
         { "<Leader>lf", "<Cmd>Lspsaga finder<CR>", desc = "lsp_finder" },
         { "<F2>", "<Cmd>Lspsaga rename<CR>", desc = "rename" },
-        {
-          "<Space>d",
-          function()
-            vim.cmd("Lspsaga peek_definition")
-            vim.defer_fn(function()
-              vim.cmd("normal! zt")
-            end, 50)
-          end,
-          desc = "peek_definition",
-        },
-        { "<Space>t", function()
-            vim.cmd("Lspsaga peek_type_definition")
-            vim.defer_fn(function()
-              vim.cmd("normal! zt")
-            end, 50)
-        end, desc = "peek_type_definition" },
+        { "<Space>d", "<Cmd>Lspsaga peek_definition<CR>", desc = "peek_definition" },
+        { "<Space>t", "<Cmd>Lspsaga peek_type_definition<CR>", desc = "peek_type_definition" },
         { "<Leader>sl", "<Cmd>Lspsaga show_line_diagnostics<CR>", desc = "show_line_diagnostics" },
         { "<Leader>sb", "<Cmd>Lspsaga show_buf_diagnostics<CR>", desc = "show_buf_diagnostics" },
         { "<Leader>sw", "<Cmd>Lspsaga show_workspace_diagnostics<CR>", desc = "show_workspace_diagnostics" },
@@ -437,6 +423,11 @@ return {
       },
     },
     opts = {
+      panel = {
+        keymap = {
+          open = "<M-L>",
+        },
+      },
       suggestion = {
         auto_trigger = true,
       },

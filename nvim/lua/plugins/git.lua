@@ -170,7 +170,30 @@ return {
       { "<C-g>ni", "<Cmd>tab Git diff --no-index ", desc = "[Fugitive] :tab Git diff --no-index ..." },
       { "<C-g>dv", "<Cmd>Gdiffsplit<CR>", desc = "[Fugitive] :Gdiffsplit" },
       { "<C-g>dt", "<Cmd>Git! difftool<CR>", desc = "[Fugitive] :Git! difftool" },
+
+      {
+        "<C-g><C-w>",
+        function()
+          local win = vim.api.nvim_get_current_win()
+          local val = ""
+          if vim.api.nvim_get_option_value("winbar", { win = win }) == "" then
+            val = "-"
+          end
+          vim.api.nvim_set_option_value("winbar", val, { win = win, scope = "local" })
+        end,
+        ft = "fugitiveblame",
+        desc = "[Fugitive] toggle winbar",
+      },
     },
+    config = function()
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup("UserFugitiveShiftBlame", { clear = true }),
+        pattern = "fugitiveblame",
+        callback = function()
+          vim.api.nvim_set_option_value("winbar", "-", { win = vim.api.nvim_get_current_win(), scope = "local" })
+        end,
+      })
+    end,
   },
   {
     "sindrets/diffview.nvim",
