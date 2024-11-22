@@ -77,6 +77,9 @@ return {
               function()
                 return vim.fn.getcwd():gsub(vim.fn.expand("$HOME"), "~")
               end,
+              cond = function()
+                return vim.o.columns >= 160
+              end,
             },
             "encoding",
             "fileformat",
