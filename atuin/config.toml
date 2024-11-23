@@ -4,6 +4,7 @@ show_preview = true
 show_tabs = false
 max_preview_height = 10
 enter_accept = true
+# store_failed = false
 
 [stats]
 
