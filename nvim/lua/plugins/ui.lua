@@ -300,7 +300,7 @@ return {
         table.insert(keymaps, {
           "<Leader>" .. i % 10,
           function()
-            require("bufferline").go_to(i)
+            require("bufferline").go_to(i, true)
           end,
           desc = string.format("BufferLineGoToBuffer %d", i),
         })

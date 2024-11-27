@@ -77,7 +77,7 @@ return {
     opts = function(_, opts)
       local colors = {
         -- grays
-        bg = "#0d0d0d", -- 5%
+        bg = "#121212",
         cursor_line = "#1d1d1d",
         cursor_line_bright = "#333333",
         win_separator = "#404040",
@@ -106,6 +106,7 @@ return {
         highlight_groups = {
           BufferlineTab = { fg = colors.comment },
           BufferlineTabSelected = { fg = "iris" },
+          BufferLineFill = { bg = colors.bg },
           ColorColumn = { bg = colors.cursor_line },
           Comment = { fg = colors.comment },
           Constant = { fg = colors.pine_light },
@@ -164,14 +165,15 @@ return {
 
       local lualine_theme = require("lualine.themes.rose-pine")
       local colors = {
-        light = "#404040",
-        dark = "#2e2e2e",
+        light = "#444444",
+        dark = "#303030",
+        text = "#e0e0e0",
       }
 
       lualine_theme = vim.tbl_deep_extend("force", lualine_theme, {
         normal = {
           b = { bg = colors.light, gui = "none" },
-          c = { bg = colors.dark },
+          c = { bg = colors.dark, fg = colors.text },
         },
         insert = {
           b = { bg = colors.light },
