@@ -62,7 +62,6 @@ export FZF_DEFAULT_OPTS="
   --multi
   --layout=reverse
   --height=100%
-  --tmux=80%
   --scrollbar='▐'
   --preview='if [[ -f {1} ]]; then bat --color=always --style=numbers --line-range=:500 {}; else eza --tree --color=always {}; fi'
   --bind='ctrl-\:toggle'
@@ -94,7 +93,7 @@ export FZF_CTRL_R_OPTS="
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 zstyle ':fzf-tab:complete:*' fzf-preview 'if [[ -f $realpath ]]; then bat --color=always --style=numbers --line-range=:500 $realpath; else eza --tree --color=always $realpath; fi'
 
-eval "$(atuin init zsh)"
+eval "$(atuin init zsh --disable-up-arrow)"
 
 [[ -e "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
 
@@ -166,13 +165,15 @@ bindkey -e '^G' _rfv
 
 bindkey -e '^[R' fzf-history-widget
 
+bindkey -e '^[[1;3A' atuin-up-search
 bindkey -e '^[ ' autosuggest-execute
 bindkey -e '^[l' autosuggest-execute
+bindkey -e '^[;' autosuggest-execute
 bindkey -e '^[e' edit-command-line
 bindkey -e '^U' kill-whole-line
+bindkey -e '^[v' quoted-insert
 bindkey -e '^[r' redo
 bindkey -e '^X^I' toggle-fzf-tab
-bindkey -e '^[v' quoted-insert
 
 alias cat="bat"
 alias docker-compose="docker compose"
@@ -216,5 +217,5 @@ alias ll="eza -l --icons=auto"
 alias lt="eza --tree -I __pycache__"
 
 if [[ "$USER" == "dcho" ]]; then
-  source "$HOME/dotfiles/cm/zshrc-cm"
+  source "$HOME/dotfiles/cm/zshrc"
 fi
