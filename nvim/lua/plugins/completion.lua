@@ -63,8 +63,10 @@ return {
           ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
           ["<C-u>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
           ["<CR>"] = cmp.mapping(cmp.mapping.confirm({ select = true })),
-          ["<M-CR>"] = cmp.mapping(cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true })),
-          ["<M-/>"] = cmp.mapping(cmp.mapping.close(), { "i", "c" }),
+          ["<M-CR>"] = cmp.mapping(
+            cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
+            { "i", "c" }
+          ),
           ["<C-_>"] = cmp.mapping(function()
             if cmp.visible() then
               cmp.abort()

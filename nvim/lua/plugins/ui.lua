@@ -37,7 +37,10 @@ return {
             {
               "branch",
               fmt = function(str)
-                return str:match("^%u+%-%d+") or str
+                if vim.o.columns < 160 then
+                  return str:match("^%u+%-%d+") or str
+                end
+                return str
               end,
               on_click = function(_, btn, _)
                 local branch = vim.fn.system("git branch --show-current"):gsub("%s+", "")
@@ -315,7 +318,7 @@ return {
     opts = function()
       return {
         options = {
-          style_preset = 4, -- bufferline style preset no italics
+          style_preset = 4, -- no italics
           close_command = "bdelete %d",
           right_mouse_command = "bdelete %d",
           max_name_length = 30,
@@ -427,10 +430,8 @@ return {
         override = {
           ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
           ["vim.lsp.util.stylize_markdown"] = true,
-          -- ["cmp.entry.get_documentation"] = true,
           ["cmp.entry.get_documentation"] = false,
         },
-        -- signature = {},
         documentation = {
           opts = {
             border = {
@@ -694,7 +695,7 @@ return {
         "javascript",
         "typescript",
       }, {
-        mode = "background", -- foreground, background
+        mode = "background",
       })
     end,
   },

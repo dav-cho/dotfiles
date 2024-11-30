@@ -31,9 +31,9 @@ return {
         enable = true,
         ---@diagnostic disable-next-line: unused-local
         disable = function(lang, buf)
-          local max_lines = 10000
-          local ok, count = pcall(vim.api.nvim_buf_line_count, buf)
-          if ok and count and count > max_lines then
+          local max_filesize = 1024 ^ 2 * 2 -- 2 MiB
+          local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+          if ok and stats and stats.size > max_filesize then
             return true
           end
         end,

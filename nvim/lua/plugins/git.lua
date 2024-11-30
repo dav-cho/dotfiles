@@ -119,58 +119,50 @@ return {
       { "<C-g><C-g>", "<Cmd>Git<CR>", desc = "[Fugitive] :Git (:G)" },
       { "<C-g><C-v>", "<Cmd>vertical Git<CR>", desc = "[Fugitive] :vertical Git" },
       { "<C-g><C-t>", "<Cmd>tab Git<CR>", desc = "[Fugitive] :tab Git" },
-
       { "<C-g>st", "<Cmd>Git status<CR>", desc = "[Fugitive] :Git status" },
       { "<C-g>ss", "<Cmd>Git status --short<CR>", desc = "[Fugitive] :Git status --short" },
-
       { "<C-g>sh", "<Cmd>Git show<CR>", desc = "[Fugitive] :Git show" },
       { "<M-g>sh", "<Cmd>tab Git show<CR>", desc = "[Fugitive] :tab Git show" },
       { "<C-g>bl", "<Cmd>Git blame<CR>", mode = { "n", "x" }, desc = "[Fugitive] :Git blame" },
-
       { "<C-g>lo", "<Cmd>tab Git log<CR>", mode = { "n", "x" }, desc = "[Fugitive] :tab Git log" },
       { "<C-g>lb", "<Cmd>tab Git log %<CR>", mode = { "n", "x" }, desc = "[Fugitive] :tab Git log %" },
       { "<C-g>ll", "<Cmd>tab Git log --oneline<CR>", mode = { "n", "x" }, desc = "[Fugitive] :tab Git log --oneline" },
       { "<C-g><C-l>", "<Cmd>Git log --oneline<CR>", mode = { "n", "x" }, desc = "[Fugitive] :Git log --oneline" },
-
       { "<C-g>cl", "<Cmd>Gclog!<CR>", mode = { "n", "x" }, desc = "[Fugitive] :Gclog!" },
       { "<C-g>cL", "<Cmd>Gclog! %<CR>", mode = { "n", "x" }, desc = "[Fugitive] :Gclog! %" },
-
       { "<C-g>dd", "<Cmd>tab Git diff<CR>", desc = "[Fugitive] :tab Git diff" },
       { "<C-g>ds", "<Cmd>tab Git diff --staged<CR>", desc = "[Fugitive] :tab Git diff --staged" },
-
       { "<C-g>ct", "<Cmd>tab Git commit<CR>", mode = { "n", "x" }, desc = "[Fugitive] :tab Git commit" },
       { "<C-g>cc", "<Cmd>Git commit<CR>", mode = { "n", "x" }, desc = "[Fugitive] :Git commit" },
       { "<C-g>cA", "<Cmd>Git commit --amend<CR>", mode = { "n", "x" }, desc = "[Fugitive] :Git commit --amend" },
       {
-        "<C-g>!!",
+        "<C-g>!~",
         "<Cmd>Git commit --amend --no-edit<CR>",
         mode = { "n", "x" },
         desc = "[Fugitive] :Git commit --amend --no-edit",
       },
       {
-        "<C-g>!~",
+        "<C-g>!!",
         "<Cmd>Git commit --amend --no-edit --date=now<CR>",
         mode = { "n", "x" },
-        desc = "[Fugitive] :Git commit --amend --no-edit",
+        desc = "[Fugitive] :Git commit --amend --no-edit --date=now",
       },
       {
-        "<M-g>!!",
+        "<M-g>!~",
         "<Cmd>Git commit --all --amend --no-edit<CR>",
         mode = { "n", "x" },
         desc = "[Fugitive] :Git commit --amend --no-edit",
       },
       {
-        "<M-g>!~",
+        "<M-g>!!",
         "<Cmd>Git commit --all --amend --no-edit --date=now<CR>",
         mode = { "n", "x" },
-        desc = "[Fugitive] :Git commit --amend --no-edit",
+        desc = "[Fugitive] :Git commit --amend --no-edit --date=now",
       },
-
       { "<C-g>gr", "<Cmd>Ggrep ", desc = "[Fugitive] :Ggrep ..." },
       { "<C-g>ni", "<Cmd>tab Git diff --no-index ", desc = "[Fugitive] :tab Git diff --no-index ..." },
       { "<C-g>dv", "<Cmd>Gdiffsplit<CR>", desc = "[Fugitive] :Gdiffsplit" },
       { "<C-g>dt", "<Cmd>Git! difftool<CR>", desc = "[Fugitive] :Git! difftool" },
-
       {
         "<C-g><C-w>",
         function()

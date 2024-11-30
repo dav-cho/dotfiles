@@ -70,9 +70,10 @@ lctrl + lcmd - h : yabai -m window west --stack east
 lctrl + lcmd - j : yabai -m window south --stack north
 lctrl + lcmd - k : yabai -m window north --stack south
 lctrl + lcmd - l : yabai -m window east --stack west
-lctrl + lcmd - 0x32 : yabai -m window recent --stack $(yabai -m query --windows 'id' --window | jq -r '.id')
 lcmd + lshift - tab : yabai -m window sibling --stack sibling
+lctrl + lcmd - 0x32 : yabai -m window recent --stack $(yabai -m query --windows 'id' --window | jq -r '.id')
 
+lctrl + lcmd + lshift - 0x2A : yabai -m window --stack recent --focus stack.next
 lctrl + lcmd + lshift - 0x32 : yabai -m window --stack recent --focus stack.next
 lctrl + lcmd + lshift - h    : yabai -m window --stack west --focus stack.next
 lctrl + lcmd + lshift - j    : yabai -m window --stack south --focus stack.next

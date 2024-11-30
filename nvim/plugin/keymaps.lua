@@ -1,12 +1,5 @@
 local map = vim.keymap.set
 
-local function goto_tab(cmd)
-  if vim.v.count > 0 then
-    return vim.cmd(cmd .. vim.v.count)
-  end
-  return vim.cmd(cmd)
-end
-
 local function search_keep_pos(cmd)
   local cursor = vim.api.nvim_win_get_cursor(0)
   vim.cmd("normal! " .. cmd)
@@ -39,10 +32,16 @@ map({ "n", "v" }, "<Leader>>", "<Cmd>tabm +1<CR>", { desc = "Move tab right" })
 map({ "n", "v" }, "<PageUp>", "<Cmd>tabnext<CR>", { desc = "Next tab" })
 map({ "n", "v" }, "<PageDown>", "<Cmd>tabprevious<CR>", { desc = "Previous tab" })
 map({ "n", "v" }, "<S-Right>", function()
-  goto_tab("tabnext")
+  if vim.v.count > 0 then
+    return vim.cmd("tabnext" .. vim.v.count)
+  end
+  return vim.cmd("tabnext")
 end, { desc = "[count]tabnext" })
 map({ "n", "v" }, "<S-Left>", function()
-  goto_tab("tabprevious")
+  if vim.v.count > 0 then
+    return vim.cmd("tabprevious" .. vim.v.count)
+  end
+  return vim.cmd("tabprevious")
 end, { desc = "[count]tabprevious" })
 
 map("n", "<Esc>", function()
