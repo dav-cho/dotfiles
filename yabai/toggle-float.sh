@@ -1,22 +1,19 @@
 #!/usr/bin/env bash
 
-floating=$(yabai -m query --windows --window | jq '."is-floating"')
-
-if [ "$floating" = "false" ]; then
-	yabai -m window --toggle float
+if [ "$(yabai -m query --windows --window | jq '."is-floating"')" = "false" ]; then
+  yabai -m window --toggle float
 fi
 
-case "$1" in
--g | --grid)
-	yabai -m window --grid $2
-	;;
---grid=*)
-	yabai -m window --grid ${1#*=}
-	;;
--r | --resize)
-	yabai -m window --resize $2
-	;;
---resize=*)
-	yabai -m window --resize ${1#*=}
-	;;
-esac
+if [ $# -eq 0 ]; then
+  exit 0
+fi
+
+orientation=$(
+  jq \
+    --argjson frame "$(yabai -m query --displays --window | jq -r '.frame')" \
+    -nr \
+    '(if $frame.w > $frame.h then "landscape" else "portrait" end)'
+)
+grid=$([ "$orientation" == "landscape" ] && echo "$1" || echo "$2")
+
+yabai -m window --grid "$grid"
