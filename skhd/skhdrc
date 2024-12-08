@@ -101,6 +101,16 @@ lctrl + lcmd - 9 : yabai -m window --space 9  --focus
 lctrl + lcmd - 0 : yabai -m window --space 10 --focus
 lctrl + lcmd - 0x21 : yabai -m window --space prev --focus
 lctrl + lcmd - 0x1E : yabai -m window --space next --focus
+# ralt + rcmd - 1 : yabai -m window --space 1  --focus
+# ralt + rcmd - 2 : yabai -m window --space 2  --focus
+# ralt + rcmd - 3 : yabai -m window --space 3  --focus
+# ralt + rcmd - 4 : yabai -m window --space 4  --focus
+# ralt + rcmd - 5 : yabai -m window --space 5  --focus
+# ralt + rcmd - 6 : yabai -m window --space 6  --focus
+# ralt + rcmd - 7 : yabai -m window --space 7  --focus
+# ralt + rcmd - 8 : yabai -m window --space 8  --focus
+# ralt + rcmd - 9 : yabai -m window --space 9  --focus
+# ralt + rcmd - 0 : yabai -m window --space 10 --focus
 
 lctrl + lcmd + lshift - 1 : yabai -m window --space 1
 lctrl + lcmd + lshift - 2 : yabai -m window --space 2
@@ -119,9 +129,34 @@ lctrl + lcmd + lshift - 0x1E : yabai -m window --space next --focus
 lctrl + lcmd - q : yabai -m window --display 1 --focus
 lctrl + lcmd - w : yabai -m window --display 2 --focus
 lctrl + lcmd - e : yabai -m window --display 3 --focus
+# ralt + rshift - 1 : yabai -m window --display 1 --focus
+# ralt + rshift - 2 : yabai -m window --display 2 --focus
+# ralt + rshift - 3 : yabai -m window --display 3 --focus
+# ralt + rshift - 0x21 : yabai -m window --display prev --focus
+# ralt + rshift - 0x1E : yabai -m window --display next --focus
+
+# ralt + rcmd + rshift - 1 : yabai -m window --display 1
+# ralt + rcmd + rshift - 2 : yabai -m window --display 2
+# ralt + rcmd + rshift - 3 : yabai -m window --display 3
+# ralt + rcmd + rshift - 0x21 : yabai -m window --display prev
+# ralt + rcmd + rshift - 0x1E : yabai -m window --display next
 
 ## toggle window float
 lctrl + lcmd - tab   : yabai -m window --toggle float
+# ralt + rcmd - return : yabai -m window --toggle float
+
+# lctrl + lshift - z : yabai -m query --windows --window | jq -e '."is-floating" == false' && \
+#                      yabai -m window --toggle float; \
+#                      yabai -m window --resize abs:1133:825 && \
+#                      "$HOME/.config/yabai/float-center.sh"
+# lctrl + lshift - x : yabai -m query --windows --window | jq -e '."is-floating" == false' && \
+#                      yabai -m window --toggle float; \
+#                      yabai -m window --resize abs:1333:1025 && \
+#                      "$HOME/.config/yabai/float-center.sh"
+# lctrl + lshift - s : yabai -m query --windows --window | jq -e '."is-floating" == false' && \
+#                      yabai -m window --toggle float; \
+#                      yabai -m window --resize abs:1533:1225 && \
+#                      "$HOME/.config/yabai/float-center.sh"
 
 lctrl + lshift - z : "$HOME/.config/yabai/toggle-float.sh" abs 1133 825   # s
 lctrl + lshift - x : "$HOME/.config/yabai/toggle-float.sh" abs 1333 1025  # m
@@ -139,6 +174,9 @@ lctrl + lshift - c : "$HOME/.config/yabai/toggle-float.sh" grid 1:3:2:0:1:1 3:1:
 
 ## obsidian
 lctrl + lalt + lcmd - o : "$HOME/.config/yabai/toggle-float.sh" abs 2044 1341
+# lctrl + lalt + lcmd - o : "$HOME/.config/yabai/toggle-float.sh" && \
+#                           yabai -m window --move abs:258:37 --resize abs:2044:1341 && \
+#                           "$HOME/.config/yabai/float-center.sh"
 
 ## move float
 lctrl + lalt - c : "$HOME/.config/yabai/float-center.sh"
@@ -188,12 +226,19 @@ lctrl + lalt + lshift - x : yabai -m window --sub-layer auto
 lctrl + lalt + lshift - z : "$HOME/.config/yabai/sub-layer-all.sh" normal
 
 ## window actions
+# lctrl + lcmd + lshift - tab : yabai -m window --ratio abs:0.333
+# lctrl + lcmd + lshift - q   : yabai -m window --ratio abs:0.4
+# lctrl + lcmd + lshift - w   : yabai -m window --ratio abs:0.5
+# lctrl + lcmd + lshift - e   : yabai -m window --ratio abs:0.6
+# lctrl + lcmd + lshift - r   : yabai -m window --ratio abs:0.666
 lctrl + lcmd + lshift - s : yabai -m window --toggle split
+
 lctrl + lcmd + lshift - q : yabai -m window --ratio abs:0.333
 lctrl + lcmd + lshift - w : yabai -m window --ratio abs:0.5
 lctrl + lcmd + lshift - e : yabai -m window --ratio abs:0.666
 lctrl + lalt + lcmd - q : yabai -m window --ratio abs:0.4
 lctrl + lalt + lcmd - e : yabai -m window --ratio abs:0.6
+# lctrl + lalt + lcmd - e   : yabai -m window --ratio abs:0.666
 
 ## window tree actions
 lctrl + lshift + rshift - b    : yabai -m space --balance
@@ -218,3 +263,5 @@ ralt + rcmd + rshift - d : yabai -m space --destroy
 lctrl + lcmd - return : "$HOME/dotfiles/yabai/alacritty-new-window.sh"
 lctrl + lcmd - space : open -a kitty.app -n --args --single-instance --directory $HOME
 
+## layouts
+lctrl + lalt + lcmd - return : "$HOME/dotfiles/yabai/layout/socials.sh"
