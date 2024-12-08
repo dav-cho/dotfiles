@@ -38,9 +38,6 @@ return {
           end
         end,
       },
-      indent = {
-        enable = true,
-      },
       incremental_selection = {
         enable = true,
         keymaps = {
@@ -301,19 +298,21 @@ return {
       },
     },
     opts = {
-      useDefaultKeymaps = true,
-      disabledKeymaps = {
-        "ig",
-        "ag",
-        "C",
-        "Q",
-        "io",
-        "ao",
-        "r",
-        "n",
-        "|",
-        "L",
-        "!",
+      keymaps = {
+        useDefaults = true,
+        disabledDefaults = {
+          "ig",
+          "ag",
+          "C",
+          "Q",
+          "io",
+          "ao",
+          "r",
+          "n",
+          "|",
+          "L",
+          "!",
+        },
       },
     },
   },

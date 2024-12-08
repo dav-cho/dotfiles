@@ -11,6 +11,7 @@ end
 return {
   {
     dir = "dav.themes",
+    virtual = true,
     dependencies = { "telescope.nvim" },
     keys = function()
       local themes = {
