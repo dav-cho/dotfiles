@@ -32,7 +32,7 @@ export VISUAL=nvim
 export LESS="--mouse -R"
 
 export BAT_STYLE="plain"
-export BAT_THEME="Coldark-Dark"
+export BAT_THEME="Visual Studio Dark+"
 export EZA_COLORS='xx=38;5;246:xa=38;5;246:'\
 'ur=38;5;246:uw=38;5;250:ux=38;5;254:ue=38;5;254:'\
 'gr=38;5;246:gw=38;5;250:gx=38;5;254:'\
@@ -163,17 +163,16 @@ bindkey -e '^[D' _pipe-delta
 bindkey -e '^[F' _pipe-fzf
 bindkey -e '^G' _rfv
 
-bindkey -e '^[R' fzf-history-widget
-
 bindkey -e '^[[1;3A' atuin-up-search
-bindkey -e '^[ ' autosuggest-execute
+bindkey -e '^[R' fzf-history-widget
+bindkey -e '^X^I' toggle-fzf-tab
+
 bindkey -e '^[l' autosuggest-execute
-bindkey -e '^[;' autosuggest-execute
+bindkey -e '^[u' backward-kill-line
 bindkey -e '^[e' edit-command-line
-bindkey -e '^U' kill-whole-line
 bindkey -e '^[v' quoted-insert
 bindkey -e '^[r' redo
-bindkey -e '^X^I' toggle-fzf-tab
+bindkey -e '^[U' up-case-word
 
 alias cat="bat"
 alias docker-compose="docker compose"
@@ -182,29 +181,23 @@ alias ghco="gh copilot"
 alias mann="MANPAGER='nvim +Man! +colorscheme\ tokyonight' man"
 alias rg="rg --smart-case"
 
-alias gL="git log --oneline --all"
 alias gcnn!='git commit --verbose --no-edit --amend --date=now'
 alias gdni="git diff --no-index --"
 alias gdno="git diff --name-only"
 alias gdst="git diff --stat"
-alias ghn="MANPAGER='nvim +Man! +colorscheme\ tokyonight' git help"
-alias gl1="git log -1 --stat --pretty=fuller"
+alias ghhh="MANPAGER='nvim +Man! +colorscheme\ tokyonight' git help"
 alias gl="git log --oneline"
-alias gla='git log --pretty="format:%C(auto)%h%d %s %C(magenta)%an" --date="format:%Y-%m-%d %H:%M:%S"'
-alias glad='git log --pretty="format:%C(auto)%h%d %s %C(magenta)%an %C(dim blue)(%ar) %ad" --date="format:%Y-%m-%d %H:%M:%S"'
-alias glae='git log --pretty="format:%C(auto)%h%d %s %C(magenta)%an %C(dim)(%ae)"'
+alias gla="git log --oneline --all"
 alias gld='git log --pretty="format:%C(auto)%h%d %s %C(dim blue)(%ar) %ad" --date="format:%Y-%m-%d %H:%M:%S"'
-alias gldd='git log --pretty="format:%C(auto)%h%d %s %C(dim blue)(%ad)" --date="format:%Y-%m-%d %H:%M:%S"'
-alias gldr='git log --pretty="format:%C(auto)%h%d %s %C(dim blue)(%ar)" --date="format:%Y-%m-%d %H:%M:%S"'
 alias glh='git log --simplify-by-decoration --pretty="format:%C(auto)%h%d %s %C(dim blue)(%ar) %ad" --date="format:%Y-%m-%d %H:%M:%S"'
-alias gll="git log --oneline --no-decorate"
+alias gll="git log"
 alias gllr='git log --pretty="format:%C(auto)%h %C(magenta)%m%C(auto)%d %s %C(dim blue)(%ar)" --date="format:%Y-%m-%d %H:%M:%S"'
-alias glo="git log"
+alias glo='git log -1 --stat'
 alias glop="git log --stat --patch --reverse ORIG_HEAD.."
 alias glorig='git log --oneline ORIG_HEAD.. --pretty="format:%C(auto)%h%d %s %C(dim blue)(%ar) %ad" --date="format:%Y-%m-%d %H:%M:%S"'
 alias glp="git log --oneline --first-parent"
-alias gls="git log --oneline --stat"
-alias glt='git log -10 --pretty="format:%C(auto)%h%d %s %C(dim blue)(%ar) %ad" --date="format:%Y-%m-%d %H:%M:%S"'
+alias glst="git log --oneline --stat"
+alias glt='git log -10 --pretty="format:%C(auto)%h%d %s %C(dim blue)(%ar)"'
 alias glup='git log --pretty="format:%C(auto)%h %C(magenta)%m%C(auto)%d %s %C(dim blue)(%ar)" --date="format:%Y-%m-%d %H:%M:%S" @{u}...'
 alias gmnf="git merge --no-ff"
 alias gs="git status --short"
