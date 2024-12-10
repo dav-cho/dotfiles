@@ -77,6 +77,18 @@ map("x", "<M-j>", ":m '>+1<CR>gv=gv", { desc = "Move lines down" })
 map("x", "<M-k>", ":m '<-2<CR>gv=gv", { desc = "Move lines up" })
 map({ "n", "i" }, "<S-down>", "<Cmd>call append(line('.'), getline('.'))<CR>", { desc = "Copy line down" })
 map({ "n", "i" }, "<S-up>", "<Cmd>call append(line('.')-1, getline('.'))<CR>", { desc = "Copy line up" })
+-- map(
+--   { "n", "i" },
+--   "<M-S-down>",
+--   "<Cmd>call append(line('.'), getline('.'))<CR><Cmd>normal! j<cr>",
+--   { desc = "Copy line down and move" }
+-- )
+-- map(
+--   { "n", "i" },
+--   "<M-S-up>",
+--   "<Cmd>call append(line('.')-1, getline('.'))<CR><Cmd>normal! k<cr>",
+--   { desc = "Copy line up and move" }
+-- )
 
 map("n", "<Leader>yf", [[<Cmd>let @+=expand("%:t")<CR>]], { desc = "Yank file name" })
 map("n", "<Leader>yr", [[<Cmd>let @+=expand("%:~:.")<CR>]], { desc = "Yank relative file path" })
