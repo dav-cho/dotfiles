@@ -100,6 +100,7 @@ eval "$(atuin init zsh --disable-up-arrow)"
 export PATH="$HOME/.local/share/solana/install/active_release/bin:$PATH"
 
 [[ ! -f ~/.p10k.zsh ]] || . ~/.p10k.zsh
+# eval "$(starship init zsh)"
 
 _fzf_compgen_path() {
   fd -u --follow -E ".git" -E "node_modules" -E "__pycache__" . "$1"
@@ -163,17 +164,18 @@ bindkey -e '^[D' _pipe-delta
 bindkey -e '^[F' _pipe-fzf
 bindkey -e '^G' _rfv
 
-bindkey -e '^[R' fzf-history-widget
-
 bindkey -e '^[[1;3A' atuin-up-search
+bindkey -e '^[R' fzf-history-widget
+bindkey -e '^X^I' toggle-fzf-tab
+
 bindkey -e '^[ ' autosuggest-execute
 bindkey -e '^[l' autosuggest-execute
 bindkey -e '^[;' autosuggest-execute
+bindkey -e '^[u' backward-kill-line
 bindkey -e '^[e' edit-command-line
-bindkey -e '^U' kill-whole-line
 bindkey -e '^[v' quoted-insert
 bindkey -e '^[r' redo
-bindkey -e '^X^I' toggle-fzf-tab
+bindkey -e '^[U' up-case-word
 
 alias cat="bat"
 alias docker-compose="docker compose"
@@ -198,7 +200,7 @@ alias glop="git log --stat --patch --reverse ORIG_HEAD.."
 alias glorig='git log --oneline ORIG_HEAD.. --pretty="format:%C(auto)%h%d %s %C(dim blue)(%ar) %ad" --date="format:%Y-%m-%d %H:%M:%S"'
 alias glp="git log --oneline --first-parent"
 alias glst="git log --oneline --stat"
-alias glt='git log -10 --pretty="format:%C(auto)%h%d %s %C(dim blue)(%ar) %ad" --date="format:%Y-%m-%d %H:%M:%S"'
+alias glt='git log -10 --pretty="format:%C(auto)%h%d %s %C(dim blue)(%ar)"'
 alias glup='git log --pretty="format:%C(auto)%h %C(magenta)%m%C(auto)%d %s %C(dim blue)(%ar)" --date="format:%Y-%m-%d %H:%M:%S" @{u}...'
 alias gmnf="git merge --no-ff"
 alias gs="git status --short"
