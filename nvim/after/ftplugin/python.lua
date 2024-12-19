@@ -1,9 +1,22 @@
+-- WIP: `:h ft-python-indent`
+
 vim.g.python_indent = {
   open_paren = "shiftwidth()",
   nested_paren = "shiftwidth()",
   continue = "shiftwidth()",
   closed_paren_align_last_line = false,
+	-- searchpair_timeout = 500,
+	-- disable_parentheses_indenting = 1,
 }
+
+-- -- defaults
+-- vim.g.python_indent = {
+-- 	open_paren = 'shiftwidth() * 2',
+-- 	nested_paren = 'shiftwidth()',
+-- 	continue = 'shiftwidth() * 2',
+-- 	closed_paren_align_last_line = false,
+-- }
+
 
 vim.opt_local.shiftwidth = 4
 vim.opt_local.tabstop = 4

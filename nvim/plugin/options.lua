@@ -29,3 +29,9 @@ opt.tabstop = 2
 opt.termguicolors = true
 opt.undofile = true
 opt.wrap = false
+
+-- WIP
+---- default "0{,0},0),0],:,0#,!^F,o,O,e"
+-- opt.indentkeys:remove("0}")
+-- opt.autoindent = false
+-- opt.smartindent = true
