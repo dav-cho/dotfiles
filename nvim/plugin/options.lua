@@ -20,7 +20,7 @@ opt.sessionoptions:append("globals")
 opt.shiftwidth = 2
 opt.signcolumn = "yes"
 opt.smartcase = true
-opt.smartindent = true
+-- opt.smartindent = true
 opt.softtabstop = 2
 opt.splitbelow = true
 opt.splitright = true
@@ -29,3 +29,9 @@ opt.tabstop = 2
 opt.termguicolors = true
 opt.undofile = true
 opt.wrap = false
+
+-- WIP
+---- default "0{,0},0),0],:,0#,!^F,o,O,e"
+-- opt.indentkeys:remove("0}")
+-- opt.autoindent = false
+-- opt.smartindent = true

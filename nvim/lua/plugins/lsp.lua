@@ -269,6 +269,7 @@ return {
           append_args = {
             "--config=lint.isort.section-order=['future', 'standard-library', 'third-party', 'common', 'first-party', 'local-folder']",
             "--config=lint.isort.sections.common=['common']",
+            "--config=lint.isort.split-on-trailing-comma=false"
           },
         },
         -- stylua = {
