@@ -22,14 +22,14 @@ ctrl - right : yabai -m space --focus next
 lctrl + lshift - backspace : yabai -m space --focus recent
 
 ## focus window
-ctrl - backspace : yabai -m window --focus recent
+ctrl - backspace   : yabai -m window --focus recent
 lctrl + lshift - h : yabai -m window --focus west
 lctrl + lshift - j : yabai -m window --focus south
 lctrl + lshift - k : yabai -m window --focus north
 lctrl + lshift - l : yabai -m window --focus east
 
 ## focus stack
-alt - 0x32 : yabai -m window --focus stack.recent
+alt - 0x32       : yabai -m window --focus stack.recent
 lctrl + lcmd - s : yabai -m window --focus stack.recent
 lctrl + lcmd - a : yabai -m window --focus stack.prev
 lctrl + lcmd - z : yabai -m window --focus stack.next
@@ -41,11 +41,12 @@ lctrl + lalt - q : yabai -m display --focus 1
 lctrl + lalt - w : yabai -m display --focus 2
 lctrl + lalt - e : yabai -m display --focus 3
 lctrl + lalt - backspace : yabai -m display --focus recent
-ralt + rshift - return : yabai -m display --focus recent
+ralt + rshift - return   : yabai -m display --focus recent
 
 # zoom window
-lctrl + lalt - s : yabai -m window --toggle zoom-parent
-lctrl + lalt - d : yabai -m window --toggle zoom-fullscreen
+lctrl + lalt - a : yabai -m window --toggle zoom-parent
+lctrl + lalt - s : yabai -m window --toggle zoom-fullscreen
+lctrl + lalt - d : yabai -m window --toggle windowed-fullscreen
 lctrl + lalt - f : yabai -m window --toggle native-fullscreen
 
 ## warp window
@@ -66,49 +67,40 @@ lctrl + lalt - 0x1E : yabai -m window --swap next
 lctrl + lalt - 0x2A : yabai -m window --swap recent
 
 ## stack window
-lctrl + lcmd - h : yabai -m window west --stack east
+lctrl + lcmd - h : yabai -m window west  --stack east
 lctrl + lcmd - j : yabai -m window south --stack north
 lctrl + lcmd - k : yabai -m window north --stack south
-lctrl + lcmd - l : yabai -m window east --stack west
-lcmd + lshift - tab : yabai -m window sibling --stack sibling
-lctrl + lcmd - 0x32 : yabai -m window recent --stack $(yabai -m query --windows 'id' --window | jq -r '.id')
+lctrl + lcmd - l : yabai -m window east  --stack west
+lctrl + lalt - tab  : yabai -m window sibling --stack sibling
+lctrl + lcmd - 0x32 : yabai -m window recent  --stack $(yabai -m query --windows 'id' --window | jq -r '.id')
+lcmd + lshift - tab : yabai -m window mouse   --stack $(yabai -m query --windows 'id' --window | jq -r '.id')
 
-lctrl + lcmd + lshift - 0x2A : yabai -m window --stack recent --focus stack.next
+lctrl + lcmd + lshift - h : yabai -m window --stack west  --focus stack.next
+lctrl + lcmd + lshift - j : yabai -m window --stack south --focus stack.next
+lctrl + lcmd + lshift - k : yabai -m window --stack north --focus stack.next
+lctrl + lcmd + lshift - l : yabai -m window --stack east  --focus stack.next
+lctrl + lcmd + lshift - 0x21 : yabai -m window --stack prev   --focus stack.next
+lctrl + lcmd + lshift - 0x1E : yabai -m window --stack next   --focus stack.next
 lctrl + lcmd + lshift - 0x32 : yabai -m window --stack recent --focus stack.next
-lctrl + lcmd + lshift - h    : yabai -m window --stack west --focus stack.next
-lctrl + lcmd + lshift - j    : yabai -m window --stack south --focus stack.next
-lctrl + lcmd + lshift - k    : yabai -m window --stack north --focus stack.next
-lctrl + lcmd + lshift - l    : yabai -m window --stack east  --focus stack.next
-lctrl + lcmd + lshift - 0x21 : yabai -m window --stack prev --focus stack.next
-lctrl + lcmd + lshift - 0x1E : yabai -m window --stack next --focus stack.next
+lctrl + lcmd + lshift - tab  : yabai -m window --stack mouse  --focus stack.next
 
 ## swap stack
 lctrl + lcmd + lshift - a : yabai -m window --swap stack.prev --focus
 lctrl + lcmd + lshift - z : yabai -m window --swap stack.next --focus
 
 ## move window to space
+lctrl + lcmd - 1 : yabai -m window --space 1  --focus
+lctrl + lcmd - 2 : yabai -m window --space 2  --focus
+lctrl + lcmd - 3 : yabai -m window --space 3  --focus
+lctrl + lcmd - 4 : yabai -m window --space 4  --focus
+lctrl + lcmd - 5 : yabai -m window --space 5  --focus
+lctrl + lcmd - 6 : yabai -m window --space 6  --focus
+lctrl + lcmd - 7 : yabai -m window --space 7  --focus
+lctrl + lcmd - 8 : yabai -m window --space 8  --focus
+lctrl + lcmd - 9 : yabai -m window --space 9  --focus
+lctrl + lcmd - 0 : yabai -m window --space 10 --focus
 lctrl + lcmd - 0x21 : yabai -m window --space prev --focus
 lctrl + lcmd - 0x1E : yabai -m window --space next --focus
-lctrl + lcmd - 1 : yabai -m window --space 1 --focus
-lctrl + lcmd - 2 : yabai -m window --space 2 --focus
-lctrl + lcmd - 3 : yabai -m window --space 3 --focus
-lctrl + lcmd - 4 : yabai -m window --space 4 --focus
-lctrl + lcmd - 5 : yabai -m window --space 5 --focus
-lctrl + lcmd - 6 : yabai -m window --space 6 --focus
-lctrl + lcmd - 7 : yabai -m window --space 7 --focus
-lctrl + lcmd - 8 : yabai -m window --space 8 --focus
-lctrl + lcmd - 9 : yabai -m window --space 9 --focus
-lctrl + lcmd - 0 : yabai -m window --space 10 --focus
-ralt + rcmd - 1 : yabai -m window --space 1 --focus
-ralt + rcmd - 2 : yabai -m window --space 2 --focus
-ralt + rcmd - 3 : yabai -m window --space 3 --focus
-ralt + rcmd - 4 : yabai -m window --space 4 --focus
-ralt + rcmd - 5 : yabai -m window --space 5 --focus
-ralt + rcmd - 6 : yabai -m window --space 6 --focus
-ralt + rcmd - 7 : yabai -m window --space 7 --focus
-ralt + rcmd - 8 : yabai -m window --space 8 --focus
-ralt + rcmd - 9 : yabai -m window --space 9 --focus
-ralt + rcmd - 0 : yabai -m window --space 10 --focus
 
 lctrl + lcmd + lshift - 1 : yabai -m window --space 1
 lctrl + lcmd + lshift - 2 : yabai -m window --space 2
@@ -120,65 +112,45 @@ lctrl + lcmd + lshift - 7 : yabai -m window --space 7
 lctrl + lcmd + lshift - 8 : yabai -m window --space 8
 lctrl + lcmd + lshift - 9 : yabai -m window --space 9
 lctrl + lcmd + lshift - 0 : yabai -m window --space 10
+lctrl + lcmd + lshift - 0x21 : yabai -m window --space prev --focus
+lctrl + lcmd + lshift - 0x1E : yabai -m window --space next --focus
 
 ## move window to display
 lctrl + lcmd - q : yabai -m window --display 1 --focus
 lctrl + lcmd - w : yabai -m window --display 2 --focus
 lctrl + lcmd - e : yabai -m window --display 3 --focus
-ralt + rshift - 1 : yabai -m window --display 1 --focus
-ralt + rshift - 2 : yabai -m window --display 2 --focus
-ralt + rshift - 3 : yabai -m window --display 3 --focus
-ralt + rshift - 0x21 : yabai -m window --display prev --focus
-ralt + rshift - 0x1E : yabai -m window --display next --focus
-
-ralt + rcmd + rshift - 1 : yabai -m window --display 1
-ralt + rcmd + rshift - 2 : yabai -m window --display 2
-ralt + rcmd + rshift - 3 : yabai -m window --display 3
-ralt + rcmd + rshift - 0x21 : yabai -m window --display prev
-ralt + rcmd + rshift - 0x1E : yabai -m window --display next
 
 ## toggle window float
+## abs dx dy
+## grid landscape portrait
 lctrl + lcmd - tab   : yabai -m window --toggle float
-ralt + rcmd - return : yabai -m window --toggle float
 
-lctrl + lshift - z : yabai -m query --windows --window | jq -e '."is-floating" == false' && \
-                     yabai -m window --toggle float; \
-                     yabai -m window --resize abs:1133:825 && \
-                     "$HOME/.config/yabai/float-center.sh"
-lctrl + lshift - x : yabai -m query --windows --window | jq -e '."is-floating" == false' && \
-                     yabai -m window --toggle float; \
-                     yabai -m window --resize abs:1333:1025 && \
-                     "$HOME/.config/yabai/float-center.sh"
-lctrl + lshift - s : yabai -m query --windows --window | jq -e '."is-floating" == false' && \
-                     yabai -m window --toggle float; \
-                     yabai -m window --resize abs:1533:1225 && \
-                     "$HOME/.config/yabai/float-center.sh"
+lctrl + lshift - z : "$HOME/.config/yabai/toggle-float.sh" abs 1133 825   # s
+lctrl + lshift - x : "$HOME/.config/yabai/toggle-float.sh" abs 1333 1025  # m
+lctrl + lshift - s : "$HOME/.config/yabai/toggle-float.sh" abs 1533 1225  # l
 
-lctrl + lshift - q : "$HOME/.config/yabai/toggle-float.sh" 1:6:0:0:4:1 15:1:0:0:1:7   # xl left
-lctrl + lshift - a : "$HOME/.config/yabai/toggle-float.sh" 1:6:1:0:4:1 15:1:0:4:1:7   # xl center
-lctrl + lshift - w : "$HOME/.config/yabai/toggle-float.sh" 1:6:2:0:4:1 15:1:0:8:1:7   # xl right
-lctrl + lshift - 1 : "$HOME/.config/yabai/toggle-float.sh" 1:2:0:0:1:1 2:1:0:0:1:1    # half left
-lctrl + lshift - 2 : "$HOME/.config/yabai/toggle-float.sh" 1:4:1:0:2:1 4:1:0:1:1:2    # half center
-lctrl + lshift - 3 : "$HOME/.config/yabai/toggle-float.sh" 1:2:1:0:1:1 2:1:0:1:1:1    # half right
-lctrl + lshift - e : "$HOME/.config/yabai/toggle-float.sh" 1:3:0:0:1:1 3:1:0:0:1:1    # third left
-lctrl + lshift - d : "$HOME/.config/yabai/toggle-float.sh" 1:3:1:0:1:1 3:1:0:1:1:1    # third center
-lctrl + lshift - c : "$HOME/.config/yabai/toggle-float.sh" 1:3:2:0:1:1 3:1:0:2:1:1    # third right
+lctrl + lshift - q : "$HOME/.config/yabai/toggle-float.sh" grid 1:6:0:0:4:1 15:1:0:0:1:7  # xl left
+lctrl + lshift - a : "$HOME/.config/yabai/toggle-float.sh" grid 1:6:1:0:4:1 15:1:0:4:1:7  # xl center
+lctrl + lshift - w : "$HOME/.config/yabai/toggle-float.sh" grid 1:6:2:0:4:1 15:1:0:8:1:7  # xl right
+lctrl + lshift - 1 : "$HOME/.config/yabai/toggle-float.sh" grid 1:2:0:0:1:1 2:1:0:0:1:1   # half left
+lctrl + lshift - 2 : "$HOME/.config/yabai/toggle-float.sh" grid 1:4:1:0:2:1 4:1:0:1:1:2   # half center
+lctrl + lshift - 3 : "$HOME/.config/yabai/toggle-float.sh" grid 1:2:1:0:1:1 2:1:0:1:1:1   # half right
+lctrl + lshift - e : "$HOME/.config/yabai/toggle-float.sh" grid 1:3:0:0:1:1 3:1:0:0:1:1   # third left
+lctrl + lshift - d : "$HOME/.config/yabai/toggle-float.sh" grid 1:3:1:0:1:1 3:1:0:1:1:1   # third center
+lctrl + lshift - c : "$HOME/.config/yabai/toggle-float.sh" grid 1:3:2:0:1:1 3:1:0:2:1:1   # third right
 
-## obsidian
-lctrl + lalt + lcmd - o : "$HOME/.config/yabai/toggle-float.sh" && \
-                          yabai -m window --move abs:0:0 --resize abs:2044:1341 && \
-                          "$HOME/.config/yabai/float-center.sh"
+lctrl + lalt + lcmd - o : "$HOME/.config/yabai/toggle-float.sh" abs 2044 1341 # obsidian
 
 ## move float
 lctrl + lalt - c : "$HOME/.config/yabai/float-center.sh"
-lctrl + lalt + lshift - h : yabai -m window --move rel:-20:0   # move left
-lctrl + lalt + lshift - j : yabai -m window --move rel:0:20    # move down
-lctrl + lalt + lshift - k : yabai -m window --move rel:0:-20   # move up
-lctrl + lalt + lshift - l : yabai -m window --move rel:20:0    # move right
-lctrl + lalt + rshift - h : yabai -m window --move rel:-1:0    # move left micro
-lctrl + lalt + rshift - j : yabai -m window --move rel:0:1     # move down micro
-lctrl + lalt + rshift - k : yabai -m window --move rel:0:-1    # move up micro
-lctrl + lalt + rshift - l : yabai -m window --move rel:1:0     # move right micro
+lctrl + lalt + lshift - h : yabai -m window --move rel:-20:0  # move left
+lctrl + lalt + lshift - j : yabai -m window --move rel:0:20   # move down
+lctrl + lalt + lshift - k : yabai -m window --move rel:0:-20  # move up
+lctrl + lalt + lshift - l : yabai -m window --move rel:20:0   # move right
+lctrl + lalt + rshift - h : yabai -m window --move rel:-1:0   # move left micro
+lctrl + lalt + rshift - j : yabai -m window --move rel:0:1    # move down micro
+lctrl + lalt + rshift - k : yabai -m window --move rel:0:-1   # move up micro
+lctrl + lalt + rshift - l : yabai -m window --move rel:1:0    # move right micro
 
 ## resize float
 lctrl + lalt + lcmd - h : yabai -m window --resize left:-20:0               # + left
@@ -217,12 +189,14 @@ lctrl + lalt + lshift - x : yabai -m window --sub-layer auto
 lctrl + lalt + lshift - z : "$HOME/.config/yabai/sub-layer-all.sh" normal
 
 ## window actions
-lctrl + lcmd + lshift - tab : yabai -m window --ratio abs:0.333
-lctrl + lcmd + lshift - q   : yabai -m window --ratio abs:0.4
-lctrl + lcmd + lshift - w   : yabai -m window --ratio abs:0.5
-lctrl + lcmd + lshift - e   : yabai -m window --ratio abs:0.6
-lctrl + lcmd + lshift - r   : yabai -m window --ratio abs:0.666
 lctrl + lcmd + lshift - s : yabai -m window --toggle split
+lctrl + lcmd + lshift - q : yabai -m window --ratio abs:0.333
+lctrl + lcmd + lshift - w : yabai -m window --ratio abs:0.5
+lctrl + lcmd + lshift - e : yabai -m window --ratio abs:0.666
+lctrl + lalt + lcmd - q : yabai -m window --ratio abs:0.4
+lctrl + lalt + lcmd - e : yabai -m window --ratio abs:0.6
+lctrl + lalt + lcmd - s : yabai -m window --toggle sticky
+lctrl + lalt + lcmd - p : yabai -m window --toggle pip
 
 ## window tree actions
 lctrl + lshift + rshift - b    : yabai -m space --balance
@@ -232,7 +206,7 @@ lctrl + lshift + rshift - 0x1E : yabai -m space --rotate 270      # cycle clockw
 lctrl + lshift + rshift - 0x21 : yabai -m space --rotate 90       # cycle counter-clockwise
 lctrl + lcmd + lshift + rshift - p : yabai -m space --toggle padding && yabai -m space --toggle gap
 
-## Layout management
+## layout management
 lctrl + lshift + rshift - 0x2A      : yabai -m space --layout float
 lctrl + lshift + rshift - backspace : yabai -m space --layout bsp
 
