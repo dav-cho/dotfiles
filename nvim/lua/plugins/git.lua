@@ -84,6 +84,7 @@ return {
         end, { desc = "reset_hunk" })
         map("n", "<Space>u", gitsigns.undo_stage_hunk, { desc = "undo_stage_hunk" })
         map("n", "<Space>S", gitsigns.stage_buffer, { desc = "stage_buffer" })
+        map("n", "<Leader>ss", gitsigns.stage_buffer, { desc = "stage_buffer" })
         map("n", "<Space>Z", gitsigns.reset_buffer, { desc = "reset_buffer" })
         map("n", "<Leader>hp", gitsigns.preview_hunk, { desc = "preview_hunk" })
         map("n", "<Leader>hr", gitsigns.refresh, { desc = "refresh" })
