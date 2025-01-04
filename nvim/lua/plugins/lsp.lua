@@ -272,6 +272,12 @@ return {
             "--config=lint.isort.split-on-trailing-comma=false"
           },
         },
+        -- stylua = {
+        --   prepend_args = {
+        --     "--indent-type=Spaces",
+        --     "--indent-width=2",
+        --   },
+        -- },
       },
       formatters_by_ft = {
         go = { "goimports", "gofmt", stop_after_first = true },
@@ -280,6 +286,7 @@ return {
         json = { "fixjson" },
         lua = { "stylua" },
         markdown = { "mdformat", "prettierd" },
+        -- python = { "isort", "black" },
         python = { "ruff_fix", "ruff_format", "ruff_organize_imports" },
         rust = { "rustfmt" },
         sh = { "shfmt" },

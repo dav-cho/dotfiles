@@ -52,6 +52,14 @@ return {
                 end
               end,
             },
+            -- {
+            --   function()
+            --     return "wip"
+            --   end,
+            --   cond = function()
+            --     return os.execute("git rev-list --max-count=1 --format='%s' HEAD | grep -q -- '--wip--'") == 0
+            --   end,
+            -- },
             "diff",
             {
               "diagnostics",
