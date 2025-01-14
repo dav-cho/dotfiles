@@ -195,6 +195,10 @@ lctrl + lcmd + lshift - w : yabai -m window --ratio abs:0.5
 lctrl + lcmd + lshift - e : yabai -m window --ratio abs:0.666
 lctrl + lalt + lcmd - q : yabai -m window --ratio abs:0.4
 lctrl + lalt + lcmd - e : yabai -m window --ratio abs:0.6
+
+lctrl + lalt + lshift - 0x18 : yabai -m window --ratio rel:0.025
+lctrl + lalt + lshift - 0x1B : yabai -m window --ratio rel:-0.025
+
 lctrl + lalt + lcmd - s : yabai -m window --toggle sticky
 lctrl + lalt + lcmd - p : yabai -m window --toggle pip
 

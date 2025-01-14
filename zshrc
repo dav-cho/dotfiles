@@ -93,6 +93,7 @@ export FZF_CTRL_R_OPTS="
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 zstyle ':fzf-tab:complete:*' fzf-preview 'if [[ -f $realpath ]]; then bat --color=always --style=numbers --line-range=:500 $realpath; else eza --tree --color=always $realpath; fi'
 
+. "$HOME/.atuin/bin/env"
 eval "$(atuin init zsh --disable-up-arrow)"
 
 [[ -e "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
@@ -198,6 +199,7 @@ alias glorig='git log --oneline ORIG_HEAD.. --pretty="format:%C(auto)%h%d %s %C(
 alias glp="git log --oneline --first-parent"
 alias glst="git log --oneline --stat"
 alias glt='git log -10 --pretty="format:%C(auto)%h%d %s %C(dim blue)(%ar)"'
+alias glu='git log --oneline --pretty="format:%C(auto)%h%d %s %C(dim blue)(%ar) %ad" --date="format:%Y-%m-%d %H:%M:%S" ...@{u}'
 alias glup='git log --pretty="format:%C(auto)%h %C(magenta)%m%C(auto)%d %s %C(dim blue)(%ar)" --date="format:%Y-%m-%d %H:%M:%S" @{u}...'
 alias gmnf="git merge --no-ff"
 alias gs="git status --short"
