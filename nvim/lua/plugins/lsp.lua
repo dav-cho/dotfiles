@@ -22,7 +22,7 @@ return {
 
       vim.diagnostic.config({
         underline = false,
-        virtual_text = true,
+        virtual_text = false,
         update_in_insert = true,
         severity_sort = true,
         signs = true,
@@ -269,14 +269,9 @@ return {
           append_args = {
             "--config=lint.isort.section-order=['future', 'standard-library', 'third-party', 'common', 'first-party', 'local-folder']",
             "--config=lint.isort.sections.common=['common']",
+            "--config=lint.isort.split-on-trailing-comma=false",
           },
         },
-        -- stylua = {
-        --   prepend_args = {
-        --     "--indent-type=Spaces",
-        --     "--indent-width=2",
-        --   },
-        -- },
       },
       formatters_by_ft = {
         go = { "goimports", "gofmt", stop_after_first = true },
@@ -285,7 +280,6 @@ return {
         json = { "fixjson" },
         lua = { "stylua" },
         markdown = { "mdformat", "prettierd" },
-        -- python = { "isort", "black" },
         python = { "ruff_fix", "ruff_format", "ruff_organize_imports" },
         rust = { "rustfmt" },
         sh = { "shfmt" },
