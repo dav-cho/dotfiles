@@ -101,6 +101,7 @@ eval "$(atuin init zsh --disable-up-arrow)"
 export PATH="$HOME/.local/share/solana/install/active_release/bin:$PATH"
 
 [[ ! -f ~/.p10k.zsh ]] || . ~/.p10k.zsh
+# eval "$(starship init zsh)"
 
 _fzf_compgen_path() {
   fd -u --follow -E ".git" -E "node_modules" -E "__pycache__" . "$1"
@@ -168,7 +169,9 @@ bindkey -e '^[[1;3A' atuin-up-search
 bindkey -e '^[R' fzf-history-widget
 bindkey -e '^X^I' toggle-fzf-tab
 
+# bindkey -e '^[ ' autosuggest-execute
 bindkey -e '^[l' autosuggest-execute
+# bindkey -e '^[;' autosuggest-execute
 bindkey -e '^[u' backward-kill-line
 bindkey -e '^[e' edit-command-line
 bindkey -e '^[v' quoted-insert

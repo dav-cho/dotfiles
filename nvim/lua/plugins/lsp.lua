@@ -70,7 +70,17 @@ return {
             },
           },
         },
-        pyright = {},
+        pyright = {
+          -- TODO: causing lag?
+          settings = {
+            python = {
+              pythonPath = (function()
+                local venv_path = vim.fn.exepath("./.venv/bin/python")
+                return #venv_path > 0 and venv_path or nil
+              end)(),
+            },
+          },
+        },
         ruff = {},
         rust_analyzer = {},
         sqlls = {},
@@ -272,6 +282,12 @@ return {
             "--config=lint.isort.split-on-trailing-comma=false",
           },
         },
+        -- stylua = {
+        --   prepend_args = {
+        --     "--indent-type=Spaces",
+        --     "--indent-width=2",
+        --   },
+        -- },
       },
       formatters_by_ft = {
         go = { "goimports", "gofmt", stop_after_first = true },
