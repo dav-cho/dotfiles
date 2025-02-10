@@ -43,6 +43,8 @@ return {
         end,
         desc = "[Comment] Comment paragraph",
       },
+      -- TODO: enable dot repeat - change to Ex-commands?
+      -- see note from: https://github.com/chrisgrieser/nvim-various-textobjs/blob/main/README.md#configuration
       {
         "<Leader>#",
         function()
@@ -322,6 +324,14 @@ return {
       })
     end,
   },
+  { -- TODO
+    "folke/persistence.nvim",
+    enabled = false,
+    event = "BufReadPre", -- this will only start session saving when an actual file was opened
+    opts = {
+      -- add any custom options here
+    },
+  },
   {
     "danymat/neogen",
     cmd = "Neogen",
@@ -531,6 +541,53 @@ return {
         end,
         desc = "Buffer Local Keymaps (which-key)",
       },
+    },
+  },
+  {
+    "yetone/avante.nvim",
+    enabled = false,
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "stevearc/dressing.nvim",
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      "nvim-tree/nvim-web-devicons",
+      "zbirenbaum/copilot.lua",
+      "MeanderingProgrammer/render-markdown.nvim",
+    },
+    keys = {
+      "<Leader>aa",
+      "<Leader>ae",
+      "<Leader>af",
+      "<Leader>ah",
+      "<Leader>as",
+      "<Leader>at",
+      "<Leader>aR",
+    },
+    -- event = "VeryLazy",
+    version = false,
+    build = "make",
+    opts = {
+      hints = {
+        enabled = false,
+      },
+    },
+  },
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    enabled = false,
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    ft = { "Avante" },
+    -- keys = {
+    --   "<Leader>rm",
+    --   function()
+    --     require("render-markdown").toggle()
+    --   end,
+    --   -- "<Cmd>RenderMarkdownToggle<CR>",
+    --   desc = "[Render Markdown] toggle",
+    -- },
+    opts = {
+      file_types = { "Avante" },
     },
   },
 }

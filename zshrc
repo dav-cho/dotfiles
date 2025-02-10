@@ -92,6 +92,7 @@ export FZF_CTRL_R_OPTS="
 "
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 zstyle ':fzf-tab:complete:*' fzf-preview 'if [[ -f $realpath ]]; then bat --color=always --style=numbers --line-range=:500 $realpath; else eza --tree --color=always $realpath; fi'
+zstyle ':fzf-tab:*' fzf-bindings 'ctrl-y:execute-silent({_FTB_INIT_}echo "$realpath" | tr -d "\n" | pbcopy)'
 
 . "$HOME/.atuin/bin/env"
 eval "$(atuin init zsh --disable-up-arrow)"
@@ -101,6 +102,7 @@ eval "$(atuin init zsh --disable-up-arrow)"
 export PATH="$HOME/.local/share/solana/install/active_release/bin:$PATH"
 
 [[ ! -f ~/.p10k.zsh ]] || . ~/.p10k.zsh
+# eval "$(starship init zsh)"
 
 _fzf_compgen_path() {
   fd -u --follow -E ".git" -E "node_modules" -E "__pycache__" . "$1"
@@ -138,15 +140,15 @@ _nvim-man() {
   zle accept-line
 }
 
-_pipe-delta() {
-  BUFFER+=" | delta"
-  zle accept-line
-}
+# _pipe-delta() {
+#   BUFFER+=" | delta"
+#   zle accept-line
+# }
 
-_pipe-fzf() {
-  BUFFER+=" | fzf"
-  zle accept-line
-}
+# _pipe-fzf() {
+#   BUFFER+=" | fzf"
+#   zle accept-line
+# }
 
 _rfv() {
   rfv
@@ -160,20 +162,24 @@ zle -N _rfv
 
 bindkey -e '^V' _nvim
 bindkey -e '^[M' _nvim-man
-bindkey -e '^[D' _pipe-delta
-bindkey -e '^[F' _pipe-fzf
+# bindkey -e '^[D' _pipe-delta
+# bindkey -e '^[F' _pipe-fzf
 bindkey -e '^G' _rfv
 
 bindkey -e '^[[1;3A' atuin-up-search
 bindkey -e '^[R' fzf-history-widget
 bindkey -e '^X^I' toggle-fzf-tab
 
+# bindkey -e '^[ ' autosuggest-execute
 bindkey -e '^[l' autosuggest-execute
+# bindkey -e '^[;' autosuggest-execute
 bindkey -e '^[u' backward-kill-line
 bindkey -e '^[e' edit-command-line
 bindkey -e '^[v' quoted-insert
 bindkey -e '^[r' redo
 bindkey -e '^[U' up-case-word
+bindkey -e '^[B' vi-backward-blank-word
+bindkey -e '^[F' vi-forward-blank-word
 
 alias cat="bat"
 alias docker-compose="docker compose"
@@ -187,13 +193,13 @@ alias gdni="git diff --no-index --"
 alias gdno="git diff --name-only"
 alias gdst="git diff --stat"
 alias ghhh="MANPAGER='nvim +Man! +colorscheme\ tokyonight' git help"
+alias gl1='git log -1 --stat'
 alias gl="git log --oneline"
 alias gla="git log --oneline --all"
 alias gld='git log --pretty="format:%C(auto)%h%d %s %C(dim blue)(%ar) %ad" --date="format:%Y-%m-%d %H:%M:%S"'
 alias glh='git log --simplify-by-decoration --pretty="format:%C(auto)%h%d %s %C(dim blue)(%ar) %ad" --date="format:%Y-%m-%d %H:%M:%S"'
-alias gll="git log"
 alias gllr='git log --pretty="format:%C(auto)%h %C(magenta)%m%C(auto)%d %s %C(dim blue)(%ar)" --date="format:%Y-%m-%d %H:%M:%S"'
-alias glo='git log -1 --stat'
+alias glo="git log"
 alias glop="git log --stat --patch --reverse ORIG_HEAD.."
 alias glorig='git log --oneline ORIG_HEAD.. --pretty="format:%C(auto)%h%d %s %C(dim blue)(%ar) %ad" --date="format:%Y-%m-%d %H:%M:%S"'
 alias glp="git log --oneline --first-parent"
