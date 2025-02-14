@@ -11,6 +11,7 @@ if command -v pyenv &>/dev/null && command -v pip &>/dev/null; then
         mypy \
         numpy \
         pandas \
+        pandas-stubs \
         pip \
         pylint \
         pytest \

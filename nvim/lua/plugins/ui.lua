@@ -52,6 +52,14 @@ return {
                 end
               end,
             },
+            -- {
+            --   function()
+            --     return "wip"
+            --   end,
+            --   cond = function()
+            --     return os.execute("git rev-list --max-count=1 --format='%s' HEAD | grep -q -- '--wip--'") == 0
+            --   end,
+            -- },
             "diff",
             {
               "diagnostics",
@@ -580,7 +588,7 @@ return {
       draw = {
         delay = 50,
         animation = function(_, _)
-          return 3
+          return 0.5
         end,
       },
       mappings = {

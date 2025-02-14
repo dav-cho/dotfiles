@@ -195,9 +195,10 @@ lctrl + lcmd + lshift - w : yabai -m window --ratio abs:0.5
 lctrl + lcmd + lshift - e : yabai -m window --ratio abs:0.666
 lctrl + lalt + lcmd - q : yabai -m window --ratio abs:0.4
 lctrl + lalt + lcmd - e : yabai -m window --ratio abs:0.6
-
-lctrl + lalt + lshift - 0x18 : yabai -m window --ratio rel:0.025
-lctrl + lalt + lshift - 0x1B : yabai -m window --ratio rel:-0.025
+lctrl + lalt + lshift - 0x18 : yabai -m window --ratio rel:0.01
+lctrl + lalt + lshift - 0x1B : yabai -m window --ratio rel:-0.01
+lctrl + lalt + lshift + rshift - 0x18 : yabai -m window --ratio rel:0.005
+lctrl + lalt + lshift + rshift - 0x1B : yabai -m window --ratio rel:-0.005
 
 lctrl + lalt + lcmd - s : yabai -m window --toggle sticky
 lctrl + lalt + lcmd - p : yabai -m window --toggle pip
@@ -224,4 +225,12 @@ ralt + rcmd + rshift - d : yabai -m space --destroy
 ## apps
 lctrl + lcmd - return : "$HOME/dotfiles/yabai/alacritty-new-window.sh"
 lctrl + lcmd - space : open -a kitty.app -n --args --single-instance --directory $HOME
+# lctrl + lcmd - space : open -a kitty.app -n --args --directory $HOME
+# lctrl + lcmd + lshift - space : open -a kitty.app -n --args --directory $HOME
 
+### WIP
+
+# lctrl + lalt + lcmd - return : yabai -m window --opacity 0.1 && sleep $(yabai -m config window_opacity_duration) && yabai -m window --opacity 0.0
+
+## layouts
+# lctrl + lalt + lcmd - return : "$HOME/dotfiles/yabai/layout/socials.sh"

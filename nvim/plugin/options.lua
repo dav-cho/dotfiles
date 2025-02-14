@@ -11,6 +11,7 @@ opt.ignorecase = true
 opt.inccommand = "split"
 opt.linebreak = true
 opt.mouse = "a"
+opt.nrformats:append("unsigned")
 opt.number = true
 opt.pumblend = 10
 opt.pumheight = 15
@@ -20,7 +21,7 @@ opt.sessionoptions:append("globals")
 opt.shiftwidth = 2
 opt.signcolumn = "yes"
 opt.smartcase = true
-opt.smartindent = true
+opt.smartindent = true -- TODO
 opt.softtabstop = 2
 opt.splitbelow = true
 opt.splitright = true
@@ -29,3 +30,5 @@ opt.tabstop = 2
 opt.termguicolors = true
 opt.undofile = true
 opt.wrap = false
+
+-- opt.nrformats:append("alpha", "unsigned")

@@ -40,6 +40,7 @@ vim.api.nvim_create_autocmd("FileType", {
     "fugitiveblame",
     "fzf",
     "git",
+    "gitsigns-blame",
     "help",
     "man",
     "notify",
