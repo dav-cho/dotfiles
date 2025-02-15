@@ -46,6 +46,7 @@ return {
         --   end
         -- end,
       },
+      -- TODO
       indent = {
         enable = true,
       },
@@ -216,6 +217,18 @@ return {
     "chrisgrieser/nvim-various-textobjs",
     event = "VeryLazy",
     keys = {
+      {
+        "io", -- additional: iS
+        "<Cmd>lua require('various-textobjs').subword('inner')<CR>",
+        mode = { "o", "x" },
+        desc = "[various-textobjs] subword('inner')",
+      },
+      {
+        "ao", -- additional: aS
+        "<Cmd>lua require('various-textobjs').subword('outer')<CR>",
+        mode = { "o", "x" },
+        desc = "[various-textobjs] subword('outer')",
+      },
       {
         "i<M-i>", -- override: ig
         "<Cmd>lua require('various-textobjs').greedyOuterIndentation('inner')<CR>",
