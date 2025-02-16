@@ -71,15 +71,30 @@ return {
           },
         },
         pyright = {
+          -- TODO: causing lag?
           settings = {
             python = {
+              -- TODO
+              -- pythonPath = (function()
+              --   local venv_path = vim.fn.exepath("./.venv/bin/python")
+              --   return #venv_path > 0 and venv_path or nil
+              -- end)(),
               pythonPath = (function()
                 local venv_active = os.getenv("VIRTUAL_ENV")
                 local venv_local_path = vim.fn.exepath("./.venv/bin/python")
                 return (venv_active and venv_active .. "/bin/python")
                   or (#venv_local_path > 0 and venv_local_path)
-                  or vim.fn.exepath("python")
+                  or nil
+                -- or vim.fn.exepath("python")
               end)(),
+
+              -- TODO
+              analysis = {
+                deprecateTypingAliases = true,
+                -- typeCheckingMode = "off",
+              },
+
+              --
             },
           },
         },
@@ -130,7 +145,10 @@ return {
           buf_map("n", "gD", vim.lsp.buf.type_definition, { desc = "vim.lsp.buf.type_definition" })
           buf_map("n", "<Leader>gi", vim.lsp.buf.implementation)
           buf_map("n", "gr", vim.lsp.buf.references)
+          -- TODO
           buf_map({ "n", "i" }, "<M-s>", vim.lsp.buf.signature_help)
+          -- buf_map({ "n", "i" }, "<Leader>k", vim.lsp.buf.signature_help) -- can't use because causes `,` to lag
+          -- buf_map({ "n", "i" }, "<C-s>", vim.lsp.buf.signature_help)
           buf_map("n", "<Leader>rn", vim.lsp.buf.rename)
           buf_map("n", "<Leader>ca", vim.lsp.buf.code_action)
           buf_map("n", "<Leader>fm", vim.lsp.buf.format)
@@ -284,6 +302,12 @@ return {
             "--config=lint.isort.split-on-trailing-comma=false",
           },
         },
+        -- stylua = {
+        --   prepend_args = {
+        --     "--indent-type=Spaces",
+        --     "--indent-width=2",
+        --   },
+        -- },
       },
       formatters_by_ft = {
         go = { "goimports", "gofmt", stop_after_first = true },
@@ -380,6 +404,9 @@ return {
   {
     "RRethy/vim-illuminate",
     event = "LspAttach",
+    opts = {
+      -- modes_denylist = { "v" }, -- TODO
+    },
     config = function(_, opts)
       local illuminate = require("illuminate")
       local repeatable_move = require("nvim-treesitter.textobjects.repeatable_move")

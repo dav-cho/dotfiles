@@ -21,7 +21,7 @@ opt.sessionoptions:append("globals")
 opt.shiftwidth = 2
 opt.signcolumn = "yes"
 opt.smartcase = true
-opt.smartindent = true
+opt.smartindent = true -- TODO
 opt.softtabstop = 2
 opt.splitbelow = true
 opt.splitright = true
@@ -30,3 +30,5 @@ opt.tabstop = 2
 opt.termguicolors = true
 opt.undofile = true
 opt.wrap = false
+
+-- opt.nrformats:append("alpha", "unsigned")

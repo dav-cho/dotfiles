@@ -6,6 +6,23 @@ local function search_keep_pos(cmd)
   vim.api.nvim_win_set_cursor(0, cursor)
 end
 
+-- local function search_keep_pos_visual()
+--   local _, start_line, start_col = vim.fn.getpos("'<")
+--   local _, end_line, end_col = vim.fn.getpos("'>")
+--
+--   local lines = vim.fn.getline(start_line, end_line)
+--
+--   if #lines == 1 then
+--     -- Single line selection
+--     return string.sub(lines[1], start_col, end_col)
+--   else
+--     -- Multi-line selection
+--     lines[1] = string.sub(lines[1], start_col)
+--     lines[#lines] = string.sub(lines[#lines], 1, end_col)
+--     return table.concat(lines, "\n")
+--   end
+-- end
+
 map("n", "<Space>w", "<Cmd>silent! w<CR>", { desc = "Write" })
 map("n", "<Space>W", "<Cmd>silent! wa<CR>", { desc = "Write All" })
 map({ "n", "v" }, "<C-q>", "<Cmd>qa<CR>", { desc = "Quit all" })
@@ -78,6 +95,18 @@ map("x", "<M-j>", ":m '>+1<CR>gv=gv", { desc = "Move lines down" })
 map("x", "<M-k>", ":m '<-2<CR>gv=gv", { desc = "Move lines up" })
 map({ "n", "i" }, "<S-down>", "<Cmd>call append(line('.'), getline('.'))<CR>", { desc = "Copy line down" })
 map({ "n", "i" }, "<S-up>", "<Cmd>call append(line('.')-1, getline('.'))<CR>", { desc = "Copy line up" })
+-- map(
+--   { "n", "i" },
+--   "<M-S-down>",
+--   "<Cmd>call append(line('.'), getline('.'))<CR><Cmd>normal! j<cr>",
+--   { desc = "Copy line down and move" }
+-- )
+-- map(
+--   { "n", "i" },
+--   "<M-S-up>",
+--   "<Cmd>call append(line('.')-1, getline('.'))<CR><Cmd>normal! k<cr>",
+--   { desc = "Copy line up and move" }
+-- )
 
 map("n", "<Leader>yf", [[<Cmd>let @+=expand("%:t")<CR>]], { desc = "Yank file name" })
 map("n", "<Leader>yr", [[<Cmd>let @+=expand("%:~:.")<CR>]], { desc = "Yank relative file path" })

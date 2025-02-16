@@ -8,6 +8,7 @@ return {
       { "hrsh7th/cmp-nvim-lsp", lazy = true },
       { "hrsh7th/cmp-nvim-lsp-document-symbol", lazy = true },
       { "hrsh7th/cmp-nvim-lua", lazy = true },
+      { "hrsh7th/cmp-calc", lazy = true }, -- TODO
     },
     event = { "InsertEnter", "CmdlineEnter" },
     opts = function(_, opts)
@@ -148,6 +149,7 @@ return {
         }, {
           { name = "buffer" },
           { name = "path" },
+          { name = "calc" }, -- TODO
         }),
       }
     end,

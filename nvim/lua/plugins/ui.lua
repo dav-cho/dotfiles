@@ -52,6 +52,14 @@ return {
                 end
               end,
             },
+            -- {
+            --   function()
+            --     return "wip"
+            --   end,
+            --   cond = function()
+            --     return os.execute("git rev-list --max-count=1 --format='%s' HEAD | grep -q -- '--wip--'") == 0
+            --   end,
+            -- },
             "diff",
             {
               "diagnostics",
@@ -62,6 +70,8 @@ return {
             {
               "filename",
               path = 1,
+              -- function on_click(cnt, btn, mods)
+              -- params: num clicks, button, modifiers
               on_click = function(_, btn, _)
                 local path = vim.fn.expand("%:~")
                 if btn == "r" then
@@ -535,8 +545,10 @@ return {
     opts = {
       enabled = false,
       indent = {
-        char = "│",
-        tab_char = "│",
+        -- char = "│",
+        -- tab_char = "│",
+        char = "▏",
+        tab_char = "▏",
       },
       scope = { enabled = false },
       exclude = {
@@ -591,7 +603,8 @@ return {
         border = "top",
         try_as_border = true,
       },
-      symbol = "│", -- or "▏"
+      -- symbol = "│",
+      symbol = "▏",
     },
     config = function(_, opts)
       vim.g.miniindentscope_disable = true

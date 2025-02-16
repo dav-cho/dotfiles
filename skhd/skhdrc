@@ -225,3 +225,12 @@ ralt + rcmd + rshift - d : yabai -m space --destroy
 ## apps
 lctrl + lcmd - return : "$HOME/dotfiles/yabai/alacritty-new-window.sh"
 lctrl + lcmd - space : open -a kitty.app -n --args --single-instance --directory $HOME
+# lctrl + lcmd - space : open -a kitty.app -n --args --directory $HOME
+# lctrl + lcmd + lshift - space : open -a kitty.app -n --args --directory $HOME
+
+### WIP
+
+# lctrl + lalt + lcmd - return : yabai -m window --opacity 0.1 && sleep $(yabai -m config window_opacity_duration) && yabai -m window --opacity 0.0
+
+## layouts
+# lctrl + lalt + lcmd - return : "$HOME/dotfiles/yabai/layout/socials.sh"
