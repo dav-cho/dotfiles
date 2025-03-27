@@ -219,12 +219,9 @@ return {
       {
         "<Space>'",
         function()
-          require("nvim-tree.api").tree.find_file({
-            open = true,
-            focus = true,
-          })
+          require("nvim-tree.api").tree.toggle({ find_file = true })
         end,
-        desc = "[Nvim-Tree] Find File",
+        desc = "[Nvim-Tree] Toggle (find file)",
       },
       {
         "<Space>:",

@@ -4,12 +4,16 @@ return {
     event = "LspAttach",
     opts = {
       attach_to_untracked = true,
+      trouble = false,
       current_line_blame_opts = {
         virt_text = true,
         virt_text_pos = "eol",
         delay = 0,
       },
       current_line_blame_formatter = " <author> <author_time:%Y-%m-%d %H:%M %p> <summary> (<abbrev_sha>)",
+      diff_opts = {
+        linematch = 1,
+      },
       on_attach = function(bufnr)
         local gitsigns = require("gitsigns")
         local repeatable_move = require("nvim-treesitter.textobjects.repeatable_move")
@@ -19,6 +23,18 @@ return {
           opts.buffer = bufnr
           opts.desc = "[Gitsigns] " .. (opts.desc or "")
           vim.keymap.set(mode, lhs, rhs, opts)
+        end
+
+        local function make_nav_repeats(opts, cb)
+          local nav_next, nav_prev = repeatable_move.make_repeatable_move_pair(function()
+            gitsigns.nav_hunk("next", opts or {}, cb)
+          end, function()
+            gitsigns.nav_hunk("prev", opts or {}, cb)
+          end)
+          return {
+            next = nav_next,
+            prev = nav_prev,
+          }
         end
 
         local function map_repeat(lhs, diff_cmd, cb, desc)
@@ -32,36 +48,34 @@ return {
           end, { expr = true, desc = desc })
         end
 
-        local next_hunk_unstg_repeat, prev_hunk_unstg_repeat = repeatable_move.make_repeatable_move_pair(function()
-          gitsigns.nav_hunk("next", { target = "unstaged" })
-        end, function()
-          gitsigns.nav_hunk("prev", { target = "unstaged" })
-        end)
-        map_repeat("]c", "]c", next_hunk_unstg_repeat, "nav_hunk('next', { target = 'unstaged' })")
-        map_repeat("[c", "[c", prev_hunk_unstg_repeat, "nav_hunk('prev', { target = 'unstaged' })")
+        local nav_all = make_nav_repeats({ target = "all" })
+        map_repeat("]h", "]c", nav_all.next, "nav_hunk('next', { target = 'all' })")
+        map_repeat("[h", "[c", nav_all.prev, "nav_hunk('prev', { target = 'all' })")
 
-        local next_hunk_stg_repeat, prev_hunk_stg_repeat = repeatable_move.make_repeatable_move_pair(function()
-          gitsigns.nav_hunk("next", { target = "staged" })
-        end, function()
-          gitsigns.nav_hunk("prev", { target = "staged" })
-        end)
-        map_repeat("]C", "]c", next_hunk_stg_repeat, "nav_hunk('next', { target = 'staged' })")
-        map_repeat("[C", "[c", prev_hunk_stg_repeat, "nav_hunk('prev', { target = 'staged' })")
-        map_repeat("]t", "]c", next_hunk_stg_repeat, "nav_hunk('next', { target = 'staged' })")
-        map_repeat("[t", "[c", prev_hunk_stg_repeat, "nav_hunk('prev', { target = 'staged' })")
+        local nav_unstaged = make_nav_repeats({ target = "unstaged" })
+        map_repeat("]c", "]c", nav_unstaged.next, "nav_hunk('next', { target = 'unstaged' })")
+        map_repeat("[c", "[c", nav_unstaged.prev, "nav_hunk('prev', { target = 'unstaged' })")
 
-        local next_hunk_repeat, prev_hunk_repeat = repeatable_move.make_repeatable_move_pair(function()
-          gitsigns.nav_hunk("next", { target = "all" })
-        end, function()
-          gitsigns.nav_hunk("prev", { target = "all" })
-        end)
-        map_repeat("]h", "]c", next_hunk_repeat, "nav_hunk('next', { target = 'all' })")
-        map_repeat("[h", "[c", prev_hunk_repeat, "nav_hunk('prev', { target = 'all' })")
+        local nav_staged = make_nav_repeats({ target = "staged" })
+        map_repeat("]v", "]c", nav_staged.next, "nav_hunk('next', { target = 'staged' })")
+        map_repeat("[v", "[c", nav_staged.prev, "nav_hunk('prev', { target = 'staged' })")
 
-        map("n", "<M-[>c", function()
+        local nav_all_preview = make_nav_repeats({ target = "all" }, gitsigns.preview_hunk_inline)
+        map_repeat("]H", "]c", nav_all_preview.next, "nav_hunk next all, preview_hunk_inline")
+        map_repeat("[H", "[c", nav_all_preview.prev, "nav_hunk prev all, preview_hunk_inline")
+
+        local nav_unstaged_preview = make_nav_repeats({ target = "unstaged" }, gitsigns.preview_hunk_inline)
+        map_repeat("]C", "]c", nav_unstaged_preview.next, "nav_hunk next unstaged, preview_hunk_inline")
+        map_repeat("[C", "[c", nav_unstaged_preview.prev, "nav_hunk prev unstaged, preview_hunk_inline")
+
+        local nav_staged_preview = make_nav_repeats({ target = "staged" }, gitsigns.preview_hunk_inline)
+        map_repeat("]V", "]c", nav_staged_preview.next, "nav_hunk next staged, preview_hunk_inline")
+        map_repeat("[V", "[c", nav_staged_preview.prev, "nav_hunk prev staged, preview_hunk_inline")
+
+        map("n", "[<M-h>", function()
           gitsigns.nav_hunk("first", { target = "all" })
         end, { desc = [[nav_hunk("first")]] })
-        map("n", "<M-]>c", function()
+        map("n", "]<M-h>", function()
           gitsigns.nav_hunk("last", { target = "all" })
         end, { desc = [[nav_hunk("last")]] })
 
@@ -73,18 +87,22 @@ return {
         map("v", "<Space>z", function()
           gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
         end, { desc = "reset_hunk" })
+
         map("n", "<Space>S", gitsigns.stage_buffer, { desc = "stage_buffer" })
         map("n", "<M-a>", gitsigns.stage_buffer, { desc = "stage_buffer" })
         map("n", "<Leader>ss", gitsigns.stage_buffer, { desc = "stage_buffer" })
         map("n", "<Space>Z", gitsigns.reset_buffer, { desc = "reset_buffer" })
-        map("n", "<Leader>hp", gitsigns.preview_hunk, { desc = "preview_hunk" })
+        map("n", "<Leader>ph", gitsigns.preview_hunk, { desc = "preview_hunk" })
+        map("n", "<Leader>hp", gitsigns.preview_hunk_inline, { desc = "preview_hunk_inline" })
         map("n", "<Leader>hr", gitsigns.refresh, { desc = "refresh" })
         map("n", "<Leader>SH", gitsigns.show, { desc = "show" })
         map("n", "<M-b>", gitsigns.blame, { desc = "blame" })
-        map("n", "<Leader>hq", gitsigns.setqflist, { desc = "setqflist" })
+        map("n", "<Leader>hq", function()
+          gitsigns.setqflist("all")
+        end, { desc = "setqflist('all')" })
         map("n", "<Leader>hl", gitsigns.setloclist, { desc = "setloclist" })
         map("n", "<Leader>tb", gitsigns.toggle_current_line_blame, { desc = "toggle_current_line_blame" })
-        map("n", "<Leader>td", gitsigns.preview_hunk_inline, { desc = "toggle_deleted" })
+        map("n", "<Leader>td", gitsigns.toggle_deleted, { desc = "toggle_deleted" })
         map("n", "<Leader>tD", gitsigns.toggle_word_diff, { desc = "toggle_word_diff" })
         map("n", "<Leader>tl", gitsigns.toggle_linehl, { desc = "toggle_linehl" })
         map("n", "<Leader>tn", gitsigns.toggle_numhl, { desc = "toggle_numhl" })
@@ -93,10 +111,10 @@ return {
           gitsigns.diffthis("~")
         end, { desc = [[diffthis("~")]] })
         map("n", "<Leader>hb", function()
-          gitsigns.blame_line({ full = true })
+          gitsigns.blame_line({ full = false })
         end, { desc = "blame_line { full = false }" })
         map("n", "<Leader>hB", function()
-          gitsigns.blame_line({ full = false })
+          gitsigns.blame_line({ full = true })
         end, { desc = "blame_line { full = true }" })
         map("n", "<Leader>hc", function()
           vim.cmd("Gitsigns")
@@ -116,12 +134,14 @@ return {
       { "<C-g><C-l>", "<Cmd>Git log --oneline<CR>", mode = { "n", "x" }, desc = "[Fugitive] :Git log --oneline" },
       { "<C-g>lo", "<Cmd>Git log<CR>", mode = { "n", "x" }, desc = "[Fugitive] :Git log" },
       { "<C-g>lb", "<Cmd>Git log %<CR>", mode = { "n", "x" }, desc = "[Fugitive] :Git log %" },
+      { "<C-g>1", "<Cmd>Git log -1 -p --stat<CR>", mode = { "n", "x" }, desc = "[Fugitive] :Git log -1 -p --stat" },
       {
         "<C-g><C-u>",
         "<Cmd>Git log --oneline --pretty='format:%h%d %s (%ar) %ad' --date='format:%Y-%m-%d %H:%M:%S' ...@{u}<CR>",
         mode = { "n", "x" },
         desc = "[Fugitive] :Git log --oneline ...@{u} (w/ dates)",
       },
+      { "<C-g><C-h>", "<Cmd>Git show<CR>", desc = "[Fugitive] :Git show" },
       { "<C-g><C-c>", "<Cmd>Git commit<CR>", mode = { "n", "x" }, desc = "[Fugitive] :Git commit" },
       { "<C-g><C-a>", "<Cmd>Git commit --amend<CR>", mode = { "n", "x" }, desc = "[Fugitive] :Git commit --amend" },
       {
@@ -130,7 +150,18 @@ return {
         mode = { "n", "x" },
         desc = "[Fugitive] :tab Git commit --amend",
       },
-      { "<C-g><C-h>", "<Cmd>Git show<CR>", desc = "[Fugitive] :Git show" },
+      {
+        "<M-1><M-1>",
+        "<Cmd>Git commit --amend --no-edit --date=now<CR>",
+        mode = { "n", "x" },
+        desc = "[Fugitive] :Git commit --amend --no-edit --date=now",
+      },
+      {
+        "<M-!><M-!>",
+        "<Cmd>Git commit --all --amend --no-edit --date=now<CR>",
+        mode = { "n", "x" },
+        desc = "[Fugitive] :Git commit --amend --no-edit --date=now",
+      },
       {
         "<C-g>!!",
         "<Cmd>Git commit --amend --no-edit --date=now<CR>",
@@ -183,7 +214,6 @@ return {
           vim.api.nvim_set_option_value("winbar", "-", { win = vim.api.nvim_get_current_win(), scope = "local" })
         end,
       })
-
       vim.api.nvim_create_autocmd("User", {
         pattern = {
           "FugitiveObject",
@@ -199,7 +229,7 @@ return {
           local old_win = vim.api.nvim_get_current_win()
           local buf = vim.api.nvim_get_current_buf()
           local height = math.floor(vim.o.lines * 0.8)
-          local width = math.floor(vim.o.columns * 0.5)
+          local width = math.floor(vim.o.columns * (vim.o.columns > 160 and 0.5 or 0.8))
           vim.api.nvim_open_win(buf, true, {
             relative = "editor",
             width = width,

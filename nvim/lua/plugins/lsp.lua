@@ -78,7 +78,7 @@ return {
                 local venv_local_path = vim.fn.exepath("./.venv/bin/python")
                 return (venv_active and venv_active .. "/bin/python")
                   or (#venv_local_path > 0 and venv_local_path)
-                  or vim.fn.exepath("python")
+                  or nil
               end)(),
             },
           },

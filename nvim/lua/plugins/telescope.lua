@@ -563,29 +563,7 @@ return {
       local actions = require("telescope.actions")
       local layout = require("telescope.actions.layout")
       local state = require("telescope.actions.state")
-      local builtin = require("telescope.builtin")
       local fb_actions = require("telescope._extensions.file_browser.actions")
-
-      local live_grep_select_dir = function(prompt_bufnr)
-        require("telescope").extensions.file_browser.file_browser({
-          files = false,
-          depth = false,
-          attach_mappings = function(prompt_bufnr)
-            require("telescope.actions").select_default:replace(function()
-              local entry_path = state.get_selected_entry().Path
-              local dir = entry_path:is_dir() and entry_path or entry_path:parent()
-
-              builtin.live_grep({
-                results_title = dir:make_relative(vim.fn.getcwd()) .. "/",
-                cwd = dir:absolute(),
-                default_text = state.get_current_line(),
-              })
-            end)
-
-            return true
-          end,
-        })
-      end
 
       local function yank_path(modifiers)
         return function()

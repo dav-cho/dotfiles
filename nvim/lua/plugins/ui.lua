@@ -199,7 +199,6 @@ return {
           end,
           desc = "[count] move to (positive index)",
         },
-
         {
           "<Space><S-Right>",
           function()
@@ -535,8 +534,8 @@ return {
     opts = {
       enabled = false,
       indent = {
-        char = "│",
-        tab_char = "│",
+        char = "▏",
+        tab_char = "▏",
       },
       scope = { enabled = false },
       exclude = {
@@ -591,7 +590,7 @@ return {
         border = "top",
         try_as_border = true,
       },
-      symbol = "│", -- or "▏"
+      symbol = "▏",
     },
     config = function(_, opts)
       vim.g.miniindentscope_disable = true

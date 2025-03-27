@@ -99,6 +99,8 @@ eval "$(atuin init zsh --disable-up-arrow)"
 
 [[ -e "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
 
+eval "$(gh copilot alias -- zsh)"
+
 export PATH="$HOME/.local/share/solana/install/active_release/bin:$PATH"
 
 [[ ! -f ~/.p10k.zsh ]] || . ~/.p10k.zsh
@@ -167,6 +169,7 @@ bindkey -e '^[B' vi-backward-blank-word
 bindkey -e '^[F' vi-forward-blank-word
 
 alias cat="bat"
+alias chrome="open -a 'Google Chrome'"
 alias docker-compose="docker compose"
 alias eza="eza --time-style=long-iso"
 alias ghco="gh copilot"

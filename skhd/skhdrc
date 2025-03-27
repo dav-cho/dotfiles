@@ -212,8 +212,9 @@ lctrl + lshift + rshift - 0x21 : yabai -m space --rotate 90       # cycle counte
 lctrl + lcmd + lshift + rshift - p : yabai -m space --toggle padding && yabai -m space --toggle gap
 
 ## layout management
-lctrl + lshift + rshift - 0x2A      : yabai -m space --layout float
-lctrl + lshift + rshift - backspace : yabai -m space --layout bsp
+lctrl + lalt + lshift - return    : yabai -m space --layout bsp
+lctrl + lalt + lshift - 0x2A      : yabai -m space --layout float
+lctrl + lalt + lshift - backspace : yabai -m space --layout stack
 
 ## create/destroy space
 ralt + rcmd + rshift - n : yabai -m space --create && \

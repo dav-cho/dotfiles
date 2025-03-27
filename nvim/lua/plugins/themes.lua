@@ -10,68 +10,6 @@ end
 
 return {
   {
-    dir = "dav.themes",
-    virtual = true,
-    dependencies = { "telescope.nvim" },
-    keys = function()
-      local themes = {
-        ["catppuccin"] = "catppuccin",
-        ["codedark"] = "vim-code-dark",
-        ["darkplus"] = "darkplus.nvim",
-        ["everforest"] = "everforest",
-        ["kanagawa"] = "kanagawa.nvim",
-        ["material"] = "material.nvim",
-        ["moonfly"] = "moonfly",
-        ["onedark"] = "onedark.nvim",
-        ["onenord"] = "onenord.nvim",
-        ["rose-pine"] = "rose-pine",
-        ["tokyonight"] = "tokyonight.nvim",
-        ["zenbones"] = "zenbones.nvim",
-      }
-
-      local function set_theme(theme)
-        if package.loaded[theme] then
-          vim.cmd("colorscheme " .. theme)
-          return
-        end
-        require("lazy").load({ plugins = { themes[theme] } })
-      end
-
-      return {
-        {
-          "<Leader>th",
-          function()
-            local choices = {}
-            for theme, _ in pairs(themes) do
-              table.insert(choices, theme)
-            end
-            table.sort(choices)
-            vim.ui.select(choices, { prompt = "Select Theme:" }, function(choice)
-              if choice and themes[choice] then
-                set_theme(themes[choice])
-              end
-            end)
-          end,
-          desc = "[Custom] Set theme",
-        },
-        {
-          "<Leader>ty",
-          function()
-            set_theme("tokyonight")
-          end,
-          desc = "[Theme] Tokyonight",
-        },
-        {
-          "<Leader>on",
-          function()
-            set_theme("onenord")
-          end,
-          desc = "[Theme] onenord",
-        },
-      }
-    end,
-  },
-  {
     "rose-pine/neovim",
     name = "rose-pine",
     priority = 1000,
@@ -138,6 +76,7 @@ return {
           TelescopeBorder = { link = "FloatBorder" },
           TelescopeSelection = { bg = colors.cursor_line_bright },
           Todo = { fg = "iris", bg = "none", blend = 0 },
+          WinBar = { link = "Normal" },
           WinSeparator = { fg = colors.win_separator },
           ["@attribute"] = { fg = "iris" },
           ["@comment.todo"] = { link = "Todo" },
@@ -324,7 +263,7 @@ return {
     end,
   },
   {
-    -- *After changes, make sure to run `:CatppuccinCompile`
+    -- *After changes, run `:CatppuccinCompile`
     "catppuccin/nvim",
     name = "catppuccin",
     lazy = true,
