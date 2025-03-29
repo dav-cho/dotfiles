@@ -63,6 +63,13 @@ return {
           IlluminatedWordText = { bg = colors.cursor_line_bright },
           IlluminatedWordWrite = { bg = colors.cursor_line_bright },
           Include = { fg = "iris" },
+
+          -- IndentBlanklineChar xxx cterm=nocombine gui=nocombine guifg=#6e6a86
+          -- #75708f
+          -- #837e9a
+          -- TODO
+          -- IndentBlanklineChar = { fg = "#837e9a" },
+
           LineNr = { fg = colors.line_nr },
           LspSignatureActiveParameter = { link = "LspReferenceRead" },
           Normal = { fg = colors.text, bg = colors.bg },

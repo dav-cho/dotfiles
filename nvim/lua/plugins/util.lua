@@ -72,6 +72,201 @@ return {
         desc = "[Comment] TODO EOL (insert mode)",
       },
     },
+
+    -- keys = {
+    --   {
+    --     "<C-_>",
+    --     function()
+    --       return vim.api.nvim_get_vvar("count") == 0 and "<Plug>(comment_toggle_linewise_current)"
+    --         or "<Plug>(comment_toggle_linewise_count)"
+    --     end,
+    --     expr = true,
+    --     silent = true,
+    --     desc = "<Plug>(comment_toggle_linewise_current|comment_toggle_linewise_count)",
+    --   },
+    --   {
+    --     "<C-_>",
+    --     function()
+    --       return "<Plug>(comment_toggle_linewise_visual)"
+    --     end,
+    --     mode = "v",
+    --     expr = true,
+    --     silent = true,
+    --     desc = "<Plug>(comment_toggle_linewise_visual)",
+    --   },
+    --   {
+    --     "<M-Y>",
+    --     function()
+    --       vim.cmd("normal! ygv")
+    --       vim.api.nvim_input("gc")
+    --     end,
+    --     mode = "v",
+    --     desc = "[Comment] Yank selection and comment",
+    --   },
+    --   {
+    --     "<M-?>",
+    --     function()
+    --       vim.cmd("normal! vip")
+    --       vim.api.nvim_input("gc")
+    --     end,
+    --     desc = "[Comment] Comment paragraph",
+    --   },
+    --   -- TODO: enable dot repeat - change to Ex-commands?
+    --   -- see note from: https://github.com/chrisgrieser/nvim-various-textobjs/blob/main/README.md#configuration
+    --   {
+    --     "<Leader>#",
+    --     function()
+    --       vim.api.nvim_input("gcOTODO<Esc>")
+    --     end,
+    --     desc = "[Comment] TODO above",
+    --   },
+    --
+    --   ---api.insert.linewise.above(config?)
+    --   ---api.insert.linewise.below(config?)
+    --   ---api.insert.linewise.eol(config?)
+    --
+    --   -- WIP
+    --
+    --   {
+    --     "<leader><leader>",
+    --     function()
+    --       -- return require("dav.comment").call("insert_todo_above", "g@$")
+    --       return require("dav.comment").call("insert_todo_above")
+    --     end,
+    --     expr = true,
+    --     desc = "[Comment] TODO above",
+    --   },
+    --
+    --   {
+    --     "<Leader>$",
+    --     function()
+    --       vim.api.nvim_input("gcATODO<Esc>")
+    --     end,
+    --     desc = "[Comment] TODO EOL",
+    --   },
+    --   {
+    --     "<Space>#",
+    --     function()
+    --       vim.api.nvim_input("gcOTODO: ")
+    --     end,
+    --     desc = "[Comment] TODO above (insert mode)",
+    --   },
+    --   {
+    --     "<Space>$",
+    --     function()
+    --       vim.api.nvim_input("gcATODO: ")
+    --     end,
+    --     desc = "[Comment] TODO EOL (insert mode)",
+    --   },
+    -- },
+
+    -- WIP
+    keys = function()
+      local function call(cb, op)
+        return function()
+          vim.api.nvim_set_option("operatorfunc", ("v:lua.require'dav.comment'.locked'%s'"):format(cb))
+          return op
+        end
+      end
+
+      return {
+        {
+          -- "<leader><leader>",
+          "<M-,><leader>",
+          call("insert_todo_above", "g@$"),
+          -- function()
+          --   -- return require("dav.comment").call("insert_todo_above", "g@$")
+          --   return require("dav.comment").call("insert_todo_above")
+          -- end,
+          expr = true,
+          desc = "[Comment] TODO above",
+        },
+
+        ---api.insert.linewise.above(config?)
+        ---api.insert.linewise.below(config?)
+        ---api.insert.linewise.eol(config?)
+
+        -- {
+        --   "<leader><leader>",
+        --   call("insert_todo_above", "g@$"),
+        --   -- function()
+        --   --   -- return require("dav.comment").call("insert_todo_above", "g@$")
+        --   --   return require("dav.comment").call("insert_todo_above")
+        --   -- end,
+        --   expr = true,
+        --   desc = "[Comment] TODO above",
+        -- },
+
+        {
+          "<C-_>",
+          function()
+            return vim.api.nvim_get_vvar("count") == 0 and "<Plug>(comment_toggle_linewise_current)"
+              or "<Plug>(comment_toggle_linewise_count)"
+          end,
+          expr = true,
+          silent = true,
+          desc = "<Plug>(comment_toggle_linewise_current|comment_toggle_linewise_count)",
+        },
+        {
+          "<C-_>",
+          function()
+            return "<Plug>(comment_toggle_linewise_visual)"
+          end,
+          mode = "v",
+          expr = true,
+          silent = true,
+          desc = "<Plug>(comment_toggle_linewise_visual)",
+        },
+        {
+          "<M-Y>",
+          function()
+            vim.cmd("normal! ygv")
+            vim.api.nvim_input("gc")
+          end,
+          mode = "v",
+          desc = "[Comment] Yank selection and comment",
+        },
+        {
+          "<M-?>",
+          function()
+            vim.cmd("normal! vip")
+            vim.api.nvim_input("gc")
+          end,
+          desc = "[Comment] Comment paragraph",
+        },
+        -- TODO: enable dot repeat - change to Ex-commands?
+        -- see note from: https://github.com/chrisgrieser/nvim-various-textobjs/blob/main/README.md#configuration
+        {
+          "<Leader>#",
+          function()
+            vim.api.nvim_input("gcOTODO<Esc>")
+          end,
+          desc = "[Comment] TODO above",
+        },
+        {
+          "<Leader>$",
+          function()
+            vim.api.nvim_input("gcATODO<Esc>")
+          end,
+          desc = "[Comment] TODO EOL",
+        },
+        {
+          "<Space>#",
+          function()
+            vim.api.nvim_input("gcOTODO: ")
+          end,
+          desc = "[Comment] TODO above (insert mode)",
+        },
+        {
+          "<Space>$",
+          function()
+            vim.api.nvim_input("gcATODO: ")
+          end,
+          desc = "[Comment] TODO EOL (insert mode)",
+        },
+      }
+    end,
+
     config = function()
       require("Comment").setup()
     end,
@@ -121,6 +316,7 @@ return {
     keys = {
       {
         "-",
+        -- "<M-->",
         function()
           require("oil").open_float()
         end,
@@ -128,6 +324,7 @@ return {
       },
       {
         "_",
+        -- "<M-_>",
         function()
           require("oil").open()
         end,
@@ -216,6 +413,16 @@ return {
         end,
         desc = "[Nvim-Tree] Toggle",
       },
+      -- {
+      --   "<Space>'",
+      --   function()
+      --     require("nvim-tree.api").tree.find_file({
+      --       open = true,
+      --       focus = true,
+      --     })
+      --   end,
+      --   desc = "[Nvim-Tree] Find File",
+      -- },
       {
         "<Space>'",
         function()
@@ -318,6 +525,14 @@ return {
         end,
       })
     end,
+  },
+  { -- TODO
+    "folke/persistence.nvim",
+    enabled = false,
+    event = "BufReadPre", -- this will only start session saving when an actual file was opened
+    opts = {
+      -- add any custom options here
+    },
   },
   {
     "danymat/neogen",
@@ -486,12 +701,17 @@ return {
     version = "*",
     opts = {
       global = {
+        -- kitty_get_text = {
+        --   ansi = false,
+        -- },
         paste_window = {
           winblend = 30,
+          yank_register_enabled = false,
         },
       },
       tmux = {
         kitty_get_text = {
+          -- ansi = false,
           extent = "last_cmd_output",
         },
       },
@@ -528,6 +748,53 @@ return {
         end,
         desc = "Buffer Local Keymaps (which-key)",
       },
+    },
+  },
+  {
+    "yetone/avante.nvim",
+    enabled = false,
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "stevearc/dressing.nvim",
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      "nvim-tree/nvim-web-devicons",
+      "zbirenbaum/copilot.lua",
+      "MeanderingProgrammer/render-markdown.nvim",
+    },
+    keys = {
+      "<Leader>aa",
+      "<Leader>ae",
+      "<Leader>af",
+      "<Leader>ah",
+      "<Leader>as",
+      "<Leader>at",
+      "<Leader>aR",
+    },
+    -- event = "VeryLazy",
+    version = false,
+    build = "make",
+    opts = {
+      hints = {
+        enabled = false,
+      },
+    },
+  },
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    enabled = false,
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    ft = { "Avante" },
+    -- keys = {
+    --   "<Leader>rm",
+    --   function()
+    --     require("render-markdown").toggle()
+    --   end,
+    --   -- "<Cmd>RenderMarkdownToggle<CR>",
+    --   desc = "[Render Markdown] toggle",
+    -- },
+    opts = {
+      file_types = { "Avante" },
     },
   },
 }

@@ -92,6 +92,10 @@ if [[ -d "$KITTY" ]]; then
     symlink "$KITTY/kitten" "$HOME/.local/bin"
 fi
 
+if [[ -d "$HOME/Library/Application Support/k9s" ]]; then
+    symlink "$DOTFILES/k9s/config.yaml" "$HOME/Library/Application Support/k9s/config.yaml"
+fi
+
 if [[ "$USER" == "$CM_USER" ]]; then
     source "$DOTFILES/cm/install"
 fi
