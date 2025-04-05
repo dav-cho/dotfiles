@@ -79,6 +79,7 @@ return {
                 return (venv_active and venv_active .. "/bin/python")
                   or (#venv_local_path > 0 and venv_local_path)
                   or nil
+                -- or vim.fn.exepath("python")
               end)(),
             },
           },
@@ -130,10 +131,14 @@ return {
           buf_map("n", "gD", vim.lsp.buf.type_definition, { desc = "vim.lsp.buf.type_definition" })
           buf_map("n", "<Leader>gi", vim.lsp.buf.implementation)
           buf_map("n", "gr", vim.lsp.buf.references)
+          -- TODO
           buf_map({ "n", "i" }, "<M-s>", vim.lsp.buf.signature_help)
+          -- buf_map({ "n", "i" }, "<Leader>k", vim.lsp.buf.signature_help) -- can't use because causes `,` to lag
+          -- buf_map({ "n", "i" }, "<C-s>", vim.lsp.buf.signature_help)
           buf_map("n", "<Leader>rn", vim.lsp.buf.rename)
           buf_map("n", "<Leader>ca", vim.lsp.buf.code_action)
-          buf_map("n", "<Leader>fm", vim.lsp.buf.format)
+          -- buf_map("n", "<Leader>fm", vim.lsp.buf.format)
+          buf_map("n", "<Leader>FM", vim.lsp.buf.format)
           buf_map("n", "<Leader>Wa", vim.lsp.buf.add_workspace_folder)
           buf_map("n", "<Leader>Wr", vim.lsp.buf.remove_workspace_folder)
           buf_map("n", "<Leader>Wl", function()
@@ -284,6 +289,12 @@ return {
             "--config=lint.isort.split-on-trailing-comma=false",
           },
         },
+        -- stylua = {
+        --   prepend_args = {
+        --     "--indent-type=Spaces",
+        --     "--indent-width=2",
+        --   },
+        -- },
       },
       formatters_by_ft = {
         go = { "goimports", "gofmt", stop_after_first = true },
@@ -434,6 +445,26 @@ return {
       suggestion = {
         auto_trigger = true,
       },
+      should_attach = function(_, _)
+        local logger = require("copilot.logger")
+
+        if not vim.bo.buflisted then
+          logger.debug("not attaching, buffer is not 'buflisted'")
+          return false
+        end
+
+        if vim.bo.buftype ~= "" then
+          logger.debug("not attaching, buffer 'buftype' is " .. vim.bo.buftype)
+          return false
+        end
+
+        -- if vim.startswith(vim.fn.getcwd(), vim.fn.expand("~/cm")) then
+        --   logger.debug("not attaching, current working directory is ~/cm")
+        --   return false
+        -- end
+
+        return true
+      end,
     },
   },
   {

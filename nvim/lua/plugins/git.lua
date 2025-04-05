@@ -4,6 +4,7 @@ return {
     event = "LspAttach",
     opts = {
       attach_to_untracked = true,
+      -- signs_staged_enable = false,
       trouble = false,
       current_line_blame_opts = {
         virt_text = true,
@@ -11,8 +12,14 @@ return {
         delay = 0,
       },
       current_line_blame_formatter = " <author> <author_time:%Y-%m-%d %H:%M %p> <summary> (<abbrev_sha>)",
+      -- TODO
       diff_opts = {
         linematch = 1,
+        -- internal = true,
+        -- ignore_blank_lines = false,
+        -- ignore_whitespace_change = false,
+        -- ignore_whitespace = false,
+        -- ignore_whitespace_change_at_eol = false,
       },
       on_attach = function(bufnr)
         local gitsigns = require("gitsigns")
@@ -88,21 +95,24 @@ return {
           gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
         end, { desc = "reset_hunk" })
 
+        -- map("n", "<Space>u", gitsigns.undo_stage_hunk, { desc = "undo_stage_hunk" }) -- TODO
+        -- map("n", "<Space>u", gitsigns.stage_hunk, { desc = "undo_stage_hunk" }) -- TODO
         map("n", "<Space>S", gitsigns.stage_buffer, { desc = "stage_buffer" })
-        map("n", "<M-a>", gitsigns.stage_buffer, { desc = "stage_buffer" })
+        map("n", "<M-a>", gitsigns.stage_buffer, { desc = "stage_buffer" }) -- TODO
         map("n", "<Leader>ss", gitsigns.stage_buffer, { desc = "stage_buffer" })
         map("n", "<Space>Z", gitsigns.reset_buffer, { desc = "reset_buffer" })
         map("n", "<Leader>ph", gitsigns.preview_hunk, { desc = "preview_hunk" })
-        map("n", "<Leader>hp", gitsigns.preview_hunk_inline, { desc = "preview_hunk_inline" })
+        map("n", "<Leader>hp", gitsigns.preview_hunk_inline, { desc = "preview_hunk_inline" }) -- TODO
+        -- map("n", "<Leader>td", gitsigns.preview_hunk_inline, { desc = "preview_hunk_inline (toggle deleted)" }) -- TODO
         map("n", "<Leader>hr", gitsigns.refresh, { desc = "refresh" })
         map("n", "<Leader>SH", gitsigns.show, { desc = "show" })
-        map("n", "<M-b>", gitsigns.blame, { desc = "blame" })
+        map("n", "<M-b>", gitsigns.blame, { desc = "blame" }) -- TODO
         map("n", "<Leader>hq", function()
           gitsigns.setqflist("all")
         end, { desc = "setqflist('all')" })
         map("n", "<Leader>hl", gitsigns.setloclist, { desc = "setloclist" })
         map("n", "<Leader>tb", gitsigns.toggle_current_line_blame, { desc = "toggle_current_line_blame" })
-        map("n", "<Leader>td", gitsigns.toggle_deleted, { desc = "toggle_deleted" })
+        map("n", "<Leader>td", gitsigns.toggle_deleted, { desc = "toggle_deleted" }) -- TODO
         map("n", "<Leader>tD", gitsigns.toggle_word_diff, { desc = "toggle_word_diff" })
         map("n", "<Leader>tl", gitsigns.toggle_linehl, { desc = "toggle_linehl" })
         map("n", "<Leader>tn", gitsigns.toggle_numhl, { desc = "toggle_numhl" })
@@ -126,6 +136,114 @@ return {
   {
     "tpope/vim-fugitive",
     cmd = { "G", "Git" },
+    -- -- TODO
+    -- keys = {
+    --   { "<C-g><C-g>", "<Cmd>Git<CR>", desc = "[Fugitive] :Git (:G)" },
+    --   { "<C-g><C-v>", "<Cmd>vert Git<CR>", desc = "[Fugitive] :vert Git" },
+    --   { "<C-g><C-t>", "<Cmd>tab Git<CR>", desc = "[Fugitive] :tab Git" },
+    --
+    --   { "<C-g><C-s>", "<Cmd>Git status --short<CR>", desc = "[Fugitive] :Git status --short" },
+    --   { "<C-g>ss", "<Cmd>vert Git status --short<CR>", desc = "[Fugitive] :vert Git status --short" },
+    --   { "<C-g>st", "<Cmd>vert Git status<CR>", desc = "[Fugitive] :vert Git status" },
+    --   { "<M-g>ss", "<Cmd>tab Git status --short<CR>", desc = "[Fugitive] :tab Git status --short" },
+    --   { "<M-g>st", "<Cmd>tab Git status<CR>", desc = "[Fugitive] :tab Git status" },
+    --
+    --   { "<C-g><C-d>", "<Cmd>Git diff<CR>", desc = "[Fugitive] :Git diff" },
+    --   { "<C-g>dd", "<Cmd>vert Git diff<CR>", desc = "[Fugitive] :vert Git diff" },
+    --   { "<C-g>ds", "<Cmd>vert Git diff --staged<CR>", desc = "[Fugitive] :vert Git diff --staged" },
+    --   { "<C-g>ni", "<Cmd>vert Git diff --no-index ", desc = "[Fugitive] :vert Git diff --no-index ..." },
+    --   { "<M-g>dd", "<Cmd>tab Git diff<CR>", desc = "[Fugitive] :tab Git diff" },
+    --   { "<M-g>ds", "<Cmd>tab Git diff --staged<CR>", desc = "[Fugitive] :tab Git diff --staged" },
+    --   { "<M-g>ni", "<Cmd>tab Git diff --no-index ", desc = "[Fugitive] :tab Git diff --no-index ..." },
+    --
+    --   { "<C-g><C-l>", "<Cmd>Git log --oneline<CR>", mode = { "n", "x" }, desc = "[Fugitive] :Git log --oneline" },
+    --   { "<C-g>lo", "<Cmd>vert Git log<CR>", mode = { "n", "x" }, desc = "[Fugitive] :vert Git log" },
+    --   { "<C-g>lb", "<Cmd>vert Git log %<CR>", mode = { "n", "x" }, desc = "[Fugitive] :vert Git log %" },
+    --   {
+    --     "<C-g>ll",
+    --     "<Cmd>vert Git log --oneline<CR>",
+    --     mode = { "n", "x" },
+    --     desc = "[Fugitive] :vert Git log --oneline",
+    --   },
+    --   { "<M-g>lo", "<Cmd>tab Git log<CR>", mode = { "n", "x" }, desc = "[Fugitive] :tab Git log" },
+    --   { "<M-g>lb", "<Cmd>tab Git log %<CR>", mode = { "n", "x" }, desc = "[Fugitive] :tab Git log %" },
+    --   { "<M-g>ll", "<Cmd>tab Git log --oneline<CR>", mode = { "n", "x" }, desc = "[Fugitive] :tab Git log --oneline" },
+    --
+    --   {
+    --     "<C-g><C-u>",
+    --     "<Cmd>Git log --oneline --pretty='format:%h%d %s (%ar) %ad' --date='format:%Y-%m-%d %H:%M:%S' ...@{u}<CR>",
+    --     mode = { "n", "x" },
+    --     desc = "[Fugitive] :Git log --oneline ...@{u} (w/ dates)",
+    --   },
+    --
+    --   { "<C-g><C-c>", "<Cmd>Git commit<CR>", mode = { "n", "x" }, desc = "[Fugitive] :Git commit" },
+    --   { "<C-g>cc", "<Cmd>vert Git commit<CR>", mode = { "n", "x" }, desc = "[Fugitive] :vert Git commit" },
+    --   { "<C-g><C-a>", "<Cmd>Git commit --amend<CR>", mode = { "n", "x" }, desc = "[Fugitive] :Git commit --amend" },
+    --   {
+    --     "<C-g>cA",
+    --     "<Cmd>vert Git commit --amend<CR>",
+    --     mode = { "n", "x" },
+    --     desc = "[Fugitive] :vert Git commit --amend",
+    --   },
+    --   { "<M-g>cc", "<Cmd>tab Git commit<CR>", mode = { "n", "x" }, desc = "[Fugitive] :tab Git commit" },
+    --   {
+    --     "<M-g>cA",
+    --     "<Cmd>tab Git commit --amend<CR>",
+    --     mode = { "n", "x" },
+    --     desc = "[Fugitive] :tab Git commit --amend",
+    --   },
+    --
+    --   { "<C-g><C-h>", "<Cmd>Git show<CR>", desc = "[Fugitive] :Git show" },
+    --   { "<C-g>sh", "<Cmd>vert Git show<CR>", desc = "[Fugitive] :vert Git show" },
+    --   { "<M-g>sh", "<Cmd>tab Git show<CR>", desc = "[Fugitive] :tab Git show" },
+    --
+    --   {
+    --     "<C-g>!!",
+    --     "<Cmd>Git commit --amend --no-edit --date=now<CR>",
+    --     mode = { "n", "x" },
+    --     desc = "[Fugitive] :Git commit --amend --no-edit --date=now",
+    --   },
+    --   {
+    --     "<M-g>!!",
+    --     "<Cmd>Git commit --all --amend --no-edit --date=now<CR>",
+    --     mode = { "n", "x" },
+    --     desc = "[Fugitive] :Git commit --amend --no-edit --date=now",
+    --   },
+    --   {
+    --     "<C-g>!~",
+    --     "<Cmd>Git commit --amend --no-edit<CR>",
+    --     mode = { "n", "x" },
+    --     desc = "[Fugitive] :Git commit --amend --no-edit",
+    --   },
+    --   {
+    --     "<M-g>!~",
+    --     "<Cmd>Git commit --all --amend --no-edit<CR>",
+    --     mode = { "n", "x" },
+    --     desc = "[Fugitive] :Git commit --amend --no-edit",
+    --   },
+    --
+    --   { "<C-g>bl", "<Cmd>Git blame<CR>", mode = { "n", "x" }, desc = "[Fugitive] :Git blame" },
+    --   {
+    --     "<C-g><C-w>",
+    --     function()
+    --       local win = vim.api.nvim_get_current_win()
+    --       local val = ""
+    --       if vim.api.nvim_get_option_value("winbar", { win = win }) == "" then
+    --         val = "-"
+    --       end
+    --       vim.api.nvim_set_option_value("winbar", val, { win = win, scope = "local" })
+    --     end,
+    --     ft = "fugitiveblame",
+    --     desc = "[Fugitive] toggle winbar",
+    --   },
+    --
+    --   { "<C-g>dv", "<Cmd>Gdiffsplit<CR>", desc = "[Fugitive] :Gdiffsplit" },
+    --   { "<C-g>dt", "<Cmd>Git! difftool<CR>", desc = "[Fugitive] :Git! difftool" },
+    --   { "<C-g>gr", "<Cmd>Ggrep ", desc = "[Fugitive] :Ggrep ..." },
+    --   { "<C-g>cl", "<Cmd>Gclog!<CR>", mode = { "n", "x" }, desc = "[Fugitive] :Gclog!" },
+    --   { "<C-g>cL", "<Cmd>Gclog! %<CR>", mode = { "n", "x" }, desc = "[Fugitive] :Gclog! %" },
+    -- },
+    -- TODO
     keys = {
       { "<C-g><C-g>", "<Cmd>Git<CR>", desc = "[Fugitive] :Git (:G)" },
       { "<C-g><C-s>", "<Cmd>Git status --short<CR>", desc = "[Fugitive] :Git status --short" },
@@ -150,6 +268,8 @@ return {
         mode = { "n", "x" },
         desc = "[Fugitive] :tab Git commit --amend",
       },
+
+      -- TODO
       {
         "<M-1><M-1>",
         "<Cmd>Git commit --amend --no-edit --date=now<CR>",
@@ -162,6 +282,7 @@ return {
         mode = { "n", "x" },
         desc = "[Fugitive] :Git commit --amend --no-edit --date=now",
       },
+
       {
         "<C-g>!!",
         "<Cmd>Git commit --amend --no-edit --date=now<CR>",
@@ -200,6 +321,7 @@ return {
         ft = "fugitiveblame",
         desc = "[Fugitive] toggle winbar",
       },
+
       { "<C-g>dv", "<Cmd>Gdiffsplit<CR>", desc = "[Fugitive] :Gdiffsplit" },
       { "<C-g>dt", "<Cmd>Git! difftool<CR>", desc = "[Fugitive] :Git! difftool" },
       { "<C-g>gr", "<Cmd>Ggrep ", desc = "[Fugitive] :Ggrep ..." },
@@ -214,13 +336,29 @@ return {
           vim.api.nvim_set_option_value("winbar", "-", { win = vim.api.nvim_get_current_win(), scope = "local" })
         end,
       })
+
+      -- TODO: convert to wrapper
+      -- something like:
+      -- function with_float(cmd) 
+      --   -- save window layout/display and cursor position
+      --   -- set autocmd
+      --   vim.cmd(cmd)
+      --   -- reset/clear autocmd
+      -- end
       vim.api.nvim_create_autocmd("User", {
+        -- TODO: disable FugitiveChanged
+        -- pattern = "Fugitive*",
         pattern = {
+          -- "FugitiveTag",
+          -- "FugitiveCommit",
+          -- "FugitiveTree",
+          -- "FugitiveBlob",
           "FugitiveObject",
           "FugitiveStageBlob",
           "FugitiveIndex",
           "FugitivePager",
           "FugitiveEditor",
+          -- "FugitiveChanged",
         },
         callback = function()
           if vim.bo.filetype == "fugitiveblame" then

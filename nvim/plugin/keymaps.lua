@@ -6,6 +6,12 @@ local function search_keep_pos(cmd)
   vim.api.nvim_win_set_cursor(0, cursor)
 end
 
+-- map("n", "<space><leader>", function()
+--   vim.notify(vim.inspect(vim.fn.getcwd()))
+--   vim.notify(vim.inspect(vim.fn.expand("~/cm")))
+--   vim.notify(vim.inspect(vim.startswith(vim.fn.getcwd(), vim.fn.expand("~/cm"))))
+-- end)
+
 map("n", "<Space>w", "<Cmd>silent! w<CR>", { desc = "Write" })
 map("n", "<Space>W", "<Cmd>silent! wa<CR>", { desc = "Write All" })
 map({ "n", "v" }, "<C-q>", "<Cmd>qa<CR>", { desc = "Quit all" })
@@ -28,6 +34,48 @@ map({ "n", "v" }, "<C-l>", [[<Cmd>exe v:count1 . "wincmd l"<CR>]], { desc = "Win
 map({ "n", "v" }, "<Leader>w", "<C-w>", { desc = "Window command" })
 map({ "n", "v" }, "<Leader>wt", "<Cmd>tab split<CR>", { desc = ":tab split" })
 map({ "n", "v" }, "<Leader>wT", "<Cmd>wincmd T<CR>", { desc = ":wincmd T" })
+map({ "n", "v" }, "<Leader>wX", "<C-w>x<C-w>p", { desc = "Swap window keep cursor" })
+
+-- map({ "n", "v" }, "<Leader>wX", function()
+--   local win = vim.api.nvim_get_current_win()
+--   vim.cmd("wincmd h")
+--   if vim.api.nvim_get_current_win() ~= win then
+--     vim.cmd("wincmd x")
+--   end
+-- end, { desc = "Swap window prev" })
+-- map({ "n", "v" }, "<Leader>wX", "<C-w>W<C-w>x", { desc = "Swap window prev" })
+-- map({ "n", "v" }, "<Leader>wX", "<C-w>p<C-w>x", { desc = "Swap window prev" })
+
+-- map({ "n", "v" }, "<Leader>wx", function()
+--   local wins = vim.api.nvim_list_wins()
+--   for i, w in ipairs(wins) do
+--     if w == vim.api.nvim_get_current_win() then
+--       local next_idx = (i + vim.v.count) % #wins + 1
+--       vim.cmd(string.format("%d wincmd x | wincmd w", next_idx))
+--       break
+--     end
+--   end
+-- end, { desc = "swap next window" })
+-- map({ "n", "v" }, "<Leader>wX", function()
+--   local wins = vim.api.nvim_list_wins()
+--   for i, w in ipairs(wins) do
+--     if w == vim.api.nvim_get_current_win() then
+--       local prev_idx = i > 1 and (i - vim.v.count - 1) % #wins or #wins
+--       vim.cmd(string.format("%d wincmd x | wincmd W", prev_idx))
+--       break
+--     end
+--   end
+-- end, { desc = "swap previous window" })
+-- map({ "n", "v" }, "<C-w>X", function()
+--   local wins = vim.api.nvim_list_wins()
+--   for i, w in ipairs(wins) do
+--     if w == vim.api.nvim_get_current_win() then
+--       local prev_idx = i > 1 and (i - vim.v.count - 1) % #wins or #wins
+--       vim.cmd(string.format("%d wincmd x", prev_idx))
+--       break
+--     end
+--   end
+-- end, { desc = "swap previous window (keep cursor in same window)" })
 
 map("n", "<M-x>", "<Cmd>tabc<CR>", { desc = "Close tab" })
 map("n", "<Leader><C-x>", "<Cmd>tabc<CR>", { desc = "Close tab" })

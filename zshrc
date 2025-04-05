@@ -104,6 +104,7 @@ eval "$(gh copilot alias -- zsh)"
 export PATH="$HOME/.local/share/solana/install/active_release/bin:$PATH"
 
 [[ ! -f ~/.p10k.zsh ]] || . ~/.p10k.zsh
+# eval "$(starship init zsh)"
 
 _fzf_compgen_path() {
   fd -u --follow -E ".git" -E "node_modules" -E "__pycache__" . "$1"
@@ -141,6 +142,16 @@ _nvim-man() {
   zle accept-line
 }
 
+# _pipe-delta() {
+#   BUFFER+=" | delta"
+#   zle accept-line
+# }
+
+# _pipe-fzf() {
+#   BUFFER+=" | fzf"
+#   zle accept-line
+# }
+
 _rfv() {
   rfv
 }
@@ -153,13 +164,17 @@ zle -N _rfv
 
 bindkey -e '^V' _nvim
 bindkey -e '^[M' _nvim-man
+# bindkey -e '^[D' _pipe-delta
+# bindkey -e '^[F' _pipe-fzf
 bindkey -e '^G' _rfv
 
 bindkey -e '^[[1;3A' atuin-up-search
 bindkey -e '^[R' fzf-history-widget
 bindkey -e '^X^I' toggle-fzf-tab
 
+# bindkey -e '^[ ' autosuggest-execute
 bindkey -e '^[l' autosuggest-execute
+# bindkey -e '^[;' autosuggest-execute
 bindkey -e '^[u' backward-kill-line
 bindkey -e '^[e' edit-command-line
 bindkey -e '^[v' quoted-insert
@@ -172,6 +187,7 @@ alias cat="bat"
 alias chrome="open -a 'Google Chrome'"
 alias docker-compose="docker compose"
 alias eza="eza --time-style=long-iso"
+# alias ghc="gh copilot"
 alias ghco="gh copilot"
 alias mann="MANPAGER='nvim +Man! +colorscheme\ tokyonight' man"
 alias rg="rg --smart-case"
