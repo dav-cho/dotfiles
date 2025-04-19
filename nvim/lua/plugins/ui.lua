@@ -39,6 +39,10 @@ return {
               fmt = function(str)
                 if vim.o.columns < 160 then
                   return str:match("^%u+%-%d+") or str
+                  -- local branch = str:match("^%u+%-%d+") or str
+                  -- if branch:lower():find("wip") then
+                  --   branch = branch .. " (wip)"
+                  -- end
                 end
                 return str
               end,
@@ -52,6 +56,27 @@ return {
                 end
               end,
             },
+            -- {
+            --   function()
+            --     return "wip"
+            --   end,
+            --   cond = function()
+            --     return os.execute("git rev-list --max-count=1 --format='%s' HEAD | grep -q -- '--wip--'") == 0
+            --   end,
+            -- },
+            {
+              function()
+                return "wip"
+                -- return "" --  |  |  |  | 󰵮 | 󰱯
+              end,
+              cond = function()
+                return os.execute(
+                  "git rev-parse --is-inside-work-tree > /dev/null 2>&1 && git log -1 --pretty=%s | grep -q 'wip'"
+                ) == 0
+              end,
+              padding = { left = 0, right = 1 },
+              color = { fg = "#fabb64" },
+            },
             "diff",
             {
               "diagnostics",
@@ -62,6 +87,8 @@ return {
             {
               "filename",
               path = 1,
+              -- function on_click(cnt, btn, mods)
+              -- params: num clicks, button, modifiers
               on_click = function(_, btn, _)
                 local path = vim.fn.expand("%:~")
                 if btn == "r" then
@@ -114,7 +141,33 @@ return {
     version = "*",
     dependencies = { "nvim-web-devicons" },
     event = "UIEnter",
-    keys = function()
+    keys = function(self)
+      --
+
+      -- -- WIP
+      -- -- Prompts user to select a buffer then applies a function to the buffer
+      -- -- Uses ordinals instead of default `pick.alphabet`
+      -- ---@param cb fun(id: number)
+      -- local function choose_then(cb)
+      --   local state = require("bufferline.state")
+      --   local ui = require("bufferline.ui")
+      --   state.is_picking = true
+      --   ui.refresh()
+      --   -- NOTE: handle keyboard interrupts by catching any thrown errors
+      --   local ok, char = pcall(vim.fn.getchar)
+      --   if ok then
+      --     local num = vim.fn.nr2char(char)
+      --     for _, item in ipairs(state.components) do
+      --       local element = item:as_element()
+      --       if element and num == element.ordinal then
+      --         cb(element.id)
+      --       end
+      --     end
+      --   end
+      --   state.is_picking = false
+      --   ui.refresh()
+      -- end
+
       local keymaps = {
         {
           "<Tab>",
@@ -238,6 +291,255 @@ return {
           end,
           desc = "BufferLineTogglePin",
         },
+
+        -- WIP
+        {
+          "<Leader>bn",
+          function()
+            local config = require("bufferline.config")
+            local user_opts = config.get().user.options
+            if user_opts.numbers == nil or user_opts.numbers == "none" then
+              vim.notify(vim.inspect(require("bufferline.config").get().user.options.numbers))
+              user_opts.numbers = function(opts)
+                return string.format("%s", opts.raise(opts.ordinal))
+              end
+              vim.notify(vim.inspect(require("bufferline.config").get().user.options.numbers))
+            else
+              user_opts.numbers = "none"
+            end
+            require("bufferline").setup({ options = user_opts })
+          end,
+          desc = "toggle bufferline numbers superscript",
+        },
+
+        -- {
+        --   "<space><leader>",
+        --   function()
+        --     local state = require("bufferline.state")
+        --     -- local components = state.components
+        --
+        --     --
+        --   end,
+        --   desc = "toggle bufferline numbers superscript",
+        -- },
+
+        -- -- Prompts user to select a buffer then applies a function to the buffer
+        -- ---@param func fun(id: number)
+        -- function M.choose_then(func)
+        --   state.is_picking = true
+        --   ui.refresh()
+        --   -- NOTE: handle keyboard interrupts by catching any thrown errors
+        --   local ok, char = pcall(fn.getchar)
+        --   if ok then
+        --     local letter = fn.nr2char(char)
+        --     for _, item in ipairs(state.components) do
+        --       local element = item:as_element()
+        --       if element and letter == element.letter then func(element.id) end
+        --     end
+        --   end
+        --   state.is_picking = false
+        --   ui.refresh()
+        -- end
+
+        -- { {
+        --     buftype = "",
+        --     component = <function 1>,
+        --     diagnostics = {
+        --       count = 0
+        --     },
+        --     duplicated = "path",
+        --     extension = "py",
+        --     group = "ungrouped",
+        --     icon = "",
+        --     icon_highlight = "DevIconPy",
+        --     id = 2,
+        --     length = 24,
+        --     letter = "m",
+        --     modifiable = true,
+        --     modified = false,
+        --     name = "main.py",
+        --     ordinal = 1,
+        --     path = "/Users/dcho/cm/qr/review-dqen-1130/app/ws/src/fidelity/main.py",
+        --     prefix_count = 2,
+        --     <metatable> = <1>{
+        --       __index = <table 1>,
+        --       ancestor = <function 2>,
+        --       current = <function 3>,
+        --       find_index = <function 4>,
+        --       new = <function 5>,
+        --       newly_opened = <function 6>,
+        --       previously_opened = <function 7>,
+        --       type = "buffer",
+        --       visibility = <function 8>,
+        --       visible = <function 9>,
+        --       <metatable> = <2>{
+        --         __ancestor = <function 10>,
+        --         __index = <table 2>,
+        --         as_element = <function 11>,
+        --         component = <function 12>,
+        --         current = <function 13>,
+        --         focusable = true,
+        --         is_end = <function 14>,
+        --         length = 0,
+        --         new = <function 15>
+        --       }
+        --     }
+        --   }, {
+        --     buftype = "",
+        --     component = <function 16>,
+        --     diagnostics = {
+        --       count = 0
+        --     },
+        --     extension = "py",
+        --     group = "ungrouped",
+        --     icon = "",
+        --     icon_highlight = "DevIconPy",
+        --     id = 3,
+        --     length = 26,
+        --     letter = "a",
+        --     modifiable = true,
+        --     modified = false,
+        --     name = "api_environment.py",
+        --     ordinal = 2,
+        --     path = "/Users/dcho/cm/qr/review-dqen-1130/app/ws/src/fidelity/api_environment.py",
+        --     <metatable> = <table 1>
+        --   }, {
+        --     buftype = "",
+        --     component = <function 17>,
+        --     diagnostics = {
+        --       count = 0
+        --     },
+        --     extension = "py",
+        --     group = "ungrouped",
+        --     icon = "",
+        --     icon_highlight = "DevIconPy",
+        --     id = 4,
+        --     length = 22,
+        --     letter = "1",
+        --     modifiable = true,
+        --     modified = false,
+        --     name = "arg_parser.py",
+        --     ordinal = 3,
+        --     path = "/Users/dcho/cm/qr/review-dqen-1130/app/ws/src/fidelity/arg_parser.py",
+        --     <metatable> = <table 1>
+        --   }, {
+        --     buftype = "",
+        --     component = <function 18>,
+        --     diagnostics = {
+        --       count = 0
+        --     },
+        --     extension = "py",
+        --     group = "ungrouped",
+        --     icon = "",
+        --     icon_highlight = "DevIconPy",
+        --     id = 5,
+        --     length = 21,
+        --     letter = "c",
+        --     modifiable = true,
+        --     modified = false,
+        --     name = "capture.py",
+        --     ordinal = 4,
+        --     path = "/Users/dcho/cm/qr/review-dqen-1130/app/ws/src/fidelity/capture.py",
+        --     <metatable> = <table 1>
+        --   }, {
+        --     buftype = "",
+        --     component = <function 19>,
+        --     diagnostics = {
+        --       count = 0
+        --     },
+        --     extension = "py",
+        --     group = "ungrouped",
+        --     icon = "",
+        --     icon_highlight = "DevIconPy",
+        --     id = 6,
+        --     length = 21,
+        --     letter = "2",
+        --     modifiable = true,
+        --     modified = false,
+        --     name = "constants.py",
+        --     ordinal = 5,
+        --     path = "/Users/dcho/cm/qr/review-dqen-1130/app/ws/src/fidelity/constants.py",
+        --     <metatable> = <table 1>
+        --   }, {
+        --     buftype = "",
+        --     component = <function 20>,
+        --     diagnostics = {
+        --       count = 0
+        --     },
+        --     extension = "py",
+        --     group = "ungrouped",
+        --     icon = "",
+        --     icon_highlight = "DevIconPy",
+        --     id = 7,
+        --     length = 26,
+        --     letter = "f",
+        --     modifiable = true,
+        --     modified = false,
+        --     name = "fidelity_stream.py",
+        --     ordinal = 6,
+        --     path = "/Users/dcho/cm/qr/review-dqen-1130/app/ws/src/fidelity/fidelity_stream.py",
+        --     <metatable> = <table 1>
+        --   }, {
+        --     buftype = "",
+        --     component = <function 21>,
+        --     diagnostics = {
+        --       count = 0
+        --     },
+        --     extension = "py",
+        --     group = "ungrouped",
+        --     icon = "",
+        --     icon_highlight = "DevIconPy",
+        --     id = 8,
+        --     length = 21,
+        --     letter = "3",
+        --     modifiable = true,
+        --     modified = false,
+        --     name = "monitor.py",
+        --     ordinal = 7,
+        --     path = "/Users/dcho/cm/qr/review-dqen-1130/app/ws/src/fidelity/monitor.py",
+        --     <metatable> = <table 1>
+        --   }, {
+        --     buftype = "",
+        --     component = <function 22>,
+        --     diagnostics = {
+        --       count = 0
+        --     },
+        --     extension = "py",
+        --     group = "ungrouped",
+        --     icon = "",
+        --     icon_highlight = "DevIconPy",
+        --     id = 9,
+        --     length = 23,
+        --     letter = "o",
+        --     modifiable = true,
+        --     modified = false,
+        --     name = "outage_board.py",
+        --     ordinal = 8,
+        --     path = "/Users/dcho/cm/qr/review-dqen-1130/app/ws/src/fidelity/outage_board.py",
+        --     <metatable> = <table 1>
+        --   }, {
+        --     buftype = "",
+        --     component = <function 23>,
+        --     diagnostics = {
+        --       count = 0
+        --     },
+        --     duplicated = "path",
+        --     extension = "py",
+        --     group = "ungrouped",
+        --     icon = "",
+        --     icon_highlight = "DevIconPy",
+        --     id = 10,
+        --     length = 24,
+        --     letter = "4",
+        --     modifiable = true,
+        --     modified = false,
+        --     name = "main.py",
+        --     ordinal = 9,
+        --     path = "/Users/dcho/cm/qr/review-dqen-1130/app/ws/src/refrates/main.py",
+        --     prefix_count = 2,
+        --     <metatable> = <table 1>
+        --   } }
+
         {
           "<Leader>br",
           function()
@@ -324,6 +626,12 @@ return {
           show_close_icon = false,
           persist_buffer_sort = true,
           move_wraps_at_ends = true,
+          -- WIP
+          -- pick = {
+          --   -- alphabet = "abcdefghijklmopqrstuvwxyzABCDEFGHIJKLMOPQRSTUVWXYZ1234567890",
+          --   alphabet = "1234567890abcdefghijklmopqrstuvwxyzABCDEFGHIJKLMOPQRSTUVWXYZ",
+          --   -- alphabet = "1234567890abcdefghijklmopqrstuvwxyzABCDEFGHIJKLMOPQRSTUVWXYZ",
+          -- },
           groups = {
             items = {
               require("bufferline.groups").builtin.pinned:with({ icon = "" }),
@@ -534,6 +842,8 @@ return {
     opts = {
       enabled = false,
       indent = {
+        -- char = "│",
+        -- tab_char = "│",
         char = "▏",
         tab_char = "▏",
       },
@@ -566,8 +876,15 @@ return {
       {
         "<Leader>ii",
         function()
-          require("ibl").update({ enabled = not require("ibl.config").get_config(-1).enabled })
-          vim.g.miniindentscope_disable = not vim.g.miniindentscope_disable
+          -- require("ibl").update({ enabled = not require("ibl.config").get_config(-1).enabled })
+          -- vim.g.miniindentscope_disable = not vim.g.miniindentscope_disable
+          if require("ibl.config").get_config(-1).enabled and not vim.g.miniindentscope_disable then
+            require("ibl").update({ enabled = false })
+            vim.g.miniindentscope_disable = true
+          else
+            require("ibl").update({ enabled = true })
+            vim.g.miniindentscope_disable = false
+          end
         end,
         silent = true,
         desc = "Toggle indent lines and scope",
@@ -590,6 +907,7 @@ return {
         border = "top",
         try_as_border = true,
       },
+      -- symbol = "│",
       symbol = "▏",
     },
     config = function(_, opts)

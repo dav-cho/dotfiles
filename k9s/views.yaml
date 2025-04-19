@@ -1,0 +1,21 @@
+views:
+  v1/pods@dqe-staging:
+    sortColumn: NAME:asc
+    columns:
+      - NAME
+      - IMAGE:.spec.containers[0].image|W
+      # - TAG:{{ index .spec.containers 0 | pluck "image" | first | split ":" | last }}
+      # - PF
+      # - READY
+      # - STATUS
+      # - RESTARTS
+      # - LAST RESTART
+      # - CPU
+      # - MEM
+      # - PF
+      # - READY
+      # - STATUS
+      # - CPU
+      # - MEM
+      # - IP
+      # - NODE
