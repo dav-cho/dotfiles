@@ -30,3 +30,9 @@ opt.tabstop = 2
 opt.termguicolors = true
 opt.undofile = true
 opt.wrap = false
+
+-- opt.nrformats:append("alpha", "unsigned")
+
+-- TODO: shada=!,'100,<50,s10,h
+--     default=!,'100,<50,s10,h
+-- opt.shada:append({ "" })

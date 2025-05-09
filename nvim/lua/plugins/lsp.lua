@@ -10,22 +10,19 @@ return {
     config = function()
       local lspconfig = require("lspconfig")
 
-      local signs = {
-        { name = "DiagnosticSignError", text = "" },
-        { name = "DiagnosticSignWarn", text = "" },
-        { name = "DiagnosticSignHint", text = "" },
-        { name = "DiagnosticSignInfo", text = "" },
-      }
-      for _, sign in ipairs(signs) do
-        vim.fn.sign_define(sign.name, { text = sign.text, texthl = sign.name, numhl = "" })
-      end
-
       vim.diagnostic.config({
         underline = false,
         virtual_text = false,
         update_in_insert = true,
         severity_sort = true,
-        signs = true,
+        signs = {
+          text = {
+            [vim.diagnostic.severity.ERROR] = "",
+            [vim.diagnostic.severity.WARN] = "",
+            [vim.diagnostic.severity.HINT] = "",
+            [vim.diagnostic.severity.INFO] = "",
+          },
+        },
         float = {
           focusable = true,
           severity_sort = true,
@@ -37,12 +34,12 @@ return {
         },
       })
 
-      local hover = {
-        focusable = true,
-        border = "rounded",
-      }
-      vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, hover)
-      vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, hover)
+      -- local hover = {
+      --   focusable = true,
+      --   border = "rounded",
+      -- }
+      -- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, hover)
+      -- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, hover)
 
       local capabilities = require("blink.cmp").get_lsp_capabilities()
 
@@ -79,6 +76,7 @@ return {
                 return (venv_active and venv_active .. "/bin/python")
                   or (#venv_local_path > 0 and venv_local_path)
                   or nil
+                -- or vim.fn.exepath("python")
               end)(),
             },
           },
@@ -115,25 +113,39 @@ return {
             vim.keymap.set(mode, lhs, rhs, options)
           end
 
-          local diagnostic_goto_next, diagnostic_goto_prev =
-            require("nvim-treesitter.textobjects.repeatable_move").make_repeatable_move_pair(
-              vim.diagnostic.goto_next,
-              vim.diagnostic.goto_prev
-            )
+          local diagnostic_goto_next, diagnostic_goto_prev = require("nvim-treesitter.textobjects.repeatable_move").make_repeatable_move_pair(
+            -- vim.diagnostic.goto_next,
+            -- vim.diagnostic.goto_prev
+            function()
+              vim.diagnostic.jump({ count = 1, float = true })
+            end,
+            function()
+              vim.diagnostic.jump({ count = -1, float = true })
+            end
+          )
 
           buf_map("n", "[d", diagnostic_goto_prev, { desc = "vim.diagnostic.goto_prev" })
           buf_map("n", "]d", diagnostic_goto_next, { desc = "vim.diagnostic.goto_next" })
           buf_map("n", "<Leader>lr", ":LspRestart<CR>", { desc = "LspRestart" })
           buf_map("n", "gl", vim.diagnostic.open_float, { desc = "vim.diagnostic.open_float" })
-          buf_map("n", "gh", vim.lsp.buf.hover)
+          -- buf_map("n", "gh", vim.lsp.buf.hover)
+          buf_map("n", "gh", function()
+            vim.lsp.buf.hover({ focusable = true, border = "rounded" })
+          end, { desc = "vim.lsp.buf.hover" })
           buf_map("n", "gd", vim.lsp.buf.definition)
           buf_map("n", "gD", vim.lsp.buf.type_definition, { desc = "vim.lsp.buf.type_definition" })
           buf_map("n", "<Leader>gi", vim.lsp.buf.implementation)
           buf_map("n", "gr", vim.lsp.buf.references)
-          buf_map({ "n", "i" }, "<M-s>", vim.lsp.buf.signature_help)
+          -- buf_map({ "n", "i" }, "<M-s>", vim.lsp.buf.signature_help)
+          buf_map({ "n", "i" }, "<M-s>", function()
+            vim.lsp.buf.signature_help({ focusable = true, border = "rounded" })
+          end, { desc = "vim.lsp.buf.signature_help" })
+          -- buf_map({ "n", "i" }, "<Leader>k", vim.lsp.buf.signature_help) -- can't use because causes `,` to lag
+          -- buf_map({ "n", "i" }, "<C-s>", vim.lsp.buf.signature_help)
           buf_map("n", "<Leader>rn", vim.lsp.buf.rename)
           buf_map("n", "<Leader>ca", vim.lsp.buf.code_action)
-          buf_map("n", "<Leader>fm", vim.lsp.buf.format)
+          -- buf_map("n", "<Leader>fm", vim.lsp.buf.format)
+          buf_map("n", "<Leader>FM", vim.lsp.buf.format)
           buf_map("n", "<Leader>Wa", vim.lsp.buf.add_workspace_folder)
           buf_map("n", "<Leader>Wr", vim.lsp.buf.remove_workspace_folder)
           buf_map("n", "<Leader>Wl", function()
@@ -143,16 +155,33 @@ return {
             vim.diagnostic.config({ virtual_text = not vim.diagnostic.config()["virtual_text"] })
           end, { desc = "buf toggle virtual text" })
 
+          -- local gd_cmd = function(cmd)
+          --   local original_handler = vim.lsp.handlers["textDocument/definition"]
+          --   vim.lsp.handlers["textDocument/definition"] = function(err, result, ctx, config)
+          --     if cmd ~= nil then
+          --       vim.cmd(cmd)
+          --     end
+          --     original_handler(err, result, ctx, config)
+          --     vim.api.nvim_input("zt<C-y>")
+          --     vim.lsp.handlers["textDocument/definition"] = original_handler
+          --   end
+          --   vim.lsp.buf.definition()
+          -- end
+
           local gd_cmd = function(cmd)
-            local original_handler = vim.lsp.handlers["textDocument/definition"]
-            vim.lsp.handlers["textDocument/definition"] = function(err, result, ctx, config)
-              if cmd ~= nil then
-                vim.cmd(cmd)
-              end
-              original_handler(err, result, ctx, config)
-              vim.api.nvim_input("zt<C-y>")
-              vim.lsp.handlers["textDocument/definition"] = original_handler
-            end
+            -- local original_handler = vim.lsp.handlers["textDocument/definition"]
+            -- vim.lsp.handlers["textDocument/definition"] = function(err, result, ctx, config)
+            --   if cmd ~= nil then
+            --     vim.cmd(cmd)
+            --   end
+            --   original_handler(err, result, ctx, config)
+            --   vim.api.nvim_input("zt<C-y>")
+            --   vim.lsp.handlers["textDocument/definition"] = original_handler
+            -- end
+            -- if cmd ~= nil then
+            --   vim.cmd(cmd)
+            -- end
+            vim.cmd(cmd)
             vim.lsp.buf.definition()
           end
 
@@ -166,7 +195,8 @@ return {
             gd_cmd("wincmd s")
           end, { desc = "vim.lsp.buf.definition() split redraw top" })
           buf_map("n", "<Leader>gt", function()
-            gd_cmd("tabe %")
+            -- gd_cmd("tabe %")
+            gd_cmd("tab split")
           end, { desc = "vim.lsp.buf.definition() tabe redraw top" })
 
           local client = vim.lsp.get_client_by_id(ev.data.client_id)
@@ -186,17 +216,30 @@ return {
     end,
   },
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     build = ":MasonUpdate",
     lazy = true,
     cmd = "Mason",
     opts = {},
   },
   {
-    "williamboman/mason-lspconfig.nvim",
+    "mason-org/mason-lspconfig.nvim",
     lazy = true,
     opts = {
-      automatic_installation = true,
+      -- automatic_installation = true,
+      ensure_installed = {
+        "bashls",
+        "docker_compose_language_service",
+        "dockerls",
+        "jsonls",
+        "kotlin_language_server",
+        "lua_ls",
+        "pyright",
+        "rust_analyzer",
+        "taplo",
+        "ts_ls",
+        "yamlls",
+      },
     },
   },
   {
@@ -284,6 +327,12 @@ return {
             "--config=lint.isort.split-on-trailing-comma=false",
           },
         },
+        -- stylua = {
+        --   prepend_args = {
+        --     "--indent-type=Spaces",
+        --     "--indent-width=2",
+        --   },
+        -- },
       },
       formatters_by_ft = {
         go = { "goimports", "gofmt", stop_after_first = true },
@@ -434,6 +483,26 @@ return {
       suggestion = {
         auto_trigger = true,
       },
+      should_attach = function(_, _)
+        local logger = require("copilot.logger")
+
+        if not vim.bo.buflisted then
+          logger.debug("not attaching, buffer is not 'buflisted'")
+          return false
+        end
+
+        if vim.bo.buftype ~= "" then
+          logger.debug("not attaching, buffer 'buftype' is " .. vim.bo.buftype)
+          return false
+        end
+
+        -- if vim.startswith(vim.fn.getcwd(), vim.fn.expand("~/cm")) then
+        --   logger.debug("not attaching, current working directory is ~/cm")
+        --   return false
+        -- end
+
+        return true
+      end,
     },
   },
   {
