@@ -14,16 +14,16 @@ return {
     "nvim-lualine/lualine.nvim",
     event = "UIEnter",
     opts = function()
-      local cm = {
-        jira_url = vim.fn.expand("$CM_JIRA_URL"),
-      }
-      function cm:open_jira()
-        local id = vim.fn.system("git branch --show-current"):match("^%u+%-%d+")
-        local ok, _ = pcall(function()
-          vim.ui.open(self.jira_url .. id)
-        end)
-        return ok
-      end
+      -- local cm = {
+      --   jira_url = vim.fn.expand("$CM_JIRA_URL"),
+      -- }
+      -- function cm:open_jira()
+      --   local id = vim.fn.system("git branch --show-current"):match("^%u+%-%d+")
+      --   local ok, _ = pcall(function()
+      --     vim.ui.open(self.jira_url .. id)
+      --   end)
+      --   return ok
+      -- end
 
       return {
         options = {
@@ -46,15 +46,15 @@ return {
                 end
                 return str
               end,
-              on_click = function(_, btn, _)
-                local branch = vim.fn.system("git branch --show-current"):gsub("%s+", "")
-                if btn == "m" then
-                  vim.api.nvim_echo({ { branch, "Directory" } }, false, {})
-                  return cm:open_jira() or pcall(vim.fn.system, "gh repo view -w")
-                else
-                  print(branch)
-                end
-              end,
+              -- on_click = function(_, btn, _)
+              --   local branch = vim.fn.system("git branch --show-current"):gsub("%s+", "")
+              --   if btn == "m" then
+              --     vim.api.nvim_echo({ { branch, "Directory" } }, false, {})
+              --     return cm:open_jira() or pcall(vim.fn.system, "gh repo view -w")
+              --   else
+              --     print(branch)
+              --   end
+              -- end,
             },
             -- {
             --   function()
