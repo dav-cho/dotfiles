@@ -1,0 +1,99 @@
+#!/usr/bin/env bash
+
+set -x
+
+cd "$HOME"
+
+if [[ $(uname) == "Darwin" ]]; then
+    if ! command -v brew &>/dev/null; then
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+        brew install \
+            bat \
+            eza \
+            fd \
+            fzf \
+            gh \
+            git \
+            git-delta \
+            jq \
+            neovim \
+            ripgrep \
+            tmux \
+            zoxide
+
+        $(brew --prefix)/opt/fzf/install
+
+        curl -LsSf https://astral.sh/uv/install.sh | sh
+    fi
+fi
+
+OMZ_CUSTOM=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}
+
+if [[ ! -d $HOME/.oh-my-zsh ]]; then
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+fi
+
+if [[ ! -e $OMZ_CUSTOM/themes/powerlevel10k ]]; then
+    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $OMZ_CUSTOM/themes/powerlevel10k
+fi
+
+if [[ ! -e $OMZ_CUSTOM/plugins/zsh-autosuggestions ]]; then
+    git clone https://github.com/zsh-users/zsh-autosuggestions $OMZ_CUSTOM/plugins/zsh-autosuggestions
+fi
+
+if [[ ! -e $OMZ_CUSTOM/plugins/zsh-syntax-highlighting ]]; then
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $OMZ_CUSTOM/plugins/zsh-syntax-highlighting
+fi
+
+if [[ ! -e $OMZ_CUSTOM/plugins/fzf-tab ]]; then
+    git clone https://github.com/Aloxaf/fzf-tab $OMZ_CUSTOM/plugins/fzf-tab
+fi
+
+if [[ ! -e $HOME/.tmux/plugins/tpm ]]; then
+    git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
+fi
+
+function symlink() {
+    if [[ ! $(readlink -f "$2") == "$1" ]]; then
+        ln -sfhv "$1" "$2"
+    fi
+}
+
+CONFIG="$HOME/.config"
+DOTFILES="$HOME/dotfiles"
+
+symlink "$DOTFILES/gitconfig" "$HOME/.gitconfig"
+symlink "$DOTFILES/p10k.zsh" "$HOME/.p10k.zsh"
+symlink "$DOTFILES/tmux.conf" "$HOME/.tmux.conf"
+symlink "$DOTFILES/vimrc" "$HOME/.vimrc"
+symlink "$DOTFILES/zshrc" "$HOME/.zshrc"
+
+symlink "$DOTFILES/alacritty.toml" "$CONFIG/alacritty.toml"
+symlink "$DOTFILES/atuin/config.toml" "$CONFIG/atuin/config.toml"
+symlink "$DOTFILES/git" "$CONFIG/git"
+symlink "$DOTFILES/kitty" "$CONFIG/kitty"
+symlink "$DOTFILES/nvim" "$CONFIG/nvim"
+symlink "$DOTFILES/ruff" "$CONFIG/ruff"
+symlink "$DOTFILES/skhd" "$CONFIG/skhd"
+symlink "$DOTFILES/yabai" "$CONFIG/yabai"
+
+[[ -d "$CONFIG/git" ]] || mkdir "$CONFIG/git"
+symlink "$DOTFILES/git/ignore" "$CONFIG/git/ignore"
+
+[[ -d "$HOME/.local/bin" ]] || mkdir "$HOME/.local/bin"
+cp "$DOTFILES"/bin/* "$HOME/.local/bin"
+
+SETTINGS="$HOME/dotfiles/settings"
+if [[ -d "$SETTINGS" ]]; then
+    symlink "$SETTINGS/karabiner" "$CONFIG/karabiner"
+    symlink "$SETTINGS/vimium" "$CONFIG/vimium"
+fi
+
+KITTY="/Applications/kitty.app/Contents/MacOS/kitty"
+if [[ -d "$KITTY" ]]; then
+    symlink "$KITTY/kitty" "$HOME/.local/bin"
+    symlink "$KITTY/kitten" "$HOME/.local/bin"
+fi
+
+touch .hushlogin

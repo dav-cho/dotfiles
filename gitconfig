@@ -1,0 +1,45 @@
+[user]
+name = dcho
+email = dcho.null@gmail.com
+
+[core]
+editor = nvim
+pager = delta
+
+[init]
+defaultBranch = main
+
+[pull]
+ff = only
+
+[merge]
+ff = only
+conflictStyle = zdiff3
+tool = nvimdiff
+
+[diff]
+colorMoved = default
+submodule = log
+tool = nvimdiff
+
+[interactive]
+diffFilter = delta --color-only
+
+[delta]
+navigate = true
+zero-style = normal
+minus-style = "#ff7b72"
+minus-non-emph-style = "#ff7b72"
+minus-emph-style = reverse "#d5867f"
+plus-style = "#3fb950"
+plus-non-emph-style = "#3fb950"
+plus-emph-style = reverse "#45aa50"
+line-numbers-minus-style = "#ff7b72"
+line-numbers-plus-style = "#3fb950"
+file-style = blue
+file-decoration-style = omit
+hunk-header-style = line-number
+hunk-header-decoration-style = blue
+
+[url "git@github.com:"]
+insteadOf = "https://github.com/"
