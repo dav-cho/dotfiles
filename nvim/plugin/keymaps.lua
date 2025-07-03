@@ -18,6 +18,7 @@ map("n", "<M-c>", "<Cmd>bd<CR>", { desc = "Unload buffer" })
 map("n", "<Leader><C-c>", "<Cmd>bd<CR>", { desc = "Unload buffer" })
 map("n", "<M-C>", "<Cmd>bd!<CR>", { desc = "Unload buffer (force)" })
 map({ "n", "v" }, "<Leader><Tab>", "<C-^>", { desc = "Alternate file (`<C-^>`)" })
+map({ "n", "v" }, "<Space><Tab>", "<C-^>", { desc = "Alternate file (`<C-^>`)" })
 
 map({ "n", "v" }, "<C-c>", "<Cmd>wincmd c<CR>", { desc = ":wincmd c" })
 map({ "n", "v" }, "<C-h>", [[<Cmd>exe v:count1 . "wincmd h"<CR>]], { desc = ":wincmd h" })
@@ -25,10 +26,21 @@ map({ "n", "v" }, "<C-j>", [[<Cmd>exe v:count1 . "wincmd j"<CR>]], { desc = ":wi
 map({ "n", "v" }, "<C-k>", [[<Cmd>exe v:count1 . "wincmd k"<CR>]], { desc = ":wincmd k" })
 map({ "n", "v" }, "<C-l>", [[<Cmd>exe v:count1 . "wincmd l"<CR>]], { desc = ":wincmd l" })
 
+-- TODO: pick one
 map({ "n", "v" }, "<Leader>w", "<C-w>", { desc = "Window command" })
 map({ "n", "v" }, "<Leader>wt", "<Cmd>tab split<CR>", { desc = ":tab split" })
 map({ "n", "v" }, "<Leader>wT", "<Cmd>wincmd T<CR>", { desc = ":wincmd T" })
 map({ "n", "v" }, "<Leader>wX", "<C-w>x<C-w>p", { desc = "Swap window keep cursor" })
+-- TODO: same as above but with `.`
+map({ "n", "v" }, "<Space>.", "<C-w>", { desc = "Window command" })
+map({ "n", "v" }, "<Space>.t", "<Cmd>tab split<CR>", { desc = ":tab split" })
+map({ "n", "v" }, "<Space>.T", "<Cmd>wincmd T<CR>", { desc = ":wincmd T" })
+map({ "n", "v" }, "<Space>.X", "<C-w>x<C-w>p", { desc = "Swap window keep cursor" })
+-- TODO: same as above but with `<Space>`
+map({ "n", "v" }, "<Space><Space>", "<C-w>", { desc = "Window command" })
+map({ "n", "v" }, "<Space><Space>t", "<Cmd>tab split<CR>", { desc = ":tab split" })
+map({ "n", "v" }, "<Space><Space>T", "<Cmd>wincmd T<CR>", { desc = ":wincmd T" })
+map({ "n", "v" }, "<Space><Space>X", "<C-w>x<C-w>p", { desc = "Swap window keep cursor" })
 
 -- map({ "n", "v" }, "<Leader>wX", function()
 --   local win = vim.api.nvim_get_current_win()
