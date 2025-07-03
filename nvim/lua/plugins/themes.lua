@@ -50,6 +50,7 @@ return {
           Comment = { fg = colors.comment },
           Constant = { fg = colors.pine_light },
           CurSearch = { fg = "base", bg = "love", inherit = false, blend = 85 },
+          -- Cursor = { fg = "#111111", bg = "#cccccc" },
           CursorLine = { bg = colors.cursor_line },
           CursorLineNr = { fg = colors.cursor_line_nr },
           DiagnosticVirtualTextError = { fg = colors.diagnostic_virtual_text_error, bg = "none" },
@@ -63,6 +64,13 @@ return {
           IlluminatedWordText = { bg = colors.cursor_line_bright },
           IlluminatedWordWrite = { bg = colors.cursor_line_bright },
           Include = { fg = "iris" },
+
+          -- IndentBlanklineChar xxx cterm=nocombine gui=nocombine guifg=#6e6a86
+          -- #75708f
+          -- #837e9a
+          -- TODO
+          -- IndentBlanklineChar = { fg = "#837e9a" },
+
           LineNr = { fg = colors.line_nr },
           LspSignatureActiveParameter = { link = "LspReferenceRead" },
           Normal = { fg = colors.text, bg = colors.bg },

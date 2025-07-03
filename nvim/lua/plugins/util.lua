@@ -5,73 +5,270 @@ return {
   { "tpope/vim-surround", event = "VeryLazy" },
   {
     "numToStr/Comment.nvim",
-    keys = {
-      {
-        "<C-_>",
-        function()
-          return vim.api.nvim_get_vvar("count") == 0 and "<Plug>(comment_toggle_linewise_current)"
-            or "<Plug>(comment_toggle_linewise_count)"
-        end,
-        expr = true,
-        silent = true,
-        desc = "<Plug>(comment_toggle_linewise_current|comment_toggle_linewise_count)",
-      },
-      {
-        "<C-_>",
-        function()
-          return "<Plug>(comment_toggle_linewise_visual)"
-        end,
-        mode = "v",
-        expr = true,
-        silent = true,
-        desc = "<Plug>(comment_toggle_linewise_visual)",
-      },
-      {
-        "<M-Y>",
-        function()
-          vim.cmd("normal! ygv")
-          vim.api.nvim_input("gc")
-        end,
-        mode = "v",
-        desc = "[Comment] Yank selection and comment",
-      },
-      {
-        "<M-?>",
-        function()
-          vim.cmd("normal! vip")
-          vim.api.nvim_input("gc")
-        end,
-        desc = "[Comment] Comment paragraph",
-      },
-      {
-        "<Leader>#",
-        function()
-          vim.api.nvim_input("gcOTODO<Esc>")
-        end,
-        desc = "[Comment] TODO above",
-      },
-      {
-        "<Leader>$",
-        function()
-          vim.api.nvim_input("gcATODO<Esc>")
-        end,
-        desc = "[Comment] TODO EOL",
-      },
-      {
-        "<Space>#",
-        function()
-          vim.api.nvim_input("gcOTODO: ")
-        end,
-        desc = "[Comment] TODO above (insert mode)",
-      },
-      {
-        "<Space>$",
-        function()
-          vim.api.nvim_input("gcATODO: ")
-        end,
-        desc = "[Comment] TODO EOL (insert mode)",
-      },
-    },
+
+    -- keys = {
+    --   {
+    --     "<C-_>",
+    --     function()
+    --       return vim.api.nvim_get_vvar("count") == 0 and "<Plug>(comment_toggle_linewise_current)"
+    --         or "<Plug>(comment_toggle_linewise_count)"
+    --     end,
+    --     expr = true,
+    --     silent = true,
+    --     desc = "<Plug>(comment_toggle_linewise_current|comment_toggle_linewise_count)",
+    --   },
+    --   {
+    --     "<C-_>",
+    --     function()
+    --       return "<Plug>(comment_toggle_linewise_visual)"
+    --     end,
+    --     mode = "v",
+    --     expr = true,
+    --     silent = true,
+    --     desc = "<Plug>(comment_toggle_linewise_visual)",
+    --   },
+    --   {
+    --     "<M-Y>",
+    --     function()
+    --       vim.cmd("normal! ygv")
+    --       vim.api.nvim_input("gc")
+    --     end,
+    --     mode = "v",
+    --     desc = "[Comment] Yank selection and comment",
+    --   },
+    --   {
+    --     "<M-?>",
+    --     function()
+    --       vim.cmd("normal! vip")
+    --       vim.api.nvim_input("gc")
+    --     end,
+    --     desc = "[Comment] Comment paragraph",
+    --   },
+    --   {
+    --     "<Leader>#",
+    --     function()
+    --       vim.api.nvim_input("gcOTODO<Esc>")
+    --     end,
+    --     desc = "[Comment] TODO above",
+    --   },
+    --   {
+    --     "<Leader>$",
+    --     function()
+    --       vim.api.nvim_input("gcATODO<Esc>")
+    --     end,
+    --     desc = "[Comment] TODO EOL",
+    --   },
+    --   {
+    --     "<Space>#",
+    --     function()
+    --       vim.api.nvim_input("gcOTODO: ")
+    --     end,
+    --     desc = "[Comment] TODO above (insert mode)",
+    --   },
+    --   {
+    --     "<Space>$",
+    --     function()
+    --       vim.api.nvim_input("gcATODO: ")
+    --     end,
+    --     desc = "[Comment] TODO EOL (insert mode)",
+    --   },
+    -- },
+
+    -- keys = {
+    --   {
+    --     "<C-_>",
+    --     function()
+    --       return vim.api.nvim_get_vvar("count") == 0 and "<Plug>(comment_toggle_linewise_current)"
+    --         or "<Plug>(comment_toggle_linewise_count)"
+    --     end,
+    --     expr = true,
+    --     silent = true,
+    --     desc = "<Plug>(comment_toggle_linewise_current|comment_toggle_linewise_count)",
+    --   },
+    --   {
+    --     "<C-_>",
+    --     function()
+    --       return "<Plug>(comment_toggle_linewise_visual)"
+    --     end,
+    --     mode = "v",
+    --     expr = true,
+    --     silent = true,
+    --     desc = "<Plug>(comment_toggle_linewise_visual)",
+    --   },
+    --   {
+    --     "<M-Y>",
+    --     function()
+    --       vim.cmd("normal! ygv")
+    --       vim.api.nvim_input("gc")
+    --     end,
+    --     mode = "v",
+    --     desc = "[Comment] Yank selection and comment",
+    --   },
+    --   {
+    --     "<M-?>",
+    --     function()
+    --       vim.cmd("normal! vip")
+    --       vim.api.nvim_input("gc")
+    --     end,
+    --     desc = "[Comment] Comment paragraph",
+    --   },
+    --   -- TODO: enable dot repeat - change to Ex-commands?
+    --   -- see note from: https://github.com/chrisgrieser/nvim-various-textobjs/blob/main/README.md#configuration
+    --   {
+    --     "<Leader>#",
+    --     function()
+    --       vim.api.nvim_input("gcOTODO<Esc>")
+    --     end,
+    --     desc = "[Comment] TODO above",
+    --   },
+    --
+    --   ---api.insert.linewise.above(config?)
+    --   ---api.insert.linewise.below(config?)
+    --   ---api.insert.linewise.eol(config?)
+    --
+    --   -- WIP
+    --
+    --   {
+    --     "<leader><leader>",
+    --     function()
+    --       -- return require("dav.comment").call("insert_todo_above", "g@$")
+    --       return require("dav.comment").call("insert_todo_above")
+    --     end,
+    --     expr = true,
+    --     desc = "[Comment] TODO above",
+    --   },
+    --
+    --   {
+    --     "<Leader>$",
+    --     function()
+    --       vim.api.nvim_input("gcATODO<Esc>")
+    --     end,
+    --     desc = "[Comment] TODO EOL",
+    --   },
+    --   {
+    --     "<Space>#",
+    --     function()
+    --       vim.api.nvim_input("gcOTODO: ")
+    --     end,
+    --     desc = "[Comment] TODO above (insert mode)",
+    --   },
+    --   {
+    --     "<Space>$",
+    --     function()
+    --       vim.api.nvim_input("gcATODO: ")
+    --     end,
+    --     desc = "[Comment] TODO EOL (insert mode)",
+    --   },
+    -- },
+
+    -- WIP
+    keys = function()
+      local function call(cb, op)
+        return function()
+          vim.api.nvim_set_option("operatorfunc", ("v:lua.require'dav.comment'.locked'%s'"):format(cb))
+          return op
+        end
+      end
+
+      return {
+        -- -- WIP
+        -- {
+        --   -- "<leader><leader>",
+        --   "<M-,><leader>",
+        --   call("insert_todo_above", "g@$"),
+        --   -- function()
+        --   --   -- return require("dav.comment").call("insert_todo_above", "g@$")
+        --   --   return require("dav.comment").call("insert_todo_above")
+        --   -- end,
+        --   expr = true,
+        --   desc = "[Comment] TODO above",
+        -- },
+
+        ---api.insert.linewise.above(config?)
+        ---api.insert.linewise.below(config?)
+        ---api.insert.linewise.eol(config?)
+
+        -- {
+        --   "<leader><leader>",
+        --   call("insert_todo_above", "g@$"),
+        --   -- function()
+        --   --   -- return require("dav.comment").call("insert_todo_above", "g@$")
+        --   --   return require("dav.comment").call("insert_todo_above")
+        --   -- end,
+        --   expr = true,
+        --   desc = "[Comment] TODO above",
+        -- },
+
+        {
+          "<C-_>",
+          function()
+            return vim.api.nvim_get_vvar("count") == 0 and "<Plug>(comment_toggle_linewise_current)"
+              or "<Plug>(comment_toggle_linewise_count)"
+          end,
+          expr = true,
+          silent = true,
+          desc = "<Plug>(comment_toggle_linewise_current|comment_toggle_linewise_count)",
+        },
+        {
+          "<C-_>",
+          function()
+            return "<Plug>(comment_toggle_linewise_visual)"
+          end,
+          mode = "v",
+          expr = true,
+          silent = true,
+          desc = "<Plug>(comment_toggle_linewise_visual)",
+        },
+        {
+          "<M-Y>",
+          function()
+            vim.cmd("normal! ygv")
+            vim.api.nvim_input("gc")
+          end,
+          mode = "v",
+          desc = "[Comment] Yank selection and comment",
+        },
+        {
+          "<M-?>",
+          function()
+            vim.cmd("normal! vip")
+            vim.api.nvim_input("gc")
+          end,
+          desc = "[Comment] Comment paragraph",
+        },
+        -- TODO: enable dot repeat - change to Ex-commands?
+        -- see note from: https://github.com/chrisgrieser/nvim-various-textobjs/blob/main/README.md#configuration
+        {
+          "<Leader>#",
+          function()
+            vim.api.nvim_input("gcOTODO<Esc>")
+          end,
+          desc = "[Comment] TODO above",
+        },
+        {
+          "<Leader>$",
+          function()
+            vim.api.nvim_input("gcATODO<Esc>")
+          end,
+          desc = "[Comment] TODO EOL",
+        },
+        {
+          "<Space>#",
+          function()
+            vim.api.nvim_input("gcOTODO: ")
+          end,
+          desc = "[Comment] TODO above (insert mode)",
+        },
+        {
+          "<Space>$",
+          function()
+            vim.api.nvim_input("gcATODO: ")
+          end,
+          desc = "[Comment] TODO EOL (insert mode)",
+        },
+      }
+    end,
+
     config = function()
       require("Comment").setup()
     end,
@@ -121,6 +318,7 @@ return {
     keys = {
       {
         "-",
+        -- "<M-->",
         function()
           require("oil").open_float()
         end,
@@ -128,6 +326,7 @@ return {
       },
       {
         "_",
+        -- "<M-_>",
         function()
           require("oil").open()
         end,
@@ -216,6 +415,16 @@ return {
         end,
         desc = "[Nvim-Tree] Toggle",
       },
+      -- {
+      --   "<Space>'",
+      --   function()
+      --     require("nvim-tree.api").tree.find_file({
+      --       open = true,
+      --       focus = true,
+      --     })
+      --   end,
+      --   desc = "[Nvim-Tree] Find File",
+      -- },
       {
         "<Space>'",
         function()
@@ -264,12 +473,16 @@ return {
       vim.cmd("hi link NvimTreeNormalFloat NvimTreeNormal")
     end,
   },
+
+  -- WIP
   {
     "junegunn/fzf.vim",
     dependencies = { "junegunn/fzf" },
     cmd = { "FZF" },
     keys = {
       { "<Leader>fz", "<Cmd>FZF<CR>", desc = "[FZF] FZF" },
+      -- { "<Leader>rg", "<Cmd>Rg<CR>", desc = "[FZF] Rg" },
+      -- { "<Leader>fl", "<Cmd>Lines<CR>", desc = "[FZF] Lines" },
       { "<Leader>bl", "<Cmd>BLines<CR>", desc = "[FZF] BLines" },
       { "<Leader>fh", "<Cmd>History<CR>", desc = "[FZF] History" },
       {
@@ -317,6 +530,17 @@ return {
       })
     end,
   },
+
+  -- WIP
+  -- {
+  --   "ibhagwan/fzf-lua",
+  --   -- optional for icon support
+  --   dependencies = { "nvim-tree/nvim-web-devicons" },
+  --   -- or if using mini.icons/mini.nvim
+  --   -- dependencies = { "echasnovski/mini.icons" },
+  --   opts = {},
+  -- },
+
   {
     "ibhagwan/fzf-lua",
     dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -330,6 +554,9 @@ return {
       },
 
       {
+        -- "<Space>f",
+        -- "<leader>ef",
+        -- "<Space><Space>f",
         "<Leader>ff",
         function()
           require("fzf-lua").files()
@@ -337,14 +564,20 @@ return {
         desc = "[fzf-lua] files",
       },
       {
-        "<Space><Space>qf",
+        -- "<Space>qf",
+        -- "<leader>qf",
+        -- "<Space><Space>qf",
+        "<Leader>qq",
         function()
           require("fzf-lua").quickfix()
         end,
         desc = "[fzf-lua] quickfix",
       },
       {
-        "<Space><Space>qF",
+        -- "<Space>qF",
+        -- "<leader>qF",
+        -- "<Space><Space>qF",
+        "<Leader>qs",
         function()
           require("fzf-lua").quickfix_stack()
         end,
@@ -352,6 +585,7 @@ return {
       },
 
       {
+        -- "<Leader>rg",
         "<Leader>fg",
         function()
           require("fzf-lua").grep()
@@ -359,6 +593,7 @@ return {
         desc = "[fzf-lua] grep",
       },
       {
+        -- "<Leader>rg",
         "<Leader>fG",
         function()
           require("fzf-lua").grep_last()
@@ -366,6 +601,7 @@ return {
         desc = "[fzf-lua] grep_last",
       },
       {
+        -- "<Leader>fj",
         "<Leader>fw",
         function()
           require("fzf-lua").grep_cword()
@@ -373,6 +609,7 @@ return {
         desc = "[fzf-lua] grep_cword",
       },
       {
+        -- "<Leader>fJ",
         "<Leader>fW",
         function()
           require("fzf-lua").grep_cWORD()
@@ -408,10 +645,21 @@ return {
         end,
         desc = "[fzf-lua] manpages",
       },
+
+      -- {
+      --   "<M-g><M-b>",
+      --   function()
+      --     require("fzf-lua").git_blame()
+      --   end,
+      --   desc = "[fzf-lua] git_blame",
+      -- },
+
+      --
     },
     opts = {
       winopts = {
         backdrop = 100,
+        -- win_blend = 10,
         preview = {
           horizontal = "right:50%",
         },
@@ -419,19 +667,32 @@ return {
           vim.keymap.set("n", "<Esc>", function()
             require("fzf-lua").hide()
           end, { buffer = 0 })
+          -- vim.keymap.set("n", "<Tab>", function()
+          --   require("fzf-lua").hide()
+          -- end, { buffer = 0 })
           vim.keymap.set("n", "<Tab>", "i<C-j><Esc>", { buffer = 0 })
         end,
       },
       keymaps = {
-        builtin = {},
+        builtin = {
+          -- ["<Esc>"] = "hide",
+          -- ["?"] = "toggle-help",
+          -- ["<C-Down>"] = "preview-page-down",
+          -- ["<C-Up>"] = "preview-page-up",
+          -- ["<C-Left>"] = "preview-page-left",
+          -- ["<C-Right>"] = "preview-page-right",
+        },
       },
     },
   },
-  {
+
+  { -- TODO
     "folke/persistence.nvim",
     enabled = false,
-    event = "BufReadPre",
-    opts = {},
+    event = "BufReadPre", -- this will only start session saving when an actual file was opened
+    opts = {
+      -- add any custom options here
+    },
   },
   {
     "danymat/neogen",
@@ -600,6 +861,9 @@ return {
     version = "*",
     opts = {
       global = {
+        -- kitty_get_text = {
+        --   ansi = false,
+        -- },
         paste_window = {
           winblend = 30,
           yank_register_enabled = false,
@@ -607,6 +871,7 @@ return {
       },
       tmux = {
         kitty_get_text = {
+          -- ansi = false,
           extent = "last_cmd_output",
         },
       },
@@ -666,6 +931,7 @@ return {
       "<Leader>at",
       "<Leader>aR",
     },
+    -- event = "VeryLazy",
     version = false,
     build = "make",
     opts = {
@@ -679,6 +945,14 @@ return {
     enabled = false,
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     ft = { "Avante" },
+    -- keys = {
+    --   "<Leader>rm",
+    --   function()
+    --     require("render-markdown").toggle()
+    --   end,
+    --   -- "<Cmd>RenderMarkdownToggle<CR>",
+    --   desc = "[Render Markdown] toggle",
+    -- },
     opts = {
       file_types = { "Avante" },
     },

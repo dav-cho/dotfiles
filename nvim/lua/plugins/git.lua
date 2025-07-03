@@ -4,6 +4,7 @@ return {
     event = "LspAttach",
     opts = {
       attach_to_untracked = true,
+      -- signs_staged_enable = false,
       trouble = false,
       current_line_blame_opts = {
         virt_text = true,
@@ -11,12 +12,18 @@ return {
         delay = 0,
       },
       current_line_blame_formatter = " <author> <author_time:%Y-%m-%d %I:%M %p> <abbrev_sha> <summary>",
+      -- TODO
       diff_opts = {
         linematch = 1,
+        -- internal = true,
+        -- ignore_blank_lines = false,
+        -- ignore_whitespace_change = false,
+        -- ignore_whitespace = false,
+        -- ignore_whitespace_change_at_eol = false,
       },
       on_attach = function(bufnr)
         local gitsigns = require("gitsigns")
-        local repeatable_move = require("nvim-treesitter.textobjects.repeatable_move")
+        local repeat_move = require("nvim-treesitter.textobjects.repeatable_move")
 
         local map = function(mode, lhs, rhs, opts)
           opts = opts or {}
@@ -26,7 +33,7 @@ return {
         end
 
         local function make_nav_repeats(opts, cb)
-          local nav_next, nav_prev = repeatable_move.make_repeatable_move_pair(function()
+          local nav_next, nav_prev = repeat_move.make_repeatable_move_pair(function()
             gitsigns.nav_hunk("next", opts or {}, cb)
           end, function()
             gitsigns.nav_hunk("prev", opts or {}, cb)
@@ -88,12 +95,15 @@ return {
           gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
         end, { desc = "reset_hunk" })
 
+        -- map("n", "<Space>u", gitsigns.undo_stage_hunk, { desc = "undo_stage_hunk" }) -- TODO
+        -- map("n", "<Space>u", gitsigns.stage_hunk, { desc = "undo_stage_hunk" }) -- TODO
         map("n", "<Space>S", gitsigns.stage_buffer, { desc = "stage_buffer" })
         map("n", "<M-a>", gitsigns.stage_buffer, { desc = "stage_buffer" }) -- TODO
         map("n", "<Leader>ss", gitsigns.stage_buffer, { desc = "stage_buffer" })
         map("n", "<Space>Z", gitsigns.reset_buffer, { desc = "reset_buffer" })
         map("n", "<Leader>ph", gitsigns.preview_hunk, { desc = "preview_hunk" })
         map("n", "<Leader>hp", gitsigns.preview_hunk_inline, { desc = "preview_hunk_inline" }) -- TODO
+        -- map("n", "<Leader>td", gitsigns.preview_hunk_inline, { desc = "preview_hunk_inline (toggle deleted)" }) -- TODO
         map("n", "<Leader>hr", gitsigns.refresh, { desc = "refresh" })
         map("n", "<Leader>SH", gitsigns.show, { desc = "show" })
         map("n", "<M-b>", gitsigns.blame, { desc = "blame" }) -- TODO
@@ -102,7 +112,7 @@ return {
         end, { desc = "setqflist('all')" })
         map("n", "<Leader>hl", gitsigns.setloclist, { desc = "setloclist" })
         map("n", "<Leader>tb", gitsigns.toggle_current_line_blame, { desc = "toggle_current_line_blame" })
-        map("n", "<Leader>td", gitsigns.toggle_deleted, { desc = "toggle_deleted" })
+        -- map("n", "<Leader>td", gitsigns.toggle_deleted, { desc = "toggle_deleted" }) -- TODO
         map("n", "<Leader>tD", gitsigns.toggle_word_diff, { desc = "toggle_word_diff" })
         map("n", "<Leader>tl", gitsigns.toggle_linehl, { desc = "toggle_linehl" })
         map("n", "<Leader>tn", gitsigns.toggle_numhl, { desc = "toggle_numhl" })
@@ -169,6 +179,7 @@ return {
 
       return {
         { "<C-g><C-g>", wf:wrap(), desc = "[Fugitive] :Git (:G)" },
+        { "<C-g><Bslash>", "<Cmd>Git<CR>", desc = "[Fugitive] :Git (:G)" },
         { "<C-g><C-s>", "<Cmd>Git status --short<CR>", desc = "[Fugitive] :Git status --short" },
         { "<C-g>st", wf:wrap("Git status"), desc = "[Fugitive] :Git status" },
         { "<C-g><C-d>", wf:wrap("diff"), desc = "[Fugitive] :Git diff" },

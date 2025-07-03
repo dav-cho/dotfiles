@@ -17,21 +17,62 @@ map("n", "<M-_>", "_", { desc = "_ <underscore>" })
 map("n", "<M-c>", "<Cmd>bd<CR>", { desc = "Unload buffer" })
 map("n", "<Leader><C-c>", "<Cmd>bd<CR>", { desc = "Unload buffer" })
 map("n", "<M-C>", "<Cmd>bd!<CR>", { desc = "Unload buffer (force)" })
-map({ "n", "v" }, "<Leader><Tab>", "<C-^>", { desc = "Alternate file" })
+map({ "n", "v" }, "<Leader><Tab>", "<C-^>", { desc = "Alternate file (`<C-^>`)" })
 
-map({ "n", "v" }, "<C-c>", "<Cmd>wincmd c<CR>", { desc = "Close window" })
-map({ "n", "v" }, "<C-h>", [[<Cmd>exe v:count1 . "wincmd h"<CR>]], { desc = "Window left" })
-map({ "n", "v" }, "<C-j>", [[<Cmd>exe v:count1 . "wincmd j"<CR>]], { desc = "Window down" })
-map({ "n", "v" }, "<C-k>", [[<Cmd>exe v:count1 . "wincmd k"<CR>]], { desc = "Window up" })
-map({ "n", "v" }, "<C-l>", [[<Cmd>exe v:count1 . "wincmd l"<CR>]], { desc = "Window right" })
+map({ "n", "v" }, "<C-c>", "<Cmd>wincmd c<CR>", { desc = ":wincmd c" })
+map({ "n", "v" }, "<C-h>", [[<Cmd>exe v:count1 . "wincmd h"<CR>]], { desc = ":wincmd h" })
+map({ "n", "v" }, "<C-j>", [[<Cmd>exe v:count1 . "wincmd j"<CR>]], { desc = ":wincmd j" })
+map({ "n", "v" }, "<C-k>", [[<Cmd>exe v:count1 . "wincmd k"<CR>]], { desc = ":wincmd k" })
+map({ "n", "v" }, "<C-l>", [[<Cmd>exe v:count1 . "wincmd l"<CR>]], { desc = ":wincmd l" })
 
 map({ "n", "v" }, "<Leader>w", "<C-w>", { desc = "Window command" })
 map({ "n", "v" }, "<Leader>wt", "<Cmd>tab split<CR>", { desc = ":tab split" })
 map({ "n", "v" }, "<Leader>wT", "<Cmd>wincmd T<CR>", { desc = ":wincmd T" })
 map({ "n", "v" }, "<Leader>wX", "<C-w>x<C-w>p", { desc = "Swap window keep cursor" })
 
-map("n", "<M-x>", "<Cmd>tabc<CR>", { desc = "Close tab" })
-map("n", "<Leader><C-x>", "<Cmd>tabc<CR>", { desc = "Close tab" })
+-- map({ "n", "v" }, "<Leader>wX", function()
+--   local win = vim.api.nvim_get_current_win()
+--   vim.cmd("wincmd h")
+--   if vim.api.nvim_get_current_win() ~= win then
+--     vim.cmd("wincmd x")
+--   end
+-- end, { desc = "Swap window prev" })
+-- map({ "n", "v" }, "<Leader>wX", "<C-w>W<C-w>x", { desc = "Swap window prev" })
+-- map({ "n", "v" }, "<Leader>wX", "<C-w>p<C-w>x", { desc = "Swap window prev" })
+
+-- map({ "n", "v" }, "<Leader>wx", function()
+--   local wins = vim.api.nvim_list_wins()
+--   for i, w in ipairs(wins) do
+--     if w == vim.api.nvim_get_current_win() then
+--       local next_idx = (i + vim.v.count) % #wins + 1
+--       vim.cmd(string.format("%d wincmd x | wincmd w", next_idx))
+--       break
+--     end
+--   end
+-- end, { desc = "swap next window" })
+-- map({ "n", "v" }, "<Leader>wX", function()
+--   local wins = vim.api.nvim_list_wins()
+--   for i, w in ipairs(wins) do
+--     if w == vim.api.nvim_get_current_win() then
+--       local prev_idx = i > 1 and (i - vim.v.count - 1) % #wins or #wins
+--       vim.cmd(string.format("%d wincmd x | wincmd W", prev_idx))
+--       break
+--     end
+--   end
+-- end, { desc = "swap previous window" })
+-- map({ "n", "v" }, "<C-w>X", function()
+--   local wins = vim.api.nvim_list_wins()
+--   for i, w in ipairs(wins) do
+--     if w == vim.api.nvim_get_current_win() then
+--       local prev_idx = i > 1 and (i - vim.v.count - 1) % #wins or #wins
+--       vim.cmd(string.format("%d wincmd x", prev_idx))
+--       break
+--     end
+--   end
+-- end, { desc = "swap previous window (keep cursor in same window)" })
+
+map("n", "<M-x>", "<Cmd>tabc<CR>", { desc = "tabclose" })
+-- map("n", "<Leader><C-x>", "<Cmd>tabc<CR>", { desc = "tabclose" })
 map({ "n", "v" }, "<Leader><", "<Cmd>tabm -1<CR>", { desc = "Move tab left" })
 map({ "n", "v" }, "<Leader>>", "<Cmd>tabm +1<CR>", { desc = "Move tab right" })
 map({ "n", "v" }, "<PageUp>", "<Cmd>tabnext<CR>", { desc = "Next tab" })

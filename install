@@ -96,4 +96,9 @@ if [[ -d "$KITTY" ]]; then
     symlink "$KITTY/kitten" "$HOME/.local/bin"
 fi
 
+# K9S="$HOME/Library/Application Support/k9s"
+# if [[ -d $K9S ]]; then
+#     symlink "$DOTFILES/k9s/config.yaml" "$K9S/config.yaml"
+# fi
+
 touch .hushlogin

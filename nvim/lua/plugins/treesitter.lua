@@ -4,12 +4,14 @@ return {
     dependencies = {
       { "nvim-treesitter/nvim-treesitter-textobjects", lazy = true },
     },
+    -- branch = "main",
     build = ":TSUpdate",
     event = { "BufReadPre", "BufNewFile" },
     ft = { "diff" },
     opts = {
       ensure_installed = {
         "comment",
+        -- "css",
         "dockerfile",
         "go",
         "html",
@@ -298,6 +300,12 @@ return {
         desc = "[various-textobjs] diagnostic()",
       },
       {
+        "gW", -- override: gw
+        "<Cmd>lua require('various-textobjs').visibleInWindow()<CR>",
+        mode = { "o", "x" },
+        desc = "[various-textobjs] visibleInWindow()",
+      },
+      {
         "gx",
         function()
           require("various-textobjs").url()
@@ -350,6 +358,10 @@ return {
           "|",
           "L",
           "!",
+          "gw",
+          "gW",
+          "i,",
+          "a,",
         },
       },
     },
