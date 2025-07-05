@@ -1,0 +1,152 @@
+// Place your key bindings in this file to override the defaultsauto[]
+[
+  {
+    "key": "ctrl+/",
+    "command": "editor.action.commentLine",
+    "when": "editorTextFocus && !editorReadOnly"
+  },
+  {
+    "key": "cmd+n",
+    "command": "explorer.newFile"
+  },
+  {
+    "key": "shift+cmd+n",
+    "command": "explorer.newFolder"
+  },
+  {
+    "key": "alt+cmd+n",
+    "command": "workbench.action.files.newUntitledFile"
+  },
+  {
+    "key": "shift+alt+cmd+n",
+    "command": "workbench.action.newWindow"
+  },
+  {
+    "key": "ctrl+shift+cmd+`",
+    "command": "workbench.action.terminal.kill"
+  },
+  {
+    "key": ", e",
+    "command": "workbench.view.explorer",
+    "when": "!editorIsOpen"
+  },
+  {
+    "key": ", e",
+    "command": "workbench.action.focusActiveEditorGroup",
+    "when": "!editorTextFocus"
+  },
+  {
+    "key": ", e",
+    "command": "workbench.view.explorer",
+    "when": "!editorIsOpen"
+  },
+  {
+    "key": ", b",
+    "command": "workbench.action.toggleSidebarVisibility",
+    "when": "!editorTextFocus"
+  },
+  {
+    "key": "alt+j",
+    "command": "editor.action.moveLinesDownAction",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "alt+k",
+    "command": "editor.action.moveLinesUpAction",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+cmd+h",
+    "command": "workbench.action.previousEditor"
+  },
+  {
+    "key": "ctrl+cmd+l",
+    "command": "workbench.action.nextEditor"
+  },
+  {
+    "key": "alt+cmd+h",
+    "command": "workbench.action.moveEditorLeftInGroup"
+  },
+  {
+    "key": "alt+cmd+l",
+    "command": "workbench.action.moveEditorRightInGroup"
+  },
+  {
+    "key": "ctrl+shift+h",
+    "command": "workbench.action.moveEditorToLeftGroup"
+  },
+  {
+    "key": "ctrl+shift+l",
+    "command": "workbench.action.moveEditorToRightGroup"
+  },
+  {
+    "key": "ctrl+shift+j",
+    "command": "workbench.action.moveEditorToBelowGroup"
+  },
+  {
+    "key": "ctrl+shift+k",
+    "command": "workbench.action.moveEditorToAboveGroup"
+  },
+  {
+    "key": "ctrl+h",
+    "command": "workbench.action.focusLeftGroup",
+    "when": "editorTextFocus && vim.active && vim.mode != 'Insert'"
+  },
+  {
+    "key": "ctrl+l",
+    "command": "workbench.action.focusRightGroup",
+    "when": "editorTextFocus && vim.active && vim.mode != 'Insert'"
+  },
+  {
+    "key": "ctrl+k",
+    "command": "workbench.action.focusAboveGroup",
+    "when": "editorTextFocus && vim.active && vim.mode != 'Insert'"
+  },
+  {
+    "key": "ctrl+j",
+    "command": "workbench.action.focusBelowGroup",
+    "when": "editorTextFocus && vim.active && vim.mode != 'Insert'"
+  },
+  {
+    "key": "cmd+n",
+    "command": "-workbench.action.files.newUntitledFile"
+  },
+  {
+    "key": "shift+cmd+n",
+    "command": "-workbench.action.newWindow"
+  },
+  {
+    "key": "alt+cmd+left",
+    "command": "-workbench.action.previousEditor"
+  },
+  {
+    "key": "alt+cmd+right",
+    "command": "-workbench.action.nextEditor"
+  },
+  {
+    "key": "cmd+k shift+cmd+left",
+    "command": "-workbench.action.moveEditorLeftInGroup"
+  },
+  {
+    "key": "cmd+k shift+cmd+right",
+    "command": "-workbench.action.moveEditorRightInGroup"
+  },
+  {
+    "key": "ctrl+alt+cmd+=",
+    "command": "workbench.action.increaseViewSize",
+    "when": "sideBarFocus && sideBarVisible || editorTextFocus && vim.active && vim.mode != 'Insert'"
+  },
+  {
+    "key": "ctrl+alt+cmd+-",
+    "command": "workbench.action.decreaseViewSize",
+    "when": "sideBarFocus && sideBarVisible || editorTextFocus && vim.active && vim.mode != 'Insert'"
+  },
+  {
+    "key": "ctrl+alt+cmd+l",
+    "command": "turboConsoleLog.displayLogMessage"
+  },
+  {
+    "key": "ctrl+alt+l",
+    "command": "-turboConsoleLog.displayLogMessage"
+  }
+]

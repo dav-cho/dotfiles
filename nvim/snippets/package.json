@@ -1,0 +1,52 @@
+{
+  "name": "dav-snippets",
+  "engines": {
+    "vscode": "^1.66.0"
+  },
+  "contributes": {
+    "snippets": [
+      {
+        "language": [
+          "plaintext",
+          "markdown",
+          "tex",
+          "html",
+          "global"
+        ],
+        "path": "./global.json"
+      },
+      {
+        "language": "go",
+        "path": "./go.json"
+      },
+      {
+        "language": [
+          "javascript"
+        ],
+        "path": "./javascript.json"
+      },
+      {
+        "language": [
+          "javascriptreact"
+        ],
+        "path": "./javascriptreact.json"
+      },
+      {
+        "language": "python",
+        "path": "./python.json"
+      },
+      {
+        "language": [
+          "typescript"
+        ],
+        "path": "./typescript.json"
+      },
+      {
+        "language": [
+          "typescriptreact"
+        ],
+        "path": "./typescriptreact.json"
+      }
+    ]
+  }
+}

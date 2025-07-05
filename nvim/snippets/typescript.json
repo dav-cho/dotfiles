@@ -1,0 +1,22 @@
+{
+  "Fancy Console Log": {
+    "prefix": "con",
+    "body": ["console.log('~ $2:', $1);"],
+    "description": "Fancy console.log"
+  },
+  "Quick Fancy Console Log": {
+    "prefix": "conq",
+    "body": ["console.log('~ $1:', $1);"],
+    "description": "Quick and Fancy console.log"
+  },
+  "Import From": {
+    "prefix": "imp",
+    "body": ["import { $2 } from '$1';"],
+    "description": "Regular Import Statement"
+  },
+  "Named Import": {
+    "prefix": "impo",
+    "body": ["import $2 from '$1';"],
+    "description": "Named Import Statement"
+  }
+}

@@ -1,0 +1,6 @@
+views:
+  v1/pods@dqe-staging:
+    sortColumn: NAME:asc
+    columns:
+      - NAME
+      - IMAGE:.spec.containers[0].image|W

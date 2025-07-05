@@ -1,0 +1,92 @@
+[colors]
+draw_bold_text_with_bright_colors = true
+
+[colors.bright]
+black = "#484f58"
+blue = "#79c0ff"
+cyan = "#56d4dd"
+green = "#56d364"
+magenta = "#d2a8ff"
+red = "#ffa198"
+white = "#ffffff"
+yellow = "#e5ba64"
+
+[colors.cursor]
+cursor = "#e6edf3"
+text = "#1d1d1d"
+
+[colors.normal]
+black = "#2e3138"
+blue = "#58a6ff"
+cyan = "#39c5cf"
+green = "#3fb950"
+magenta = "#bc8cff"
+red = "#ff7b72"
+white = "#b1bac4"
+yellow = "#d4b26c"
+
+[colors.primary]
+background = "#000000"
+foreground = "#e6edf3"
+
+[colors.selection]
+background = "#264f78"
+text = "#e6edf3"
+
+[colors.vi_mode_cursor]
+cursor = "#e6edf3"
+text = "#1d1d1d"
+
+[font]
+size = 13.0
+
+[font.offset]
+x = 1
+
+[font.normal]
+family = "JetBrainsMono Nerd Font"
+style = "Regular"
+
+[[keyboard.bindings]]
+chars = "\u001F"
+key = "Slash"
+mods = "Control"
+
+[[keyboard.bindings]]
+chars = "\u001B[27;5;9~"
+key = "Tab"
+mods = "Control"
+
+[[keyboard.bindings]]
+chars = "\u001B[27;6;9~"
+key = "Tab"
+mods = "Control|Shift"
+
+[[keyboard.bindings]]
+action = "ClearHistory"
+key = "K"
+mode = "~Vi|~Search"
+mods = "Command"
+
+[[keyboard.bindings]]
+key = "K"
+mods = "Command"
+
+[keyboard.bindings.command]
+args = ["clear-history"]
+program = "tmux"
+
+[window]
+decorations = "none"
+dynamic_padding = true
+opacity = 0.75
+option_as_alt = "Both"
+resize_increments = true
+
+[window.dimensions]
+columns = 100
+lines = 25
+
+[window.padding]
+x = 4
+y = 4
