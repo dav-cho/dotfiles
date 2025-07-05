@@ -253,8 +253,29 @@ return {
         }
       end
 
+      vim.b.blink_enabled = true
+      vim.g.blink_enabled = true
+
+      vim.keymap.set("n", "<Leader>tc", function()
+        vim.b.blink_enabled = not (vim.b.blink_enabled ~= false)
+      end, { desc = "[blink.cmp] Toggle local `vim.b.blink_enabled`" })
+      vim.keymap.set("n", "<Leader>TC", function()
+        vim.g.blink_enabled = not vim.g.blink_enabled
+        for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+          if vim.api.nvim_buf_is_loaded(buf) then
+            vim.api.nvim_buf_set_var(buf, "blink_enabled", vim.g.blink_enabled)
+          end
+        end
+      end, { desc = "[blink.cmp] Toggle global `vim.g.blink_enabled`" })
+
       return {
         keymap = keymap,
+        enabled = function()
+          if vim.b.blink_enabled == nil then
+            vim.b.blink_enabled = vim.g.blink_enabled
+          end
+          return vim.b.blink_enabled and vim.g.blink_enabled
+        end,
         -- enabled = function()
         --   return vim.bo.buftype ~= "prompt"
         --     and vim.b.completion ~= false
