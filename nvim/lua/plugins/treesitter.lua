@@ -171,29 +171,39 @@ return {
         end, 10)
       end, { desc = "repeat_last_move_previous() + redraw top" })
 
-      local next_fold, prev_fold = repeat_move.make_repeatable_move_pair(function()
-        vim.cmd("normal! zj")
-      end, function()
-        vim.cmd("normal! zk")
-      end)
-      vim.keymap.set({ "n", "x", "o" }, "zj", next_fold, { silent = true, desc = "Down next fold" })
-      vim.keymap.set({ "n", "x", "o" }, "zk", prev_fold, { silent = true, desc = "Up next fold" })
+      local function map_repeat_moves(modes, next, prev, options)
+        local next_move, prev_move = repeat_move.make_repeatable_move_pair(function()
+          vim.cmd.normal({ next.cmd, bang = true })
+        end, function()
+          vim.cmd.normal({ prev.cmd, bang = true })
+        end)
+        vim.keymap.set(modes, next.cmd, next_move, vim.tbl_deep_extend("force", { desc = next.desc }, options or {}))
+        vim.keymap.set(modes, prev.cmd, prev_move, vim.tbl_deep_extend("force", { desc = prev.desc }, options or {}))
+      end
 
-      local next_diff, prev_diff = repeat_move.make_repeatable_move_pair(function()
-        vim.cmd("normal! ]c")
-      end, function()
-        vim.cmd("normal! [c")
-      end)
-      vim.keymap.set("n", "]c", next_diff, { desc = "Jumpto next diff" })
-      vim.keymap.set("n", "[c", prev_diff, { desc = "Jumpto next diff" })
-
-      local next_method, prev_method = repeat_move.make_repeatable_move_pair(function()
-        vim.cmd("normal! ]m")
-      end, function()
-        vim.cmd("normal! [m")
-      end)
-      vim.keymap.set({ "n", "x", "o" }, "]m", next_method, { silent = true, desc = "next method" })
-      vim.keymap.set({ "n", "x", "o" }, "[m", prev_method, { silent = true, desc = "prev method" })
+      map_repeat_moves(
+        { "n", "x", "o" },
+        { cmd = "zj", desc = "Down next fold" },
+        { cmd = "zk", desc = "Up next fold" },
+        { silent = true }
+      )
+      map_repeat_moves(
+        { "n", "x", "o" },
+        { cmd = "]c", desc = "next change" },
+        { cmd = "[c", desc = "previous change" }
+      )
+      map_repeat_moves(
+        { "n", "x", "o" },
+        { cmd = "]m", desc = "next method" },
+        { cmd = "[m", desc = "previous method" },
+        { silent = true }
+      )
+      map_repeat_moves(
+        { "n", "x", "o" },
+        { cmd = "]`", desc = "next lowercase mark" },
+        { cmd = "[`", desc = "previous lowercase mark" },
+        { silent = true }
+      )
 
       require("nvim-treesitter.configs").setup(opts)
     end,
