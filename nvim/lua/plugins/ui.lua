@@ -531,6 +531,8 @@ return {
     opts = {
       enabled = false,
       indent = {
+        -- char = "│",
+        -- tab_char = "│",
         char = "▏",
         tab_char = "▏",
       },
@@ -593,6 +595,7 @@ return {
         try_as_border = true,
       },
       symbol = "▏",
+      -- symbol = "│",
     },
     config = function(_, opts)
       vim.g.miniindentscope_disable = true

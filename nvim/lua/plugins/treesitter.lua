@@ -4,12 +4,14 @@ return {
     dependencies = {
       { "nvim-treesitter/nvim-treesitter-textobjects", lazy = true },
     },
+    -- branch = "main",
     build = ":TSUpdate",
     event = { "BufReadPre", "BufNewFile" },
     ft = { "diff" },
     opts = {
       ensure_installed = {
         "comment",
+        -- "css",
         "dockerfile",
         "go",
         "html",
@@ -31,7 +33,7 @@ return {
         ---@diagnostic disable-next-line: unused-local
         disable = function(lang, buf)
           local max_filesize = 1024 ^ 2 * 2 -- 2 MiB
-          local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+          local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
           if ok and stats and stats.size > max_filesize then
             return true
           end
@@ -170,6 +172,14 @@ return {
           vim.cmd("normal! zt")
         end, 10)
       end, { desc = "repeat_last_move_previous() + redraw top" })
+
+      -- TODO: fix first ]`/[` move
+      -- E5108: Error executing lua: vim/_editor.lua:0: nvim_exec2(), line 1: Vim(normal):E92: Buffer 0 not found
+      -- stack traceback:
+      --         [C]: in function 'nvim_exec2'
+      --         vim/_editor.lua: in function 'cmd'
+      --         /Users/dcho/.config/nvim/lua/plugins/treesitter.lua:183: in function 'forward_move_fn'
+      --         ...ects/lua/nvim-treesitter/textobjects/repeatable_move.lua:79: in function <...ects/lua/nvim-treesitter/textobjects/repeatable_move.lua:77>
 
       local function map_repeat_moves(modes, next, prev, options)
         local next_move, prev_move = repeat_move.make_repeatable_move_pair(function()

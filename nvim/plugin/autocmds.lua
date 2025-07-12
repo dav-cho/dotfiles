@@ -15,9 +15,9 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   end,
 })
 
-vim.api.nvim_create_augroup("RelativeNumberToggle", {})
+local rel_num_toggle = vim.api.nvim_create_augroup("RelativeNumberToggle", {})
 vim.api.nvim_create_autocmd({ "InsertLeave", "BufEnter", "WinEnter", "FocusGained" }, {
-  group = "RelativeNumberToggle",
+  group = rel_num_toggle,
   callback = function()
     if vim.api.nvim_get_option_value("number", {}) then
       vim.opt.relativenumber = true
@@ -25,7 +25,7 @@ vim.api.nvim_create_autocmd({ "InsertLeave", "BufEnter", "WinEnter", "FocusGaine
   end,
 })
 vim.api.nvim_create_autocmd({ "InsertEnter", "BufLeave", "WinLeave", "FocusLost" }, {
-  group = "RelativeNumberToggle",
+  group = rel_num_toggle,
   callback = function()
     if vim.api.nvim_get_option_value("relativenumber", {}) then
       vim.opt.relativenumber = false

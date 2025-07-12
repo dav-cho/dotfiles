@@ -91,6 +91,8 @@ return {
         end, { desc = "reset_hunk" })
 
         map("n", "<Space>S", gitsigns.stage_buffer, { desc = "stage_buffer" })
+        -- map("n", "<M-a>", gitsigns.stage_buffer, { desc = "stage_buffer" })
+        -- map("n", "<Leader>ss", gitsigns.stage_buffer, { desc = "stage_buffer" })
         map("n", "<Space>Z", gitsigns.reset_buffer, { desc = "reset_buffer" })
         map("n", "<Leader>hp", gitsigns.preview_hunk_inline, { desc = "preview_hunk_inline" })
         map("n", "<Leader>ph", gitsigns.preview_hunk, { desc = "preview_hunk" })
@@ -102,6 +104,7 @@ return {
         end, { desc = "setqflist('all')" })
         map("n", "<Leader>hl", gitsigns.setloclist, { desc = "setloclist" })
         map("n", "<Leader>tb", gitsigns.toggle_current_line_blame, { desc = "toggle_current_line_blame" })
+        -- map("n", "<Leader>td", gitsigns.toggle_deleted, { desc = "toggle_deleted" }) -- TODO
         map("n", "<Leader>tD", gitsigns.toggle_word_diff, { desc = "toggle_word_diff" })
         map("n", "<Leader>tl", gitsigns.toggle_linehl, { desc = "toggle_linehl" })
         map("n", "<Leader>tn", gitsigns.toggle_numhl, { desc = "toggle_numhl" })
@@ -182,6 +185,12 @@ return {
         { "<C-g>lb", wf:wrap("log %"), mode = { "n", "x" }, desc = "[Fugitive] :Git log %" },
         {
           "<C-g>1",
+          wf:wrap("log -10 --pretty='format:%C(auto)%h%d %s %C(dim blue)(%ar)'"),
+          mode = { "n", "x" },
+          desc = "Git log --oneline -10 --date='format:%Y-%m-%d %H:%M:%S'",
+        },
+        {
+          "<M-g>1",
           wf:wrap("log -1 -p --stat"),
           mode = { "n", "x" },
           desc = "[Fugitive] :Git log -1 -p --stat",

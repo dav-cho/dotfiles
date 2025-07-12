@@ -53,9 +53,16 @@ command -v uvx >/dev/null && eval "$(uvx --generate-shell-completion zsh)"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh" --no-use
+# nvm() {
+#   unset -f nvm
+#   [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
+#   nvm "$@"
+# }
 
+# export FZF_DEFAULT_COMMAND="fd --strip-cwd-prefix --unrestricted --exclude .git --exclude node_modules --exclude __pycache__"
 export FZF_DEFAULT_COMMAND="fd --exclude .git --exclude node_modules --exclude __pycache__"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+# export FZF_ALT_C_COMMAND="fd --type d --strip-cwd-prefix --unrestricted --exclude .git --exclude node_modules --exclude __pycache__"
 export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type d"
 export FZF_DEFAULT_OPTS="
   --cycle
@@ -85,6 +92,8 @@ export FZF_DEFAULT_OPTS="
   --bind='alt-space:jump'
   --bind='alt-/:jump-accept'
 "
+  # --bind='alt-f:change-prompt(󰈙 > )+reload(fd -t f -u -E .git -E node_modules -E __pycache__)'
+  # --bind='alt-d:change-prompt(󰉋 > )+reload(fd -t d -u -E .git -E node_modules -E __pycache__)'
 export FZF_CTRL_T_OPTS=""
 export FZF_ALT_C_OPTS="--preview='eza --tree --color=always {}'"
 export FZF_CTRL_R_OPTS="
@@ -107,6 +116,7 @@ eval "$(gh copilot alias -- zsh)"
 export PATH="$HOME/.local/share/solana/install/active_release/bin:$PATH"
 
 [[ ! -f ~/.p10k.zsh ]] || . ~/.p10k.zsh
+# eval "$(starship init zsh)"
 
 _fzf_compgen_path() {
   fd -u --follow --strip-cwd-prefix -E ".git" -E "node_modules" -E "__pycache__" . "$1"
@@ -144,6 +154,16 @@ _nvim-man() {
   zle accept-line
 }
 
+# _pipe-delta() {
+#   BUFFER+=" | delta"
+#   zle accept-line
+# }
+
+# _pipe-fzf() {
+#   BUFFER+=" | fzf"
+#   zle accept-line
+# }
+
 _rfv() {
   rfv
 }
@@ -156,13 +176,17 @@ zle -N _rfv
 
 bindkey -e '^V' _nvim
 bindkey -e '^[M' _nvim-man
+# bindkey -e '^[D' _pipe-delta
+# bindkey -e '^[F' _pipe-fzf
 bindkey -e '^G' _rfv
 
 bindkey -e '^[[1;3A' atuin-up-search
 bindkey -e '^[R' fzf-history-widget
 bindkey -e '^X^I' toggle-fzf-tab
 
+# bindkey -e '^[ ' autosuggest-execute
 bindkey -e '^[l' autosuggest-execute
+# bindkey -e '^[;' autosuggest-execute
 bindkey -e '^[u' backward-kill-line
 bindkey -e '^[e' edit-command-line
 bindkey -e '^[v' quoted-insert
@@ -176,6 +200,7 @@ alias chrome="open -a 'Google Chrome'"
 alias docker-compose="docker compose"
 alias eza="eza --time-style=long-iso"
 alias firefox="open -a 'Firefox'"
+# alias ghc="gh copilot"
 alias ghco="gh copilot"
 alias mann="MANPAGER='nvim +Man! +colorscheme\ tokyonight' man"
 alias nvmd="nvm use default"
@@ -209,3 +234,13 @@ alias la="eza -laa --icons=auto"
 alias lg="eza -laaG --icons=auto"
 alias ll="eza -l --icons=auto"
 alias lt="eza --tree -I __pycache__"
+
+# if [[ "$USER" == "dcho" ]]; then
+#   source "$HOME/dotfiles/cm/zshrc"
+# fi
+#
+# # The following lines have been added by Docker Desktop to enable Docker CLI completions.
+# fpath=(/Users/dcho/.docker/completions $fpath)
+# autoload -Uz compinit
+# compinit
+# # End of Docker CLI completions

@@ -116,6 +116,9 @@ lctrl + lcmd + lshift - 0x21 : yabai -m window --space prev --focus
 lctrl + lcmd + lshift - 0x1E : yabai -m window --space next --focus
 
 ## move window to display
+# lctrl + lcmd - q : yabai -m window --display 1 --focus
+# lctrl + lcmd - w : yabai -m window --display 2 --focus
+# lctrl + lcmd - e : yabai -m window --display 3 --focus
 lctrl + lcmd - q : yabai -m window --display 1 --focus && "$HOME/.config/yabai/float-center.sh"
 lctrl + lcmd - w : yabai -m window --display 2 --focus && "$HOME/.config/yabai/float-center.sh"
 lctrl + lcmd - e : yabai -m window --display 3 --focus && "$HOME/.config/yabai/float-center.sh"
@@ -211,10 +214,20 @@ lctrl + lshift + rshift - 0x1E : yabai -m space --rotate 270      # cycle clockw
 lctrl + lshift + rshift - 0x21 : yabai -m space --rotate 90       # cycle counter-clockwise
 lctrl + lcmd + lshift + rshift - p : yabai -m space --toggle padding && yabai -m space --toggle gap
 
+# lctrl + lshift + rshift - b : yabai -m space --balance
+# lctrl + lshift + rshift - b    : yabai -m space --balance x-axis && yabai -m --balance y-axis
+# lctrl + lalt + lshift + rshift - x : yabai -m space --balance x-axis
+# lctrl + lalt + lshift + rshift - y : yabai -m space --balance y-axis
+
 ## layout management
+# lctrl + lshift + rshift - 0x2A      : yabai -m space --layout float
+# lctrl + lshift + rshift - backspace : yabai -m space --layout bsp
 lctrl + lalt + lshift - return    : yabai -m space --layout bsp
 lctrl + lalt + lshift - 0x2A      : yabai -m space --layout float
 lctrl + lalt + lshift - backspace : yabai -m space --layout stack
+# hyper - return    : yabai -m space --layout bsp
+# hyper - 0x2A      : yabai -m space --layout float
+# hyper - backspace : yabai -m space --layout stack
 
 ## create/destroy space
 ralt + rcmd + rshift - n : yabai -m space --create && \
@@ -224,4 +237,14 @@ ralt + rcmd + rshift - n : yabai -m space --create && \
 ralt + rcmd + rshift - d : yabai -m space --destroy
 
 ## apps
+lctrl + lcmd - return : "$HOME/dotfiles/yabai/alacritty-new-window.sh"
 lctrl + lcmd - space : open -a kitty.app -n --args --single-instance --directory $HOME
+# lctrl + lcmd - space : open -a kitty.app -n --args --directory $HOME
+# lctrl + lcmd + lshift - space : open -a kitty.app -n --args --directory $HOME
+
+### WIP
+
+# lctrl + lalt + lcmd - return : yabai -m window --opacity 0.1 && sleep $(yabai -m config window_opacity_duration) && yabai -m window --opacity 0.0
+
+## layouts
+# lctrl + lalt + lcmd - return : "$HOME/dotfiles/yabai/layout/socials.sh"
