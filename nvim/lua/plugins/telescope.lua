@@ -6,176 +6,41 @@ return {
       "telescope-fzf-native.nvim",
     },
     keys = function()
-      local keymaps = {
-        {
-          "<Space>r",
-          function()
-            require("telescope.builtin").resume()
-          end,
-          desc = "resume",
-        },
-        {
-          "<Space>k",
-          function()
-            require("telescope.builtin").keymaps()
-          end,
-          desc = "keymaps",
-        },
-        {
-          "<Space>h",
-          function()
-            require("telescope.builtin").help_tags()
-          end,
-          desc = "help_tags",
-        },
-        {
-          "<Leader>tm",
-          function()
-            require("telescope.builtin").man_pages()
-          end,
-          desc = "man_pages",
-        },
-        {
-          "<Leader>co",
-          function()
-            require("telescope.builtin").commands()
-          end,
-          desc = "commands",
-        },
-        {
-          "<Leader>cs",
-          function()
-            require("telescope.builtin").colorscheme()
-          end,
-          desc = "colorscheme",
-        },
-        {
-          "<Leader>oo",
-          function()
-            require("telescope.builtin").oldfiles()
-          end,
-          desc = "oldfiles",
-        },
-        {
-          "<Leader>sh",
-          function()
-            require("telescope.builtin").search_history()
-          end,
-          desc = "search_history",
-        },
-        {
-          "<Leader>ch",
-          function()
-            require("telescope.builtin").command_history()
-          end,
-          desc = "command_history",
-        },
-        {
-          "<Space>b",
-          function()
-            require("telescope.builtin").buffers()
-          end,
-          desc = "buffers",
-        },
-        {
-          "<Leader>re",
-          function()
-            require("telescope.builtin").registers()
-          end,
-          desc = "registers",
-        },
-        {
-          "<Leader>ju",
-          function()
-            require("telescope.builtin").jumplist()
-          end,
-          desc = "jumplist",
-        },
-        {
-          "<Leader>mk",
-          function()
-            require("telescope.builtin").marks()
-          end,
-          desc = "marks",
-        },
-        {
-          "<Leader>qf",
-          function()
-            require("telescope.builtin").quickfix()
-          end,
-          desc = "quickfix",
-        },
-        {
-          "<Leader>qF",
-          function()
-            require("telescope.builtin").quickfixhistory()
-          end,
-          desc = "quickfixhistory",
-        },
-        {
-          "<Leader>lc",
-          function()
-            require("telescope.builtin").loclist()
-          end,
-          desc = "loclist",
-        },
-        {
-          "<Leader>bt",
-          function()
-            require("telescope.builtin").current_buffer_tags()
-          end,
-          desc = "current_buffer_tags",
-        },
-        {
-          "<Leader>sp",
-          function()
-            require("telescope.builtin").spell_suggest()
-          end,
-          desc = "spell_suggest",
-        },
-        {
-          "<Leader>vo",
-          function()
-            require("telescope.builtin").vim_options()
-          end,
-          desc = "vim_options",
-        },
-        {
-          "<Leader>ac",
-          function()
-            require("telescope.builtin").autocommands()
-          end,
-          desc = "autocommands",
-        },
-        {
-          "<Leader>hi",
-          function()
-            require("telescope.builtin").highlights()
-          end,
-          desc = "highlights",
-        },
-        {
-          "<Leader>ts",
-          function()
-            require("telescope.builtin").treesitter()
-          end,
-          desc = "treesitter",
-        },
-        {
-          "<Space>v",
-          function()
-            require("telescope.builtin").current_buffer_fuzzy_find()
-          end,
-          desc = "current_buffer_fuzzy_find",
-        },
+      local function telescope_builtin(name, opts)
+        return function()
+          require("telescope.builtin")[name](opts or {})
+        end
+      end
 
-        {
-          "<Space>f",
-          function()
-            require("telescope.builtin").find_files()
-          end,
-          desc = "find_files",
-        },
+      local keymaps = {
+        { "<Space>r", telescope_builtin("resume"), desc = "resume" },
+        { "<Space>k", telescope_builtin("keymaps"), desc = "keymaps" },
+        { "<Space>h", telescope_builtin("help_tags"), desc = "help_tags" },
+        { "<Space>b", telescope_builtin("buffers"), desc = "buffers" },
+        { "<Space>v", telescope_builtin("current_buffer_fuzzy_find"), desc = "current_buffer_fuzzy_find" },
+        { "<Leader>ac", telescope_builtin("autocommands"), desc = "autocommands" },
+        { "<Leader>bi", telescope_builtin("builtin"), desc = "builtin" },
+        { "<Leader>bt", telescope_builtin("current_buffer_tags"), desc = "current_buffer_tags" },
+        { "<Leader>ch", telescope_builtin("command_history"), desc = "command_history" },
+        { "<Leader>co", telescope_builtin("commands"), desc = "commands" },
+        { "<Leader>cs", telescope_builtin("colorscheme"), desc = "colorscheme" },
+        { "<Leader>hi", telescope_builtin("highlights"), desc = "highlights" },
+        { "<Leader>ju", telescope_builtin("jumplist"), desc = "jumplist" },
+        { "<Leader>lc", telescope_builtin("loclist"), desc = "loclist" },
+        { "<Leader>mk", telescope_builtin("marks"), desc = "marks" },
+        { "<Leader>oo", telescope_builtin("oldfiles"), desc = "oldfiles" },
+        { "<Leader>qF", telescope_builtin("quickfixhistory"), desc = "quickfixhistory" },
+        { "<Leader>qf", telescope_builtin("quickfix"), desc = "quickfix" },
+        { "<Leader>re", telescope_builtin("registers"), desc = "registers" },
+        { "<Leader>rl", telescope_builtin("reloader"), desc = "reloader" },
+        { "<Leader>sh", telescope_builtin("search_history"), desc = "search_history" },
+        { "<Leader>sp", telescope_builtin("spell_suggest"), desc = "spell_suggest" },
+        { "<Leader>tm", telescope_builtin("man_pages"), desc = "man_pages" },
+        { "<Leader>tp", telescope_builtin("pickers"), desc = "pickers" },
+        { "<Leader>ts", telescope_builtin("treesitter"), desc = "treesitter" },
+        { "<Leader>vo", telescope_builtin("vim_options"), desc = "vim_options" },
+
+        { "<Space>f", telescope_builtin("find_files"), desc = "find_files" },
         {
           "<Space>F",
           function()
@@ -188,13 +53,11 @@ return {
         },
         {
           "<Space>a",
-          function()
-            require("telescope.builtin").find_files({
-              hidden = true,
-              no_ignore = true,
-              prompt_title = "Find Files (hidden, no_ignore)",
-            })
-          end,
+          telescope_builtin("find_files", {
+            hidden = true,
+            no_ignore = true,
+            prompt_title = "Find Files (hidden, no_ignore)",
+          }),
           desc = "find_files (hidden, no_ignore)",
         },
         {
@@ -224,28 +87,18 @@ return {
         {
           "<Space>E",
           function()
-            require("telescope").extensions.file_browser.file_browser({
-              hidden = true,
-            })
+            require("telescope").extensions.file_browser.file_browser({ hidden = true })
           end,
           desc = "file_browser",
         },
 
-        {
-          "<Leader>ll",
-          function()
-            require("telescope.builtin").live_grep()
-          end,
-          desc = "live_grep",
-        },
+        { "<Leader>ll", telescope_builtin("live_grep"), desc = "live_grep" },
         {
           "<Leader>lo",
-          function()
-            require("telescope.builtin").live_grep({
-              grep_open_files = true,
-              prompt_title = "Live Grep (Open Files)",
-            })
-          end,
+          telescope_builtin("live_grep", {
+            grep_open_files = true,
+            prompt_title = "Live Grep (Open Files)",
+          }),
           desc = "live_grep (open files)",
         },
         {
@@ -280,20 +133,14 @@ return {
 
         {
           "<Leader>jj",
-          function()
-            require("telescope.builtin").grep_string()
-          end,
+          telescope_builtin("grep_string"),
           mode = { "n", "x" },
           desc = "grep_string",
         },
         {
-          mode = { "n", "x" },
           "<Leader>jo",
-          function()
-            require("telescope.builtin").grep_string({
-              grep_open_files = true,
-            })
-          end,
+          telescope_builtin("grep_string", { grep_open_files = true }),
+          mode = { "n", "x" },
           desc = "grep_string (open files)",
         },
         {
@@ -309,32 +156,22 @@ return {
 
         {
           "<F12>",
-          function()
-            require("telescope.builtin").lsp_references({
-              include_current_line = true,
-              ump_type = "never",
-              fname_width = 50,
-            })
-          end,
+          telescope_builtin("lsp_references", {
+            include_current_line = true,
+            ump_type = "never",
+            fname_width = 50,
+          }),
           desc = "lsp_references",
         },
         {
           "<M-d>",
-          function()
-            require("telescope.builtin").diagnostics({
-              bufnr = 0,
-              prompt_title = "Diagnostics (buffer)",
-            })
-          end,
+          telescope_builtin("diagnostics", {
+            bufnr = 0,
+            prompt_title = "Diagnostics (buffer)",
+          }),
           desc = "diagnostics (buffer)",
         },
-        {
-          "<M-D>",
-          function()
-            require("telescope.builtin").diagnostics()
-          end,
-          desc = "diagnostics (cwd)",
-        },
+        { "<M-D>", telescope_builtin("diagnostics"), desc = "diagnostics (workspace)" },
         {
           "<Leader><M-d>",
           function()
@@ -355,164 +192,46 @@ return {
           end,
           desc = "diagnostics (buf dir)",
         },
-        {
-          "<Leader>DD",
-          function()
-            require("telescope.builtin").diagnostics()
-          end,
-          desc = "diagnostics",
-        },
-        {
-          "<Space>i",
-          function()
-            require("telescope.builtin").lsp_document_symbols()
-          end,
-          desc = "lsp_document_symbols",
-        },
-        {
-          "<Space>I",
-          function()
-            require("telescope.builtin").lsp_dynamic_workspace_symbols()
-          end,
-          desc = "lsp_dynamic_workspace_symbols",
-        },
-        {
-          "<Leader>SS",
-          function()
-            require("telescope.builtin").lsp_workspace_symbols()
-          end,
-          desc = "lsp_workspace_symbols",
-        },
-        {
-          "<Leader>ic",
-          function()
-            require("telescope.builtin").lsp_incoming_calls()
-          end,
-          desc = "lsp_incoming_calls",
-        },
-        {
-          "<Leader>oc",
-          function()
-            require("telescope.builtin").lsp_outgoing_calls()
-          end,
-          desc = "lsp_outgoing_calls",
-        },
-        {
-          "<Leader>li",
-          function()
-            require("telescope.builtin").lsp_implementations()
-          end,
-          desc = "lsp_implementations",
-        },
-        {
-          "<Leader>ld",
-          function()
-            require("telescope.builtin").lsp_definitions()
-          end,
-          desc = "lsp_definitions",
-        },
-        {
-          "<Leader>lt",
-          function()
-            require("telescope.builtin").lsp_type_definitions()
-          end,
-          desc = "lsp_type_definitions",
-        },
+        { "<Space>i", telescope_builtin("lsp_document_symbols"), desc = "lsp_document_symbols" },
+        { "<Space>I", telescope_builtin("lsp_dynamic_workspace_symbols"), desc = "lsp_dynamic_workspace_symbols" },
+        { "<Leader>SS", telescope_builtin("lsp_workspace_symbols"), desc = "lsp_workspace_symbols" },
+        { "<Leader>ic", telescope_builtin("lsp_incoming_calls"), desc = "lsp_incoming_calls" },
+        { "<Leader>oc", telescope_builtin("lsp_outgoing_calls"), desc = "lsp_outgoing_calls" },
+        { "<Leader>li", telescope_builtin("lsp_implementations"), desc = "lsp_implementations" },
+        { "<Leader>ld", telescope_builtin("lsp_definitions"), desc = "lsp_definitions" },
+        { "<Leader>lt", telescope_builtin("lsp_type_definitions"), desc = "lsp_type_definitions" },
 
-        {
-          "<Space>g",
-          function()
-            require("telescope.builtin").git_files()
-          end,
-          desc = "git_files",
-        },
+        { "<Space>g", telescope_builtin("git_files"), desc = "git_files" },
         {
           "<Space>G",
-          function()
-            require("telescope.builtin").git_files({
-              prompt_title = "Git Files (cwd)",
-              use_git_root = false,
-            })
-          end,
+          telescope_builtin("git_files", {
+            prompt_title = "Git Files (cwd)",
+            use_git_root = false,
+          }),
           desc = "git_files (cwd)",
         },
         {
           "<Space>o",
-          function()
-            require("telescope.builtin").git_files({
-              prompt_title = "Git Files (others)",
-              git_command = { "git", "ls-files", "--others", "--exclude-per-directory", ".gitignore" },
-            })
-          end,
+          telescope_builtin("git_files", {
+            prompt_title = "Git Files (others)",
+            git_command = { "git", "ls-files", "--others", "--exclude-per-directory", ".gitignore" },
+          }),
           desc = "git_files (others)",
         },
         {
           "<Space>O",
-          function()
-            require("telescope.builtin").git_files({
-              prompt_title = "Git Files (others, cwd)",
-              use_git_root = false,
-              git_command = { "git", "ls-files", "--others", "--exclude-per-directory", ".gitignore" },
-            })
-          end,
+          telescope_builtin("git_files", {
+            prompt_title = "Git Files (others, cwd)",
+            use_git_root = false,
+            git_command = { "git", "ls-files", "--others", "--exclude-per-directory", ".gitignore" },
+          }),
           desc = "git_files (others, cwd)",
         },
-        {
-          "<Leader>gb",
-          function()
-            require("telescope.builtin").git_branches()
-          end,
-          desc = "git_branches",
-        },
-        {
-          "<Leader>gl",
-          function()
-            require("telescope.builtin").git_commits()
-          end,
-          desc = "git_commits",
-        },
-        {
-          "<Leader>gL",
-          function()
-            require("telescope.builtin").git_bcommits()
-          end,
-          desc = "git_bcommits",
-        },
-        {
-          "<Leader>gs",
-          function()
-            require("telescope.builtin").git_status()
-          end,
-          desc = "git_status",
-        },
-        {
-          "<Leader>st",
-          function()
-            require("telescope.builtin").git_stash()
-          end,
-          desc = "git_stash",
-        },
-        {
-          "<Leader>bi",
-          function()
-            require("telescope.builtin").builtin()
-          end,
-          desc = "builtin",
-        },
-        {
-          "<Leader>tp",
-          function()
-            require("telescope.builtin").pickers()
-          end,
-          desc = "pickers",
-        },
-        {
-          "<Leader>rl",
-          function()
-            require("telescope.builtin").reloader()
-          end,
-          desc = "reloader",
-        },
+        { "<Leader>gb", telescope_builtin("git_branches"), desc = "git_branches" },
+        { "<Leader>gl", telescope_builtin("git_commits"), desc = "git_commits" },
+        { "<Leader>gL", telescope_builtin("git_bcommits"), desc = "git_bcommits" },
+        { "<Leader>gs", telescope_builtin("git_status"), desc = "git_status" },
+        { "<Leader>st", telescope_builtin("git_stash"), desc = "git_stash" },
 
         {
           "<Leader>no",

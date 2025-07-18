@@ -27,8 +27,10 @@ return {
 
         local function make_nav_repeats(opts, cb)
           local nav_next, nav_prev = repeat_move.make_repeatable_move_pair(function()
+            ---@diagnostic disable-next-line: redundant-parameter
             gitsigns.nav_hunk("next", opts or {}, cb)
           end, function()
+            ---@diagnostic disable-next-line: redundant-parameter
             gitsigns.nav_hunk("prev", opts or {}, cb)
           end)
           return {
@@ -89,11 +91,9 @@ return {
         end, { desc = "reset_hunk" })
 
         map("n", "<Space>S", gitsigns.stage_buffer, { desc = "stage_buffer" })
-        map("n", "<M-a>", gitsigns.stage_buffer, { desc = "stage_buffer" })
-        map("n", "<Leader>ss", gitsigns.stage_buffer, { desc = "stage_buffer" })
         map("n", "<Space>Z", gitsigns.reset_buffer, { desc = "reset_buffer" })
-        map("n", "<Leader>ph", gitsigns.preview_hunk, { desc = "preview_hunk" })
         map("n", "<Leader>hp", gitsigns.preview_hunk_inline, { desc = "preview_hunk_inline" })
+        map("n", "<Leader>ph", gitsigns.preview_hunk, { desc = "preview_hunk" })
         map("n", "<Leader>hr", gitsigns.refresh, { desc = "refresh" })
         map("n", "<Leader>SH", gitsigns.show, { desc = "show" })
         map("n", "<M-b>", gitsigns.blame, { desc = "blame" })
@@ -168,7 +168,7 @@ return {
 
       return {
         { "<C-g><C-g>", wf:wrap(), desc = "[Fugitive] :Git (:G)" },
-        { "<C-g><Bslash>", "<Cmd>Git<CR>", desc = "[Fugitive] :Git (:G)" },
+        { "<Leader><C-g>", vim.cmd.Git, desc = "[Fugitive] :Git (:G)" },
         { "<C-g><C-s>", "<Cmd>Git status --short<CR>", desc = "[Fugitive] :Git status --short" },
         { "<C-g>st", wf:wrap("Git status"), desc = "[Fugitive] :Git status" },
         { "<C-g><C-d>", wf:wrap("diff"), desc = "[Fugitive] :Git diff" },
@@ -244,7 +244,6 @@ return {
           ft = "fugitiveblame",
           desc = "[Fugitive] toggle winbar",
         },
-
         { "<C-g>dv", "<Cmd>Gdiffsplit<CR>", desc = "[Fugitive] :Gdiffsplit" },
         { "<C-g>dt", "<Cmd>Git! difftool<CR>", desc = "[Fugitive] :Git! difftool" },
         { "<C-g>gr", "<Cmd>Ggrep ", desc = "[Fugitive] :Ggrep ..." },

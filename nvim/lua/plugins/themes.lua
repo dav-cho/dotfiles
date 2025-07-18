@@ -43,8 +43,8 @@ return {
         extend_background_behind_borders = false,
         styles = { italic = false },
         highlight_groups = {
-          BufferlineTab = { fg = colors.comment },
-          BufferlineTabSelected = { fg = "iris" },
+          BufferlineTab = { fg = colors.comment, bg = colors.bg },
+          BufferlineTabSelected = { fg = "iris", bg = colors.bg },
           BufferLineFill = { bg = colors.bg },
           ColorColumn = { bg = colors.cursor_line },
           Comment = { fg = colors.comment },

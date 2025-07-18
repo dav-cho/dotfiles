@@ -17,7 +17,6 @@ return {
 
       local keymap = {
         preset = "none",
-
         ["<Tab>"] = {
           function(cmp)
             if cmp.is_visible() then
@@ -185,9 +184,6 @@ return {
   },
   {
     "windwp/nvim-autopairs",
-    dependencies = {
-      "nvim-cmp",
-    },
     event = "InsertEnter",
     opts = {
       check_ts = true,
@@ -199,6 +195,7 @@ return {
 
       npairs.setup(opts)
 
+      -- add spaces between parentheses
       local brackets = { { "(", ")" }, { "[", "]" }, { "{", "}" } }
       npairs.add_rules({
         Rule(" ", " ")
@@ -236,162 +233,6 @@ return {
             end),
         })
       end
-    end,
-  },
-  {
-    "hrsh7th/nvim-cmp",
-    enabled = false,
-    dependencies = {
-      { "hrsh7th/cmp-buffer", lazy = true },
-      { "hrsh7th/cmp-path", lazy = true },
-      { "hrsh7th/cmp-cmdline", lazy = true },
-      { "hrsh7th/cmp-nvim-lsp", lazy = true },
-      { "hrsh7th/cmp-nvim-lsp-document-symbol", lazy = true },
-      { "hrsh7th/cmp-nvim-lua", lazy = true },
-      { "hrsh7th/cmp-calc", lazy = true }, -- TODO
-    },
-    event = { "InsertEnter", "CmdlineEnter" },
-    opts = function()
-      local cmp = require("cmp")
-      local luasnip = require("luasnip")
-
-      local has_words_before = function()
-        unpack = unpack or table.unpack
-        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-      end
-
-      cmp.setup.cmdline(":", {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = cmp.config.sources({
-          { name = "path" },
-        }, {
-          { name = "cmdline" },
-        }),
-      })
-
-      cmp.setup.cmdline({ "/", "?" }, {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = {
-          { name = "buffer" },
-          { name = "nvim_lsp_document_symbol" },
-        },
-      })
-
-      return {
-        performance = {
-          fetching_timeout = 100,
-        },
-        preselect = cmp.PreselectMode.None,
-        snippet = {
-          expand = function(args)
-            luasnip.lsp_expand(args.body)
-          end,
-        },
-        window = {
-          completion = {
-            scrolloff = 1,
-          },
-          documentation = {
-            border = "single",
-          },
-        },
-        mapping = {
-          ["<C-j>"] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }), { "i", "c" }),
-          ["<C-k>"] = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), { "i", "c" }),
-          ["<C-n>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "c" }),
-          ["<C-p>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "c" }),
-          ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
-          ["<C-u>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
-          ["<CR>"] = cmp.mapping(cmp.mapping.confirm({ select = true })),
-          ["<M-CR>"] = cmp.mapping(
-            cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
-            { "i", "c" }
-          ),
-          ["<C-_>"] = cmp.mapping(function()
-            if cmp.visible() then
-              cmp.abort()
-            else
-              cmp.complete()
-            end
-          end, { "i", "c" }),
-          ["<Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_next_item()
-            elseif luasnip.locally_jumpable(1) then
-              luasnip.jump(1)
-            elseif has_words_before() then
-              cmp.complete()
-            else
-              fallback()
-            end
-          end, { "i", "s" }),
-          ["<S-Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_prev_item()
-            elseif luasnip.locally_jumpable(-1) then
-              luasnip.jump(-1)
-            else
-              fallback()
-            end
-          end, { "i", "s" }),
-        },
-        formatting = {
-          fields = { "abbr", "kind", "menu" },
-          format = function(entry, vim_item)
-            -- https://github.com/onsails/lspkind.nvim/blob/master/lua/lspkind/init.lua
-            local kind_icons = {
-              Text = "󰉿",
-              Method = "󰆧",
-              Function = "󰊕",
-              Constructor = "",
-              Field = "󰜢",
-              Variable = "󰀫",
-              Class = "󰠱",
-              Interface = "",
-              Module = "",
-              Property = "󰜢",
-              Unit = "󰑭",
-              Value = "󰎠",
-              Enum = "",
-              Keyword = "󰌋",
-              Snippet = "",
-              Color = "󰏘",
-              File = "󰈙",
-              Reference = "󰈇",
-              Folder = "󰉋",
-              EnumMember = "",
-              Constant = "󰏿",
-              Struct = "󰙅",
-              Event = "",
-              Operator = "󰆕",
-              TypeParameter = "",
-            }
-            local menu = {
-              buffer = "[Buffer]",
-              nvim_lsp = "[LSP]",
-              luasnip = "[LuaSnip]",
-              nvim_lua = "[Lua]",
-            }
-
-            vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind)
-            vim_item.menu = (
-              vim_item.menu == nil and (menu[entry.source.name] == nil and "" or menu[entry.source.name])
-            ) or vim_item.menu
-
-            return vim_item
-          end,
-        },
-        sources = cmp.config.sources({
-          { name = "nvim_lsp" },
-          { name = "luasnip" },
-          { name = "nvim_lua" },
-        }, {
-          { name = "buffer" },
-          { name = "path" },
-          { name = "calc" },
-        }),
-      }
     end,
   },
 }
