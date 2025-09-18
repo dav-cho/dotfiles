@@ -235,13 +235,6 @@ return {
             "--float-to-top",
           },
         },
-        prettier = {
-          prepend_args = {
-            "--config-precedence",
-            "prefer-file",
-            "--single-quote",
-          },
-        },
         ruff_fix = {
           append_args = {
             "--ignore=F401", -- unused-import
@@ -259,7 +252,7 @@ return {
         go = { "goimports", "gofmt", stop_after_first = true },
         javascript = { "prettier", "prettierd", stop_after_first = true },
         javascriptreact = { "prettier", "prettierd", stop_after_first = true },
-        json = { "fixjson" },
+        json = { "prettierd", "prettier", "fixjson", stop_after_first = true },
         lua = { "stylua" },
         markdown = { "mdformat", "prettierd" },
         python = { "ruff_fix", "ruff_format", "ruff_organize_imports" },

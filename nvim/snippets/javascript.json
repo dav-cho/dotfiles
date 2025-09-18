@@ -1,6 +1,11 @@
 {
-  "Fancy Console Log": {
+  "Console Log": {
     "prefix": "con",
+    "body": ["console.log($1);"],
+    "description": "Fancy console.log"
+  },
+  "Fancy Console Log": {
+    "prefix": "conf",
     "body": ["console.log('~ $2:', $1);"],
     "description": "Fancy console.log"
   },
