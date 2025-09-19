@@ -22,11 +22,11 @@ ctrl - right : yabai -m space --focus next
 lctrl + lshift - backspace : yabai -m space --focus recent
 
 ## focus window
-ctrl - backspace   : yabai -m window --focus recent
 lctrl + lshift - h : yabai -m window --focus west
 lctrl + lshift - j : yabai -m window --focus south
 lctrl + lshift - k : yabai -m window --focus north
 lctrl + lshift - l : yabai -m window --focus east
+ctrl - backspace   : yabai -m window --focus recent
 
 ## focus stack
 alt - 0x32       : yabai -m window --focus stack.recent
@@ -121,8 +121,8 @@ lctrl + lcmd - w : yabai -m window --display 2 --focus && "$HOME/.config/yabai/f
 lctrl + lcmd - e : yabai -m window --display 3 --focus && "$HOME/.config/yabai/float-center.sh"
 
 ## toggle window float
-## abs dx dy
-## grid landscape portrait
+## - abs dx dy
+## - grid landscape portrait
 lctrl + lcmd - tab   : yabai -m window --toggle float
 
 lctrl + lshift - z : "$HOME/.config/yabai/toggle-float.sh" abs 1133 825   # s
@@ -182,11 +182,12 @@ lctrl + lcmd + lshift - up     : yabai -m window --insert north
 lctrl + lcmd + lshift - right  : yabai -m window --insert east
 
 ## set sub-layer
-lctrl + lalt + lshift - e : yabai -m window --sub-layer above
-lctrl + lalt + lshift - d : yabai -m window --sub-layer normal
-lctrl + lalt + lshift - c : yabai -m window --sub-layer below
-lctrl + lalt + lshift - x : yabai -m window --sub-layer auto
+lctrl + lshift + rshift - e : yabai -m window --sub-layer above
+lctrl + lshift + rshift - d : yabai -m window --sub-layer normal
+lctrl + lshift + rshift - c : yabai -m window --sub-layer below
+lctrl + lshift + rshift - a : yabai -m window --sub-layer auto
 lctrl + lalt + lshift - z : "$HOME/.config/yabai/sub-layer-all.sh" normal
+lctrl + lalt + lcmd + lshift - z : yabai -m query --windows | jq -r 'map(.id)[]' | xargs -I {} yabai -m window {} --sub-layer normal
 
 ## window actions
 lctrl + lcmd + lshift - s : yabai -m window --toggle split
@@ -200,11 +201,16 @@ lctrl + lalt + lshift - 0x1B : yabai -m window --ratio rel:-0.01
 lctrl + lalt + lshift + rshift - 0x18 : yabai -m window --ratio rel:0.005
 lctrl + lalt + lshift + rshift - 0x1B : yabai -m window --ratio rel:-0.005
 
-lctrl + lalt + lcmd - s : yabai -m window --toggle sticky
 lctrl + lalt + lcmd - p : yabai -m window --toggle pip
+lctrl + lalt + lcmd - s : yabai -m window --toggle sticky
+lctrl + lalt + lshift - s : "$HOME/.config/yabai/toggle-sticky.sh"
+
+lalt + lcmd - 0x2A : yabai -m window --scratchpad 'bslash'
+lctrl + lshift - 0x2A : yabai -m window --toggle 'bslash'
+lctrl + lalt + lcmd - 0x2A : yabai -m window --scratchpad
 
 ## window tree actions
-lctrl + lshift + rshift - b    : yabai -m space --balance
+lctrl + lcmd + lshift - b : yabai -m space --balance
 lctrl + lshift + rshift - x    : yabai -m space --mirror x-axis
 lctrl + lshift + rshift - y    : yabai -m space --mirror y-axis
 lctrl + lshift + rshift - 0x1E : yabai -m space --rotate 270      # cycle clockwise
@@ -216,12 +222,18 @@ lctrl + lalt + lshift - return    : yabai -m space --layout bsp
 lctrl + lalt + lshift - 0x2A      : yabai -m space --layout float
 lctrl + lalt + lshift - backspace : yabai -m space --layout stack
 
+lctrl + lalt + lshift - b : space_idx=$(yabai -m query --spaces --space | jq -r '.index') && \
+                              yabai -m config --space $space_idx \
+                              auto_balance $([ "$(yabai -m config --space $space_idx auto_balance)" = "on" ] && echo "off" || echo "on")
+
 ## create/destroy space
-ralt + rcmd + rshift - n : yabai -m space --create && \
-                           idx="$(("$(yabai -m query --spaces --space | jq '.index')" + 1))" && \
-                           yabai -m space --focus "$(yabai -m query --spaces --display | jq 'map(select(."is-native-fullscreen" == false))[-1].index')" && \
-                           yabai -m space --move "$idx"
-ralt + rcmd + rshift - d : yabai -m space --destroy
+ralt + rcmd + rshift - s : yabai -m space --create && \
+                             src="$(yabai -m query --spaces --display | jq 'map(select(."is-native-fullscreen" == false))[-1].index')" && \
+                             dst="$(("$(yabai -m query --spaces --space | jq '.index')" + 1))" && \
+                             yabai -m space --focus "$src" && \
+                             yabai -m space --move "$dst"
+ralt + rcmd + rshift - d : yabai -m space --focus recent && sleep 0.1 && yabai -m space --destroy recent
 
 ## apps
+lctrl + lcmd - return : "$HOME/dotfiles/yabai/alacritty-new-window.sh"
 lctrl + lcmd - space : open -a kitty.app -n --args --single-instance --directory $HOME
