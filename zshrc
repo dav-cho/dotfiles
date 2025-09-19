@@ -54,6 +54,13 @@ command -v uvx >/dev/null && eval "$(uvx --generate-shell-completion zsh)"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh" --no-use
 
+# bun completions
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+[[ -d "$BUN_INSTALL" ]] && export PATH="$BUN_INSTALL/bin:$PATH"
+
 export FZF_DEFAULT_COMMAND="fd --exclude .git --exclude node_modules --exclude __pycache__"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type d"
@@ -62,6 +69,7 @@ export FZF_DEFAULT_OPTS="
   --multi
   --layout=reverse
   --height=100%
+  --history=$HOME/.fzf.zsh.history
   --scrollbar='▐'
   --preview='if [[ -f {1} ]]; then bat --color=always --style=numbers --line-range=:500 {}; else eza --tree --color=always {}; fi'
   --bind='ctrl-\:toggle'
@@ -72,18 +80,25 @@ export FZF_DEFAULT_OPTS="
   --bind='ctrl-b:page-up'
   --bind='ctrl-v:become(nvim {+} < /dev/tty > /dev/tty)'
   --bind='ctrl-y:execute-silent(echo {+} | tr -d '\''\n'\'' | pbcopy)'
-  --bind='ctrl-d:preview-page-down'
-  --bind='ctrl-u:preview-page-up'
   --bind='ctrl-_:toggle-preview'
-  --bind='alt-p:change-preview-window(down|right)'
-  --bind='alt-f:change-prompt(󰈙 > )+reload($FZF_DEFAULT_COMMAND -t f)'
-  --bind='alt-d:change-prompt(󰉋 > )+reload($FZF_DEFAULT_COMMAND -t d)'
-  --bind='alt-.:change-prompt(.> )+reload(fd -t d -u)'
-  --bind='alt-u:change-prompt(> )+reload($FZF_DEFAULT_COMMAND --unrestricted)'
-  --bind='alt-enter:select-all+accept'
+  --bind='ctrl-]:change-preview-window(down|right)'
+  --bind='alt-f:preview-page-down'
+  --bind='alt-d:preview-page-up'
+  --bind='alt-d:preview-half-page-down'
+  --bind='alt-u:preview-half-page-up'
+  --bind='alt-h:first'
+  --bind='alt-l:last'
+  --bind='alt-c:clear-multi'
+  --bind='alt-n:next-history'
+  --bind='alt-p:prev-history'
   --bind='alt-\:toggle-all'
+  --bind='alt-enter:select-all+accept'
   --bind='alt-space:jump'
   --bind='alt-/:jump-accept'
+  --bind='alt-F:change-prompt(󰈙 > )+reload($FZF_DEFAULT_COMMAND -t f)'
+  --bind='alt-D:change-prompt(󰉋 > )+reload($FZF_DEFAULT_COMMAND -t d)'
+  --bind='alt-U:change-prompt(> )+reload($FZF_DEFAULT_COMMAND --unrestricted)'
+  --bind='alt-.:change-prompt(.> )+reload(fd -t d -u)'
 "
 export FZF_CTRL_T_OPTS=""
 export FZF_ALT_C_OPTS="--preview='eza --tree --color=always {}'"
@@ -107,6 +122,13 @@ eval "$(gh copilot alias -- zsh)"
 export PATH="$HOME/.local/share/solana/install/active_release/bin:$PATH"
 
 [[ ! -f ~/.p10k.zsh ]] || . ~/.p10k.zsh
+
+_claude() {
+  if [[ $(nvm current) == "system" ]]; then
+    nvm use default
+  fi
+  command claude "$@"
+}
 
 _fzf_compgen_path() {
   fd -u --follow --strip-cwd-prefix -E ".git" -E "node_modules" -E "__pycache__" . "$1"
@@ -158,7 +180,7 @@ bindkey -e '^V' _nvim
 bindkey -e '^[M' _nvim-man
 bindkey -e '^G' _rfv
 
-bindkey -e '^[[1;3A' atuin-up-search
+bindkey -e '^[r' atuin-up-search
 bindkey -e '^[R' fzf-history-widget
 bindkey -e '^X^I' toggle-fzf-tab
 
@@ -166,13 +188,14 @@ bindkey -e '^[l' autosuggest-execute
 bindkey -e '^[u' backward-kill-line
 bindkey -e '^[e' edit-command-line
 bindkey -e '^[v' quoted-insert
-bindkey -e '^[r' redo
+bindkey -e '^[/' redo
 bindkey -e '^[U' up-case-word
 bindkey -e '^[B' vi-backward-blank-word
 bindkey -e '^[F' vi-forward-blank-word
 
 alias cat="bat"
 alias chrome="open -a 'Google Chrome'"
+alias cld="_claude"
 alias docker-compose="docker compose"
 alias eza="eza --time-style=long-iso"
 alias firefox="open -a 'Firefox'"
@@ -208,4 +231,4 @@ alias l="eza -la --icons=auto"
 alias la="eza -laa --icons=auto"
 alias lg="eza -laaG --icons=auto"
 alias ll="eza -l --icons=auto"
-alias lt="eza --tree -I __pycache__"
+alias lt="eza --tree -I 'node_modules|__pycache__'"
