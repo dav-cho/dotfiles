@@ -43,3 +43,6 @@ hunk-header-decoration-style = blue
 
 [url "git@github.com:"]
 insteadOf = "https://github.com/"
+
+[includeIf "gitdir:~/alloy/"]
+path = ~/dotfiles/work/git/gitconfig

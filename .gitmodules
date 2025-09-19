@@ -1,3 +1,6 @@
 [submodule "settings"]
 	path = settings
 	url = git@github.com:dav-cho/settings.git
+[submodule "work"]
+	path = work
+	url = git@github.com:dav-cho/dotfiles-alloy.git

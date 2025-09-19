@@ -232,3 +232,5 @@ alias la="eza -laa --icons=auto"
 alias lg="eza -laaG --icons=auto"
 alias ll="eza -l --icons=auto"
 alias lt="eza --tree -I 'node_modules|__pycache__'"
+
+[[ -s "$HOME/dotfiles/work/zshrc" ]] && source "$HOME/dotfiles/work/zshrc"
