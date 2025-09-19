@@ -1,0 +1,7 @@
+{
+  "Print": {
+    "prefix": "p",
+    "body": ["println!(\"$1\");"],
+    "description": "Simple print"
+  }
+}
