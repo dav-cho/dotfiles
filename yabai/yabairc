@@ -21,6 +21,9 @@ yabai -m config \
   window_gap '10'
 
 yabai -m rule --add \
+  sub-layer="normal"
+
+yabai -m rule --add \
   app!="^(Alacritty|kitty|Google Chrome|Firefox)$" \
   manage=off
 
@@ -35,11 +38,19 @@ yabai -m rule --add \
   manage=off
 
 yabai -m signal --add \
-  event=window_focused \
-  action="yabai -m window $YABAI_WINDOW_ID --sub-layer normal"
+  event=window_created \
+  action='yabai -m window $YABAI_WINDOW_ID --sub-layer normal'
 
 yabai -m signal --add \
   event=window_minimized \
-  action="yabai -m query --windows --window \$YABAI_WINDOW_ID | \
-            jq -e '.\"is-floating\" == false' && \
-            yabai -m window \$YABAI_WINDOW_ID --toggle float"
+  action='yabai -m query --windows --window $YABAI_WINDOW_ID |
+          jq -e '\''."is-floating" == false'\'' >/dev/null &&
+          yabai -m window $YABAI_WINDOW_ID --toggle float'
+
+yabai -m signal --add \
+  event=window_deminimized \
+  action='yabai -m query --spaces --space |
+          jq -e '\''.type == "stack"'\'' >/dev/null &&
+          yabai -m query --windows --window $YABAI_WINDOW_ID |
+          jq -e '\''."is-floating" == true'\'' >/dev/null &&
+          yabai -m window $YABAI_WINDOW_ID --toggle float'
