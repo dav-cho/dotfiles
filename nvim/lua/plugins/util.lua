@@ -115,6 +115,24 @@ return {
     },
   },
   {
+    "mbbill/undotree",
+    keys = {
+      {
+        "<Leader>uu",
+        function()
+          vim.cmd.UndotreeToggle()
+          vim.cmd.UndotreeFocus()
+        end,
+        desc = "[Undotree] Toggle + focus",
+      },
+      { "<Leader>ut", vim.cmd.UndotreeToggle, desc = "[Undotree] Toggle" },
+    },
+    config = function()
+      vim.g.undotree_WindowLayout = 2
+      vim.g.undotree_ShortIndicators = 1
+    end,
+  },
+  {
     "stevearc/oil.nvim",
     dependencies = { "nvim-web-devicons" },
     cmd = "Oil",
@@ -337,14 +355,14 @@ return {
         desc = "[fzf-lua] files",
       },
       {
-        "<Space><Space>qf",
+        "<Leader>qq",
         function()
           require("fzf-lua").quickfix()
         end,
         desc = "[fzf-lua] quickfix",
       },
       {
-        "<Space><Space>qF",
+        "<Leader>qs",
         function()
           require("fzf-lua").quickfix_stack()
         end,

@@ -1,12 +1,12 @@
 vim.api.nvim_create_autocmd("FileType", {
-  group = vim.api.nvim_create_augroup("GlobalOptions", {}),
+  group = vim.api.nvim_create_augroup("GlobalOptions", { clear = true }),
   callback = function()
     vim.opt.formatoptions:remove("o")
   end,
 })
 
 vim.api.nvim_create_autocmd("TextYankPost", {
-  group = vim.api.nvim_create_augroup("HighlightYank", {}),
+  group = vim.api.nvim_create_augroup("HighlightYank", { clear = true }),
   callback = function()
     vim.highlight.on_yank({
       higroup = "IncSearch",
@@ -15,9 +15,9 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   end,
 })
 
-vim.api.nvim_create_augroup("RelativeNumberToggle", {})
+local rel_num_toggle = vim.api.nvim_create_augroup("RelativeNumberToggle", { clear = true })
 vim.api.nvim_create_autocmd({ "InsertLeave", "BufEnter", "WinEnter", "FocusGained" }, {
-  group = "RelativeNumberToggle",
+  group = rel_num_toggle,
   callback = function()
     if vim.api.nvim_get_option_value("number", {}) then
       vim.opt.relativenumber = true
@@ -25,7 +25,7 @@ vim.api.nvim_create_autocmd({ "InsertLeave", "BufEnter", "WinEnter", "FocusGaine
   end,
 })
 vim.api.nvim_create_autocmd({ "InsertEnter", "BufLeave", "WinLeave", "FocusLost" }, {
-  group = "RelativeNumberToggle",
+  group = rel_num_toggle,
   callback = function()
     if vim.api.nvim_get_option_value("relativenumber", {}) then
       vim.opt.relativenumber = false
@@ -34,7 +34,7 @@ vim.api.nvim_create_autocmd({ "InsertEnter", "BufLeave", "WinLeave", "FocusLost"
 })
 
 vim.api.nvim_create_autocmd("FileType", {
-  group = vim.api.nvim_create_augroup("CloseWithQ", {}),
+  group = vim.api.nvim_create_augroup("CloseWithQ", { clear = true }),
   pattern = {
     "fugitive",
     "fugitiveblame",
@@ -54,7 +54,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 vim.api.nvim_create_autocmd("TermOpen", {
-  group = vim.api.nvim_create_augroup("TermBufOpts", {}),
+  group = vim.api.nvim_create_augroup("TermBufOpts", { clear = true }),
   pattern = "term://*",
   callback = function()
     vim.opt_local.number = false
@@ -66,7 +66,7 @@ vim.api.nvim_create_autocmd("TermOpen", {
 })
 
 vim.api.nvim_create_autocmd("FileType", {
-  group = vim.api.nvim_create_augroup("DockerComposeYaml", {}),
+  group = vim.api.nvim_create_augroup("DockerComposeYaml", { clear = true }),
   pattern = { "yaml" },
   callback = function(ev)
     local filename = vim.fn.expand("#" .. ev.buf .. ":t")

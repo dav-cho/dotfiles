@@ -11,9 +11,6 @@ return {
         delay = 0,
       },
       current_line_blame_formatter = " <author> <author_time:%Y-%m-%d %I:%M %p> <abbrev_sha> <summary>",
-      diff_opts = {
-        linematch = 1,
-      },
       on_attach = function(bufnr)
         local gitsigns = require("gitsigns")
         local repeat_move = require("nvim-treesitter.textobjects.repeatable_move")
@@ -27,10 +24,10 @@ return {
 
         local function make_nav_repeats(opts, cb)
           local nav_next, nav_prev = repeat_move.make_repeatable_move_pair(function()
-            ---@diagnostic disable-next-line: redundant-parameter
+            ---@diagnostic disable-next-line: param-type-mismatch
             gitsigns.nav_hunk("next", opts or {}, cb)
           end, function()
-            ---@diagnostic disable-next-line: redundant-parameter
+            ---@diagnostic disable-next-line: param-type-mismatch
             gitsigns.nav_hunk("prev", opts or {}, cb)
           end)
           return {
@@ -174,9 +171,9 @@ return {
         { "<C-g><C-d>", wf:wrap("diff"), desc = "[Fugitive] :Git diff" },
         {
           "<C-g><C-l>",
-          wf:wrap("log --oneline"),
+          wf:wrap("log --pretty='format:%C(auto)%h %s %C(dim blue)(%ar)' --date='format:%Y-%m-%d %H:%M:%S'"),
           mode = { "n", "x" },
-          desc = "[Fugitive] :Git log --oneline",
+          desc = "[Fugitive] :Git log (oneline, custom format, relative date)",
         },
         { "<C-g>lo", wf:wrap("log"), mode = { "n", "x" }, desc = "[Fugitive] :Git log" },
         { "<C-g>lb", wf:wrap("log %"), mode = { "n", "x" }, desc = "[Fugitive] :Git log %" },

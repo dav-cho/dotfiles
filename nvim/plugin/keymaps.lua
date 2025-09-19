@@ -10,8 +10,8 @@ map({ "n", "v" }, "<Space><Tab>", "<C-^>", { desc = "Alternate file (`<C-^>`)" }
 
 map("n", "<Space>w", "<Cmd>silent! w<CR>", { desc = "Write" })
 map("n", "<Space>W", "<Cmd>silent! wa<CR>", { desc = "Write All" })
-map({ "n", "v" }, "<C-q><C-q>", "<Cmd>qa<CR>", { desc = "Quit all" })
-map({ "n", "v" }, "<M-q><M-q>", "<Cmd>qa!<CR>", { desc = "Quit all (force)" })
+map({ "n", "v" }, "<C-q>", "<Cmd>qa<CR>", { desc = "Quit all" })
+map({ "n", "v" }, "<M-Q>", "<Cmd>qa!<CR>", { desc = "Quit all (force)" })
 
 map({ "n", "v" }, "<C-c>", "<Cmd>wincmd c<CR>", { desc = ":wincmd c" })
 map({ "n", "v" }, "<C-h>", [[<Cmd>exe v:count1 . "wincmd h"<CR>]], { desc = ":wincmd h" })
@@ -78,6 +78,8 @@ map("n", "<Leader>yr", [[<Cmd>let @+=expand("%:~:.")<CR>]], { desc = "Yank relat
 map("n", "<Leader>ya", [[<Cmd>let @+=fnamemodify(expand("%:p"), ":~")<CR>]], { desc = "Yank abbreviated file path" })
 map("n", "<Leader>yA", [[<Cmd>let @+=expand("%:p")<CR>]], { desc = "Yank absolute file path" })
 
+map("n", "<Leader>tt", ":vert term<CR>", { desc = "Terminal" })
+
 map("n", "<Space>q", "<Cmd>copen<CR>", { desc = "Open qflist" })
 map("n", "<Space>-", "<Cmd>cprevious<CR>", { desc = "qflist previous" })
 map("n", "<Space>=", "<Cmd>cnext<CR>", { desc = "qflist next" })
@@ -100,5 +102,14 @@ end, { desc = "Redraw cursor line bottom 1/5" })
 
 map("n", "<Leader>ms", function()
   vim.cmd("mksession!")
-  vim.notify(string.format("Session Saved: %s/Session.vim", vim.fn.getcwd()))
+  print(string.format("Session Saved: %s/Session.vim", vim.fn.getcwd()))
 end, { silent = true, desc = "[Sessions] mksession" })
+
+map("n", "<Leader>ve", function()
+  vim.api.nvim_set_option_value(
+    "virtualedit",
+    #vim.api.nvim_get_option_value("virtualedit", { scope = "local" }) > 0 and "" or "block",
+    { scope = "local" }
+  )
+end, { desc = "toggle virtualedit=block" })
+map("n", "<Leader>lz", "<Cmd>Lazy<CR>", { desc = "Lazy" })

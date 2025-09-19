@@ -69,7 +69,7 @@ return {
     lazy = true,
     keys = {
       {
-        "<Leader><Leader>",
+        "<M-Bslash>",
         function()
           require("dav.scratch").toggle()
         end,

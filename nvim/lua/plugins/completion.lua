@@ -33,8 +33,15 @@ return {
           "fallback",
         },
         ["<S-Tab>"] = {
-          "snippet_backward",
-          "insert_prev",
+          function(cmp)
+            if cmp.is_visible() then
+              cmp.insert_prev()
+              return true
+            elseif luasnip.locally_jumpable(-1) then
+              cmp.snippet_backward()
+              return true
+            end
+          end,
           "fallback",
         },
         ["<CR>"] = { "select_and_accept", "fallback" },
