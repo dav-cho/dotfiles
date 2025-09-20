@@ -41,6 +41,20 @@ yabai -m signal --add \
   event=window_created \
   action='yabai -m window $YABAI_WINDOW_ID --sub-layer normal'
 
+# yabai -m signal --add \
+#   event=window_moved \
+#   action='yabai -m window $YABAI_WINDOW_ID --sub-layer normal'
+
+# yabai -m signal --add \
+#   event=window_focused \
+#   action='yabai -m window $YABAI_WINDOW_ID --sub-layer normal'
+
+# yabai -m signal --add \
+#   event=window_focused \
+#   action='yabai -m query --windows --window $YABAI_WINDOW_ID |
+#           jq -e '\''."is-sticky" == false'\'' >/dev/null &&
+#           yabai -m window $YABAI_WINDOW_ID --sub-layer normal'
+
 yabai -m signal --add \
   event=window_minimized \
   action='yabai -m query --windows --window $YABAI_WINDOW_ID |

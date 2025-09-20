@@ -53,16 +53,26 @@ command -v uvx >/dev/null && eval "$(uvx --generate-shell-completion zsh)"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh" --no-use
+# [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
 
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
+# export PATH="$BUN_INSTALL/bin:$PATH"
 [[ -d "$BUN_INSTALL" ]] && export PATH="$BUN_INSTALL/bin:$PATH"
 
+# nvm() {
+#   unset -f nvm
+#   [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
+#   nvm "$@"
+# }
+
+# export FZF_DEFAULT_COMMAND="fd --strip-cwd-prefix --unrestricted --exclude .git --exclude node_modules --exclude __pycache__"
 export FZF_DEFAULT_COMMAND="fd --exclude .git --exclude node_modules --exclude __pycache__"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+# export FZF_ALT_C_COMMAND="fd --type d --strip-cwd-prefix --unrestricted --exclude .git --exclude node_modules --exclude __pycache__"
 export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type d"
 export FZF_DEFAULT_OPTS="
   --cycle
@@ -122,6 +132,7 @@ eval "$(gh copilot alias -- zsh)"
 export PATH="$HOME/.local/share/solana/install/active_release/bin:$PATH"
 
 [[ ! -f ~/.p10k.zsh ]] || . ~/.p10k.zsh
+# eval "$(starship init zsh)"
 
 _claude() {
   if [[ $(nvm current) == "system" ]]; then
@@ -166,6 +177,16 @@ _nvim-man() {
   zle accept-line
 }
 
+# _pipe-delta() {
+#   BUFFER+=" | delta"
+#   zle accept-line
+# }
+
+# _pipe-fzf() {
+#   BUFFER+=" | fzf"
+#   zle accept-line
+# }
+
 _rfv() {
   rfv
 }
@@ -178,16 +199,22 @@ zle -N _rfv
 
 bindkey -e '^V' _nvim
 bindkey -e '^[M' _nvim-man
+# bindkey -e '^[D' _pipe-delta
+# bindkey -e '^[F' _pipe-fzf
 bindkey -e '^G' _rfv
 
+# bindkey -e '^[[1;3A' atuin-up-search
 bindkey -e '^[r' atuin-up-search
 bindkey -e '^[R' fzf-history-widget
 bindkey -e '^X^I' toggle-fzf-tab
 
+# bindkey -e '^[ ' autosuggest-execute
 bindkey -e '^[l' autosuggest-execute
+# bindkey -e '^[;' autosuggest-execute
 bindkey -e '^[u' backward-kill-line
 bindkey -e '^[e' edit-command-line
 bindkey -e '^[v' quoted-insert
+# bindkey -e '^[r' redo
 bindkey -e '^[/' redo
 bindkey -e '^[U' up-case-word
 bindkey -e '^[B' vi-backward-blank-word
@@ -232,5 +259,10 @@ alias la="eza -laa --icons=auto"
 alias lg="eza -laaG --icons=auto"
 alias ll="eza -l --icons=auto"
 alias lt="eza --tree -I 'node_modules|__pycache__'"
+# alias lt='eza --tree -I '\''node_modules|__pycache__'\'
 
 [[ -s "$HOME/dotfiles/work/zshrc" ]] && source "$HOME/dotfiles/work/zshrc"
+
+# if [[ "$USER" == "dcho" ]]; then
+#   source "$HOME/dotfiles/cm/zshrc"
+# fi
