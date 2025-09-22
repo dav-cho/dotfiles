@@ -4,12 +4,9 @@ return {
     dependencies = {
       "mason.nvim",
       "mason-lspconfig.nvim",
-      "none-ls.nvim",
     },
     event = { "BufRead", "BufNewFile" },
     config = function()
-      local lspconfig = require("lspconfig")
-
       local diagnostic_signs = {
         text = {
           [vim.diagnostic.severity.ERROR] = "",
@@ -33,8 +30,6 @@ return {
           border = "rounded",
         },
       })
-
-      local capabilities = require("blink.cmp").get_lsp_capabilities()
 
       local function get_python_path()
         local active_venv = os.getenv("VIRTUAL_ENV")
@@ -97,21 +92,19 @@ return {
         },
       }
 
+      local capabilities = require("blink.cmp").get_lsp_capabilities()
+
       for server, config in pairs(servers) do
-        lspconfig[server].setup(vim.tbl_deep_extend("force", {
+        vim.lsp.config[server] = vim.tbl_deep_extend("force", {
           capabilities = capabilities,
-        }, config))
+        }, config)
+
+        vim.lsp.enable(server)
       end
 
       vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup("my.lsp", {}),
         callback = function(ev)
-          local repeat_move = require("nvim-treesitter.textobjects.repeatable_move")
-
-          local diagnostic_jump_next, diagnostic_jump_prev = repeat_move.make_repeatable_move_pair(function()
-            vim.diagnostic.jump({ count = vim.v.count1, float = true })
-          end, function()
-            vim.diagnostic.jump({ count = -vim.v.count1, float = true })
-          end)
 
           local buf_map = function(mode, lhs, rhs, options)
             options = vim.tbl_deep_extend("force", { buffer = ev.buf }, options or {})
@@ -125,6 +118,15 @@ return {
             end
           end
 
+          local diagnostic_jump_next, diagnostic_jump_prev = require("nvim-treesitter.textobjects.repeatable_move").make_repeatable_move_pair(
+            function()
+              vim.diagnostic.jump({ count = vim.v.count1, float = true })
+            end,
+            function()
+              vim.diagnostic.jump({ count = -vim.v.count1, float = true })
+            end
+          )
+
           buf_map("n", "<Leader>td", function()
             vim.diagnostic.enable(not vim.diagnostic.is_enabled())
           end, { desc = "toggle lsp diagnostics" })
@@ -132,12 +134,8 @@ return {
           buf_map("n", "]d", diagnostic_jump_next, { desc = "vim.diagnostic.goto_next" })
           buf_map("n", "<Leader>lr", vim.cmd.LspRestart, { desc = "LspRestart" })
           buf_map("n", "gl", vim.diagnostic.open_float, { desc = "vim.diagnostic.open_float" })
-          buf_map("n", "gh", function()
-            vim.lsp.buf.hover({ focusable = true, border = "rounded" })
-          end, { desc = "vim.lsp.buf.hover" })
           buf_map("n", "gd", vim.lsp.buf.definition)
           buf_map("n", "gD", vim.lsp.buf.type_definition, { desc = "vim.lsp.buf.type_definition" })
-          buf_map("n", "gr", vim.lsp.buf.references)
           buf_map({ "n", "i" }, "<M-s>", function()
             vim.lsp.buf.signature_help({ focusable = true, focus = false, border = "rounded" })
           end, { desc = "vim.lsp.buf.signature_help" })
@@ -160,7 +158,7 @@ return {
           buf_map("n", "<Leader>gx", gd_cmd("wincmd s"), { desc = "vim.lsp.buf.definition() split redraw top" })
           buf_map("n", "<Leader>gt", gd_cmd("tab split"), { desc = "vim.lsp.buf.definition() tab split redraw top" })
 
-          local client = vim.lsp.get_client_by_id(ev.data.client_id)
+          local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
           if not client then
             return
           end
