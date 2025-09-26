@@ -7,6 +7,8 @@ return {
     },
     event = { "BufRead", "BufNewFile" },
     config = function()
+      -- local lspconfig = require("lspconfig")
+
       local diagnostic_signs = {
         text = {
           [vim.diagnostic.severity.ERROR] = "",
@@ -95,6 +97,9 @@ return {
       local capabilities = require("blink.cmp").get_lsp_capabilities()
 
       for server, config in pairs(servers) do
+        -- lspconfig[server].setup(vim.tbl_deep_extend("force", {
+        --   capabilities = capabilities,
+        -- }, config))
         vim.lsp.config[server] = vim.tbl_deep_extend("force", {
           capabilities = capabilities,
         }, config)
@@ -103,7 +108,7 @@ return {
       end
 
       vim.api.nvim_create_autocmd("LspAttach", {
-        group = vim.api.nvim_create_augroup("my.lsp", {}),
+        group = vim.api.nvim_create_augroup("my.lsp", {}), -- TODO
         callback = function(ev)
 
           local buf_map = function(mode, lhs, rhs, options)
@@ -118,6 +123,7 @@ return {
             end
           end
 
+          -- TODO: treesitter main
           local diagnostic_jump_next, diagnostic_jump_prev = require("nvim-treesitter.textobjects.repeatable_move").make_repeatable_move_pair(
             function()
               vim.diagnostic.jump({ count = vim.v.count1, float = true })
@@ -130,12 +136,18 @@ return {
           buf_map("n", "<Leader>td", function()
             vim.diagnostic.enable(not vim.diagnostic.is_enabled())
           end, { desc = "toggle lsp diagnostics" })
+          -- TODO: treesitter main
           buf_map("n", "[d", diagnostic_jump_prev, { desc = "vim.diagnostic.goto_prev" })
           buf_map("n", "]d", diagnostic_jump_next, { desc = "vim.diagnostic.goto_next" })
           buf_map("n", "<Leader>lr", vim.cmd.LspRestart, { desc = "LspRestart" })
           buf_map("n", "gl", vim.diagnostic.open_float, { desc = "vim.diagnostic.open_float" })
+          -- TODO: need?
+          buf_map("n", "gh", function()
+            vim.lsp.buf.hover({ focusable = true, border = "rounded" })
+          end, { desc = "vim.lsp.buf.hover" })
           buf_map("n", "gd", vim.lsp.buf.definition)
           buf_map("n", "gD", vim.lsp.buf.type_definition, { desc = "vim.lsp.buf.type_definition" })
+          -- buf_map("n", "gr", vim.lsp.buf.references)
           buf_map({ "n", "i" }, "<M-s>", function()
             vim.lsp.buf.signature_help({ focusable = true, focus = false, border = "rounded" })
           end, { desc = "vim.lsp.buf.signature_help" })
@@ -158,6 +170,8 @@ return {
           buf_map("n", "<Leader>gx", gd_cmd("wincmd s"), { desc = "vim.lsp.buf.definition() split redraw top" })
           buf_map("n", "<Leader>gt", gd_cmd("tab split"), { desc = "vim.lsp.buf.definition() tab split redraw top" })
 
+          -- TODO
+          -- local client = vim.lsp.get_client_by_id(ev.data.client_id)
           local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
           if not client then
             return
@@ -233,6 +247,13 @@ return {
             "--float-to-top",
           },
         },
+        -- prettier = {
+        --   prepend_args = {
+        --     "--config-precedence",
+        --     "prefer-file",
+        --     "--single-quote",
+        --   },
+        -- },
         ruff_fix = {
           append_args = {
             "--ignore=F401", -- unused-import
@@ -250,6 +271,7 @@ return {
         go = { "goimports", "gofmt", stop_after_first = true },
         javascript = { "prettier", "prettierd", stop_after_first = true },
         javascriptreact = { "prettier", "prettierd", stop_after_first = true },
+        -- json = { "fixjson" },
         json = { "prettierd", "prettier", "fixjson", stop_after_first = true },
         lua = { "stylua" },
         markdown = { "mdformat", "prettierd" },
@@ -342,6 +364,7 @@ return {
     "RRethy/vim-illuminate",
     event = "LspAttach",
     config = function(_, opts)
+      -- TODO: treesitter main
       local goto_next_ref, goto_prev_ref = require("nvim-treesitter.textobjects.repeatable_move").make_repeatable_move_pair(
         function()
           require("illuminate").goto_next_reference()
