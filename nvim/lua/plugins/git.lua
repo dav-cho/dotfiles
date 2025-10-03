@@ -1,7 +1,7 @@
 return {
   {
     "lewis6991/gitsigns.nvim",
-    event = "LspAttach",
+    event = "BufRead",
     opts = {
       attach_to_untracked = true,
       trouble = false,
