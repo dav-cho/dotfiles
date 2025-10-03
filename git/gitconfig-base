@@ -1,7 +1,3 @@
-[user]
-name = dcho
-email = dcho.null@gmail.com
-
 [core]
 editor = nvim
 pager = delta

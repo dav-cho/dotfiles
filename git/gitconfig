@@ -1,0 +1,6 @@
+[include]
+path = ~/dotfiles/git/gitconfig-base
+path = ~/dotfiles/git/gitconfig-partial
+
+[url "git@github.com:"]
+insteadOf = "https://github.com/"

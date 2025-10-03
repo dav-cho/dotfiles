@@ -63,7 +63,7 @@ function symlink() {
 CONFIG="$HOME/.config"
 DOTFILES="$HOME/dotfiles"
 
-symlink "$DOTFILES/gitconfig" "$HOME/.gitconfig"
+symlink "$DOTFILES/git/gitconfig" "$HOME/.gitconfig"
 symlink "$DOTFILES/p10k.zsh" "$HOME/.p10k.zsh"
 symlink "$DOTFILES/tmux.conf" "$HOME/.tmux.conf"
 symlink "$DOTFILES/vimrc" "$HOME/.vimrc"
@@ -94,6 +94,10 @@ KITTY="/Applications/kitty.app/Contents/MacOS/kitty"
 if [[ -d "$KITTY" ]]; then
     symlink "$KITTY/kitty" "$HOME/.local/bin"
     symlink "$KITTY/kitten" "$HOME/.local/bin"
+fi
+
+if [[ -f "$HOME/._work" ]]; then
+  symlink "$DOTFILES/work/git/gitconfig" "$HOME/.gitconfig"
 fi
 
 touch .hushlogin
