@@ -97,7 +97,7 @@ if [[ -d "$KITTY" ]]; then
 fi
 
 if [[ -f "$HOME/._work" ]]; then
-  symlink "$DOTFILES/work/git/gitconfig" "$HOME/.gitconfig"
+    source "$DOTFILES/work/install"
 fi
 
 touch .hushlogin

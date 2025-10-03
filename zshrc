@@ -202,6 +202,8 @@ alias firefox="open -a 'Firefox'"
 alias ghco="gh copilot"
 alias mann="MANPAGER='nvim +Man! +colorscheme\ tokyonight' man"
 alias nvmd="nvm use default"
+alias nvml="nvm use --lts"
+alias nvms="nvm use system"
 alias rg="rg --smart-case"
 
 alias gcnn!='git commit --verbose --no-edit --amend --date=now'
@@ -233,4 +235,4 @@ alias lg="eza -laaG --icons=auto"
 alias ll="eza -l --icons=auto"
 alias lt="eza --tree -I 'node_modules|__pycache__'"
 
-[[ -s "$HOME/dotfiles/work/zshrc" ]] && source "$HOME/dotfiles/work/zshrc"
+[[ -e "$HOME/._work" && -s "$HOME/dotfiles/work/zshrc" ]] && source "$HOME/dotfiles/work/zshrc"
