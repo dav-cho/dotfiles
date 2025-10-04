@@ -30,3 +30,12 @@ opt.tabstop = 2
 opt.termguicolors = true
 opt.undofile = true
 opt.wrap = false
+
+-- opt.nrformats:append("alpha", "unsigned")
+
+-- TODO: shada=!,'100,<50,s10,h
+--     default=!,'100,<50,s10,h
+-- opt.shada:append({ "" })
+
+-- opt.guicursor="n-v-c-sm:block-Cursor,i-ci-ve:ver25-blinkon500-blinkoff500,r-cr-o:hor20,t:block-blinkon500-blinkoff500-TermCursor"
+-- opt.guicursor="n-v-c-sm:block-Cursor,i-ci-ve:ver25,r-cr-o:hor20,t:block-blinkon500-blinkoff500-TermCursor,a:blinkwait100-blinkon500-blinkoff500"

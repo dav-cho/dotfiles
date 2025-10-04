@@ -112,6 +112,27 @@ return {
       dap.listeners.after.event_initialized["dapui_config"] = dapui.open
       dap.listeners.before.event_terminated["dapui_config"] = dapui.close
       dap.listeners.before.event_exited["dapui_config"] = dapui.close
+
+      dap.adapters["pwa-node"] = {
+        type = "server",
+        host = "localhost",
+        port = "${port}",
+        executable = {
+          command = "node",
+          -- 💀 Make sure to update this path to point to your installation
+          args = { "$HOME/.local/share/nvim/dap/js-debug/src/dapDebugServer.js", "${port}" },
+        },
+      }
+
+      dap.configurations["javascript"] = {
+        {
+          type = "pwa-node",
+          request = "launch",
+          name = "Launch file",
+          program = "${file}",
+          cwd = "${workspaceFolder}",
+        },
+      }
     end,
   },
   {
@@ -191,6 +212,41 @@ return {
       },
     },
   },
+
+  -- WIP
+  {
+    "js-debug-dap",
+    dependencies = { "mfussenegger/nvim-dap" },
+    virtual = true,
+    lazy = true,
+    config = function()
+      local dap = require("dap")
+
+      -- require("dap").adapters["pwa-node"] = {
+      dap.adapters["pwa-node"] = {
+        type = "server",
+        host = "localhost",
+        port = "${port}",
+        executable = {
+          command = "node",
+          -- 💀 Make sure to update this path to point to your installation
+          args = { "/path/to/js-debug/src/dapDebugServer.js", "${port}" },
+        },
+      }
+
+      -- require("dap").configurations.javascript = {
+      dap.configurations.javascript = {
+        {
+          type = "pwa-node",
+          request = "launch",
+          name = "Launch file",
+          program = "${file}",
+          cwd = "${workspaceFolder}",
+        },
+      }
+    end,
+  },
+
   {
     "mfussenegger/nvim-dap-python",
     lazy = true,
