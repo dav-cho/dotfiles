@@ -14,6 +14,44 @@ return {
     "nvim-lualine/lualine.nvim",
     event = "UIEnter",
     opts = function()
+      ---@param path string
+      local function copy_and_echo(path)
+        vim.fn.system(string.format('echo "%s" | pbcopy', path))
+        vim.api.nvim_echo({ { path, "Directory" } }, false, {})
+      end
+
+      local work = {}
+
+      function work:is_work_path()
+        local work_dir = os.getenv("WORK_DIR")
+        if work_dir then
+          self.work_path = vim.fn.fnamemodify(work_dir, ":~")
+          return vim.fn.getcwd():sub(1, #work_dir) == work_dir
+        end
+        return false
+      end
+
+      ---@param branch string
+      function work:get_url(branch)
+        if self:is_work_path() then
+          local base_url = os.getenv("WORK_JIRA_URL")
+          if base_url then
+            return base_url .. "/browse/" .. branch:match("^.-/([^/]+)/")
+          end
+        end
+        return nil
+      end
+
+      ---@param branch string
+      function work:open_url(branch)
+        if self:is_work_path() then
+          local url = work:get_url(branch)
+          if url then
+            vim.ui.open(url)
+          end
+        end
+      end
+
       return {
         options = {
           component_separators = "",
@@ -25,16 +63,20 @@ return {
           lualine_b = {
             {
               "branch",
-              fmt = function(str)
-                if vim.o.columns < 160 then
-                  return str:match("^%u+%-%d+") or str
+              fmt = function(branch)
+                if work:is_work_path() then
+                  branch = branch:match("^.-/([^/]+)/") or branch
                 end
-                return str
+                return branch
               end,
               on_click = function(_, btn, _)
                 local branch = vim.fn.system("git branch --show-current"):gsub("%s+", "")
                 if btn == "l" then
                   print(branch)
+                elseif btn == "m" then
+                  work:open_url(branch)
+                elseif btn == "r" then
+                  copy_and_echo(branch)
                 end
               end,
             },
@@ -59,14 +101,22 @@ return {
           lualine_c = {
             {
               "filename",
-              path = 1,
+              path = 3, -- absolute with `~`
+              fmt = function(path)
+                path = vim.fn.fnamemodify(path, ":.")
+                if work:is_work_path() and vim.o.columns >= 170 then
+                  local cwd = vim.fn.getcwd():gsub(vim.fn.expand("$HOME"), "~"):match("([^/]+)$")
+                  path = ("%s/%s"):format(cwd, path)
+                end
+                return path
+              end,
               on_click = function(_, btn, _)
-                local path = vim.fn.expand("%:~")
-                if btn == "r" then
-                  vim.fn.system(string.format('echo "%s" | pbcopy', path))
-                  vim.api.nvim_echo({ { path, "Directory" } }, false, {})
-                else
-                  print(path)
+                if btn == "l" then
+                  print(vim.fn.expand("%:~"))
+                elseif btn == "m" then
+                  copy_and_echo(vim.fn.expand("%:~"))
+                elseif btn == "r" then
+                  copy_and_echo(vim.fn.expand("%:."))
                 end
               end,
             },
@@ -74,7 +124,16 @@ return {
           lualine_x = {
             {
               function()
-                return vim.fn.getcwd():gsub(vim.fn.expand("$HOME"), "~")
+                return vim.fn.fnamemodify(vim.fn.getcwd(), ":~")
+              end,
+              fmt = function(path)
+                if work:is_work_path() then
+                  path = path:gsub(work.work_path .. "/", "")
+                  if vim.o.columns < 170 then
+                    path = vim.fn.fnamemodify(path, ":t")
+                  end
+                end
+                return path
               end,
               cond = function()
                 return vim.o.columns >= 160
@@ -531,8 +590,8 @@ return {
     opts = {
       enabled = false,
       indent = {
-        char = "▏",  -- or "│"
-        tab_char = "▏",  -- or "│"
+        char = "▏", -- or "│"
+        tab_char = "▏", -- or "│"
       },
       scope = { enabled = false },
       exclude = {
