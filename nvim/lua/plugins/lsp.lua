@@ -233,6 +233,11 @@ return {
             "--float-to-top",
           },
         },
+        prettierd = {
+          env = {
+            PRETTIERD_DEFAULT_CONFIG = vim.fn.expand("$HOME/dotfiles/nvim/utils/prettierrc.json"),
+          },
+        },
         ruff_fix = {
           append_args = {
             "--ignore=F401", -- unused-import
@@ -248,8 +253,8 @@ return {
       },
       formatters_by_ft = {
         go = { "goimports", "gofmt", stop_after_first = true },
-        javascript = { "prettier", "prettierd", stop_after_first = true },
-        javascriptreact = { "prettier", "prettierd", stop_after_first = true },
+        javascript = { "prettierd", "prettier", stop_after_first = true },
+        javascriptreact = { "prettierd", "prettier", stop_after_first = true },
         json = { "prettierd", "prettier", "fixjson", stop_after_first = true },
         lua = { "stylua" },
         markdown = { "mdformat", "prettierd" },
@@ -257,8 +262,8 @@ return {
         rust = { "rustfmt" },
         sh = { "shfmt" },
         toml = { "taplo" },
-        typescript = { "prettier", "prettierd", stop_after_first = true },
-        typescriptreact = { "prettier", "prettierd", stop_after_first = true },
+        typescript = { "prettierd", "prettier", stop_after_first = true },
+        typescriptreact = { "prettierd", "prettier", stop_after_first = true },
         yaml = { "prettierd", "prettier", "yamlfmt", stop_after_first = true },
         ["_"] = { "trim_whitespace" },
       },
