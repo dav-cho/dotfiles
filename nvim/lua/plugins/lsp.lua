@@ -77,6 +77,7 @@ return {
         rust_analyzer = {},
         sqlls = {},
         taplo = {},
+        terraformls = {},
         ts_ls = {},
         yamlls = {
           settings = {
@@ -105,7 +106,6 @@ return {
       vim.api.nvim_create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("my.lsp", {}),
         callback = function(ev)
-
           local buf_map = function(mode, lhs, rhs, options)
             options = vim.tbl_deep_extend("force", { buffer = ev.buf }, options or {})
             vim.keymap.set(mode, lhs, rhs, options)
