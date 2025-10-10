@@ -385,6 +385,9 @@ return {
     "zbirenbaum/copilot.lua",
     event = "InsertEnter",
     cmd = "Copilot",
+    cond = function()
+      return not vim.fn.getcwd():match("^" .. vim.fn.expand("$WORK_DIR"))
+    end,
     keys = {
       {
         "<Leader>cp",
