@@ -505,6 +505,7 @@ return {
     "folke/trouble.nvim",
     dependencies = { "nvim-web-devicons" },
     keys = function()
+      -- TODO: treesitter main
       local trouble_next, trouble_prev = require("nvim-treesitter.textobjects.repeatable_move").make_repeatable_move_pair(
         function()
           require("trouble").next({ skip_groups = true, jump = true })

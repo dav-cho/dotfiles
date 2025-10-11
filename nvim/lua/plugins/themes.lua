@@ -56,6 +56,8 @@ return {
           DiagnosticVirtualTextHint = { fg = colors.diagnostic_virtual_text_hint, bg = "none" },
           DiagnosticVirtualTextInfo = { fg = colors.diagnostic_virtual_text_info, bg = "none" },
           DiagnosticVirtualTextWarn = { fg = colors.diagnostic_virtual_text_warn, bg = "none" },
+          -- DiffviewNormal xxx guifg=#e0def4 guibg=#1f1d2e
+          -- DiffviewNormal = { link = "Normal" },
           FlashLabel = { bg = "iris" },
           FloatBorder = { fg = colors.float_border },
           Folded = { link = "Comment" },
@@ -65,6 +67,7 @@ return {
           Include = { fg = "iris" },
           LineNr = { fg = colors.line_nr },
           LspSignatureActiveParameter = { link = "LspReferenceRead" },
+          MatchParen = { link = "Cursor", reverse = true },
           Normal = { fg = colors.text, bg = colors.bg },
           NormalFloat = { bg = "none" },
           NormalNC = { link = "Normal" },
