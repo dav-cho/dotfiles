@@ -38,7 +38,7 @@ yabai -m rule --add \
   manage=off
 
 yabai -m signal --add \
-  event=window_created \
+  event='window_created' \
   action='yabai -m window $YABAI_WINDOW_ID --sub-layer normal'
 
 yabai -m signal --add \
@@ -54,3 +54,12 @@ yabai -m signal --add \
           yabai -m query --windows --window $YABAI_WINDOW_ID |
           jq -e '\''."is-floating" == true'\'' >/dev/null &&
           yabai -m window $YABAI_WINDOW_ID --toggle float'
+
+yabai -m signal --add \
+  event='system_woke' \
+  action='sleep 1
+          for space_id in $(yabai -m query --displays | jq ".[] | select(.frame.x != 0 and .frame.y != 0).spaces.[]"); do
+            yabai -m config --space "$space_id" auto_balance on
+          done'
+
+[[ -e "$HOME/._work" && -s "$HOME/dotfiles/work/yabai/yabairc" ]] && source "$HOME/dotfiles/work/yabai/yabairc"
