@@ -211,13 +211,17 @@ return {
         show_hidden = true,
       },
       float = {
+        padding = 0,
+        border = "rounded",
         win_options = {
           winblend = 10,
         },
         override = function(conf)
-          local height = math.floor(vim.o.lines * 0.25)
-          local count = #vim.fn.split(vim.fn.glob(vim.fn.expand("%:p:h") .. "/*"), "\n") + 1
-          conf.height = math.max(height, count)
+          local files = vim.list_extend(
+            vim.fn.glob(vim.fn.expand("%:p:h") .. "/*", false, true),
+            vim.fn.glob(vim.fn.expand("%:p:h") .. "/.*", false, true)
+          )
+          conf.height = #files - 1
           conf.row = (vim.o.lines - conf.height) - 4
           return conf
         end,
