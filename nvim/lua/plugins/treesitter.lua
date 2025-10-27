@@ -21,6 +21,7 @@ return {
         "markdown_inline",
         "python",
         "rust",
+        "sql",
         "tsx",
         "typescript",
         "vim",
