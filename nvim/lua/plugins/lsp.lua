@@ -50,6 +50,7 @@ return {
         docker_compose_language_service = {},
         dockerls = {},
         eslint = {},
+        eslint_d = {},
         gopls = {},
         html = {},
         jsonls = {},
@@ -134,6 +135,9 @@ return {
           buf_map("n", "]d", diagnostic_jump_next, { desc = "vim.diagnostic.goto_next" })
           buf_map("n", "<Leader>lr", vim.cmd.LspRestart, { desc = "LspRestart" })
           buf_map("n", "gl", vim.diagnostic.open_float, { desc = "vim.diagnostic.open_float" })
+          buf_map("n", "gh", function()
+            vim.lsp.buf.hover({ focusable = true, border = "rounded" })
+          end, { desc = "vim.lsp.buf.hover" })
           buf_map("n", "gd", vim.lsp.buf.definition)
           buf_map("n", "gD", vim.lsp.buf.type_definition, { desc = "vim.lsp.buf.type_definition" })
           buf_map({ "n", "i" }, "<M-s>", function()
@@ -254,7 +258,7 @@ return {
       formatters_by_ft = {
         go = { "goimports", "gofmt", stop_after_first = true },
         javascript = { "prettierd", "prettier", stop_after_first = true },
-        javascriptreact = { "prettierd", "prettier", stop_after_first = true },
+        javascriptreact = { "eslint_d", "prettierd", "prettier", stop_after_first = true },
         json = { "prettierd", "prettier", "fixjson", stop_after_first = true },
         lua = { "stylua" },
         markdown = { "mdformat", "prettierd" },
@@ -263,7 +267,7 @@ return {
         sh = { "shfmt" },
         toml = { "taplo" },
         typescript = { "prettierd", "prettier", stop_after_first = true },
-        typescriptreact = { "prettierd", "prettier", stop_after_first = true },
+        typescriptreact = { "eslint_d", "prettierd", "prettier", stop_after_first = true },
         yaml = { "prettierd", "prettier", "yamlfmt", stop_after_first = true },
         ["_"] = { "trim_whitespace" },
       },
@@ -308,6 +312,7 @@ return {
       },
       definition = {
         width = 1,
+        height = 1,
         keys = {
           edit = "<Leader>we",
           vsplit = "<Leader>wv",
