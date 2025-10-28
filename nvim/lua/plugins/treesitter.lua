@@ -3,6 +3,7 @@ return {
     "nvim-treesitter/nvim-treesitter",
     dependencies = {
       { "nvim-treesitter/nvim-treesitter-textobjects", lazy = true },
+      "nvim-treesitter/nvim-treesitter-context",
     },
     build = ":TSUpdate",
     event = { "BufReadPre", "BufNewFile" },
@@ -375,6 +376,22 @@ return {
           "a,",
         },
       },
+    },
+  },
+  {
+    "nvim-treesitter/nvim-treesitter-context",
+    keys = {
+      {
+        "[x",
+        function()
+          require("treesitter-context").go_to_context(vim.v.count1)
+        end,
+        silent = true,
+        desc = "[TSContext] [count] go to prev context",
+      }
+    },
+    opts = {
+      multiwindow = true,
     },
   },
   {
