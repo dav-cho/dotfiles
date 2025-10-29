@@ -13,7 +13,7 @@ yabai -m config \
   mouse_action1 'move' \
   mouse_action2 'resize' \
   mouse_drop_action 'stack' \
-  layout 'bsp' \
+  layout 'stack' \
   top_padding '10' \
   bottom_padding '10' \
   left_padding '10' \
@@ -58,7 +58,24 @@ yabai -m signal --add \
 yabai -m signal --add \
   event='system_woke' \
   action='sleep 1
-          for space_id in $(yabai -m query --displays | jq ".[] | select(.frame.x != 0 and .frame.y != 0).spaces.[]"); do
+          for space_id in $(yabai -m query --displays | jq ".[] | select((.frame.x != 0 and .frame.y != 0) and (.frame.h > .frame.w)).spaces[]"); do
+            yabai -m config --space "$space_id" layout bsp
+            yabai -m config --space "$space_id" auto_balance on
+          done'
+
+yabai -m signal --add \
+  event='display_added' \
+  action='sleep 1
+          for space_id in $(yabai -m query --displays | jq ".[] | select((.frame.x != 0 and .frame.y != 0) and (.frame.h > .frame.w)).spaces[]"); do
+            yabai -m config --space "$space_id" layout bsp
+            yabai -m config --space "$space_id" auto_balance on
+          done'
+
+yabai -m signal --add \
+  event='display_removed' \
+  action='sleep 1
+          for space_id in $(yabai -m query --displays | jq ".[] | select((.frame.x != 0 and .frame.y != 0) and (.frame.h > .frame.w)).spaces[]"); do
+            yabai -m config --space "$space_id" layout bsp
             yabai -m config --space "$space_id" auto_balance on
           done'
 
