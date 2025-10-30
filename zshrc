@@ -212,11 +212,12 @@ alias gdno="git diff --name-only"
 alias gdst="git diff --stat"
 alias ghhh="MANPAGER='nvim +Man! +colorscheme\ tokyonight' git help"
 alias gl1='git log -1 --stat'
-alias gl="git log --oneline"
+alias gl='git log --pretty="format:%C(auto)%h%d %s %C(dim blue)(%ar)"'
 alias gla="git log --oneline --all"
 alias glc='git log --pretty="format:%C(auto)%h%d %s %C(dim blue)%an %ae"'
 alias glcd='git log --pretty="format:%C(auto)%h%d %s %C(dim blue)%an %ae (%ar) %ad" --date="format:%Y-%m-%d %H:%M:%S"'
 alias gld='git log --pretty="format:%C(auto)%h%d %s %C(dim blue)(%ar) %ad" --date="format:%Y-%m-%d %H:%M:%S"'
+alias glf='git log --pretty=fuller'
 alias glh='git log --simplify-by-decoration --pretty="format:%C(auto)%h%d %s %C(dim blue)(%ar) %ad" --date="format:%Y-%m-%d %H:%M:%S"'
 alias gll='git log --pretty="format:%C(auto)%h%d %s %C(dim blue)%an %ae (%ar) %ad" --date="format:%Y-%m-%d %H:%M:%S"'
 alias gllr='git log --pretty="format:%C(auto)%h %C(magenta)%m%C(auto)%d %s %C(dim blue)(%ar)" --date="format:%Y-%m-%d %H:%M:%S"'
