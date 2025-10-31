@@ -36,3 +36,6 @@ file-style = blue
 file-decoration-style = omit
 hunk-header-style = line-number
 hunk-header-decoration-style = blue
+
+; [index]
+; skipHash = false ; needed for p10k gitstatusd

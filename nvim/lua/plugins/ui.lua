@@ -99,14 +99,71 @@ return {
             },
           },
           lualine_c = {
+            -- {
+            --   "filename",
+            --   path = 3, -- absolute with `~`
+            --   fmt = function(path)
+            --     -- path = vim.fn.fnamemodify(path, ":.")
+            --     -- if work:is_work_path() and vim.o.columns >= 170 then
+            --     --   -- local cwd = vim.fn.getcwd():gsub(vim.fn.expand("$HOME"), "~"):match("([^/]+)$")
+            --     --   local cwd = vim.fn.getcwd():gsub(vim.fn.expand("$HOME"), "~")
+            --     --   path = ("%s/%s"):format(cwd, path)
+            --     -- end
+            --
+            --     if vim.o.columns < 140 then
+            --       path = vim.fn.fnamemodify(path, ":t")
+            --     elseif vim.o.columns < 160 then
+            --       path = vim.fn.fnamemodify(path, ":.")
+            --     elseif work:is_work_path() then
+            --       if vim.o.columns < 180 then
+            --         path = string.gsub(path, work.work_path .. "/", "")
+            --       end
+            --       if vim.o.columns < 170 then
+            --         path = path:match("^/?[^/]+/(.*)")
+            --       end
+            --     end
+            --
+            --     return path
+            --   end,
+            --   on_click = function(_, btn, _)
+            --     if btn == "l" then
+            --       print(vim.fn.expand("%:~"))
+            --     elseif btn == "m" then
+            --       copy_and_echo(vim.fn.expand("%:~"))
+            --     elseif btn == "r" then
+            --       copy_and_echo(vim.fn.expand("%:."))
+            --     end
+            --   end,
+            -- },
+            -- {
+            --   "filename",
+            --   path = 1, -- relative
+            --   fmt = function(path)
+            --     local cwd = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
+            --     path = cwd .. "/" .. path
+            --     if vim.o.columns < 100 then
+            --       path = vim.fn.fnamemodify(path, ":t")
+            --     elseif vim.o.columns < 150 then
+            --       path = string.gsub(path, cwd .. "/", "")
+            --     end
+            --     return path
+            --   end,
+            --   on_click = function(_, btn, _)
+            --     if btn == "l" then
+            --       print(vim.fn.expand("%:~"))
+            --     elseif btn == "m" then
+            --       copy_and_echo(vim.fn.expand("%:~"))
+            --     elseif btn == "r" then
+            --       copy_and_echo(vim.fn.expand("%:."))
+            --     end
+            --   end,
+            -- },
             {
               "filename",
-              path = 3, -- absolute with `~`
+              path = 1, -- relative
               fmt = function(path)
-                path = vim.fn.fnamemodify(path, ":.")
-                if work:is_work_path() and vim.o.columns >= 170 then
-                  local cwd = vim.fn.getcwd():gsub(vim.fn.expand("$HOME"), "~"):match("([^/]+)$")
-                  path = ("%s/%s"):format(cwd, path)
+                if vim.o.columns < 100 then
+                  path = vim.fn.fnamemodify(path, ":t")
                 end
                 return path
               end,
@@ -127,12 +184,18 @@ return {
                 return vim.fn.fnamemodify(vim.fn.getcwd(), ":~")
               end,
               fmt = function(path)
-                if work:is_work_path() then
-                  path = path:gsub(work.work_path .. "/", "")
-                  if vim.o.columns < 170 then
-                    path = vim.fn.fnamemodify(path, ":t")
-                  end
+                if vim.o.columns < 100 then
+                  path = vim.fn.fnamemodify(path, ":t")
                 end
+
+                -- if vim.o.columns >= 150 then
+                --   local cwd = vim.fn.fnamemodify(path, ":t")
+                --   path = path:gsub("/" .. cwd, "")
+                -- end
+
+                -- if work:is_work_path() then
+                --   path = path:gsub(work.work_path .. "/", "")
+                -- end
                 return path
               end,
               cond = function()
@@ -505,6 +568,7 @@ return {
     "folke/trouble.nvim",
     dependencies = { "nvim-web-devicons" },
     keys = function()
+      -- TODO: treesitter main
       local trouble_next, trouble_prev = require("nvim-treesitter.textobjects.repeatable_move").make_repeatable_move_pair(
         function()
           require("trouble").next({ skip_groups = true, jump = true })
