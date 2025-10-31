@@ -392,6 +392,7 @@ return {
     },
     opts = {
       multiwindow = true,
+      multiline_threshold = 1,
     },
   },
   {
