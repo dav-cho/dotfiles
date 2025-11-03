@@ -166,7 +166,7 @@ return {
 
       return {
         { "<C-g><C-g>", wf:wrap(), desc = "[Fugitive] :Git (:G)" },
-        { "<Leader><C-g>", vim.cmd.Git, desc = "[Fugitive] :Git (:G)" },
+        { "<Leader>gg", vim.cmd.Git, desc = "[Fugitive] :Git (:G)" },
         { "<C-g><C-s>", "<Cmd>Git status --short<CR>", desc = "[Fugitive] :Git status --short" },
         { "<C-g>st", wf:wrap("Git status"), desc = "[Fugitive] :Git status" },
         { "<C-g><C-d>", wf:wrap("diff"), desc = "[Fugitive] :Git diff" },
