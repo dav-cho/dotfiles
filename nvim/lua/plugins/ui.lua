@@ -101,12 +101,10 @@ return {
           lualine_c = {
             {
               "filename",
-              path = 3, -- absolute with `~`
+              path = 1, -- relative
               fmt = function(path)
-                path = vim.fn.fnamemodify(path, ":.")
-                if work:is_work_path() and vim.o.columns >= 170 then
-                  local cwd = vim.fn.getcwd():gsub(vim.fn.expand("$HOME"), "~"):match("([^/]+)$")
-                  path = ("%s/%s"):format(cwd, path)
+                if vim.o.columns < 100 then
+                  path = vim.fn.fnamemodify(path, ":t")
                 end
                 return path
               end,
@@ -127,11 +125,8 @@ return {
                 return vim.fn.fnamemodify(vim.fn.getcwd(), ":~")
               end,
               fmt = function(path)
-                if work:is_work_path() then
-                  path = path:gsub(work.work_path .. "/", "")
-                  if vim.o.columns < 170 then
-                    path = vim.fn.fnamemodify(path, ":t")
-                  end
+                if vim.o.columns < 100 then
+                  path = vim.fn.fnamemodify(path, ":t")
                 end
                 return path
               end,
