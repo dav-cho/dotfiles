@@ -147,7 +147,7 @@ return {
       {
         "<M-_>",
         function()
-          require("oil").open()
+          require("oil").open(nil, { preview = {} })
         end,
         desc = "[Oil] Open",
       },
