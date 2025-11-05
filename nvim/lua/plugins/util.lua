@@ -256,6 +256,22 @@ return {
         end,
         desc = "[Nvim-Tree] Toggle float",
       },
+      {
+        "<M-j>",
+        function()
+          local api = require("nvim-tree.api")
+          api.node.navigate.sibling.next()
+          api.node.open.preview(nil, { quit_on_open = false })
+        end,
+      },
+      {
+        "<M-k>",
+        function()
+          local api = require("nvim-tree.api")
+          api.node.navigate.sibling.prev()
+          api.node.open.preview(nil, { quit_on_open = false })
+        end,
+      }
     },
     opts = {
       hijack_netrw = false,
@@ -269,7 +285,7 @@ return {
           open_win_config = {
             col = 0,
             row = 2,
-            height = math.floor(vim.api.nvim_win_get_height(0) * 0.90),
+            height = math.floor(vim.o.lines * 0.90),
           },
         },
       },
