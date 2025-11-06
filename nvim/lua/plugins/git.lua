@@ -136,12 +136,12 @@ return {
 
       with_float.get_win_opts = function()
         local height = math.floor(vim.o.lines * 0.8)
-        local width = math.floor(vim.o.columns * 0.8)
+        local width = math.floor(vim.o.columns * 0.9)
         return {
           relative = "editor",
           width = width,
           height = height,
-          row = math.floor((vim.o.lines - height) / 2),
+          row = math.floor((vim.o.lines - height) / 2) - 1,
           col = math.floor((vim.o.columns - width) / 2),
           border = "single",
         }
