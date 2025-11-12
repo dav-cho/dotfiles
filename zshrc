@@ -207,30 +207,34 @@ alias nvms="nvm use system"
 alias rg="rg --smart-case"
 
 alias gcnn!='git commit --verbose --no-edit --amend --date=now'
+alias gdmb='git diff $(git merge-base $(git_main_branch) HEAD)..'
 alias gdni="git diff --no-index --"
 alias gdno="git diff --name-only"
 alias gdst="git diff --stat"
 alias ghhh="MANPAGER='nvim +Man! +colorscheme\ tokyonight' git help"
 alias gl1='git log -1 --stat'
-alias gl='git log --pretty="format:%C(auto)%h%d %s %C(dim blue)(%ar)"'
+alias gl='git log --pretty=oneline-reldate-name-email'
 alias gla="git log --oneline --all"
-alias glc='git log --pretty="format:%C(auto)%h%d %s %C(dim blue)%an %ae"'
-alias glcd='git log --pretty="format:%C(auto)%h%d %s %C(dim blue)%an %ae (%ar) %ad" --date="format:%Y-%m-%d %H:%M:%S"'
-alias gld='git log --pretty="format:%C(auto)%h%d %s %C(dim blue)(%ar) %ad" --date="format:%Y-%m-%d %H:%M:%S"'
+alias glc='git log --pretty=oneline-name-email'
+alias gld='git log --pretty=oneline-fulldate --date=iso'
 alias glf='git log --pretty=fuller'
-alias glh='git log --simplify-by-decoration --pretty="format:%C(auto)%h%d %s %C(dim blue)(%ar) %ad" --date="format:%Y-%m-%d %H:%M:%S"'
-alias gll='git log --pretty="format:%C(auto)%h%d %s %C(dim blue)%an %ae (%ar) %ad" --date="format:%Y-%m-%d %H:%M:%S"'
-alias gllr='git log --pretty="format:%C(auto)%h %C(magenta)%m%C(auto)%d %s %C(dim blue)(%ar)" --date="format:%Y-%m-%d %H:%M:%S"'
+alias glh='git log --simplify-by-decoration --pretty=oneline-fulldate --date=iso'
+alias gll='git logdate --pretty=oneline-fulldate-name-email'
+alias gllr='git log --pretty=oneline-mark-reldate'
+alias glmb='git log --pretty=oneline-reldate-name-email $(git merge-base $(git_main_branch) HEAD)..'
 alias glo="git log"
+alias glomb='git log $(git merge-base $(git_main_branch) HEAD)..'
 alias glop="git log --stat --patch --reverse ORIG_HEAD.."
-alias glorig='git log --oneline ORIG_HEAD.. --pretty="format:%C(auto)%h%d %s %C(dim blue)(%ar) %ad" --date="format:%Y-%m-%d %H:%M:%S"'
-alias glp="git log --oneline --first-parent"
+alias glorig='git log --pretty=oneline-reldate-name-email --date=iso ORIG_HEAD..'
+alias glp="git log --first-parent --pretty=oneline-reldate-name-email"
 alias glst="git log --oneline --stat"
-alias glt='git log -10 --pretty="format:%C(auto)%h%d %s %C(dim blue)(%ar)"'
-alias glu='git log --oneline --pretty="format:%C(auto)%h%d %s %C(dim blue)(%ar) %ad" --date="format:%Y-%m-%d %H:%M:%S" ...@{u}'
-alias glup='git log --pretty="format:%C(auto)%h %C(magenta)%m%C(auto)%d %s %C(dim blue)(%ar)" --date="format:%Y-%m-%d %H:%M:%S" @{u}...'
+alias glt='git log --pretty=oneline-reldate-name-email -10'
+alias glu='git log --pretty=oneline-reldate-name-email ..@{u}'
+alias glup='git log --pretty=oneline-mark-reldate ...@{u}'
+alias glz="git log --oneline | fzf --preview 'git show {1} --color'"
 alias gmnf="git merge --no-ff"
 alias gs="git status --short"
+alias gsww='git switch $(git branch --format="%(refname:short)" | fzf --no-preview) 2>/dev/null'
 alias gu="git pull"
 
 alias l="eza -la --icons=auto"

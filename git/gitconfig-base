@@ -1,38 +1,52 @@
 [core]
-editor = nvim
-pager = delta
+  editor = nvim
+  pager = delta
 
 [init]
-defaultBranch = main
+  defaultBranch = main
 
 [pull]
-ff = only
+  ff = only
 
 [merge]
-ff = only
-conflictStyle = zdiff3
-tool = nvimdiff
+  ff = only
+  conflictStyle = zdiff3
+  tool = nvimdiff
 
 [diff]
-colorMoved = default
-submodule = log
-tool = nvimdiff
+  colorMoved = default
+  submodule = log
+  tool = nvimdiff
 
 [interactive]
-diffFilter = delta --color-only
+  diffFilter = delta --color-only
+
+[alias]
+  logdate="log --date='format:%Y-%m-%d %H:%M:%S'"
+
+[pretty]
+  oneline-fulldate-name-email="%C(auto)%h%d %s %C(dim blue)%ad (%ar) %an %ae"
+  oneline-fulldate="%C(auto)%h%d %s %C(dim blue)(%ar) %ad"
+  oneline-mark-reldate="%C(auto)%h %C(magenta)%m%C(auto)%d %s %C(dim blue)(%ar)"
+  oneline-name-email-fulldate="%C(auto)%h%d %s %C(dim blue)%an %ae (%ar) %ad"
+  oneline-name-email="%C(auto)%h%d %s %C(dim blue)%an (%ae)"
+  oneline-reldate-name-email="%C(auto)%h%d %s %C(dim blue)(%ar) %an %ae"
 
 [delta]
-navigate = true
-zero-style = normal
-minus-style = "#ff7b72"
-minus-non-emph-style = "#ff7b72"
-minus-emph-style = reverse "#d5867f"
-plus-style = "#3fb950"
-plus-non-emph-style = "#3fb950"
-plus-emph-style = reverse "#45aa50"
-line-numbers-minus-style = "#ff7b72"
-line-numbers-plus-style = "#3fb950"
-file-style = blue
-file-decoration-style = omit
-hunk-header-style = line-number
-hunk-header-decoration-style = blue
+  navigate = true
+  zero-style = normal
+  minus-style = "#ff7b72"
+  minus-non-emph-style = "#ff7b72"
+  minus-emph-style = reverse "#d5867f"
+  plus-style = "#3fb950"
+  plus-non-emph-style = "#3fb950"
+  plus-emph-style = reverse "#45aa50"
+  line-numbers-minus-style = "#ff7b72"
+  line-numbers-plus-style = "#3fb950"
+  file-style = blue
+  file-decoration-style = omit
+  hunk-header-style = line-number
+  hunk-header-decoration-style = blue
+
+; [index]
+;   skipHash = false ; needed for p10k gitstatusd
