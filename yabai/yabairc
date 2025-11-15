@@ -19,6 +19,7 @@ yabai -m config \
   left_padding '10' \
   right_padding '10' \
   window_gap '10'
+# layout 'bsp' \
 
 yabai -m rule --add \
   sub-layer="normal"
@@ -32,6 +33,11 @@ yabai -m rule --add \
   title="^(Bitwarden.*|Task Manager)$" \
   manage=off
 
+# yabai -m rule --add \
+#   app="Google Chrome" \
+#   title="^(Bitwarden.*|Task Manager|Sign in - Google)$" \
+#   manage=off
+
 yabai -m rule --add \
   app="Firefox" \
   title="Library|^Extension:" \
@@ -40,6 +46,24 @@ yabai -m rule --add \
 yabai -m signal --add \
   event='window_created' \
   action='yabai -m window $YABAI_WINDOW_ID --sub-layer normal'
+
+# yabai -m signal --add \
+#   event='application_launched' \
+#   action='yabai -m window $YABAI_WINDOW_ID --sub-layer normal'
+
+# yabai -m signal --add \
+#   event=window_moved \
+#   action='yabai -m window $YABAI_WINDOW_ID --sub-layer normal'
+
+# yabai -m signal --add \
+#   event=window_focused \
+#   action='yabai -m window $YABAI_WINDOW_ID --sub-layer normal'
+
+# yabai -m signal --add \
+#   event=window_focused \
+#   action='yabai -m query --windows --window $YABAI_WINDOW_ID |
+#           jq -e '\''."is-sticky" == false'\'' >/dev/null &&
+#           yabai -m window $YABAI_WINDOW_ID --sub-layer normal'
 
 yabai -m signal --add \
   event=window_minimized \
@@ -54,6 +78,13 @@ yabai -m signal --add \
           yabai -m query --windows --window $YABAI_WINDOW_ID |
           jq -e '\''."is-floating" == true'\'' >/dev/null &&
           yabai -m window $YABAI_WINDOW_ID --toggle float'
+
+# yabai -m signal --add \
+#   event='system_woke' \
+#   action='sleep 1
+#           for space_id in $(yabai -m query --displays | jq ".[] | select(.frame.h > .frame.w).spaces.[]"); do
+#             yabai -m config --space "$space_id" auto_balance on
+#           done'
 
 yabai -m signal --add \
   event='system_woke' \

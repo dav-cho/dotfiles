@@ -2,8 +2,8 @@ local set_lualine_theme = function(theme)
   require("lualine").setup({ options = { theme = theme } })
 end
 
+vim.cmd([[hi IlluminatedWordText guibg=#434c5e guifg=none gui=none]])
 local illuminate_default = function()
-  vim.cmd([[hi IlluminatedWordText guibg=#434c5e guifg=none gui=none]])
   vim.cmd([[hi IlluminatedWordRead guibg=#434c5e guifg=none gui=none]])
   vim.cmd([[hi IlluminatedWordWrite guibg=#434c5e guifg=none gui=none]])
 end
@@ -57,6 +57,8 @@ return {
           DiagnosticVirtualTextHint = { fg = colors.diagnostic_virtual_text_hint, bg = "none" },
           DiagnosticVirtualTextInfo = { fg = colors.diagnostic_virtual_text_info, bg = "none" },
           DiagnosticVirtualTextWarn = { fg = colors.diagnostic_virtual_text_warn, bg = "none" },
+          -- DiffviewNormal xxx guifg=#e0def4 guibg=#1f1d2e
+          -- DiffviewNormal = { link = "Normal" },
           FlashLabel = { bg = "iris" },
           FloatBorder = { fg = colors.float_border },
           Folded = { link = "Comment" },
@@ -64,6 +66,9 @@ return {
           IlluminatedWordText = { bg = colors.cursor_line_bright },
           IlluminatedWordWrite = { bg = colors.cursor_line_bright },
           Include = { fg = "iris" },
+          -- IndentBlanklineChar xxx cterm=nocombine gui=nocombine guifg=#6e6a86
+          -- MiniIndentscopeSymbol xxx guifg=#6e6a86
+          -- SnacksIndentScope xxx guifg=#9ccfd8
           LineNr = { fg = colors.line_nr },
           LspSignatureActiveParameter = { link = "LspReferenceRead" },
           MatchParen = { link = "Cursor", reverse = true },
