@@ -50,7 +50,6 @@ return {
         docker_compose_language_service = {},
         dockerls = {},
         eslint = {},
-        eslint_d = {},
         gopls = {},
         html = {},
         jsonls = {},
@@ -67,6 +66,7 @@ return {
             },
           },
         },
+        postgres_lsp = {},
         pyright = {
           settings = {
             python = {
@@ -76,7 +76,6 @@ return {
         },
         ruff = {},
         rust_analyzer = {},
-        sqlls = {},
         taplo = {},
         terraformls = {},
         ts_ls = {},
@@ -165,6 +164,10 @@ return {
           local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
           if not client then
             return
+          end
+
+          if client.name == "eslint" or client.name == "cssmodules_ls" then
+            client.server_capabilities.hoverProvider = false
           end
 
           if client.name == "ruff" then
