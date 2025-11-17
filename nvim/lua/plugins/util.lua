@@ -308,7 +308,7 @@ return {
     cmd = { "FZF" },
     keys = {
       { "<Leader>fz", "<Cmd>FZF<CR>", desc = "[FZF] FZF" },
-      { "<Leader>bl", "<Cmd>BLines<CR>", desc = "[FZF] BLines" },
+      { "<Leader>bu", "<Cmd>BLines<CR>", desc = "[FZF] BLines" },
       { "<Leader>fh", "<Cmd>History<CR>", desc = "[FZF] History" },
       {
         "<Leader>FZ",
