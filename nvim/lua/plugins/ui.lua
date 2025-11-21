@@ -350,7 +350,7 @@ return {
 
       for i = 1, 10 do
         table.insert(keymaps, {
-          "<Leader>" .. i % 10,
+          "<Space>" .. i % 10,
           function()
             require("bufferline").go_to(i, true)
           end,

@@ -521,7 +521,7 @@ return {
 
       for i = 1, 10 do
         table.insert(keymaps, {
-          "<Space>" .. i % 10,
+          "<Leader>" .. i % 10,
           function()
             harpoon:list():select(i)
           end,
