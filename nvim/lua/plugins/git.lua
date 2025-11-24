@@ -167,12 +167,15 @@ return {
       return {
         { "<C-g><C-g>", wf:wrap(), desc = "[Fugitive] :Git (:G)" },
         { "<Leader>gg", vim.cmd.Git, desc = "[Fugitive] :Git (:G)" },
+        { "<M-G>", vim.cmd.Git, desc = "[Fugitive] :Git (:G)" },
+        { "<Leader>gU", "<Cmd>Git restore --staged .<CR>", desc = "[Fugitive] unstage all" },
+        { "<Space><M-s>", "<Cmd>Git restore --staged %<CR>", desc = "[Fugitive] unstage all" },
         { "<C-g><C-s>", "<Cmd>Git status --short<CR>", desc = "[Fugitive] :Git status --short" },
         { "<C-g>st", wf:wrap("Git status"), desc = "[Fugitive] :Git status" },
         { "<C-g><C-d>", wf:wrap("diff"), desc = "[Fugitive] :Git diff" },
         {
           "<C-g><C-l>",
-          wf:wrap("log --pretty='format:%C(auto)%h %s %C(dim blue)(%ar)' --date='format:%Y-%m-%d %H:%M:%S'"),
+          wf:wrap("log --pretty='format:%C(auto)%h %s %C(dim blue)(%ar) %an' --date='format:%Y-%m-%d %H:%M:%S'"),
           mode = { "n", "x" },
           desc = "[Fugitive] :Git log (oneline, custom format, relative date)",
         },
