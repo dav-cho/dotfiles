@@ -231,9 +231,10 @@ alias glst="git log --oneline --stat"
 alias glt='git log --pretty=oneline-reldate-name-email -10'
 alias glu='git log --pretty=oneline-reldate-name-email ..@{u}'
 alias glup='git log --pretty=oneline-mark-reldate ...@{u}'
-alias glz="git log --oneline | fzf --preview 'git show {1} --color'"
+alias glz="git log --oneline | fzf --preview 'git show --color {1}'"
 alias gmnf="git merge --no-ff"
 alias gs="git status --short"
+alias gstz="git stash list | fzf --preview 'git stash show -p --color \$(echo {1} | cut -d: -f1)'"
 alias gsww='git switch $(git branch --format="%(refname:short)" | fzf --no-preview) 2>/dev/null'
 alias gu="git pull"
 
