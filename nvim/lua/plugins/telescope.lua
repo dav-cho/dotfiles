@@ -36,9 +36,11 @@ return {
         { "<Leader>sh", telescope_builtin("search_history"), desc = "search_history" },
         { "<Leader>sp", telescope_builtin("spell_suggest"), desc = "spell_suggest" },
         { "<Leader>tm", telescope_builtin("man_pages"), desc = "man_pages" },
-        { "<Leader>tp", telescope_builtin("pickers"), desc = "pickers" },
         { "<Leader>ts", telescope_builtin("treesitter"), desc = "treesitter" },
         { "<Leader>vo", telescope_builtin("vim_options"), desc = "vim_options" },
+
+        { "<Leader>tp", telescope_builtin("pickers"), desc = "pickers" },
+        { "<Space>R", telescope_builtin("pickers"), desc = "pickers" },
 
         { "<Space>f", telescope_builtin("find_files"), desc = "find_files" },
         {
@@ -156,11 +158,24 @@ return {
 
         {
           "<F12>",
-          telescope_builtin("lsp_references", {
-            include_current_line = true,
-            ump_type = "never",
-            fname_width = 50,
-          }),
+          function()
+            require("telescope.builtin").lsp_references({
+              include_current_line = true,
+              jump_type = "never",
+              fname_width = 50,
+            })
+          end,
+          desc = "lsp_references",
+        },
+        {
+          "<Leader>rr",
+          function()
+            require("telescope.builtin").lsp_references({
+              include_current_line = true,
+              jump_type = "never",
+              fname_width = 50,
+            })
+          end,
           desc = "lsp_references",
         },
         {
@@ -298,6 +313,11 @@ return {
           layout_strategy = "flex",
           dynamic_preview_title = true,
           winblend = 10,
+          cache_picker = {
+            num_pickers = -1,
+            -- limit_entries = 1000,
+            ignore_empty_prompt = false,
+          },
           layout_config = {
             prompt_position = "top",
             flex = {
