@@ -1,3 +1,4 @@
+auto_sync = false
 filter_mode_shell_up_key_binding = "directory"
 style = "compact"
 inline_height = 0
