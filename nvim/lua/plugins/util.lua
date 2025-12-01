@@ -109,7 +109,7 @@ return {
       open_mapping = "<C-Bslash>",
       direction = "float",
       float_opts = {
-        border = "curved",
+        border = "single",
         winblend = 10,
       },
     },
