@@ -81,8 +81,8 @@ map("n", "<Leader>yA", [[<Cmd>let @+=expand("%:p")<CR>]], { desc = "Yank absolut
 map("n", "<Leader>tt", ":vert term<CR>", { desc = "Terminal" })
 
 map("n", "<Space>q", "<Cmd>copen<CR>", { desc = "Open qflist" })
-map("n", "<Space>-", "<Cmd>cprevious<CR>", { desc = "qflist previous" })
-map("n", "<Space>=", "<Cmd>cnext<CR>", { desc = "qflist next" })
+map("n", "<Space>[", "<Cmd>cprevious<CR>", { desc = "qflist previous" })
+map("n", "<Space>]", "<Cmd>cnext<CR>", { desc = "qflist next" })
 
 map("n", "<Space>l", "<Cmd>lopen<CR>", { desc = "Open loclist" })
 map("n", "<Space>_", "<Cmd>lprevious<CR>", { desc = "loclist previous" })

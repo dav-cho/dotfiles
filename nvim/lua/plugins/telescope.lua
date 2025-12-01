@@ -524,14 +524,14 @@ return {
           desc = "[Harpoon] list clear",
         },
         {
-          "<Space>[",
+          "<Space>-",
           function()
             harpoon:list():prev()
           end,
           desc = "[Harpoon] list prev",
         },
         {
-          "<Space>]",
+          "<Space>=",
           function()
             harpoon:list():next()
           end,
