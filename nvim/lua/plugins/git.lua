@@ -270,8 +270,18 @@ return {
       { "<Leader>dV", ":DiffviewOpen ", desc = "[Diffview] :DiffviewOpen" },
       { "<Leader>dc", "<Cmd>DiffviewClose<CR>", desc = "[Diffview] :DiffviewClose" },
       { "<Leader>du", "<Cmd>DiffviewRefresh<CR>", desc = "[Diffview] :DiffviewRefresh" },
-      { "<Leader>dh", ":DiffviewFileHistory %<CR>", mode = { "n", "v" }, desc = "[Diffview] :DiffviewFileHistory %" },
       { "<Leader>dH", "<Cmd>DiffviewFileHistory<CR>", desc = "[Diffview] :DiffviewFileHistory" },
+      {
+        "<Leader>dh",
+        "<Cmd>DiffviewFileHistory %<CR>",
+        mode = { "n", "v" },
+        desc = "[Diffview] :DiffviewFileHistory %",
+      },
+      {
+        "<Leader>dm",
+        "<Cmd>DiffviewOpen origin/HEAD...HEAD --imply-local<CR>",
+        desc = "[Diffview] :DiffviewOpen origin/HEAD...HEAD --imply-local)",
+      },
     },
     opts = function(_, opts)
       local actions = require("diffview.actions")
