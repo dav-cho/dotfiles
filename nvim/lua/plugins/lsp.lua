@@ -7,6 +7,8 @@ return {
     },
     event = { "BufRead", "BufNewFile" },
     config = function()
+      -- local lspconfig = require("lspconfig")
+
       local diagnostic_signs = {
         text = {
           [vim.diagnostic.severity.ERROR] = "",
@@ -76,6 +78,57 @@ return {
         },
         ruff = {},
         rust_analyzer = {},
+
+        -- WIP
+        -- sqlls = {
+        --   settings = {
+        --     sql = {
+        --       dialect = "postgresql",
+        --       quotedIdentifiers = true,
+        --       schemaQualification = true,
+        --     },
+        --   },
+        --
+        --   settings = {
+        --     -- The settings go directly under 'sql', not nested
+        --     sql = {
+        --       -- Set dialect to PostgreSQL
+        --       dialect = "postgresql",
+        --       -- Enable quoted identifiers support
+        --       quotedIdentifiers = true,
+        --       -- Enable schema qualification
+        --       schemaQualification = true,
+        --     },
+        --   },
+        --   single_file_support = true,
+        --
+        --   settings = {
+        --     sql = {
+        --       -- PostgreSQL dialect
+        --       dialect = "postgresql",
+        --       -- Enable quoted identifiers
+        --       quotedIdentifiers = true,
+        --       -- Enable schema qualification
+        --       schemaQualification = true,
+        --       -- Additional PostgreSQL settings
+        --       caseSensitive = true,
+        --       -- Enable function suggestions
+        --       functions = true,
+        --       -- Enable table suggestions
+        --       tables = true,
+        --       -- Enable column suggestions
+        --       columns = true,
+        --     },
+        --   },
+        --   -- Root directory detection
+        --   -- root_dir = function(fname)
+        --   --   return lspconfig.util.root_pattern(".git", "package.json", "tsconfig.json")(fname)
+        --   --     or lspconfig.util.path.dirname(fname)
+        --   -- end,
+        --   -- Single file support
+        --   single_file_support = true,
+        -- },
+
         taplo = {},
         terraformls = {},
         ts_ls = {},
@@ -96,6 +149,9 @@ return {
       local capabilities = require("blink.cmp").get_lsp_capabilities()
 
       for server, config in pairs(servers) do
+        -- lspconfig[server].setup(vim.tbl_deep_extend("force", {
+        --   capabilities = capabilities,
+        -- }, config))
         vim.lsp.config[server] = vim.tbl_deep_extend("force", {
           capabilities = capabilities,
         }, config)
@@ -104,7 +160,7 @@ return {
       end
 
       vim.api.nvim_create_autocmd("LspAttach", {
-        group = vim.api.nvim_create_augroup("my.lsp", {}),
+        group = vim.api.nvim_create_augroup("my.lsp", {}), -- TODO
         callback = function(ev)
           local buf_map = function(mode, lhs, rhs, options)
             options = vim.tbl_deep_extend("force", { buffer = ev.buf }, options or {})
@@ -115,9 +171,14 @@ return {
             return function()
               vim.cmd(cmd)
               vim.lsp.buf.definition()
+              -- TODO
+              -- vim.defer_fn(function()
+              --   vim.api.nvim_feedkeys("zt", "n", false)
+              -- end, 10)
             end
           end
 
+          -- TODO: treesitter main
           local diagnostic_jump_next, diagnostic_jump_prev = require("nvim-treesitter.textobjects.repeatable_move").make_repeatable_move_pair(
             function()
               vim.diagnostic.jump({ count = vim.v.count1, float = true })
@@ -130,15 +191,18 @@ return {
           buf_map("n", "<Leader>td", function()
             vim.diagnostic.enable(not vim.diagnostic.is_enabled())
           end, { desc = "toggle lsp diagnostics" })
+          -- TODO: treesitter main
           buf_map("n", "[d", diagnostic_jump_prev, { desc = "vim.diagnostic.goto_prev" })
           buf_map("n", "]d", diagnostic_jump_next, { desc = "vim.diagnostic.goto_next" })
           buf_map("n", "<Leader>lr", vim.cmd.LspRestart, { desc = "LspRestart" })
           buf_map("n", "gl", vim.diagnostic.open_float, { desc = "vim.diagnostic.open_float" })
+          -- TODO: need?
           buf_map("n", "gh", function()
             vim.lsp.buf.hover({ focusable = true, border = "rounded" })
           end, { desc = "vim.lsp.buf.hover" })
           buf_map("n", "gd", vim.lsp.buf.definition)
           buf_map("n", "gD", vim.lsp.buf.type_definition, { desc = "vim.lsp.buf.type_definition" })
+          -- buf_map("n", "gr", vim.lsp.buf.references)
           buf_map({ "n", "i" }, "<M-s>", function()
             vim.lsp.buf.signature_help({ focusable = true, focus = false, border = "rounded" })
           end, { desc = "vim.lsp.buf.signature_help" })
@@ -161,10 +225,24 @@ return {
           buf_map("n", "<Leader>gx", gd_cmd("wincmd s"), { desc = "vim.lsp.buf.definition() split redraw top" })
           buf_map("n", "<Leader>gt", gd_cmd("tab split"), { desc = "vim.lsp.buf.definition() tab split redraw top" })
 
+          -- TODO
+          -- local client = vim.lsp.get_client_by_id(ev.data.client_id)
           local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
           if not client then
             return
           end
+
+          -- if client.name == "eslint" then
+          --   for ns, opts in ipairs(vim.diagnostic.get_namespaces()) do
+          --     if opts.name:match("eslint") then
+          --       vim.diagnostic.config({ signs = false }, ns)
+          --     end
+          --   end
+          --   -- vim.diagnostic.config({ signs = false })
+          --   -- vim.diagnostic.config({ signs = false }, vim.lsp.diagnostic.get_namespace(client.id))
+          --   -- vim.diagnostic.enable(false, { ns_id = vim.lsp.diagnostic.get_namespace(client.id) })
+          --   -- vim.diagnostic.enable(false, { bufnr = 0 })
+          -- end
 
           if client.name == "eslint" or client.name == "cssmodules_ls" then
             client.server_capabilities.hoverProvider = false
@@ -245,6 +323,13 @@ return {
             PRETTIERD_DEFAULT_CONFIG = vim.fn.expand("$HOME/dotfiles/nvim/utils/prettierrc.json"),
           },
         },
+        -- prettier = {
+        --   prepend_args = {
+        --     "--config-precedence",
+        --     "prefer-file",
+        --     "--single-quote",
+        --   },
+        -- },
         ruff_fix = {
           append_args = {
             "--ignore=F401", -- unused-import
@@ -291,6 +376,19 @@ return {
         { "<Leader>lf", "<Cmd>Lspsaga finder<CR>", desc = "lsp_finder" },
         { "<F2>", "<Cmd>Lspsaga rename<CR>", desc = "rename" },
         { "<Space>d", "<Cmd>Lspsaga peek_definition<CR>", desc = "peek_definition" },
+        -- TODO
+        -- {
+        --   "<Space>d",
+        --   function()
+        --     local orig_win = vim.api.nvim_get_current_win()
+        --     vim.cmd("Lspsaga peek_definition")
+        --     vim.wait(50, function()
+        --       return vim.api.nvim_get_current_win() ~= orig_win
+        --     end, 5)
+        --     vim.api.nvim_feedkeys("zt", "n", false)
+        --   end,
+        --   desc = "peek_definition",
+        -- },
         { "<Space>t", "<Cmd>Lspsaga peek_type_definition<CR>", desc = "peek_type_definition" },
         { "<Leader>sl", "<Cmd>Lspsaga show_line_diagnostics<CR>", desc = "show_line_diagnostics" },
         { "<Leader>sb", "<Cmd>Lspsaga show_buf_diagnostics<CR>", desc = "show_buf_diagnostics" },
@@ -355,6 +453,7 @@ return {
     "RRethy/vim-illuminate",
     event = "LspAttach",
     config = function(_, opts)
+      -- TODO: treesitter main
       local goto_next_ref, goto_prev_ref = require("nvim-treesitter.textobjects.repeatable_move").make_repeatable_move_pair(
         function()
           require("illuminate").goto_next_reference()
