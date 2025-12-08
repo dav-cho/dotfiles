@@ -94,7 +94,7 @@ return {
           desc = "file_browser",
         },
 
-        { "<Leader>ll", telescope_builtin("live_grep"), desc = "live_grep" },
+        { "<Leader>lg", telescope_builtin("live_grep"), desc = "live_grep" },
         {
           "<Leader>lo",
           telescope_builtin("live_grep", {
@@ -114,23 +114,14 @@ return {
           desc = "live_grep (buf dir)",
         },
         {
-          "<Leader>lg",
+          "<Leader>ll",
           function()
-            local glob
-            vim.ui.input({ prompt = "Glob > ", completion = "file" }, function(input)
-              glob = input
-            end)
-            vim.notify(vim.inspect(glob))
-            if glob == "" then
-              return
-            end
             require("telescope.builtin").live_grep({
-              glob_pattern = glob,
-              additional_args = { "--case-sensitive" },
-              prompt_title = "Glob: " .. glob,
+              search_dirs = { vim.api.nvim_buf_get_name(0) },
+              prompt_title = "Live Grep (Buffer)",
             })
           end,
-          desc = "live_grep (glob)",
+          desc = "live_grep (buf)",
         },
 
         {
