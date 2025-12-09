@@ -399,7 +399,7 @@ return {
     "folke/flash.nvim",
     keys = {
       {
-        "<Space>/",
+        "<Leader>/",
         function()
           require("flash").jump()
         end,
@@ -407,7 +407,7 @@ return {
         desc = "[Flash] Jump (fuzzy)",
       },
       {
-        "<Leader>/",
+        "<Space>/",
         function()
           require("flash").jump({ search = { mode = "exact" } })
         end,
