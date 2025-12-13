@@ -11,8 +11,13 @@ return {
         delay = 0,
       },
       current_line_blame_formatter = " <author> <author_time:%Y-%m-%d %I:%M %p> <abbrev_sha> <summary>",
+      -- TODO
+      -- diff_opts = {
+      --   linematch = 1,
+      -- },
       on_attach = function(bufnr)
         local gitsigns = require("gitsigns")
+        -- TODO: treesitter main
         local repeat_move = require("nvim-treesitter.textobjects.repeatable_move")
 
         local map = function(mode, lhs, rhs, opts)
@@ -22,6 +27,7 @@ return {
           vim.keymap.set(mode, lhs, rhs, opts)
         end
 
+        -- TODO: treesitter main
         local function make_nav_repeats(opts, cb)
           local nav_next, nav_prev = repeat_move.make_repeatable_move_pair(function()
             ---@diagnostic disable-next-line: param-type-mismatch
@@ -91,6 +97,7 @@ return {
         map("n", "<Space>Z", gitsigns.reset_buffer, { desc = "reset_buffer" })
         map("n", "<Leader>hp", gitsigns.preview_hunk_inline, { desc = "preview_hunk_inline" })
         map("n", "<M-h>", gitsigns.preview_hunk_inline, { desc = "preview_hunk_inline" })
+        -- map("n", "<Leader>ph", gitsigns.preview_hunk, { desc = "preview_hunk" })
         map("n", "<Leader>hr", gitsigns.refresh, { desc = "refresh" })
         map("n", "<Leader>SH", gitsigns.show, { desc = "show" })
         map("n", "<M-b>", gitsigns.blame, { desc = "blame" })
@@ -100,6 +107,7 @@ return {
         end, { desc = "setqflist('all')" })
         map("n", "<Leader>hl", gitsigns.setloclist, { desc = "setloclist" })
         map("n", "<Leader>tb", gitsigns.toggle_current_line_blame, { desc = "toggle_current_line_blame" })
+        -- map("n", "<Leader>td", gitsigns.toggle_deleted, { desc = "toggle_deleted" }) -- TODO
         map("n", "<Leader>tD", gitsigns.toggle_word_diff, { desc = "toggle_word_diff" })
         map("n", "<Leader>tl", gitsigns.toggle_linehl, { desc = "toggle_linehl" })
         map("n", "<Leader>tn", gitsigns.toggle_numhl, { desc = "toggle_numhl" })
@@ -124,9 +132,9 @@ return {
     "tpope/vim-fugitive",
     cmd = { "G", "Git" },
     keys = function()
-      local with_float = {}
+      local FloatWrapper = {}
 
-      with_float.get_ctx = function()
+      FloatWrapper.get_ctx = function()
         return {
           win = vim.api.nvim_get_current_win(),
           buf = vim.api.nvim_get_current_buf(),
@@ -134,7 +142,7 @@ return {
         }
       end
 
-      with_float.get_win_opts = function()
+      FloatWrapper.get_win_opts = function()
         local height = math.floor(vim.o.lines * 0.8)
         local width = math.floor(vim.o.columns * 0.9)
         return {
@@ -147,7 +155,7 @@ return {
         }
       end
 
-      function with_float:wrap(cmd)
+      function FloatWrapper:wrap(cmd)
         local function _wrapped()
           local ctx = self.get_ctx()
           vim.cmd("tab Git " .. (cmd or ""))
@@ -162,42 +170,58 @@ return {
         return _wrapped
       end
 
-      local wf = with_float
+      local fw = FloatWrapper
+      local date_format = "format:%Y-%m-%d %H:%M:%S"
+      local pretty_format = "format:%C(auto)%h %s %C(dim blue)(%ar) %an"
 
       return {
-        { "<C-g><C-g>", wf:wrap(), desc = "[Fugitive] :Git (:G)" },
+        { "<C-g><C-g>", fw:wrap(), desc = "[Fugitive] :Git (:G)" },
         { "<Leader>gg", vim.cmd.Git, desc = "[Fugitive] :Git (:G)" },
         { "<M-G>", vim.cmd.Git, desc = "[Fugitive] :Git (:G)" },
+        -- { "<M-g><M-g>", vim.cmd.Git, desc = "[Fugitive] :Git (:G)" },
         { "<Leader>gU", "<Cmd>Git restore --staged .<CR>", desc = "[Fugitive] unstage all" },
+        -- { "<Leader>gu", "<Cmd>Git restore --staged .<CR>", desc = "[Fugitive] unstage all" },
+        -- { "<Space><M-s>", "<Cmd>Git restore --staged .<CR>", desc = "[Fugitive] unstage all" },
         { "<Space><M-s>", "<Cmd>Git restore --staged %<CR>", desc = "[Fugitive] unstage all" },
         { "<C-g><C-s>", "<Cmd>Git status --short<CR>", desc = "[Fugitive] :Git status --short" },
-        { "<C-g>st", wf:wrap("Git status"), desc = "[Fugitive] :Git status" },
-        { "<C-g><C-d>", wf:wrap("diff"), desc = "[Fugitive] :Git diff" },
+        { "<C-g>st", fw:wrap("Git status"), desc = "[Fugitive] :Git status" },
+        { "<C-g><C-d>", fw:wrap("diff"), desc = "[Fugitive] :Git diff" },
+        -- TODO
         {
           "<C-g><C-l>",
-          wf:wrap("log --pretty='format:%C(auto)%h %s %C(dim blue)(%ar) %an' --date='format:%Y-%m-%d %H:%M:%S'"),
+          -- fw:wrap("log --oneline"),
+          fw:wrap("log --pretty='format:%C(auto)%h %s %C(dim blue)(%ar) %an' --date='format:%Y-%m-%d %H:%M:%S'"),
+          -- fw:wrap(("log --pretty='%s' --date='%s'").format(date_format, pretty_format)),
           mode = { "n", "x" },
           desc = "[Fugitive] :Git log (oneline, custom format, relative date)",
         },
-        { "<C-g>lo", wf:wrap("log"), mode = { "n", "x" }, desc = "[Fugitive] :Git log" },
-        { "<C-g>lb", wf:wrap("log %"), mode = { "n", "x" }, desc = "[Fugitive] :Git log %" },
+        {
+          "<C-g><C-k>",
+          -- fw:wrap("log --oneline"),
+          -- fw:wrap("log origin/HEAD...HEAD --pretty='format:%C(auto)%h %s %C(dim blue)(%ar) %an' --date='format:%Y-%m-%d %H:%M:%S'"),
+          fw:wrap(("log origin/HEAD...HEAD --pretty='%s' --date='%s'"):format(date_format, pretty_format)),
+          mode = { "n", "x" },
+          desc = "[Fugitive] :Git log origin/HEAD...HEAD (oneline, custom format, relative date)",
+        },
+        { "<C-g>lo", fw:wrap("log"), mode = { "n", "x" }, desc = "[Fugitive] :Git log" },
+        { "<C-g>lb", fw:wrap("log %"), mode = { "n", "x" }, desc = "[Fugitive] :Git log %" },
         {
           "<C-g>1",
-          wf:wrap("log -1 -p --stat"),
+          fw:wrap("log -1 -p --stat"),
           mode = { "n", "x" },
           desc = "[Fugitive] :Git log -1 -p --stat",
         },
         {
           "<C-g><C-u>",
-          wf:wrap("log --oneline --pretty='format:%h%d %s (%ar) %ad' --date='format:%Y-%m-%d %H:%M:%S' ...@{u}"),
+          fw:wrap("log --oneline --pretty='format:%h%d %s (%ar) %ad' --date='format:%Y-%m-%d %H:%M:%S' ...@{u}"),
           mode = { "n", "x" },
           desc = "[Fugitive] :Git log --oneline ...@{u} (w/ dates)",
         },
-        { "<C-g><C-h>", wf:wrap("show"), desc = "[Fugitive] :Git show" },
-        { "<C-g><C-c>", wf:wrap("commit"), mode = { "n", "x" }, desc = "[Fugitive] :Git commit" },
+        { "<C-g><C-h>", fw:wrap("show"), desc = "[Fugitive] :Git show" },
+        { "<C-g><C-c>", fw:wrap("commit"), mode = { "n", "x" }, desc = "[Fugitive] :Git commit" },
         {
           "<C-g><C-a>",
-          wf:wrap("commit --amend"),
+          fw:wrap("commit --amend"),
           mode = { "n", "x" },
           desc = "[Fugitive] :Git commit --amend",
         },
@@ -225,6 +249,13 @@ return {
           mode = { "n", "x" },
           desc = "[Fugitive] :Git commit --amend --no-edit",
         },
+        -- -- TODO
+        -- {
+        --   "<M-=><M-=>",
+        --   "<Cmd>Git commit --amend --no-edit<CR>",
+        --   mode = { "n", "x" },
+        --   desc = "[Fugitive] :Git commit --amend --no-edit",
+        -- },
         {
           "<M-g>!!",
           "<Cmd>Git commit --all --amend --no-edit<CR>",

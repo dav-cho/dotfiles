@@ -1,7 +1,14 @@
 .DS_Store
 
+# .env
+
+# .venv/
+# __pycache__/
+# .python-version
+
 Session.vim
 .session.vim
 .*.session.vim
 
 .dav
+# dav/
