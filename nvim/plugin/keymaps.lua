@@ -41,8 +41,10 @@ map("n", "<M-C>", "<Cmd>bd!<CR>", { desc = "Unload buffer (force)" })
 
 local function search_keep_pos(cmd)
   return function()
+    local view = vim.fn.winsaveview()
     local cursor = vim.api.nvim_win_get_cursor(0)
     vim.cmd("normal! " .. cmd)
+    vim.fn.winrestview(view)
     vim.api.nvim_win_set_cursor(0, cursor)
   end
 end
@@ -61,8 +63,16 @@ map("n", "<M-j>", ":m .+1<CR>==", { desc = "Move line down" })
 map("n", "<M-k>", ":m .-2<CR>==", { desc = "Move line up" })
 map("x", "<M-j>", ":m '>+1<CR>gv=gv", { desc = "Move lines down" })
 map("x", "<M-k>", ":m '<-2<CR>gv=gv", { desc = "Move lines up" })
-map({ "n", "i" }, "<S-down>", "<Cmd>call append(line('.'), getline('.'))<CR>", { desc = "Copy line down" })
-map({ "n", "i" }, "<S-up>", "<Cmd>call append(line('.')-1, getline('.'))<CR>", { desc = "Copy line up" })
+map({ "n", "i" }, "<S-down>", function()
+  for _ = 1, vim.v.count1 do
+    vim.cmd("call append(line('.'), getline('.'))")
+  end
+end, { desc = "Copy line down" })
+map({ "n", "i" }, "<S-up>", function()
+  for _ = 1, vim.v.count1 do
+    vim.cmd("call append(line('.')-1, getline('.'))")
+  end
+end, { desc = "Copy line up" })
 
 map("n", "<M-J>", "m`J``", { desc = "Join lines, keep cursor" })
 
