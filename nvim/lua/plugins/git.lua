@@ -280,7 +280,7 @@ return {
       {
         "<Leader>dm",
         "<Cmd>DiffviewOpen origin/HEAD...HEAD --imply-local<CR>",
-        desc = "[Diffview] :DiffviewOpen origin/HEAD...HEAD --imply-local)",
+        desc = "[Diffview] :DiffviewOpen origin/HEAD...HEAD --imply-local",
       },
     },
     opts = function(_, opts)
