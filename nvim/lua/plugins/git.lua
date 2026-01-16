@@ -124,9 +124,9 @@ return {
     "tpope/vim-fugitive",
     cmd = { "G", "Git" },
     keys = function()
-      local with_float = {}
+      local FloatWrapper = {}
 
-      with_float.get_ctx = function()
+      FloatWrapper.get_ctx = function()
         return {
           win = vim.api.nvim_get_current_win(),
           buf = vim.api.nvim_get_current_buf(),
@@ -134,7 +134,7 @@ return {
         }
       end
 
-      with_float.get_win_opts = function()
+      FloatWrapper.get_win_opts = function()
         local height = math.floor(vim.o.lines * 0.8)
         local width = math.floor(vim.o.columns * 0.9)
         return {
@@ -147,7 +147,7 @@ return {
         }
       end
 
-      function with_float:wrap(cmd)
+      function FloatWrapper:wrap(cmd)
         local function _wrapped()
           local ctx = self.get_ctx()
           vim.cmd("tab Git " .. (cmd or ""))
@@ -162,42 +162,50 @@ return {
         return _wrapped
       end
 
-      local wf = with_float
+      local fw = FloatWrapper
+      local date_format = "format:%Y-%m-%d %H:%M:%S"
+      local pretty_format = "format:%C(auto)%h %s %C(dim blue)(%ar) %an"
 
       return {
-        { "<C-g><C-g>", wf:wrap(), desc = "[Fugitive] :Git (:G)" },
+        { "<C-g><C-g>", fw:wrap(), desc = "[Fugitive] :Git (:G)" },
         { "<Leader>gg", vim.cmd.Git, desc = "[Fugitive] :Git (:G)" },
         { "<M-G>", vim.cmd.Git, desc = "[Fugitive] :Git (:G)" },
         { "<Leader>gU", "<Cmd>Git restore --staged .<CR>", desc = "[Fugitive] unstage all" },
         { "<Space><M-s>", "<Cmd>Git restore --staged %<CR>", desc = "[Fugitive] unstage all" },
         { "<C-g><C-s>", "<Cmd>Git status --short<CR>", desc = "[Fugitive] :Git status --short" },
-        { "<C-g>st", wf:wrap("Git status"), desc = "[Fugitive] :Git status" },
-        { "<C-g><C-d>", wf:wrap("diff"), desc = "[Fugitive] :Git diff" },
+        { "<C-g>st", fw:wrap("Git status"), desc = "[Fugitive] :Git status" },
+        { "<C-g><C-d>", fw:wrap("diff"), desc = "[Fugitive] :Git diff" },
         {
           "<C-g><C-l>",
-          wf:wrap("log --pretty='format:%C(auto)%h %s %C(dim blue)(%ar) %an' --date='format:%Y-%m-%d %H:%M:%S'"),
+          fw:wrap("log --pretty='format:%C(auto)%h %s %C(dim blue)(%ar) %an' --date='format:%Y-%m-%d %H:%M:%S'"),
           mode = { "n", "x" },
           desc = "[Fugitive] :Git log (oneline, custom format, relative date)",
         },
-        { "<C-g>lo", wf:wrap("log"), mode = { "n", "x" }, desc = "[Fugitive] :Git log" },
-        { "<C-g>lb", wf:wrap("log %"), mode = { "n", "x" }, desc = "[Fugitive] :Git log %" },
+        {
+          "<C-g><C-k>",
+          fw:wrap(("log origin/HEAD...HEAD --pretty='%s' --date='%s'"):format(date_format, pretty_format)),
+          mode = { "n", "x" },
+          desc = "[Fugitive] :Git log origin/HEAD...HEAD (oneline, custom format, relative date)",
+        },
+        { "<C-g>lo", fw:wrap("log"), mode = { "n", "x" }, desc = "[Fugitive] :Git log" },
+        { "<C-g>lb", fw:wrap("log %"), mode = { "n", "x" }, desc = "[Fugitive] :Git log %" },
         {
           "<C-g>1",
-          wf:wrap("log -1 -p --stat"),
+          fw:wrap("log -1 -p --stat"),
           mode = { "n", "x" },
           desc = "[Fugitive] :Git log -1 -p --stat",
         },
         {
           "<C-g><C-u>",
-          wf:wrap("log --oneline --pretty='format:%h%d %s (%ar) %ad' --date='format:%Y-%m-%d %H:%M:%S' ...@{u}"),
+          fw:wrap("log --oneline --pretty='format:%h%d %s (%ar) %ad' --date='format:%Y-%m-%d %H:%M:%S' ...@{u}"),
           mode = { "n", "x" },
           desc = "[Fugitive] :Git log --oneline ...@{u} (w/ dates)",
         },
-        { "<C-g><C-h>", wf:wrap("show"), desc = "[Fugitive] :Git show" },
-        { "<C-g><C-c>", wf:wrap("commit"), mode = { "n", "x" }, desc = "[Fugitive] :Git commit" },
+        { "<C-g><C-h>", fw:wrap("show"), desc = "[Fugitive] :Git show" },
+        { "<C-g><C-c>", fw:wrap("commit"), mode = { "n", "x" }, desc = "[Fugitive] :Git commit" },
         {
           "<C-g><C-a>",
-          wf:wrap("commit --amend"),
+          fw:wrap("commit --amend"),
           mode = { "n", "x" },
           desc = "[Fugitive] :Git commit --amend",
         },
@@ -245,8 +253,11 @@ return {
           ft = "fugitiveblame",
           desc = "[Fugitive] toggle winbar",
         },
+
+        { "<C-g>dm", fw:wrap("diff origin/HEAD...HEAD"), desc = "[Fugitive] :Git diff origin/HEAD...HEAD" },
         { "<C-g>dv", "<Cmd>Gdiffsplit<CR>", desc = "[Fugitive] :Gdiffsplit" },
         { "<C-g>dt", "<Cmd>Git! difftool<CR>", desc = "[Fugitive] :Git! difftool" },
+
         { "<C-g>gr", "<Cmd>Ggrep ", desc = "[Fugitive] :Ggrep ..." },
         { "<C-g>cl", "<Cmd>Gclog!<CR>", mode = { "n", "x" }, desc = "[Fugitive] :Gclog!" },
         { "<C-g>cL", "<Cmd>Gclog! %<CR>", mode = { "n", "x" }, desc = "[Fugitive] :Gclog! %" },
