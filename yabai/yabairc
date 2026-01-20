@@ -28,8 +28,8 @@ yabai -m rule --add \
   manage=off
 
 yabai -m rule --add \
-  app="Google Chrome" \
-  title="^(Bitwarden.*|Task Manager)$" \
+  app="^(Google Chrome)$" \
+  title="^(Bitwarden.*|Task Manager|Sign in.*|Untitled.*)$" \
   manage=off
 
 yabai -m rule --add \
