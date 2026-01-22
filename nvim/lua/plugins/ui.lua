@@ -637,14 +637,13 @@ return {
         end,
       },
       mappings = {
-        object_scope = "ii",
-        object_scope_with_border = "ai",
+        bject_scope = "",
+        object_scope_with_border = "",
         goto_top = "[i",
         goto_bottom = "]i",
       },
       options = {
-        border = "top",
-        try_as_border = true,
+        indent_at_cursor = false,
       },
       symbol = "▏", -- or "│"
     },
