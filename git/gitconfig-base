@@ -30,7 +30,7 @@
   oneline-mark-reldate="%C(auto)%h %C(magenta)%m%C(auto)%d %s %C(dim blue)(%ar)"
   oneline-name-email-fulldate="%C(auto)%h%d %s %C(dim blue)%an %ae (%ar) %ad"
   oneline-name-email="%C(auto)%h%d %s %C(dim blue)%an (%ae)"
-  oneline-reldate-name-email="%C(auto)%h%d %s %C(dim blue)(%ar) %an %ae"
+  oneline-reldate-name-email="%C(auto)%h%d %s %C(blue)(%ar) %C(dim blue)%an %ae"
 
 [delta]
   navigate = true
