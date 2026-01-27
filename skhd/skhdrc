@@ -87,6 +87,8 @@ lctrl + lcmd + lshift - tab  : yabai -m window --stack mouse  --focus stack.next
 ## swap stack
 lctrl + lcmd + lshift - a : yabai -m window --swap stack.prev --focus
 lctrl + lcmd + lshift - z : yabai -m window --swap stack.next --focus
+lctrl + lalt + lshift - a : for win_id in $(yabai -m query --windows --space | jq -r '.[].id'); do yabai -m window --swap stack.prev --focus; done
+lctrl + lalt + lshift - z : for win_id in $(yabai -m query --windows --space | jq -r '.[].id'); do yabai -m window --swap stack.next --focus; done
 
 ## move window to space
 lctrl + lcmd - 1 : yabai -m window --space 1  --focus
@@ -186,7 +188,7 @@ lctrl + lshift + rshift - e : yabai -m window --sub-layer above
 lctrl + lshift + rshift - d : yabai -m window --sub-layer normal
 lctrl + lshift + rshift - c : yabai -m window --sub-layer below
 lctrl + lshift + rshift - a : yabai -m window --sub-layer auto
-lctrl + lalt + lshift - z : "$HOME/.config/yabai/sub-layer-all.sh" normal
+
 lctrl + lalt + lcmd + lshift - z : yabai -m query --windows | jq -r 'map(.id)[]' | xargs -I {} yabai -m window {} --sub-layer normal
 
 ## window actions
