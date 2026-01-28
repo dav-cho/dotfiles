@@ -12,6 +12,14 @@ map("n", "<Space>w", "<Cmd>silent! w<CR>", { desc = "Write" })
 map("n", "<Space>W", "<Cmd>silent! wa<CR>", { desc = "Write All" })
 map({ "n", "v" }, "<C-q>", "<Cmd>qa<CR>", { desc = "Quit all" })
 map({ "n", "v" }, "<M-Q>", "<Cmd>qa!<CR>", { desc = "Quit all (force)" })
+-- map({ "n", "v" }, "<C-q><C-q>", "<Cmd>qa<CR>", { desc = "Quit all" })
+-- map({ "n", "v" }, "<M-q><M-q>", "<Cmd>qa!<CR>", { desc = "Quit all (force)" })
+
+-- TODO
+map({ "n", "v" }, "<Down>", "<C-e>", { desc = "Scroll down" })
+map({ "n", "v" }, "<Up>", "<C-y>", { desc = "Scroll up" })
+-- map({ "n", "v" }, "<Down>", "<C-e>gj", { desc = "Scroll down" })
+-- map({ "n", "v" }, "<Up>", "<C-y>gk", { desc = "Scroll up" })
 
 map({ "n", "v" }, "<C-c>", "<Cmd>wincmd c<CR>", { desc = ":wincmd c" })
 map({ "n", "v" }, "<C-h>", [[<Cmd>exe v:count1 . "wincmd h"<CR>]], { desc = ":wincmd h" })
@@ -39,6 +47,14 @@ map("n", "<M-x>", "<Cmd>tabc<CR>", { desc = "Close tab" })
 map("n", "<M-c>", "<Cmd>bd<CR>", { desc = "Unload buffer" })
 map("n", "<M-C>", "<Cmd>bd!<CR>", { desc = "Unload buffer (force)" })
 
+-- TODO: moved to utils.lua (nvim-hlslens)
+-- -- local function search_keep_pos(cmd)
+-- --   return function()
+-- --     local cursor = vim.api.nvim_win_get_cursor(0)
+-- --     vim.cmd("normal! " .. cmd)
+-- --     vim.api.nvim_win_set_cursor(0, cursor)
+-- --   end
+-- -- end
 local function search_keep_pos(cmd)
   return function()
     local view = vim.fn.winsaveview()
@@ -51,6 +67,8 @@ end
 
 map("n", "*", search_keep_pos("*"), { desc = "Search word forward" })
 map("n", "#", search_keep_pos("#"), { desc = "Search word backward" })
+-- map("n", "*", "*N", { desc = "Search word forward" })
+-- map("n", "#", "#N", { desc = "Search word backward" })
 map("n", "g*", search_keep_pos("g*"), { desc = "Search word forward (partial)" })
 map("n", "g#", search_keep_pos("g#"), { desc = "Search word backward (partial)" })
 map("v", "*", [["by/\V<C-r>b<CR>`<]], { desc = "Search selection forward" })
@@ -58,11 +76,16 @@ map("v", "#", [["by?\V<C-r>b<CR>`<]], { desc = "Search selection backward" })
 map("n", "<C-n>", "nzz", { desc = "Repeat search, redraw line center" })
 map("n", "<C-p>", "Nzz", { desc = "Repeat search reverse, redraw line center" })
 map("n", "<M-C-n>", "nzt", { desc = "Repeat search, redraw top" })
+-- map("n", "<M-n>", "nzz", { desc = "Repeat search, redraw line center" })
+-- map("n", "<M-N>", "Nzz", { desc = "Repeat search reverse, redraw line center" })
+-- map("n", "<M-C-n>", "nzt", { desc = "Repeat search, redraw top" })
 
 map("n", "<M-j>", ":m .+1<CR>==", { desc = "Move line down" })
 map("n", "<M-k>", ":m .-2<CR>==", { desc = "Move line up" })
 map("x", "<M-j>", ":m '>+1<CR>gv=gv", { desc = "Move lines down" })
 map("x", "<M-k>", ":m '<-2<CR>gv=gv", { desc = "Move lines up" })
+-- map({ "n", "i" }, "<S-down>", "<Cmd>call append(line('.'), getline('.'))<CR>", { desc = "Copy line down" })
+-- map({ "n", "i" }, "<S-up>", "<Cmd>call append(line('.')-1, getline('.'))<CR>", { desc = "Copy line up" })
 map({ "n", "i" }, "<S-down>", function()
   for _ = 1, vim.v.count1 do
     vim.cmd("call append(line('.'), getline('.'))")
@@ -82,6 +105,7 @@ map("v", "gy", function()
   vim.api.nvim_win_set_cursor(0, { row, col })
 end, { desc = "Yank selection, keep cursor position" })
 map("v", "<M-y>", "ygv", { desc = "Yank selection and reselect" })
+-- map({ "n", "x" }, "<M-P>", [["0p]], { desc = "Paste yank register" })
 
 map("n", "<Leader>yf", [[<Cmd>let @+=expand("%:t")<CR>]], { desc = "Yank file name" })
 map("n", "<Leader>yr", [[<Cmd>let @+=expand("%:~:.")<CR>]], { desc = "Yank relative file path" })
@@ -98,11 +122,21 @@ map("n", "<Space>l", "<Cmd>lopen<CR>", { desc = "Open loclist" })
 map("n", "<Space>_", "<Cmd>lprevious<CR>", { desc = "loclist previous" })
 map("n", "<Space>+", "<Cmd>lnext<CR>", { desc = "loclist next" })
 
+-- TODO
+-- map({ "n", "v" }, "<Space><BS>", "zb5<C-e>", { noremap = true, desc = "zb5<C-e>" })
+-- map({ "n", "v" }, "z.", "zt5<C-y>", { noremap = true, desc = "zt" })
+-- map({ "n", "v" }, "z<Bslash>", "zt5<C-y>", { noremap = true, desc = "zt" })
+-- map({ "n", "v" }, "z<CR>", "zt10<C-y>", { noremap = true, desc = "zt5<C-y>" })
 map({ "n", "v" }, "<Space><CR>", function()
   local rows = math.floor(vim.api.nvim_win_get_height(0) * 0.1)
   rows = rows - vim.opt.scrolloff:get()
   vim.api.nvim_input(string.format("zt%d<C-y>", rows))
 end, { desc = "Redraw cursor line top 10%" })
+-- map({ "n", "v" }, "z<Bslash>", function()
+--   local rows = math.floor(vim.api.nvim_win_get_height(0) * 0.25)
+--   rows = rows - vim.opt.scrolloff:get()
+--   vim.api.nvim_input(string.format("zt%d<C-y>", rows))
+-- end, { desc = "Redraw cursor line top 25%" })
 map({ "n", "v" }, "z<Bslash>", function()
   local rows = math.floor(vim.api.nvim_win_get_height(0) * 0.25)
   rows = rows - vim.opt.scrolloff:get()
@@ -113,6 +147,18 @@ map({ "n", "v" }, "<Space><BS>", function()
   rows = rows - vim.opt.scrolloff:get()
   vim.api.nvim_input(string.format("zb%d<C-e>", rows))
 end, { desc = "Redraw cursor line bottom 10%" })
+
+-- map({ "n", "v" }, "z<CR>", "zt", { noremap = true, desc = "zt" })
+-- map({ "n", "v" }, "<Space><CR>", function()
+--   local rows = math.floor(vim.api.nvim_win_get_height(0) / 5)
+--   rows = rows - vim.opt.scrolloff:get()
+--   vim.api.nvim_input(string.format("zt%d<C-y>", rows))
+-- end, { desc = "Redraw cursor line top 1/5" })
+-- map({ "n", "v" }, "<Space><BS>", function()
+--   local rows = math.floor(vim.api.nvim_win_get_height(0) / 5)
+--   rows = rows - vim.opt.scrolloff:get()
+--   vim.api.nvim_input(string.format("zb%d<C-e>", rows))
+-- end, { desc = "Redraw cursor line bottom 1/5" })
 
 map("n", "<Leader>ms", function()
   vim.cmd("mksession!")
@@ -126,4 +172,48 @@ map("n", "<Leader>ve", function()
     { scope = "local" }
   )
 end, { desc = "toggle virtualedit=block" })
+-- map("n", "<Leader>mg", "<Cmd>messages<CR>", { desc = ":messages" })
 map("n", "<Leader>lz", "<Cmd>Lazy<CR>", { desc = "Lazy" })
+
+local run_cmds = {
+  bash = "bash",
+  javascript = "node",
+  python = "python",
+  rust = "cargo run",
+  typescript = "ts-node",
+  zsh = "zsh",
+}
+
+map("n", "<Leader>ru", function()
+  local cmd = run_cmds[vim.bo.filetype]
+  if cmd then
+    if cmd then
+      return string.format("<Cmd>!%s %%<CR>", cmd)
+    end
+    return "<NOP>"
+  end
+end, { expr = true, desc = "run file (`:!<ft cmd> %`)" })
+
+map("n", "<Leader>ri", function()
+  local cmd = run_cmds[vim.bo.filetype]
+  if cmd then
+    local file = vim.fn.expand("%")
+
+    vim.cmd("terminal")
+
+    -- wait for terminal prompt
+    vim.wait(100, function()
+      local text = vim.api.nvim_buf_get_lines(0, 0, 1, false)[1]
+      return text and text ~= ""
+    end, 10, false)
+
+    vim.api.nvim_chan_send(vim.bo.channel, string.format("%s %s\n", cmd, file))
+  end
+end, { desc = "run file in interactive terminal" })
+
+-- map("n", "<Leader>mn", function()
+--   vim.cmd("Man " .. vim.fn.input(":Man "))
+-- end, { desc = ":Man <input>" })
+-- map("n", "<Leader>vm", function()
+--   vim.cmd("vertical Man " .. vim.fn.input(":vertical Man "))
+-- end, { desc = ":vertical Man <input>" })

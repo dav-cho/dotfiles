@@ -1,0 +1,5 @@
+{
+    "window.commandCenter": true,
+    "cursor.composer.shouldAutoScrollToBottom": false,
+    "cursor.composer.queueMessageDefaultBehavior": "queue"
+}
