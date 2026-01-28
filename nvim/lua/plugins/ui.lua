@@ -434,24 +434,6 @@ return {
     config = function(self, opts)
       require("bqf").setup(opts)
 
-      ---@type BqfLayout
-      local layout = require("bqf.layout")
-      local orig_layout_initialize = layout.initialize
-
-      ---@param qwinid number
-      ---@return fun()
-      local function initialize(qwinid)
-        orig_layout_initialize(qwinid)
-        return function()
-          local height = math.min(self.custom.max_height, vim.api.nvim_buf_line_count(0))
-          vim.api.nvim_set_option_value("winfixheight", false, { win = qwinid })
-          vim.api.nvim_win_set_height(qwinid, height)
-          vim.api.nvim_set_option_value("winfixheight", true, { win = qwinid })
-        end
-      end
-
-      layout.initialize = initialize
-
       vim.api.nvim_create_autocmd("FileType", {
         group = vim.api.nvim_create_augroup("UserBqf", { clear = false }),
         pattern = "qf",
