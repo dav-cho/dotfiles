@@ -14,6 +14,11 @@
     "body": ["console.log('~ $1:', $1);"],
     "description": "Quick and Fancy console.log"
   },
+  "Console Log JSON.stringify": {
+    "prefix": "conj",
+    "body": ["console.log(JSON.stringify($1, null, 2));"],
+    "description": "console.log JSON.stringify"
+  },
   "Import From": {
     "prefix": "imp",
     "body": ["import { $2 } from '$1';"],
