@@ -5,8 +5,8 @@
 .venv/
 __pycache__/
 
-Session.vim
-.session*.vim
+*Session*.*vim
+*session*.*vim
+.*session*.*vim
 
-/.dav/
-/dav/
+.dav/

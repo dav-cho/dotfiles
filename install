@@ -71,7 +71,6 @@ symlink "$DOTFILES/zshrc" "$HOME/.zshrc"
 
 symlink "$DOTFILES/alacritty.toml" "$CONFIG/alacritty.toml"
 symlink "$DOTFILES/atuin/config.toml" "$CONFIG/atuin/config.toml"
-symlink "$DOTFILES/git" "$CONFIG/git"
 symlink "$DOTFILES/kitty" "$CONFIG/kitty"
 symlink "$DOTFILES/nvim" "$CONFIG/nvim"
 symlink "$DOTFILES/ruff" "$CONFIG/ruff"
