@@ -290,7 +290,20 @@ return {
       local keymaps = {
         { "<Leader>lf", "<Cmd>Lspsaga finder<CR>", desc = "lsp_finder" },
         { "<F2>", "<Cmd>Lspsaga rename<CR>", desc = "rename" },
-        { "<Space>d", "<Cmd>Lspsaga peek_definition<CR>", desc = "peek_definition" },
+        {
+          "<Space>d",
+          function()
+            local orig_win = vim.api.nvim_get_current_win()
+            vim.cmd("Lspsaga peek_definition")
+            vim.wait(100, function()
+              return vim.api.nvim_get_current_win() ~= orig_win
+            end, 5)
+            local rows = math.floor(vim.api.nvim_win_get_height(0) / 5)
+            rows = rows - vim.opt.scrolloff:get()
+            vim.api.nvim_input(string.format("zt%d<C-y>", rows))
+          end,
+          desc = "peek_definition",
+        },
         { "<Space>t", "<Cmd>Lspsaga peek_type_definition<CR>", desc = "peek_type_definition" },
         { "<Leader>sl", "<Cmd>Lspsaga show_line_diagnostics<CR>", desc = "show_line_diagnostics" },
         { "<Leader>sb", "<Cmd>Lspsaga show_buf_diagnostics<CR>", desc = "show_buf_diagnostics" },
