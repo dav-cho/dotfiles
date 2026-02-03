@@ -234,7 +234,12 @@ alias glup='git log --pretty=oneline-mark-reldate ...@{u}'
 alias glz="git log --oneline | fzf --preview 'git show --color {1}'"
 alias gmnf="git merge --no-ff"
 alias gs="git status --short"
-alias gstz="git stash list | fzf --preview 'git stash show -p --color \$(echo {1} | cut -d: -f1)'"
+alias gstz='git stash list | fzf --delimiter=":" \
+  --preview "git stash show -p --color {1}" \
+  --bind "alt-y:execute(echo {1})+abort" \
+  --bind "alt-A:execute(git stash apply {1})+abort" \
+  --bind "alt-P:execute(git stash pop   {1})+abort" \
+  --bind "alt-D:execute(git stash drop  {1})+abort"'
 alias gsww='git switch $(git branch --format="%(refname:short)" | fzf --no-preview) 2>/dev/null'
 alias gu="git pull"
 
