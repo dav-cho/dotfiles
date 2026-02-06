@@ -291,21 +291,21 @@ return {
           desc = "BufferLineTogglePin",
         },
         {
-          "<Leader>br",
+          "<Leader>BR",
           function()
             require("bufferline").restore_positions()
           end,
           desc = "restore_positions()",
         },
         {
-          "<Leader>Bh",
+          "<Leader>bH",
           function()
             require("bufferline").close_in_direction("left")
           end,
           desc = "BufferLineCloseLeft",
         },
         {
-          "<Leader>Bl",
+          "<Leader>bL",
           function()
             require("bufferline").close_in_direction("right")
           end,
