@@ -98,21 +98,40 @@ map("n", "<Space>l", "<Cmd>lopen<CR>", { desc = "Open loclist" })
 map("n", "<Space>_", "<Cmd>lprevious<CR>", { desc = "loclist previous" })
 map("n", "<Space>+", "<Cmd>lnext<CR>", { desc = "loclist next" })
 
-map({ "n", "v" }, "<Space><CR>", function()
-  local rows = math.floor(vim.api.nvim_win_get_height(0) * 0.1)
-  rows = rows - vim.opt.scrolloff:get()
-  vim.api.nvim_input(string.format("zt%d<C-y>", rows))
-end, { desc = "Redraw cursor line top 10%" })
-map({ "n", "v" }, "z<Bslash>", function()
-  local rows = math.floor(vim.api.nvim_win_get_height(0) * 0.25)
-  rows = rows - vim.opt.scrolloff:get()
-  vim.api.nvim_input(string.format("zt%d<C-y>", rows))
-end, { desc = "Redraw cursor line top 25%" })
-map({ "n", "v" }, "<Space><BS>", function()
-  local rows = math.floor(vim.api.nvim_win_get_height(0) * 0.1)
-  rows = rows - vim.opt.scrolloff:get()
-  vim.api.nvim_input(string.format("zb%d<C-e>", rows))
-end, { desc = "Redraw cursor line bottom 10%" })
+local function redraw_pct(pct)
+  return function()
+    local height = vim.api.nvim_win_get_height(0) - 1 -- breadcrumb line
+    local scrolloff = vim.opt.scrolloff:get()
+
+    local target = math.floor(height * math.abs(pct) + 0.5) -- round
+    if pct < 0 then
+      target = height - target + 1
+    end
+    target = math.max(scrolloff + 1, math.min(height - scrolloff, target))
+
+    local curr = vim.fn.winline()
+    local offset = math.abs(curr - target)
+    if offset > 0 then
+      vim.api.nvim_input(string.format("%d%s", offset, curr < target and "<C-y>" or "<C-e>"))
+    end
+  end
+end
+
+map({ "n", "v" }, "<Space><CR>", redraw_pct(0.1), { desc = "Redraw cursor line top 10%" })
+map({ "n", "v" }, "z<Bslash>", redraw_pct(0.25), { desc = "Redraw cursor line top 25%" })
+map({ "n", "v" }, "z;", redraw_pct(0.25), { desc = "Redraw cursor line top 25%" })
+map({ "n", "v" }, "<Space><BS>", redraw_pct(-0.1), { desc = "Redraw cursor line bottom 10%" })
+
+map("n", "<M-[>", function()
+  vim.api.nvim_input("{")
+  vim.schedule(redraw_pct(0.25))
+end, { desc = "Paragraph backward + redraw cursor line top 25%" })
+map("n", "<M-]>", function()
+  vim.api.nvim_input("}")
+  vim.schedule(redraw_pct(0.25))
+end, { desc = "Paragraph forward + redraw cursor line top 25%" })
+map("n", "<M-{>", "{zz", { desc = "Paragraph backward + redraw cursor line center" })
+map("n", "<M-}>", "}zz", { desc = "Paragraph forward + redraw cursor line center" })
 
 map("n", "<Leader>ms", function()
   vim.cmd("mksession!")
