@@ -218,12 +218,14 @@ alias gla="git log --oneline --all"
 alias glc='git log --pretty=oneline-name-email'
 alias gld='git log --pretty=oneline-fulldate --date=iso'
 alias glf='git log --pretty=fuller'
+alias glgpr='git log --stat --patch --reverse'
 alias glh='git log --simplify-by-decoration --pretty=oneline-fulldate --date=iso'
 alias gll='git logdate --pretty=oneline-fulldate-name-email'
 alias gllr='git log --pretty=oneline-mark-reldate'
-alias glmb='git log --pretty=oneline-reldate-name-email $(git merge-base $(git_main_branch) HEAD)..'
+alias glmb='git log --pretty=oneline-reldate-name-email origin/HEAD...HEAD'
+alias glnd='git log --oneline --no-decorate'
 alias glo="git log"
-alias glomb='git log $(git merge-base $(git_main_branch) HEAD)..'
+alias glomb='git log origin/HEAD...HEAD'
 alias glop="git log --stat --patch --reverse ORIG_HEAD.."
 alias glorig='git log --pretty=oneline-reldate-name-email --date=iso ORIG_HEAD..'
 alias glp="git log --first-parent --pretty=oneline-reldate-name-email"
@@ -248,5 +250,8 @@ alias la="eza -laa --icons=auto"
 alias lg="eza -laaG --icons=auto"
 alias ll="eza -l --icons=auto"
 alias lt="eza --tree -I 'node_modules|__pycache__'"
+
+alias dls="docker container ls --format 'table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Status}}'"
+alias dlss="docker container ls --format 'table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.CreatedAt}}\t{{.Status}}'"
 
 [[ -e "$HOME/._work" && -s "$HOME/dotfiles/work/zshrc" ]] && source "$HOME/dotfiles/work/zshrc"
