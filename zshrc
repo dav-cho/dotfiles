@@ -112,7 +112,7 @@ zstyle ':fzf-tab:*' use-fzf-default-opts yes
 zstyle ':fzf-tab:complete:*' fzf-preview 'if [[ -f $realpath ]]; then bat --color=always --style=numbers --line-range=:500 $realpath; else eza --tree --color=always $realpath; fi'
 zstyle ':fzf-tab:*' fzf-bindings 'ctrl-y:execute-silent({_FTB_INIT_}echo "$realpath" | tr -d "\n" | pbcopy)'
 
-. "$HOME/.atuin/bin/env"
+[[ -e "$HOME/.atuin/bin/env" ]] && . "$HOME/.atuin/bin/env"
 eval "$(atuin init zsh --disable-up-arrow)"
 
 [[ -e "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
