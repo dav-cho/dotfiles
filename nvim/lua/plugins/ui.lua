@@ -185,22 +185,6 @@ return {
           desc = "BufferLineCyclePrev",
         },
         {
-          "<Right>",
-          function()
-            require("bufferline").cycle(math.max(1, vim.v.count))
-          end,
-          mode = { "n", "v" },
-          desc = "BufferLineCyclePrev",
-        },
-        {
-          "<Left>",
-          function()
-            require("bufferline").cycle(math.min(-1, -vim.v.count))
-          end,
-          mode = { "n", "v" },
-          desc = "BufferLineCyclePrev",
-        },
-        {
           "<Space><Left>",
           function()
             local buf_count = require("bufferline.utils").get_buf_count()

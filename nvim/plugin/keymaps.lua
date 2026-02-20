@@ -24,10 +24,10 @@ map({ "n", "v" }, "<Leader>wX", "<C-w>x<C-w>p", { desc = "Swap window keep curso
 
 map({ "n", "v" }, "<Leader>wt", "<Cmd>tab split<CR>", { desc = ":tab split" })
 map({ "n", "v" }, "<Leader>wT", "<Cmd>wincmd T<CR>", { desc = ":wincmd T" })
-map({ "n", "v" }, "<S-Right>", function()
+map({ "n", "v" }, "<Right>", function()
   vim.cmd.tabnext((vim.fn.tabpagenr() - 1 + vim.v.count1) % vim.fn.tabpagenr("$") + 1)
 end, { desc = "[count] next tab" })
-map({ "n", "v" }, "<S-Left>", function()
+map({ "n", "v" }, "<Left>", function()
   vim.cmd.tabprevious(vim.v.count1)
 end, { desc = "[count] previous tab" })
 map({ "n", "v" }, "<PageUp>", "<Cmd>tabnext<CR>", { desc = "Next tab" })
