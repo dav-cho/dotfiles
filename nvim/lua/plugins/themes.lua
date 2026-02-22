@@ -44,9 +44,17 @@ return {
         extend_background_behind_borders = false,
         styles = { italic = false },
         highlight_groups = {
+          -- DiffviewNormal = { link = "Normal" },
+          -- DiffviewNormal xxx guifg=#e0def4 guibg=#1f1d2e
+          -- HlSearchLens = { link = "Search" },
+          -- HlSearchLensNear = { link = "CurSearch" },
+          -- HlSearchNear = { link = "CurSearch" },
+          -- IndentBlanklineChar xxx cterm=nocombine gui=nocombine guifg=#6e6a86
+          -- MiniIndentscopeSymbol xxx guifg=#6e6a86
+          -- SnacksIndentScope xxx guifg=#9ccfd8
+          BufferLineFill = { bg = colors.bg },
           BufferlineTab = { fg = colors.comment, bg = colors.bg },
           BufferlineTabSelected = { fg = "iris", bg = colors.bg },
-          BufferLineFill = { bg = colors.bg },
           ColorColumn = { bg = colors.cursor_line },
           Comment = { fg = colors.comment },
           Constant = { fg = colors.pine_light },
@@ -57,9 +65,16 @@ return {
           DiagnosticVirtualTextHint = { fg = colors.diagnostic_virtual_text_hint, bg = "none" },
           DiagnosticVirtualTextInfo = { fg = colors.diagnostic_virtual_text_info, bg = "none" },
           DiagnosticVirtualTextWarn = { fg = colors.diagnostic_virtual_text_warn, bg = "none" },
+          DiffAdd = { fg = colors.emerald },
+          DiffDelete = { fg = "love" },
+          -- DiffAdd = { fg = colors.emerald, bg = "none" },
+          -- DiffDelete = { fg = "love", bg = "none" },
           FlashLabel = { bg = "iris" },
           FloatBorder = { fg = colors.float_border },
           Folded = { link = "Comment" },
+          HlSearchLens = { link = "WinBarNC" },
+          HlSearchLensNear = { link = "@diff.minus" },
+          HlSearchNear = { link = "CurSearch" },
           IlluminatedWordRead = { bg = colors.cursor_line_bright },
           IlluminatedWordText = { bg = colors.cursor_line_bright },
           IlluminatedWordWrite = { bg = colors.cursor_line_bright },

@@ -20,6 +20,22 @@ if [[ "$1" == "abs" ]]; then
   )"
   yabai -m window --move "abs:$coords"
   yabai -m window --resize "abs:$2:$3"
+
+  # coords="$(
+  #   jq \
+  #     --argjson dx "$2" \
+  #     --argjson dy "$3" \
+  #     --argjson display "$(yabai -m query --displays --window | jq -r '.frame')" \
+  #     --argjson window "$(yabai -m query --windows --window | jq -r '.frame')" \
+  #     -nr '(($display.x + ($display.w - $dx) / 2) - $window.x | tostring)
+  #           + ":"
+  #           + (($display.y + ($display.h - $dy - 25) / 2) - $window.y | tostring)'
+  # )"
+  # yabai -m window --resize "abs:$2:$3"
+  # yabai -m window --move "rel:$coords"
+
+  # yabai -m window --resize "abs:$2:$3"
+  # . "$HOME/.config/yabai/float-center.sh"
 elif [[ "$1" == "grid" ]]; then
   orientation=$(
     jq \

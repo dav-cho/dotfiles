@@ -99,6 +99,65 @@ return {
             },
           },
           lualine_c = {
+            -- {
+            --   "filename",
+            --   path = 3, -- absolute with `~`
+            --   fmt = function(path)
+            --     -- path = vim.fn.fnamemodify(path, ":.")
+            --     -- if work:is_work_path() and vim.o.columns >= 170 then
+            --     --   -- local cwd = vim.fn.getcwd():gsub(vim.fn.expand("$HOME"), "~"):match("([^/]+)$")
+            --     --   local cwd = vim.fn.getcwd():gsub(vim.fn.expand("$HOME"), "~")
+            --     --   path = ("%s/%s"):format(cwd, path)
+            --     -- end
+            --
+            --     if vim.o.columns < 140 then
+            --       path = vim.fn.fnamemodify(path, ":t")
+            --     elseif vim.o.columns < 160 then
+            --       path = vim.fn.fnamemodify(path, ":.")
+            --     elseif work:is_work_path() then
+            --       if vim.o.columns < 180 then
+            --         path = string.gsub(path, work.work_path .. "/", "")
+            --       end
+            --       if vim.o.columns < 170 then
+            --         path = path:match("^/?[^/]+/(.*)")
+            --       end
+            --     end
+            --
+            --     return path
+            --   end,
+            --   on_click = function(_, btn, _)
+            --     if btn == "l" then
+            --       print(vim.fn.expand("%:~"))
+            --     elseif btn == "m" then
+            --       copy_and_echo(vim.fn.expand("%:~"))
+            --     elseif btn == "r" then
+            --       copy_and_echo(vim.fn.expand("%:."))
+            --     end
+            --   end,
+            -- },
+            -- {
+            --   "filename",
+            --   path = 1, -- relative
+            --   fmt = function(path)
+            --     local cwd = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
+            --     path = cwd .. "/" .. path
+            --     if vim.o.columns < 100 then
+            --       path = vim.fn.fnamemodify(path, ":t")
+            --     elseif vim.o.columns < 150 then
+            --       path = string.gsub(path, cwd .. "/", "")
+            --     end
+            --     return path
+            --   end,
+            --   on_click = function(_, btn, _)
+            --     if btn == "l" then
+            --       print(vim.fn.expand("%:~"))
+            --     elseif btn == "m" then
+            --       copy_and_echo(vim.fn.expand("%:~"))
+            --     elseif btn == "r" then
+            --       copy_and_echo(vim.fn.expand("%:."))
+            --     end
+            --   end,
+            -- },
             {
               "filename",
               path = 1, -- relative
@@ -128,6 +187,15 @@ return {
                 if vim.o.columns < 100 then
                   path = vim.fn.fnamemodify(path, ":t")
                 end
+
+                -- if vim.o.columns >= 150 then
+                --   local cwd = vim.fn.fnamemodify(path, ":t")
+                --   path = path:gsub("/" .. cwd, "")
+                -- end
+
+                -- if work:is_work_path() then
+                --   path = path:gsub(work.work_path .. "/", "")
+                -- end
                 return path
               end,
               cond = function()
@@ -184,6 +252,30 @@ return {
           mode = { "n", "v" },
           desc = "BufferLineCyclePrev",
         },
+        -- {
+        --   "<BSlash>",
+        --   function()
+        --     require("bufferline").cycle(math.min(-1, -vim.v.count))
+        --   end,
+        --   mode = { "n", "v" },
+        --   desc = "BufferLineCyclePrev",
+        -- },
+        -- {
+        --   "<Right>",
+        --   function()
+        --     require("bufferline").cycle(math.max(1, vim.v.count))
+        --   end,
+        --   mode = { "n", "v" },
+        --   desc = "BufferLineCyclePrev",
+        -- },
+        -- {
+        --   "<Left>",
+        --   function()
+        --     require("bufferline").cycle(math.min(-1, -vim.v.count))
+        --   end,
+        --   mode = { "n", "v" },
+        --   desc = "BufferLineCyclePrev",
+        -- },
         {
           "<Space><Left>",
           function()
@@ -334,6 +426,7 @@ return {
 
       for i = 1, 10 do
         table.insert(keymaps, {
+          -- "<Leader>" .. i % 10,
           "<Space>" .. i % 10,
           function()
             require("bufferline").go_to(i, true)
@@ -418,6 +511,25 @@ return {
     config = function(self, opts)
       require("bqf").setup(opts)
 
+      -- TODO
+      -- ---@type BqfLayout
+      -- local layout = require("bqf.layout")
+      -- local orig_layout_initialize = layout.initialize
+
+      -- ---@param qwinid number
+      -- ---@return fun()
+      -- local function initialize(qwinid)
+      --   orig_layout_initialize(qwinid)
+      --   return function()
+      --     local height = math.min(self.custom.max_height, vim.api.nvim_buf_line_count(0))
+      --     vim.api.nvim_set_option_value("winfixheight", false, { win = qwinid })
+      --     vim.api.nvim_win_set_height(qwinid, height)
+      --     vim.api.nvim_set_option_value("winfixheight", true, { win = qwinid })
+      --   end
+      -- end
+
+      -- layout.initialize = initialize
+
       vim.api.nvim_create_autocmd("FileType", {
         group = vim.api.nvim_create_augroup("UserBqf", { clear = false }),
         pattern = "qf",
@@ -466,6 +578,7 @@ return {
     "folke/trouble.nvim",
     dependencies = { "nvim-web-devicons" },
     keys = function()
+      -- TODO: treesitter main
       local trouble_next, trouble_prev = require("nvim-treesitter.textobjects.repeatable_move").make_repeatable_move_pair(
         function()
           require("trouble").next({ skip_groups = true, jump = true })
@@ -597,20 +710,30 @@ return {
     },
     opts = {
       draw = {
-        delay = 50,
+        -- delay = 50,
+        -- animation = function(_, _)
+        --   return 0.1
+        -- end,
+        delay = 0,
         animation = function(_, _)
-          return 0.5
+          return 0
         end,
+        -- animation = require("mini.indentscope").gen_animation.none(),
       },
       mappings = {
-        bject_scope = "",
+        -- object_scope = "ii",
+        -- object_scope_with_border = "ai",
+        object_scope = "",
         object_scope_with_border = "",
         goto_top = "[i",
         goto_bottom = "]i",
       },
-      options = {
-        indent_at_cursor = false,
-      },
+      -- TODO
+      -- options = {
+      --   -- border = "top",
+      --   indent_at_cursor = false,
+      --   -- try_as_border = true,
+      -- },
       symbol = "▏", -- or "│"
     },
     config = function(_, opts)
@@ -656,6 +779,12 @@ return {
         "<Leader>zl",
         function()
           require("zen-mode").toggle({ window = { width = 1 } })
+          -- local widths = {
+          --   javascript = 120,
+          --   python = 88,
+          --   typescript = 120,
+          -- }
+          -- require("zen-mode").toggle({ window = { width = widths[vim.bo.filetype] or 100 } })
         end,
         silent = true,
         desc = "[Zen Mode] Toggle",

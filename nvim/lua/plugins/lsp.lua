@@ -7,6 +7,8 @@ return {
     },
     event = { "BufRead", "BufNewFile" },
     config = function()
+      -- local lspconfig = require("lspconfig")
+
       local diagnostic_signs = {
         text = {
           [vim.diagnostic.severity.ERROR] = "",
@@ -46,7 +48,11 @@ return {
       local servers = {
         bashls = {},
         cssls = {},
+        -- TODO
         cssmodules_ls = {},
+        -- cssmodules_ls = {
+        --   filetypes = { "css", "scss" },
+        -- },
         docker_compose_language_service = {},
         dockerls = {},
         eslint = {},
@@ -67,15 +73,97 @@ return {
           },
         },
         postgres_lsp = {},
+
+        -- pyright = {
+        --   settings = {
+        --     python = {
+        --       pythonPath = get_python_path(),
+        --     },
+        --   },
+        -- },
+        -- ruff = {},
+
+        -- WIP: something is slow
         pyright = {
+          single_file_support = true,
           settings = {
             python = {
               pythonPath = get_python_path(),
             },
+            pyright = {
+              disableOrganizeImports = true,
+            },
           },
         },
-        ruff = {},
+        ruff = {
+          single_file_support = true,
+          -- root_dir = function(bufnr, on_dir)
+          --   local fname = vim.api.nvim_buf_get_name(bufnr)
+          --   local root = vim.fs.root(fname, {
+          --     "pyrightconfig.json",
+          --     "pyproject.toml",
+          --     "setup.py",
+          --     "setup.cfg",
+          --     "requirements.txt",
+          --     "Pipfile",
+          --     ".git",
+          --   })
+          --   on_dir(root or vim.fs.dirname(fname))
+          -- end,
+        },
+
         rust_analyzer = {},
+
+        -- WIP
+        -- sqlls = {
+        --   settings = {
+        --     sql = {
+        --       dialect = "postgresql",
+        --       quotedIdentifiers = true,
+        --       schemaQualification = true,
+        --     },
+        --   },
+        --
+        --   settings = {
+        --     -- The settings go directly under 'sql', not nested
+        --     sql = {
+        --       -- Set dialect to PostgreSQL
+        --       dialect = "postgresql",
+        --       -- Enable quoted identifiers support
+        --       quotedIdentifiers = true,
+        --       -- Enable schema qualification
+        --       schemaQualification = true,
+        --     },
+        --   },
+        --   single_file_support = true,
+        --
+        --   settings = {
+        --     sql = {
+        --       -- PostgreSQL dialect
+        --       dialect = "postgresql",
+        --       -- Enable quoted identifiers
+        --       quotedIdentifiers = true,
+        --       -- Enable schema qualification
+        --       schemaQualification = true,
+        --       -- Additional PostgreSQL settings
+        --       caseSensitive = true,
+        --       -- Enable function suggestions
+        --       functions = true,
+        --       -- Enable table suggestions
+        --       tables = true,
+        --       -- Enable column suggestions
+        --       columns = true,
+        --     },
+        --   },
+        --   -- Root directory detection
+        --   -- root_dir = function(fname)
+        --   --   return lspconfig.util.root_pattern(".git", "package.json", "tsconfig.json")(fname)
+        --   --     or lspconfig.util.path.dirname(fname)
+        --   -- end,
+        --   -- Single file support
+        --   single_file_support = true,
+        -- },
+
         taplo = {},
         terraformls = {},
         ts_ls = {},
@@ -96,6 +184,9 @@ return {
       local capabilities = require("blink.cmp").get_lsp_capabilities()
 
       for server, config in pairs(servers) do
+        -- lspconfig[server].setup(vim.tbl_deep_extend("force", {
+        --   capabilities = capabilities,
+        -- }, config))
         vim.lsp.config[server] = vim.tbl_deep_extend("force", {
           capabilities = capabilities,
         }, config)
@@ -104,7 +195,7 @@ return {
       end
 
       vim.api.nvim_create_autocmd("LspAttach", {
-        group = vim.api.nvim_create_augroup("my.lsp", {}),
+        group = vim.api.nvim_create_augroup("my.lsp", {}), -- TODO
         callback = function(ev)
           local buf_map = function(mode, lhs, rhs, options)
             options = vim.tbl_deep_extend("force", { buffer = ev.buf }, options or {})
@@ -115,9 +206,14 @@ return {
             return function()
               vim.cmd(cmd)
               vim.lsp.buf.definition()
+              -- TODO
+              -- vim.defer_fn(function()
+              --   vim.api.nvim_feedkeys("zt", "n", false)
+              -- end, 10)
             end
           end
 
+          -- TODO: treesitter main
           local diagnostic_jump_next, diagnostic_jump_prev = require("nvim-treesitter.textobjects.repeatable_move").make_repeatable_move_pair(
             function()
               vim.diagnostic.jump({ count = vim.v.count1, float = true })
@@ -130,15 +226,19 @@ return {
           buf_map("n", "<Leader>td", function()
             vim.diagnostic.enable(not vim.diagnostic.is_enabled())
           end, { desc = "toggle lsp diagnostics" })
+          -- TODO: treesitter main
           buf_map("n", "[d", diagnostic_jump_prev, { desc = "vim.diagnostic.goto_prev" })
           buf_map("n", "]d", diagnostic_jump_next, { desc = "vim.diagnostic.goto_next" })
           buf_map("n", "<Leader>lr", vim.cmd.LspRestart, { desc = "LspRestart" })
           buf_map("n", "gl", vim.diagnostic.open_float, { desc = "vim.diagnostic.open_float" })
+          -- TODO: need?
           buf_map("n", "gh", function()
             vim.lsp.buf.hover({ focusable = true, border = "rounded" })
           end, { desc = "vim.lsp.buf.hover" })
           buf_map("n", "gd", vim.lsp.buf.definition)
+          buf_map("n", "<MiddleMouse>", vim.lsp.buf.definition) -- TODO
           buf_map("n", "gD", vim.lsp.buf.type_definition, { desc = "vim.lsp.buf.type_definition" })
+          -- buf_map("n", "gr", vim.lsp.buf.references)
           buf_map({ "n", "i" }, "<M-s>", function()
             vim.lsp.buf.signature_help({ focusable = true, focus = false, border = "rounded" })
           end, { desc = "vim.lsp.buf.signature_help" })
@@ -160,11 +260,27 @@ return {
           buf_map("n", "<Leader>gv", gd_cmd("wincmd v"), { desc = "vim.lsp.buf.definition() vsplit redraw top" })
           buf_map("n", "<Leader>gx", gd_cmd("wincmd s"), { desc = "vim.lsp.buf.definition() split redraw top" })
           buf_map("n", "<Leader>gt", gd_cmd("tab split"), { desc = "vim.lsp.buf.definition() tab split redraw top" })
+          -- WIP
+          buf_map("n", "<M-t>", gd_cmd("tab split"), { desc = "vim.lsp.buf.definition() tab split redraw top" })
 
+          -- TODO
+          -- local client = vim.lsp.get_client_by_id(ev.data.client_id)
           local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
           if not client then
             return
           end
+
+          -- if client.name == "eslint" then
+          --   for ns, opts in ipairs(vim.diagnostic.get_namespaces()) do
+          --     if opts.name:match("eslint") then
+          --       vim.diagnostic.config({ signs = false }, ns)
+          --     end
+          --   end
+          --   -- vim.diagnostic.config({ signs = false })
+          --   -- vim.diagnostic.config({ signs = false }, vim.lsp.diagnostic.get_namespace(client.id))
+          --   -- vim.diagnostic.enable(false, { ns_id = vim.lsp.diagnostic.get_namespace(client.id) })
+          --   -- vim.diagnostic.enable(false, { bufnr = 0 })
+          -- end
 
           if client.name == "eslint" or client.name == "cssmodules_ls" then
             client.server_capabilities.hoverProvider = false
@@ -245,6 +361,13 @@ return {
             PRETTIERD_DEFAULT_CONFIG = vim.fn.expand("$HOME/dotfiles/nvim/utils/prettierrc.json"),
           },
         },
+        -- prettier = {
+        --   prepend_args = {
+        --     "--config-precedence",
+        --     "prefer-file",
+        --     "--single-quote",
+        --   },
+        -- },
         ruff_fix = {
           append_args = {
             "--ignore=F401", -- unused-import
@@ -290,6 +413,8 @@ return {
       local keymaps = {
         { "<Leader>lf", "<Cmd>Lspsaga finder<CR>", desc = "lsp_finder" },
         { "<F2>", "<Cmd>Lspsaga rename<CR>", desc = "rename" },
+        -- { "<Space>d", "<Cmd>Lspsaga peek_definition<CR>", desc = "peek_definition" },
+        -- TODO
         {
           "<Space>d",
           function()
@@ -298,9 +423,13 @@ return {
             vim.wait(100, function()
               return vim.api.nvim_get_current_win() ~= orig_win
             end, 5)
+            -- vim.api.nvim_feedkeys("zt", "n", false)
+
             local rows = math.floor(vim.api.nvim_win_get_height(0) / 5)
             rows = rows - vim.opt.scrolloff:get()
             vim.api.nvim_input(string.format("zt%d<C-y>", rows))
+
+            -- vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Space><CR>", true, false, false), "n", false)
           end,
           desc = "peek_definition",
         },
@@ -368,6 +497,7 @@ return {
     "RRethy/vim-illuminate",
     event = "LspAttach",
     config = function(_, opts)
+      -- TODO: treesitter main
       local goto_next_ref, goto_prev_ref = require("nvim-treesitter.textobjects.repeatable_move").make_repeatable_move_pair(
         function()
           require("illuminate").goto_next_reference()
@@ -380,12 +510,18 @@ return {
       vim.keymap.set(
         { "n", "x", "o" },
         "<M-n>",
+        -- "<M-C-n>",
+        -- "<C-n>",
+        -- "<M-p>",
         goto_next_ref,
         { silent = true, desc = "[Illuminate] Move to next reference" }
       )
       vim.keymap.set(
         { "n", "x", "o" },
         "<M-p>",
+        -- "<M-C-p>",
+        -- "<C-p>",
+        -- "<M-P>",
         goto_prev_ref,
         { silent = true, desc = "[Illuminate] Move to previous reference" }
       )
@@ -407,7 +543,8 @@ return {
     event = "InsertEnter",
     cmd = "Copilot",
     cond = function()
-      return not vim.fn.getcwd():match("^" .. vim.fn.expand("$WORK_DIR"))
+      -- return not vim.fn.getcwd():match("^" .. vim.fn.expand("$WORK_DIR"))
+      return not vim.uv.fs_stat(vim.fn.expand("$HOME/._work"))
     end,
     keys = {
       {
@@ -429,6 +566,13 @@ return {
       },
       should_attach = function(_, _)
         local logger = require("copilot.logger")
+
+        -- -- if uv.fs_stat(vim.fn.expand("$HOME/._work")) ~= nil then
+        -- if vim.uv.fs_stat(vim.fn.expand("$HOME/._work")) then
+        --   vim.fn.notify("cp should attach = false")
+        --   logger.debug("not attaching, on work machine")
+        --   return false
+        -- end
 
         if not vim.bo.buflisted then
           logger.debug("not attaching, buffer is not 'buflisted'")

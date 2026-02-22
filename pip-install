@@ -5,6 +5,7 @@ set -x
 if command -v pyenv &>/dev/null && command -v pip &>/dev/null; then
     pip install -U \
         aiohttp \
+        awscli-local \
         black \
         debugpy \
         matplotlib \

@@ -5,73 +5,272 @@ return {
   { "tpope/vim-surround", event = "VeryLazy" },
   {
     "numToStr/Comment.nvim",
-    keys = {
-      {
-        "<C-_>",
-        function()
-          return vim.api.nvim_get_vvar("count") == 0 and "<Plug>(comment_toggle_linewise_current)"
-            or "<Plug>(comment_toggle_linewise_count)"
-        end,
-        expr = true,
-        silent = true,
-        desc = "<Plug>(comment_toggle_linewise_current|comment_toggle_linewise_count)",
-      },
-      {
-        "<C-_>",
-        function()
-          return "<Plug>(comment_toggle_linewise_visual)"
-        end,
-        mode = "v",
-        expr = true,
-        silent = true,
-        desc = "<Plug>(comment_toggle_linewise_visual)",
-      },
-      {
-        "<M-Y>",
-        function()
-          vim.cmd("normal! ygv")
-          vim.api.nvim_input("gc")
-        end,
-        mode = "v",
-        desc = "[Comment] Yank selection and comment",
-      },
-      {
-        "<M-?>",
-        function()
-          vim.cmd("normal! vip")
-          vim.api.nvim_input("gc")
-        end,
-        desc = "[Comment] Comment paragraph",
-      },
-      {
-        "<Leader>#",
-        function()
-          vim.api.nvim_input("gcOTODO<Esc>")
-        end,
-        desc = "[Comment] TODO above",
-      },
-      {
-        "<Leader>$",
-        function()
-          vim.api.nvim_input("gcATODO<Esc>")
-        end,
-        desc = "[Comment] TODO EOL",
-      },
-      {
-        "<Space>#",
-        function()
-          vim.api.nvim_input("gcOTODO: ")
-        end,
-        desc = "[Comment] TODO above (insert mode)",
-      },
-      {
-        "<Space>$",
-        function()
-          vim.api.nvim_input("gcATODO: ")
-        end,
-        desc = "[Comment] TODO EOL (insert mode)",
-      },
-    },
+
+    -- keys = {
+    --   {
+    --     "<C-_>",
+    --     function()
+    --       return vim.api.nvim_get_vvar("count") == 0 and "<Plug>(comment_toggle_linewise_current)"
+    --         or "<Plug>(comment_toggle_linewise_count)"
+    --     end,
+    --     expr = true,
+    --     silent = true,
+    --     desc = "<Plug>(comment_toggle_linewise_current|comment_toggle_linewise_count)",
+    --   },
+    --   {
+    --     "<C-_>",
+    --     function()
+    --       return "<Plug>(comment_toggle_linewise_visual)"
+    --     end,
+    --     mode = "v",
+    --     expr = true,
+    --     silent = true,
+    --     desc = "<Plug>(comment_toggle_linewise_visual)",
+    --   },
+    --   {
+    --     "<M-Y>",
+    --     function()
+    --       vim.cmd("normal! ygv")
+    --       vim.api.nvim_input("gc")
+    --     end,
+    --     mode = "v",
+    --     desc = "[Comment] Yank selection and comment",
+    --   },
+    --   {
+    --     "<M-?>",
+    --     function()
+    --       vim.cmd("normal! vip")
+    --       vim.api.nvim_input("gc")
+    --     end,
+    --     desc = "[Comment] Comment paragraph",
+    --   },
+    --   {
+    --     "<Leader>#",
+    --     function()
+    --       vim.api.nvim_input("gcOTODO<Esc>")
+    --     end,
+    --     desc = "[Comment] TODO above",
+    --   },
+    --   {
+    --     "<Leader>$",
+    --     function()
+    --       vim.api.nvim_input("gcATODO<Esc>")
+    --     end,
+    --     desc = "[Comment] TODO EOL",
+    --   },
+    --   {
+    --     "<Space>#",
+    --     function()
+    --       vim.api.nvim_input("gcOTODO: ")
+    --     end,
+    --     desc = "[Comment] TODO above (insert mode)",
+    --   },
+    --   {
+    --     "<Space>$",
+    --     function()
+    --       vim.api.nvim_input("gcATODO: ")
+    --     end,
+    --     desc = "[Comment] TODO EOL (insert mode)",
+    --   },
+    -- },
+
+    -- keys = {
+    --   {
+    --     "<C-_>",
+    --     function()
+    --       return vim.api.nvim_get_vvar("count") == 0 and "<Plug>(comment_toggle_linewise_current)"
+    --         or "<Plug>(comment_toggle_linewise_count)"
+    --     end,
+    --     expr = true,
+    --     silent = true,
+    --     desc = "<Plug>(comment_toggle_linewise_current|comment_toggle_linewise_count)",
+    --   },
+    --   {
+    --     "<C-_>",
+    --     function()
+    --       return "<Plug>(comment_toggle_linewise_visual)"
+    --     end,
+    --     mode = "v",
+    --     expr = true,
+    --     silent = true,
+    --     desc = "<Plug>(comment_toggle_linewise_visual)",
+    --   },
+    --   {
+    --     "<M-Y>",
+    --     function()
+    --       vim.cmd("normal! ygv")
+    --       vim.api.nvim_input("gc")
+    --     end,
+    --     mode = "v",
+    --     desc = "[Comment] Yank selection and comment",
+    --   },
+    --   {
+    --     "<M-?>",
+    --     function()
+    --       vim.cmd("normal! vip")
+    --       vim.api.nvim_input("gc")
+    --     end,
+    --     desc = "[Comment] Comment paragraph",
+    --   },
+    --   -- TODO: enable dot repeat - change to Ex-commands?
+    --   -- see note from: https://github.com/chrisgrieser/nvim-various-textobjs/blob/main/README.md#configuration
+    --   {
+    --     "<Leader>#",
+    --     function()
+    --       vim.api.nvim_input("gcOTODO<Esc>")
+    --     end,
+    --     desc = "[Comment] TODO above",
+    --   },
+    --
+    --   ---api.insert.linewise.above(config?)
+    --   ---api.insert.linewise.below(config?)
+    --   ---api.insert.linewise.eol(config?)
+    --
+    --   -- WIP
+    --
+    --   {
+    --     "<leader><leader>",
+    --     function()
+    --       -- return require("dav.comment").call("insert_todo_above", "g@$")
+    --       return require("dav.comment").call("insert_todo_above")
+    --     end,
+    --     expr = true,
+    --     desc = "[Comment] TODO above",
+    --   },
+    --
+    --   {
+    --     "<Leader>$",
+    --     function()
+    --       vim.api.nvim_input("gcATODO<Esc>")
+    --     end,
+    --     desc = "[Comment] TODO EOL",
+    --   },
+    --   {
+    --     "<Space>#",
+    --     function()
+    --       vim.api.nvim_input("gcOTODO: ")
+    --     end,
+    --     desc = "[Comment] TODO above (insert mode)",
+    --   },
+    --   {
+    --     "<Space>$",
+    --     function()
+    --       vim.api.nvim_input("gcATODO: ")
+    --     end,
+    --     desc = "[Comment] TODO EOL (insert mode)",
+    --   },
+    -- },
+
+    -- WIP
+    keys = function()
+      local function call(cb, op)
+        return function()
+          vim.api.nvim_set_option("operatorfunc", ("v:lua.require'dav.comment'.locked'%s'"):format(cb))
+          return op
+        end
+      end
+
+      return {
+        "gcc",
+        "gbc",
+
+        -- -- WIP
+        -- {
+        --   -- "<leader><leader>",
+        --   "<M-,><leader>",
+        --   call("insert_todo_above", "g@$"),
+        --   -- function()
+        --   --   -- return require("dav.comment").call("insert_todo_above", "g@$")
+        --   --   return require("dav.comment").call("insert_todo_above")
+        --   -- end,
+        --   expr = true,
+        --   desc = "[Comment] TODO above",
+        -- },
+
+        ---api.insert.linewise.above(config?)
+        ---api.insert.linewise.below(config?)
+        ---api.insert.linewise.eol(config?)
+
+        -- {
+        --   "<leader><leader>",
+        --   call("insert_todo_above", "g@$"),
+        --   -- function()
+        --   --   -- return require("dav.comment").call("insert_todo_above", "g@$")
+        --   --   return require("dav.comment").call("insert_todo_above")
+        --   -- end,
+        --   expr = true,
+        --   desc = "[Comment] TODO above",
+        -- },
+
+        {
+          "<C-_>",
+          function()
+            return vim.api.nvim_get_vvar("count") == 0 and "<Plug>(comment_toggle_linewise_current)"
+              or "<Plug>(comment_toggle_linewise_count)"
+          end,
+          expr = true,
+          silent = true,
+          desc = "<Plug>(comment_toggle_linewise_current|comment_toggle_linewise_count)",
+        },
+        {
+          "<C-_>",
+          function()
+            return "<Plug>(comment_toggle_linewise_visual)"
+          end,
+          mode = "v",
+          expr = true,
+          silent = true,
+          desc = "<Plug>(comment_toggle_linewise_visual)",
+        },
+        {
+          "<M-Y>",
+          function()
+            vim.cmd("normal! ygv")
+            vim.api.nvim_input("gc")
+          end,
+          mode = "v",
+          desc = "[Comment] Yank selection and comment",
+        },
+        {
+          "<M-?>",
+          function()
+            vim.cmd("normal! vip")
+            vim.api.nvim_input("gc")
+          end,
+          desc = "[Comment] Comment paragraph",
+        },
+        -- TODO: enable dot repeat - change to Ex-commands?
+        -- see note from: https://github.com/chrisgrieser/nvim-various-textobjs/blob/main/README.md#configuration
+        {
+          "<Leader>#",
+          function()
+            vim.api.nvim_input("gcOTODO<Esc>")
+          end,
+          desc = "[Comment] TODO above",
+        },
+        {
+          "<Leader>$",
+          function()
+            vim.api.nvim_input("gcATODO<Esc>")
+          end,
+          desc = "[Comment] TODO EOL",
+        },
+        {
+          "<Space>#",
+          function()
+            vim.api.nvim_input("gcOTODO: ")
+          end,
+          desc = "[Comment] TODO above (insert mode)",
+        },
+        {
+          "<Space>$",
+          function()
+            vim.api.nvim_input("gcATODO: ")
+          end,
+          desc = "[Comment] TODO EOL (insert mode)",
+        },
+      }
+    end,
     config = function()
       require("Comment").setup()
     end,
@@ -126,10 +325,58 @@ return {
         desc = "[Undotree] Toggle + focus",
       },
       { "<Leader>ut", vim.cmd.UndotreeToggle, desc = "[Undotree] Toggle" },
+
+      -- { "<Leader>ut", "<Cmd>UndotreeToggle<CR>", desc = "[Undotree] Toggle" },
+      -- {
+      --   "<Leader>ut",
+      --   function()
+      --     vim.cmd.UndotreeToggle()
+      --     vim.cmd.UndotreeFocus()
+      --   end,
+      --   desc = "[Undotree] Toggle",
+      -- },
+
+      -- { "<Leader>uT", "<Cmd>UndotreeFocus<CR>", desc = "[Undotree] Focus" },
+      -- { "<Leader>uC", "<Cmd>UndotreeShowDiff<CR>", desc = "[Undotree] Show Diff" },
+      -- { "<Leader>uC", function ()
+      --   if vim.bo.filetype == "undotree" then
+      --     vim.cmd.UndotreeShowDiff()
+      --   else
+      --     vim.cmd.UndotreeToggle()
+      --     vim.cmd.UndotreeFocus()
+      --   end
+      -- end, desc = "[Undotree] Show Diff or Toggle/Focus" },
+      -- { "<Leader>uR", "<Cmd>UndotreeRefresh<CR>", desc = "[Undotree] Refresh" },
+      -- { "<Leader>uH", "<Cmd>UndotreeHide<CR>", desc = "[Undotree] Hide" },
+      -- { "<Leader>uS", "<Cmd>UndotreeShow<CR>", desc = "[Undotree] Show" },
+      -- { "<Leader>uF", "<Cmd>UndotreeFocus<CR>", desc = "[Undotree] Focus" },
+      -- { "<Leader>uD", "<Cmd>UndotreeToggleDiff<CR>", desc = "[Undotree] Toggle Diff" },
+      -- { "<Leader>uL", "<Cmd>UndotreeToggleLayout<CR>", desc = "[Undotree] Toggle Layout" },
     },
     config = function()
       vim.g.undotree_WindowLayout = 2
       vim.g.undotree_ShortIndicators = 1
+      -- vim.g.undotree_SplitWidth = 40
+      -- vim.g.undotree_SetFocusWhenToggle = 1
+      -- vim.g.undotree_RelativeTimestamp = 0
+      -- vim.g.undotree_HighlightChangedWithSign = 0
+      -- vim.g.undotree_HighlightSyntaxAdd = "GitsignsAdd"
+      -- vim.g.undotree_HighlightSyntaxChange = "GitsignsChange"
+      -- vim.g.undotree_HighlightSyntaxDel = "GitsignsDelete"
+
+      -- TODO
+      -- vim.g.undotree_CustomUndotreeCmd = ""
+      -- vim.g.undotree_CustomDiffpanelCmd = ""
+
+      -- vim.api.nvim_create_autocmd("FileType", {
+      --   group = vim.api.nvim_create_augroup("Undotree_User", {}),
+      --   pattern = "undotree",
+      --   callback = function(ev)
+      --     vim.bo[ev.buf].buflisted = false
+      --     vim.keymap.set("n", "<Esc>", "<Cmd>UndotreeHide<CR>", { buffer = ev.buf, silent = true })
+      --     vim.keymap.set("n", "q", "<Cmd>UndotreeHide<CR>", { buffer = ev.buf, silent = true })
+      --   end,
+      -- })
     end,
   },
   {
@@ -147,7 +394,9 @@ return {
       {
         "<M-_>",
         function()
+          -- require("oil").open()
           require("oil").open(nil, { preview = {} })
+          -- require("oil").open_preview()
         end,
         desc = "[Oil] Open",
       },
@@ -238,6 +487,16 @@ return {
         end,
         desc = "[Nvim-Tree] Toggle",
       },
+      -- {
+      --   "<Space>'",
+      --   function()
+      --     require("nvim-tree.api").tree.find_file({
+      --       open = true,
+      --       focus = true,
+      --     })
+      --   end,
+      --   desc = "[Nvim-Tree] Find File",
+      -- },
       {
         "<Space>'",
         function()
@@ -257,6 +516,7 @@ return {
         desc = "[Nvim-Tree] Toggle float",
       },
       {
+        -- "<M-]>",
         "<M-j>",
         function()
           local api = require("nvim-tree.api")
@@ -265,13 +525,14 @@ return {
         end,
       },
       {
+        -- "<M-[>",
         "<M-k>",
         function()
           local api = require("nvim-tree.api")
           api.node.navigate.sibling.prev()
           api.node.open.preview(nil, { quit_on_open = false })
         end,
-      }
+      },
     },
     opts = {
       hijack_netrw = false,
@@ -285,6 +546,7 @@ return {
           open_win_config = {
             col = 0,
             row = 2,
+            -- height = math.floor(vim.api.nvim_win_get_height(0) * 0.90),
             height = math.floor(vim.o.lines * 0.90),
           },
         },
@@ -308,6 +570,9 @@ return {
     cmd = { "FZF" },
     keys = {
       { "<Leader>fz", "<Cmd>FZF<CR>", desc = "[FZF] FZF" },
+      -- { "<Leader>rg", "<Cmd>Rg<CR>", desc = "[FZF] Rg" },
+      -- { "<Leader>fl", "<Cmd>Lines<CR>", desc = "[FZF] Lines" },
+      -- { "<Leader>bl", "<Cmd>BLines<CR>", desc = "[FZF] BLines" },
       { "<Leader>bu", "<Cmd>BLines<CR>", desc = "[FZF] BLines" },
       { "<Leader>fh", "<Cmd>History<CR>", desc = "[FZF] History" },
       {
@@ -355,6 +620,17 @@ return {
       })
     end,
   },
+
+  -- WIP
+  -- {
+  --   "ibhagwan/fzf-lua",
+  --   -- optional for icon support
+  --   dependencies = { "nvim-tree/nvim-web-devicons" },
+  --   -- or if using mini.icons/mini.nvim
+  --   -- dependencies = { "echasnovski/mini.icons" },
+  --   opts = {},
+  -- },
+
   {
     "ibhagwan/fzf-lua",
     dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -368,6 +644,9 @@ return {
       },
 
       {
+        -- "<Space>f",
+        -- "<leader>ef",
+        -- "<Space><Space>f",
         "<Leader>ff",
         function()
           require("fzf-lua").files()
@@ -375,6 +654,9 @@ return {
         desc = "[fzf-lua] files",
       },
       {
+        -- "<Space>qf",
+        -- "<leader>qf",
+        -- "<Space><Space>qf",
         "<Leader>qq",
         function()
           require("fzf-lua").quickfix()
@@ -382,6 +664,9 @@ return {
         desc = "[fzf-lua] quickfix",
       },
       {
+        -- "<Space>qF",
+        -- "<leader>qF",
+        -- "<Space><Space>qF",
         "<Leader>qs",
         function()
           require("fzf-lua").quickfix_stack()
@@ -390,6 +675,7 @@ return {
       },
 
       {
+        -- "<Leader>rg",
         "<Leader>fg",
         function()
           require("fzf-lua").grep()
@@ -397,6 +683,7 @@ return {
         desc = "[fzf-lua] grep",
       },
       {
+        -- "<Leader>rg",
         "<Leader>fG",
         function()
           require("fzf-lua").grep_last()
@@ -404,6 +691,7 @@ return {
         desc = "[fzf-lua] grep_last",
       },
       {
+        -- "<Leader>fj",
         "<Leader>fw",
         function()
           require("fzf-lua").grep_cword()
@@ -411,6 +699,7 @@ return {
         desc = "[fzf-lua] grep_cword",
       },
       {
+        -- "<Leader>fJ",
         "<Leader>fW",
         function()
           require("fzf-lua").grep_cWORD()
@@ -446,10 +735,21 @@ return {
         end,
         desc = "[fzf-lua] manpages",
       },
+
+      -- {
+      --   "<M-g><M-b>",
+      --   function()
+      --     require("fzf-lua").git_blame()
+      --   end,
+      --   desc = "[fzf-lua] git_blame",
+      -- },
+
+      --
     },
     opts = {
       winopts = {
         backdrop = 100,
+        -- win_blend = 10,
         preview = {
           horizontal = "right:50%",
         },
@@ -457,16 +757,31 @@ return {
           vim.keymap.set("n", "<Esc>", function()
             require("fzf-lua").hide()
           end, { buffer = 0 })
+          -- vim.keymap.set("n", "<Tab>", function()
+          --   require("fzf-lua").hide()
+          -- end, { buffer = 0 })
           vim.keymap.set("n", "<Tab>", "i<C-j><Esc>", { buffer = 0 })
         end,
       },
+      -- keymaps = {
+      --   builtin = {
+      --     -- ["<Esc>"] = "hide",
+      --     -- ["?"] = "toggle-help",
+      --     -- ["<C-Down>"] = "preview-page-down",
+      --     -- ["<C-Up>"] = "preview-page-up",
+      --     -- ["<C-Left>"] = "preview-page-left",
+      --     -- ["<C-Right>"] = "preview-page-right",
+      --   },
+      -- },
     },
   },
-  {
+  { -- TODO
     "folke/persistence.nvim",
     enabled = false,
-    event = "BufReadPre",
-    opts = {},
+    event = "BufReadPre", -- this will only start session saving when an actual file was opened
+    opts = {
+      -- add any custom options here
+    },
   },
   {
     "danymat/neogen",
@@ -635,6 +950,9 @@ return {
     version = "*",
     opts = {
       global = {
+        -- kitty_get_text = {
+        --   ansi = false,
+        -- },
         paste_window = {
           winblend = 30,
           yank_register_enabled = false,
@@ -642,6 +960,7 @@ return {
       },
       tmux = {
         kitty_get_text = {
+          -- ansi = false,
           extent = "last_cmd_output",
         },
       },
@@ -701,6 +1020,7 @@ return {
       "<Leader>at",
       "<Leader>aR",
     },
+    -- event = "VeryLazy",
     version = false,
     build = "make",
     opts = {
@@ -714,8 +1034,97 @@ return {
     enabled = false,
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     ft = { "Avante" },
+    -- keys = {
+    --   "<Leader>rm",
+    --   function()
+    --     require("render-markdown").toggle()
+    --   end,
+    --   -- "<Cmd>RenderMarkdownToggle<CR>",
+    --   desc = "[Render Markdown] toggle",
+    -- },
     opts = {
       file_types = { "Avante" },
     },
+  },
+  {
+    "kevinhwang91/nvim-hlslens",
+    enabled = false,
+    keys = function()
+      local function search(cmd, keep_pos, start_hls)
+        return function()
+          if keep_pos then
+            local view = vim.fn.winsaveview()
+            local cursor = vim.api.nvim_win_get_cursor(0)
+            vim.cmd("normal! " .. cmd)
+            vim.fn.winrestview(view)
+            vim.api.nvim_win_set_cursor(0, cursor)
+          else
+            vim.cmd("normal! " .. cmd)
+          end
+
+          if start_hls then
+            require("hlslens").start()
+          end
+        end
+      end
+
+      return {
+        { "*", search("*", true, true), desc = "[hlslens] Search word forward" },
+        { "#", search("#", true, true), desc = "[hlslens] Search word backward" },
+        {
+          "n",
+          function()
+            search(vim.v.count1 .. "n", false, true)()
+          end,
+          noremap = true,
+          silent = true,
+          desc = "[hlslens] Search next word",
+        },
+        {
+          "N",
+          function()
+            search(vim.v.count1 .. "N", false, true)()
+          end,
+          noremap = true,
+          silent = true,
+          desc = "[hlslens] Search prev word",
+        },
+        { -- duplicate
+          "<C-n>",
+          search("nzz", false, true),
+          noremap = true,
+          silent = true,
+          desc = "[hlslens] Repeat search, redraw line center",
+        },
+        {
+          -- "<C-n>",
+          "<M-n>",
+          search("nzz", false, true),
+          noremap = true,
+          silent = true,
+          desc = "[hlslens] Repeat search, redraw line center",
+        },
+        {
+          -- "<C-p>",
+          "<M-N>",
+          search("Nzz", false, true),
+          noremap = true,
+          silent = true,
+          desc = "[hlslens] Repeat search reverse, redraw line center",
+        },
+        {
+          "<M-C-N>",
+          search("nzt", false, true),
+          noremap = true,
+          silent = true,
+          desc = "[hlslens] Repeat search, redraw top",
+        },
+        { "g*", search("g*", true, true), silent = true, desc = "[hlslens] Search word forward (partial)" },
+        { "g#", search("g#", true, true), silent = true, desc = "[hlslens] Search word backward (partial)" },
+        { "*", [["by/\V<C-r>b<CR>`<]], mode = "v", silent = true, desc = "[hlslens] Search selection forward" },
+        { "#", [["by?\V<C-r>b<CR>`<]], mode = "v", silent = true, desc = "[hlslens] Search selection backward" },
+      }
+    end,
+    opts = {},
   },
 }
