@@ -235,6 +235,8 @@ alias glu='git log --pretty=oneline-reldate-name-email ..@{u}'
 alias glup='git log --pretty=oneline-mark-reldate ...@{u}'
 alias glz="git log --oneline | fzf --preview 'git show --color {1}'"
 alias gmnf="git merge --no-ff"
+alias grf='git reflog --pretty=reflog-reldate'
+alias grfd='git reflog --pretty=reflog-fulldate'
 alias gs="git status --short"
 alias gstz='git stash list | fzf --delimiter=":" \
   --preview "git stash show -p --color {1}" \

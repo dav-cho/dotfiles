@@ -25,12 +25,14 @@
   logdate="log --date='format:%Y-%m-%d %H:%M:%S'"
 
 [pretty]
-  oneline-fulldate-name-email="%C(auto)%h%d %s %C(dim blue)%ad (%ar) %an %ae"
+  oneline-fulldate-name-email="%C(auto)%h%d %s %C(blue)%ad (%ar) %C(dim blue) %an %ae"
   oneline-fulldate="%C(auto)%h%d %s %C(dim blue)(%ar) %ad"
   oneline-mark-reldate="%C(auto)%h %C(magenta)%m%C(auto)%d %s %C(dim blue)(%ar)"
   oneline-name-email-fulldate="%C(auto)%h%d %s %C(dim blue)%an %ae (%ar) %ad"
   oneline-name-email="%C(auto)%h%d %s %C(dim blue)%an (%ae)"
   oneline-reldate-name-email="%C(auto)%h%d %s %C(blue)(%ar) %C(dim blue)%an %ae"
+  reflog-reldate="%C(auto)%h%d %gd %gs %Cblue(%cr)"
+  reflog-fulldate="%C(auto)%h%d %gd %gs %Cblue(%cd)"
 
 [delta]
   navigate = true
