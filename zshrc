@@ -207,7 +207,7 @@ alias nvms="nvm use system"
 alias rg="rg --smart-case"
 
 alias gcnn!='git commit --verbose --no-edit --amend --date=now'
-alias gdmb='git diff $(git merge-base $(git_main_branch) HEAD)..'
+alias gdmb='git diff origin/HEAD...HEAD'
 alias gdni="git diff --no-index --"
 alias gdno="git diff --name-only"
 alias gdst="git diff --stat"
@@ -243,7 +243,7 @@ alias gstz='git stash list | fzf --delimiter=":" \
   --bind "alt-y:execute(echo {1})+abort" \
   --bind "alt-A:execute(git stash apply {1})+abort" \
   --bind "alt-P:execute(git stash pop   {1})+abort" \
-  --bind "alt-D:execute(git stash drop  {1})+abort"'
+  --bind "alt-D:execute(git stash drop  {1})+reload(git stash list)"'
 alias gsww='git switch $(git branch --format="%(refname:short)" | fzf --no-preview) 2>/dev/null'
 alias gu="git pull"
 
