@@ -88,7 +88,7 @@ map("n", "<Leader>yr", [[<Cmd>let @+=expand("%:~:.")<CR>]], { desc = "Yank relat
 map("n", "<Leader>ya", [[<Cmd>let @+=fnamemodify(expand("%:p"), ":~")<CR>]], { desc = "Yank abbreviated file path" })
 map("n", "<Leader>yA", [[<Cmd>let @+=expand("%:p")<CR>]], { desc = "Yank absolute file path" })
 
-map("n", "<Leader>tt", ":vert term<CR>", { desc = "Terminal" })
+map("n", "<Leader><Bslash>", ":vert term<CR>", { desc = "Terminal" })
 
 map("n", "<Space>q", "<Cmd>copen<CR>", { desc = "Open qflist" })
 map("n", "<Space>[", "<Cmd>cprevious<CR>", { desc = "qflist previous" })
