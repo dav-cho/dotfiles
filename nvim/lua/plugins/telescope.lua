@@ -123,6 +123,25 @@ return {
           end,
           desc = "live_grep (buf)",
         },
+        -- {
+        --   "<Leader>lg",
+        --   function()
+        --     local glob
+        --     vim.ui.input({ prompt = "Glob > ", completion = "file" }, function(input)
+        --       glob = input
+        --     end)
+        --     vim.notify(vim.inspect(glob))
+        --     if glob == "" then
+        --       return
+        --     end
+        --     require("telescope.builtin").live_grep({
+        --       glob_pattern = glob,
+        --       additional_args = { "--case-sensitive" },
+        --       prompt_title = "Glob: " .. glob,
+        --     })
+        --   end,
+        --   desc = "live_grep (glob)",
+        -- },
 
         {
           "<Leader>jj",
@@ -288,7 +307,30 @@ return {
       local actions = require("telescope.actions")
       local layout = require("telescope.actions.layout")
       local state = require("telescope.actions.state")
+      local builtin = require("telescope.builtin")
       local fb_actions = require("telescope._extensions.file_browser.actions")
+
+      -- TODO
+      local live_grep_select_dir = function(prompt_bufnr)
+        require("telescope").extensions.file_browser.file_browser({
+          files = false,
+          depth = false,
+          attach_mappings = function(prompt_bufnr)
+            require("telescope.actions").select_default:replace(function()
+              local entry_path = state.get_selected_entry().Path
+              local dir = entry_path:is_dir() and entry_path or entry_path:parent()
+
+              builtin.live_grep({
+                results_title = dir:make_relative(vim.fn.getcwd()) .. "/",
+                cwd = dir:absolute(),
+                default_text = state.get_current_line(),
+              })
+            end)
+
+            return true
+          end,
+        })
+      end
 
       local function yank_path(modifiers)
         return function()
@@ -460,6 +502,7 @@ return {
     },
     config = true,
   },
+  -- WIP: multiple lists
   {
     "ThePrimeagen/harpoon",
     branch = "harpoon2",
@@ -469,69 +512,164 @@ return {
     },
     keys = function()
       local harpoon = require("harpoon")
+      local default_list = require("harpoon.config").DEFAULT_LIST
+      local curr_list = default_list
+      local list_count = 0
+
+      local key = harpoon.config.settings.key()
+      local lists = harpoon.lists[key] or {}
+      list_count = #lists
+
+      -- local function get_title()
+      --   local key = harpoon.config.settings.key()
+      --   local lists = harpoon.lists[key] or {}
+      --   local count = #lists
+      --   -- local name = count > 0 and tostring(count + 1) or "Default"
+      --   local name = curr_list == default_list and "Default" or curr_list
+      --   local title = string.format(" Harpoon: %s ", name)
+      --
+      --   local cnt = 0
+      --   for _, l in ipairs(lists) do
+      --     cnt = cnt + 1
+      --   end
+      --   local foo = {
+      --     key = key,
+      --     count = count,
+      --     lists = lists,
+      --     len = #lists,
+      --     curr_list = curr_list,
+      --     cnt = cnt,
+      --     title = title,
+      --   }
+      --   vim.notify(vim.inspect(foo))
+      --
+      --   return title
+      -- end
 
       local keymaps = {
         {
           "<Space>m",
           function()
-            harpoon.ui:toggle_quick_menu(harpoon:list())
+            local key = harpoon.config.settings.key()
+            local lists = harpoon.lists[key] or {}
+            list_count = #lists
+
+            local name = curr_list == default_list and "Default" or curr_list
+            local title = string.format(" Harpoon: %s ", name)
+
+            harpoon.ui:toggle_quick_menu(harpoon:list(curr_list), { title = title })
           end,
           desc = "[Harpoon] toggle_quick_menu",
         },
         {
           "<Leader>ma",
           function()
-            harpoon:list():add()
+            harpoon:list(curr_list):add()
           end,
           desc = "[Harpoon] list append",
         },
         {
           "<Leader>mp",
           function()
-            harpoon:list():prepend()
+            harpoon:list(curr_list):prepend()
           end,
           desc = "[Harpoon] list prepend",
         },
         {
           "<Leader>mr",
           function()
-            harpoon:list():remove()
+            harpoon:list(curr_list):remove()
           end,
           desc = "[Harpoon] list remove",
         },
         {
           "<Leader>mu",
           function()
-            harpoon:list():remove()
-            harpoon:list():add()
+            harpoon:list(curr_list):remove()
+            harpoon:list(curr_list):add()
           end,
           desc = "[Harpoon] update",
         },
         {
           "<Leader>mX",
           function()
-            harpoon:list():clear()
+            harpoon:list(curr_list):clear()
           end,
           desc = "[Harpoon] list clear",
         },
         {
           "<Space>-",
           function()
-            harpoon:list():prev()
+            harpoon:list(curr_list):prev()
           end,
           desc = "[Harpoon] list prev",
         },
         {
           "<Space>=",
           function()
-            harpoon:list():next()
+            harpoon:list(curr_list):next()
           end,
           desc = "[Harpoon] list next",
+        },
+        {
+          "<Leader>mA",
+          function()
+            -- local key = harpoon.config.settings.key()
+            -- local lists = harpoon.lists[key] or {}
+            -- local count = tostring(#lists + 1)
+            -- harpoon:list(count):new()
+            -- curr_list = count
+
+            curr_list = tostring(list_count + 1)
+            harpoon:list(curr_list):new()
+          end,
+          desc = "[Harpoon] new list",
+        },
+        {
+          "<Leader>mL",
+          function()
+            local key = harpoon.config.settings.key()
+            local lists = harpoon.lists[key] or {}
+
+            local list_map = { default = default_list }
+            local choices = { "default" }
+            for k, _ in pairs(lists) do
+              list_map[k] = k
+              table.insert(choices, k)
+            end
+
+            local foo = {
+              lmap = list_map,
+              choices = choices,
+            }
+            vim.notify(vim.inspect(foo))
+
+            vim.ui.select(choices, { prompt = "Select list:" }, function(choice)
+              if choice then
+                curr_list = list_map[choice]
+              end
+            end)
+          end,
+          desc = "[Harpoon] select list",
+        },
+        {
+          "<Leader>mM",
+          function()
+            local key = harpoon.config.settings.key()
+            local lists = harpoon.lists[key] or {}
+
+            local foo = {
+              info = harpoon.info(),
+            }
+            vim.notify(vim.inspect(foo))
+          end,
+          desc = "[Harpoon] test...",
         },
       }
 
       for i = 1, 10 do
         table.insert(keymaps, {
+          -- "<Space>" .. i % 10,
           "<Leader>" .. i % 10,
           function()
             harpoon:list():select(i)
