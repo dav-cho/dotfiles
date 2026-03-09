@@ -92,7 +92,7 @@ return {
         completion = {
           documentation = {
             auto_show = true,
-            auto_show_delay_ms = 0,
+            auto_show_delay_ms = 100,
             window = {
               border = "single",
               winblend = 10,
@@ -123,7 +123,7 @@ return {
             winblend = 10,
           },
           trigger = {
-            prefetch_on_insert = false,
+            show_on_trigger_character = false,
             show_on_blocked_trigger_characters = function(_)
               if vim.bo.filetype == "python" then
                 return { " ", "\n", "\t", ":" }
