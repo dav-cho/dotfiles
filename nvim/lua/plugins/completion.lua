@@ -93,6 +93,8 @@ return {
           documentation = {
             auto_show = true,
             auto_show_delay_ms = 100,
+            -- auto_show_delay_ms = 10, -- TODO
+            -- auto_show_delay_ms = 50, -- TODO
             window = {
               border = "single",
               winblend = 10,
@@ -123,12 +125,14 @@ return {
             winblend = 10,
           },
           trigger = {
-            show_on_trigger_character = false,
+            -- prefetch_on_insert = false, -- TODO
+            show_on_trigger_character = false, -- TODO
             show_on_blocked_trigger_characters = function(_)
               if vim.bo.filetype == "python" then
                 return { " ", "\n", "\t", ":" }
               end
-              return { " ", "\n", "\t" }
+              -- return { " ", "\n", "\t" }
+              return {}
             end,
           },
         },

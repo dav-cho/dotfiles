@@ -80,6 +80,11 @@ symlink "$DOTFILES/yabai" "$CONFIG/yabai"
 [[ -d "$CONFIG/git" ]] || mkdir "$CONFIG/git"
 symlink "$DOTFILES/git/ignore" "$CONFIG/git/ignore"
 
+# symlink "$DOTFILES/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
+# symlink "$DOTFILES/claude/CLAUDE.md" "$HOME/.claude/settings.json"
+# symlink "$DOTFILES/opencode/opencode.json" "$CONFIG/opencode/opencode.json"
+# [[ -d "$HOME/.cursor" ]] && symlink "$DOTFILES/cursor/cli-config.json" "$HOME/.cursor/cli-config.json"
+
 [[ -d "$HOME/.local/bin" ]] || mkdir "$HOME/.local/bin"
 cp "$DOTFILES"/bin/* "$HOME/.local/bin"
 
@@ -94,6 +99,11 @@ if [[ -d "$KITTY" ]]; then
     symlink "$KITTY/kitty" "$HOME/.local/bin"
     symlink "$KITTY/kitten" "$HOME/.local/bin"
 fi
+
+# K9S="$HOME/Library/Application Support/k9s"
+# if [[ -d $K9S ]]; then
+#     symlink "$DOTFILES/k9s/config.yaml" "$K9S/config.yaml"
+# fi
 
 if [[ -f "$HOME/._work" ]]; then
     source "$DOTFILES/work/install"
